@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#FFFDF8" name="theme-color"/>
+<title>برنامج التشخيص قبل الحل | إدارة المشروعات الصغيرة | لعبة البزنس</title>
+<meta content="برنامج تدريبي تطبيقي لأصحاب المشروعات الصغيرة والمتوسطة: 12 أسبوعًا، 24 جلسة Live على Zoom، متابعة على WhatsApp، تسجيلات 6 أشهر على Telegram، أدوات عملية، وملف قرار وخطة 90 يومًا." name="description"/>
+<meta content="index,follow,max-image-preview:large" name="robots"/>
+<meta content="website" property="og:type"/>
+<meta content="ar_EG" property="og:locale"/>
+<meta content="لعبة البزنس" property="og:site_name"/>
+<meta content="التشخيص قبل الحل — برنامج Live لأصحاب المشروعات لبناء قرار مبني على دليل وأرقام" property="og:title"/>
+<meta content="12 أسبوعًا | Zoom Live | WhatsApp متابعة | تسجيلات Telegram 6 أشهر | أدوات عملية | ملف قرار وخطة 90 يومًا" property="og:description"/>
+<meta content="business_game_logo.webp" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="business_game_logo.webp" rel="icon" type="image/webp"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root{
+      --green:#0E3A32;
+      --green-deep:#072B25;
+      --green-mid:#1D5A4D;
+      --green-bright:#2E7665;
+      --gold:#F5A623;
+      --gold-dark:#DE8E0B;
+      --gold-light:#FFD37A;
+      --ivory:#FFF7ED;
+      --paper:#FFFDF8;
+      --white:#FFFFFF;
+      --ink:#14231F;
+      --muted:#5E6E68;
+      --line:#DDE7E2;
+      --soft-green:#EDF7F2;
+      --soft-gold:#FFF3DA;
+      --ok:#24715E;
+      --danger:#9A512F;
+      --dark:#061F1A;
+      --shadow:0 20px 60px rgba(7,43,37,.10);
+      --shadow-soft:0 10px 32px rgba(7,43,37,.07);
+      --radius:24px;
+      --radius-sm:16px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:118px}
+    body{
+      margin:0;
+      font-family:"Cairo",Tahoma,Arial,sans-serif;
+      background:var(--paper);
+      color:var(--ink);
+      line-height:1.8;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;
+    }
+    img,video{max-width:100%}
+    a{text-decoration:none;color:inherit}
+    button,a{touch-action:manipulation}
+    .wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+    .narrow{width:min(850px,100%);margin-inline:auto}
+    .section{padding:76px 0}
+    .section.alt{background:linear-gradient(135deg,#F2F8F5,#FFF8EC)}
+    .section-head{max-width:800px;margin:0 0 30px}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      color:var(--gold-dark);font-weight:800;font-size:14px;
+      margin-bottom:8px
+    }
+    .kicker::before{content:"";width:20px;height:2px;background:var(--gold);border-radius:99px}
+    h1,h2,h3{color:var(--green);margin-top:0}
+    h1{
+      font-size:clamp(38px,5.3vw,68px);
+      line-height:1.16;letter-spacing:-1px;
+      margin-bottom:18px;font-weight:800
+    }
+    h1 span{color:var(--gold-dark)}
+    h2{font-size:clamp(29px,4vw,45px);line-height:1.3;margin-bottom:12px;font-weight:800}
+    h3{font-size:21px;line-height:1.45;margin-bottom:8px}
+    .lead{font-size:18px;color:var(--muted);margin:0}
+    .micro{font-size:12px;color:#7B8884}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,253,248,.94);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(18,63,54,.08)
+    }
+    .topbar-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--green);font-weight:800}
+    .brand img{
+      width:52px;height:52px;object-fit:cover;border-radius:50%;
+      border:1px solid #E6D6B5;background:#fff
+    }
+    .brand small{display:block;color:var(--muted);font-size:11px;font-weight:600;margin-top:-2px}
+    .nav{display:flex;align-items:center;gap:20px;font-size:13px;color:#53645F}
+    .nav a:hover{color:var(--green)}
+    
+    
+    
+    .cta{
+      position:relative;overflow:hidden;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-height:56px;padding:0 26px;border-radius:18px;
+      background:
+        linear-gradient(180deg,rgba(27,112,91,.98) 0%,rgba(13,78,65,.98) 48%,rgba(6,49,42,.99) 100%);
+      color:#fff;font-weight:900;
+      border:1px solid rgba(255,255,255,.34);
+      box-shadow:
+        0 14px 34px rgba(5,55,45,.30),
+        inset 0 1px 0 rgba(255,255,255,.36),
+        inset 0 -10px 18px rgba(0,24,20,.24);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;
+      cursor:pointer;text-align:center
+    }
+    .cta::before{
+      content:"";position:absolute;left:8px;right:8px;top:6px;height:44%;
+      border-radius:14px;
+      background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.04));
+      pointer-events:none
+    }
+    .cta:hover{
+      transform:translateY(-2px);
+      filter:saturate(1.06) brightness(1.05);
+      box-shadow:
+        0 18px 40px rgba(5,55,45,.38),
+        inset 0 1px 0 rgba(255,255,255,.42),
+        inset 0 -10px 18px rgba(0,24,20,.26)
+    }
+    .cta.secondary{
+      background:
+        linear-gradient(180deg,rgba(31,123,100,.92) 0%,rgba(13,79,66,.94) 100%);
+      color:#fff;
+      border-color:rgba(255,255,255,.28);
+      box-shadow:
+        0 10px 28px rgba(5,55,45,.24),
+        inset 0 1px 0 rgba(255,255,255,.30)
+    }
+    .cta.secondary::before{
+      background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.03))
+    }
+    .cta.secondary:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.06)
+    }
+
+
+    
+    .cta.small{min-height:46px;padding:0 18px;border-radius:13px;font-size:14px}
+    .hero{
+      padding:62px 0 48px;
+      background:
+        radial-gradient(circle at 9% 8%,rgba(224,162,53,.19),transparent 27%),
+        radial-gradient(circle at 92% 12%,rgba(46,118,101,.24),transparent 25%),
+        linear-gradient(145deg,var(--dark) 0%,var(--green-deep) 48%,#103F35 100%);
+      overflow:hidden;
+      color:#fff;
+      position:relative
+    }
+    .hero::after{
+      content:"";position:absolute;inset:auto -130px -190px auto;width:420px;height:420px;
+      border:1px solid rgba(242,213,140,.14);border-radius:50%;pointer-events:none
+    }
+    .hero h1{color:#fff}
+    .hero h1 span{color:var(--gold-light)}
+    .hero-copy>p{color:#D8E7E1}
+    .hero .eyebrow{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.15);color:#F4DEAA;box-shadow:none}
+    .hero .truth{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#E8F2EE;box-shadow:none}
+    .hero .truth b{color:var(--gold-light)}
+    .hero .badge{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);color:#E6F0EC}
+    .hero .cta.secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.28)}
+    .hero .cta.secondary:hover{background:rgba(255,255,255,.08)}
+
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 14px;border-radius:999px;background:#fff;border:1px solid #DFEAE5;
+      color:var(--green-mid);font-weight:800;font-size:13px;
+      box-shadow:var(--shadow-soft)
+    }
+    .hero-copy>p{font-size:19px;color:#4F625D;margin:0 0 15px}
+    .truth{margin-top:18px;padding:17px 19px;border-radius:18px;background:linear-gradient(135deg,#EDF7F3,#FFF7E8);border:1px solid #D8E8DF;color:#365C50;font-size:14px;box-shadow:0 8px 24px rgba(18,63,54,.05)}
+    .hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
+    .badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+    .badge{
+      padding:8px 12px;border-radius:999px;background:#fff;border:1px solid #DFE9E5;
+      color:#4F625D;font-size:12px;font-weight:700
+    }
+    .card{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+      padding:24px;box-shadow:var(--shadow)
+    }
+    .hero-side{display:grid;gap:15px}
+    .fact{display:flex;justify-content:space-between;gap:18px;padding:11px 0;border-bottom:1px dashed #DCE6E2;font-size:14px}
+    .fact:last-child{border-bottom:0}
+    .fact span{color:var(--muted)}
+    .fact b{color:var(--green)}
+    .counter{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}
+    .countbox{padding:13px 8px;border-radius:16px;background:#F7FBF9;border:1px solid #DFEAE5;text-align:center}
+    .countbox b{display:block;color:var(--green);font-size:25px;line-height:1.1}
+    .countbox span{font-size:11px;color:var(--muted);font-weight:700}
+    .seat-summary{margin-top:14px;padding:15px 16px;background:var(--soft-gold);border:1px solid #EEDBB7;border-radius:16px;color:#6B4B22}
+    .seat-summary strong{color:var(--green);font-size:17px}
+    .progress{height:11px;background:#EDF2EF;border-radius:99px;overflow:hidden;margin-top:12px}
+    .progress span{display:block;height:100%;width:60%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:99px}
+    .grid3,.grid2,.tool-grid,.value-grid{display:grid;gap:16px}
+    .grid3{grid-template-columns:repeat(3,1fr)}
+    .grid2{grid-template-columns:repeat(2,1fr)}
+    .value-grid{grid-template-columns:repeat(3,1fr)}
+    .item{
+      background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;
+      box-shadow:var(--shadow-soft)
+    }
+    .icon{
+      width:44px;height:44px;border-radius:14px;background:var(--soft-gold);
+      display:grid;place-items:center;color:var(--gold-dark);margin-bottom:13px
+    }
+    .icon svg{width:22px;height:22px}
+    .item p,.item li{color:var(--muted);margin:0}
+    .item ul{padding-right:18px;margin:0}
+    .item li+li{margin-top:8px}
+    .bridge{
+      margin-top:18px;padding:17px 19px;border-radius:18px;
+      background:#fff;border:1px solid #DCE8E3;color:#53645F
+    }
+    .bridge b{color:var(--green)}
+    .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+
+    .book-proof-real{margin-top:16px;display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:center;background:linear-gradient(135deg,#FFF8EC,#F6FBF8);border:1px solid #E7DFC9;border-radius:20px;padding:18px}
+    .book-proof-real img{width:120px;max-width:100%;height:auto;border-radius:12px;box-shadow:0 12px 26px rgba(0,0,0,.12);background:#fff;display:block}
+    .book-proof-real h3{font-size:20px;margin:0 0 4px}
+    .book-proof-real p{margin:0;color:var(--muted);font-size:13px}
+    .tool{
+      margin:0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-soft);position:relative
+    }
+    
+    .tool-image-wrap{position:relative;background:#fff;overflow:hidden;padding:8px}
+    .tool-image-wrap img{display:block;width:100%;max-height:290px;object-fit:contain;height:auto;background:#fff;user-select:none;-webkit-user-drag:none;pointer-events:none;border-radius:14px;border:1px solid #E3E8E5}
+    .tool-logo-badge{
+      position:absolute;top:18px;left:18px;width:52px;height:52px;border-radius:50%;
+      background:rgba(255,255,255,.96);border:1px solid rgba(224,162,53,.55);
+      display:grid;place-items:center;box-shadow:0 8px 20px rgba(7,43,37,.10);pointer-events:none
+    }
+    .tool-logo-badge img{width:34px !important;height:34px !important;border:0 !important;border-radius:0 !important;background:transparent !important}
+    .tool-note{margin-top:11px;font-size:12px;color:var(--muted);text-align:center}
+
+    .tool-image-wrap img{display:block;width:100%;max-height:290px;object-fit:contain;height:auto;background:#fff;user-select:none;-webkit-user-drag:none;pointer-events:none;border-radius:14px;border:1px solid #E3E8E5}
+    .tool-image-wrap::after{
+      content:"";position:absolute;inset:0;background:transparent
+    }
+
+    .tool img{
+      display:block;width:100%;height:auto;object-fit:contain;background:#F7FAF8
+    }
+    .tool figcaption{padding:15px 17px;color:var(--green);font-weight:800}
+    .tool figcaption span{display:block;color:var(--muted);font-size:12px;font-weight:500;margin-top:4px}
+    .authority{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px;align-items:stretch}
+    .authority-title{
+      background:linear-gradient(145deg,var(--green),var(--green-mid));
+      border-radius:24px;padding:28px;color:#fff;display:flex;flex-direction:column;justify-content:center;
+      box-shadow:var(--shadow)
+    }
+    .authority-title h3{font-size:33px;color:#fff;margin-bottom:6px}
+    .authority-title p{margin:0;color:#E4F0EC}
+    .authority-points{display:grid;gap:10px;margin-top:15px}
+    .authority-point{padding:13px 15px;border-radius:15px;border:1px solid var(--line);background:#fff;color:#53645F}
+    .authority-point b{color:var(--green)}
+    .video-shell{padding:14px}
+    .video-shell video{display:block;width:min(480px,100%);margin:auto;border-radius:18px;background:#000;max-height:650px}
+    .video-caption{text-align:center;color:var(--muted);font-size:13px;margin:11px 0 0}
+    .offer-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:start}
+    .old-price{text-decoration:line-through;color:#8A9793;font-size:20px}
+    .price{font-size:59px;line-height:1;color:var(--green);font-weight:800;margin:8px 0}
+    .price small{font-size:18px}
+    .tag{
+      display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;
+      background:#EDF7F3;color:var(--ok);font-size:12px;font-weight:800;margin:3px 0
+    }
+    .tag.urgent{background:#FFF0E4;color:#8E5029}
+    .installments{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+    .inst{background:#F8FBF9;border:1px solid #DCE8E3;border-radius:15px;padding:13px;text-align:center}
+    .inst b{display:block;color:var(--green);font-size:17px}
+    .inst span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+    .offer-list{list-style:none;margin:17px 0 0;padding:0}
+    .offer-list li{padding:9px 0;border-bottom:1px dashed #DCE6E2;color:#53645F}
+    .offer-list li:last-child{border-bottom:0}
+    .refund{
+      margin-top:16px;padding:16px;border-radius:17px;background:#F0F8F4;border:1px solid #D6E8DF;color:#345E51
+    }
+    .refund b{color:var(--green)}
+    .objection{display:grid;gap:10px}
+    .objection details{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px
+    }
+    summary{cursor:pointer;font-weight:800;color:var(--green)}
+    details p{color:var(--muted);margin:10px 0 0}
+    .final{
+      background:linear-gradient(135deg,#081F1B,#0E3A32);
+      color:#fff;padding:68px 0
+    }
+    .final h2{color:#fff;margin-bottom:10px}
+    .final p{color:#DDECE7;font-size:18px;margin:0 0 20px;max-width:760px}
+    .final .cta{background:var(--gold);border-color:var(--gold)}
+    .trust-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
+    .trust-strip div{padding:12px;border:1px solid rgba(255,255,255,.14);border-radius:14px;color:#E6F1ED;font-size:12px}
+    footer{padding:28px 0 92px;background:#FCFEFD;border-top:1px solid var(--line);color:#74817D;font-size:12px}
+    .footer-row{display:flex;justify-content:space-between;gap:15px;align-items:center}
+    .mobile-sticky{display:none}
+
+    .authority-v2{display:grid;grid-template-columns:.78fr 1.22fr;gap:20px;align-items:stretch}
+    .portrait-card{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .portrait-card img{width:100%;height:420px;object-fit:cover;object-position:center 22%;display:block;background:#F3F7F4}
+    .portrait-meta{padding:18px 20px}
+    .portrait-meta h3{font-size:26px;margin-bottom:3px}
+    .portrait-meta p{margin:0;color:var(--muted);font-size:14px}
+    .cred-badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+    .cred-badge{padding:7px 10px;border-radius:999px;background:#F2F8F5;border:1px solid #DCE9E3;color:var(--green);font-size:11px;font-weight:800}
+    .book-proof{margin-top:16px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;background:linear-gradient(135deg,#FFF8EC,#F6FBF8);border:1px solid #E7DFC9;border-radius:20px;padding:18px}
+    .book-mark{width:58px;height:72px;border-radius:9px 14px 14px 9px;background:linear-gradient(145deg,var(--green),#245E51);box-shadow:0 10px 24px rgba(18,63,54,.16);display:grid;place-items:center;color:var(--gold-light);font-size:25px;border-right:5px solid var(--gold)}
+    .book-proof h3{font-size:20px;margin:0 0 4px}
+    .book-proof p{margin:0;color:var(--muted);font-size:13px}
+    .conversion-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .conversion-step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow-soft)}
+    .conversion-step .step-no{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:var(--soft-gold);color:var(--gold-dark);font-weight:800;margin-bottom:12px}
+    .conversion-step p{margin:0;color:var(--muted)}
+    .legal-box{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow-soft)}
+    .legal-box details+details{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}
+    .legal-box summary{font-size:14px}
+    .legal-box p{font-size:13px}
+    .logo-proof{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .logo-proof img{width:64px;height:64px;border-radius:50%;border:1px solid #E7D7B7;object-fit:cover;background:#fff}
+    .logo-proof b{display:block;color:var(--green);font-size:17px}
+    .logo-proof span{display:block;color:var(--muted);font-size:12px}
+
+
+    .guided-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:18px;align-items:stretch}
+    .guided-story{background:linear-gradient(145deg,#123F36,#245B50);color:#fff;border-radius:24px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .guided-story::after{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(228,194,119,.25);border-radius:50%;left:-70px;bottom:-80px}
+    .guided-story h3{color:#fff;font-size:28px;margin-bottom:10px}
+    .guided-story p{color:#E5F0EC;margin:0 0 13px}
+    .guided-story .quote{margin-top:18px;padding:15px 17px;border-radius:16px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);color:#FFF7E8;font-weight:600}
+    .guided-benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .guided-benefit{background:#fff;border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow-soft)}
+    .guided-benefit .gb-icon{width:40px;height:40px;border-radius:13px;background:var(--soft-gold);display:grid;place-items:center;color:var(--gold-dark);font-size:18px;font-weight:800;margin-bottom:11px}
+    .guided-benefit h3{font-size:18px;margin-bottom:5px}
+    .guided-benefit p{color:var(--muted);margin:0;font-size:13px}
+    .learning-compare{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+    .learning-card{border-radius:20px;padding:22px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-soft)}
+    .learning-card.featured{background:linear-gradient(145deg,#F0F8F4,#FFF9EF);border-color:#CFE2D9}
+    .learning-card .lc-label{display:inline-block;padding:6px 10px;border-radius:999px;background:#F4F6F5;color:#62716C;font-size:11px;font-weight:800;margin-bottom:10px}
+    .learning-card.featured .lc-label{background:#123F36;color:#fff}
+    .learning-card ul{margin:0;padding-right:18px;color:var(--muted)}
+    .learning-card li+li{margin-top:8px}
+    .accountability-strip{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .accountability-strip div{padding:13px;border-radius:15px;background:#fff;border:1px solid #DBE7E2;text-align:center;color:var(--green);font-size:12px;font-weight:800}
+    .trainer-proof{margin-top:18px;padding:17px 18px;border-radius:18px;background:#FFF8ED;border:1px solid #EBD7B1;color:#654A27}
+    .trainer-proof b{color:var(--green)}
+
+
+    .urgency-bar{background:#061F1A;color:#FFF0CC;
+      background:var(--dark);color:#ECF5F1;border-bottom:1px solid rgba(242,213,140,.16)
+    }
+    .urgency-inner{
+      min-height:38px;display:flex;align-items:center;justify-content:center;gap:18px;
+      font-size:12px;font-weight:700;text-align:center
+    }
+    .urgency-inner b{color:var(--gold-light)}
+    .urgency-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block}
+    .trust-rail{background:#fff;border-bottom:1px solid var(--line)}
+    .trust-rail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+    .trust-rail-item{padding:18px 16px;text-align:center;border-left:1px solid var(--line)}
+    .trust-rail-item:last-child{border-left:0}
+    .trust-rail-item b{display:block;color:var(--green);font-size:16px}
+    .trust-rail-item span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+    .trust-rail-item a{color:var(--green);text-decoration:underline;text-underline-offset:3px}
+    .early-offer{background:#FFFFFF;border:1px solid rgba(245,166,35,.55);
+      margin-top:22px;background:#fff;border:1px solid rgba(242,213,140,.42);border-radius:22px;
+      box-shadow:0 18px 46px rgba(6,31,26,.12);padding:18px 20px;
+      display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center
+    }
+    .early-offer .eo-copy b{display:block;color:var(--green);font-size:18px}
+    .early-offer .eo-copy span{display:block;color:var(--muted);font-size:12px}
+    .early-offer .eo-price{text-align:center}
+    .early-offer .eo-price strong{display:block;color:var(--green);font-size:28px;line-height:1.1}
+    .early-offer .eo-price small{color:var(--muted)}
+    .journey-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:stage}
+    .journey-card{
+      position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;
+      box-shadow:var(--shadow-soft);overflow:hidden
+    }
+    .journey-card::before{
+      counter-increment:stage;content:"0" counter(stage);position:absolute;left:14px;top:8px;
+      font-size:44px;font-weight:800;color:rgba(14,58,50,.07)
+    }
+    .journey-card .stage{color:var(--gold-dark);font-size:12px;font-weight:800;margin-bottom:7px}
+    .journey-card h3{font-size:19px;margin-bottom:7px}
+    .journey-card p{margin:0;color:var(--muted);font-size:13px}
+    .bundle-section{background:radial-gradient(circle at 10% 10%,rgba(245,166,35,.12),transparent 26%),linear-gradient(145deg,#081F1B,#0E3A32);
+      background:
+        radial-gradient(circle at 10% 10%,rgba(224,162,53,.10),transparent 26%),
+        linear-gradient(145deg,var(--dark),var(--green-deep));
+      color:#fff
+    }
+    .bundle-section h2{color:#fff}
+    .bundle-section .lead{color:#D6E5DF}
+    .bundle-section .kicker{color:var(--gold-light)}
+    .bundle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+    .bundle-card{
+      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;padding:20px
+    }
+    .bundle-card .bundle-no{display:inline-grid;place-items:center;width:35px;height:35px;border-radius:12px;background:rgba(224,162,53,.15);color:var(--gold-light);font-weight:800;margin-bottom:10px}
+    .bundle-card h3{color:#fff;font-size:18px;margin-bottom:5px}
+    .bundle-card p{color:#D6E5DF;margin:0;font-size:13px}
+    .bundle-total{
+      margin-top:18px;padding:18px 20px;border-radius:18px;background:#fff;color:var(--green);
+      display:flex;justify-content:space-between;gap:18px;align-items:center
+    }
+    .bundle-total b{font-size:18px}
+    .bundle-total span{display:block;color:var(--muted);font-size:12px}
+    .section-cta{text-align:center;margin-top:24px}
+    .proof-teaser{
+      display:flex;align-items:center;gap:11px;justify-content:center;color:var(--muted);font-size:12px;margin-top:14px
+    }
+    .proof-teaser::before{content:"▶";width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft-gold);color:var(--gold-dark);font-size:10px}
+
+
+    .bonus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+    .bonus-card{
+      background:#fff;border:1px solid rgba(245,166,35,.34);border-radius:20px;padding:20px;
+      display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;
+      box-shadow:0 12px 34px rgba(7,43,37,.07)
+    }
+    .bonus-card.dark{background:linear-gradient(145deg,#0B3029,#123F36);border-color:rgba(255,211,122,.28)}
+    .bonus-card.dark h3,.bonus-card.dark .bonus-price{color:#fff}
+    .bonus-card.dark p{color:#D8E7E1}
+    .bonus-book{width:80px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.16))}
+    .bonus-icon{
+      width:70px;height:70px;border-radius:18px;display:grid;place-items:center;
+      background:var(--soft-gold);color:var(--gold-dark);font-size:30px;font-weight:800
+    }
+    .bonus-card h3{font-size:18px;margin:0 0 4px}
+    .bonus-card p{margin:0;color:var(--muted);font-size:12px}
+    .bonus-price{margin-top:7px;color:var(--green);font-weight:800;font-size:14px}
+    .bonus-value-strip{
+      margin-top:14px;padding:14px 16px;border-radius:16px;
+      background:linear-gradient(135deg,#FFF2D8,#FFF8EA);border:1px solid #F0D39C;
+      color:#6B4A16;font-weight:700;text-align:center
+    }
+
+
+    .ai-showcase{
+      margin-top:18px;
+      background:linear-gradient(145deg,#082A24,#123F36);
+      border:1px solid rgba(255,211,122,.22);
+      border-radius:26px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      align-items:center;
+      color:#fff;
+      box-shadow:0 18px 46px rgba(7,43,37,.18)
+    }
+    .ai-showcase-media{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      padding:10px;
+      min-width:0
+    }
+    .ai-showcase-media img{
+      display:block;width:100%;height:auto;max-height:420px;object-fit:contain;
+      border-radius:16px;border:1px solid rgba(255,255,255,.08)
+    }
+    .ai-showcase-copy{min-width:0}
+    .ai-showcase .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(245,166,35,.14);
+      border:1px solid rgba(255,211,122,.28);
+      color:#FFD37A;font-size:12px;font-weight:900;margin-bottom:12px
+    }
+    .ai-showcase h3{font-size:32px;line-height:1.2;margin:0 0 10px;color:#fff}
+    .ai-showcase p{margin:0 0 12px;color:#D7E7E1}
+    .ai-price{
+      display:inline-block;margin:8px 0 14px;
+      padding:10px 14px;border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      color:#FFF4D3;font-weight:800
+    }
+    .ai-feature-list{
+      list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px
+    }
+    .ai-feature-list li{
+      position:relative;padding-right:20px;color:#E7F0EC;font-size:14px
+    }
+    .ai-feature-list li::before{
+      content:"✓";position:absolute;right:0;top:0;color:#FFD37A;font-weight:900
+    }
+    @media(max-width:980px){
+      .ai-showcase{grid-template-columns:1fr}
+      .ai-showcase h3{font-size:26px}
+    }
+
+
+    .tool-list-clean{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+      margin-top:22px
+    }
+    .tool-clean{
+      display:grid;
+      grid-template-columns:72px 1fr;
+      gap:16px;
+      align-items:start;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:var(--shadow-soft)
+    }
+    .tool-clean-icon{
+      width:72px;height:72px;border-radius:20px;
+      display:grid;place-items:center;
+      background:linear-gradient(180deg,rgba(255,197,74,.18),rgba(255,165,35,.08));
+      border:1px solid rgba(245,166,35,.28);
+      color:#A45F06;font-weight:900;font-size:22px
+    }
+    .tool-clean h3{margin:0 0 6px;color:var(--green);font-size:22px}
+    .tool-clean p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .tool-note-clean{
+      margin-top:16px;
+      padding:15px 18px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#FFF8EC,#F8FBF9);
+      border:1px solid #E7DFC9;
+      color:#53645F;
+      font-size:14px;
+      text-align:center
+    }
+    @media(max-width:900px){
+      .tool-list-clean{grid-template-columns:1fr}
+      .tool-clean{grid-template-columns:58px 1fr}
+      .tool-clean-icon{width:58px;height:58px;border-radius:16px;font-size:18px}
+    }
+.offer-cycle-bar{
+      position:sticky;top:0;z-index:90;
+      background:linear-gradient(180deg,#A71919,#7E0F0F);
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 6px 18px rgba(81,8,8,.20)
+    }
+    .offer-cycle-inner{
+      min-height:48px;
+      display:flex;align-items:center;justify-content:center;
+      gap:18px;flex-wrap:nowrap
+    }
+    .offer-cycle-label{
+      display:flex;align-items:center;gap:8px;
+      white-space:nowrap;font-size:13px
+    }
+    .offer-cycle-label strong{color:#fff}
+    .offer-cycle-pulse{
+      width:8px;height:8px;border-radius:50%;background:#FFCECE;
+      box-shadow:0 0 0 0 rgba(255,220,220,.7);
+      animation:offerPulse 1.5s infinite
+    }
+    @keyframes offerPulse{
+      0%{box-shadow:0 0 0 0 rgba(255,220,220,.65)}
+      70%{box-shadow:0 0 0 8px rgba(255,220,220,0)}
+      100%{box-shadow:0 0 0 0 rgba(255,220,220,0)}
+    }
+    .offer-cycle-counter{
+      direction:ltr;
+      display:flex;align-items:center;gap:5px;
+      font-variant-numeric:tabular-nums
+    }
+    .offer-cycle-counter span{
+      min-width:45px;padding:5px 8px;border-radius:10px;
+      background:rgba(74,0,0,.34);
+      border:1px solid rgba(255,255,255,.14);
+      text-align:center;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08)
+    }
+    .offer-cycle-counter b{
+      display:block;color:#fff;font-size:17px;line-height:1
+    }
+    .offer-cycle-counter small{
+      display:block;color:#FFDCDC;font-size:8px;margin-top:3px
+    }
+    .offer-cycle-counter i{
+      color:#FFD6D6;font-style:normal;font-weight:900
+    }
+.topbar{top:48px}
+    @media(max-width:720px){
+      .offer-cycle-inner{min-height:58px;gap:8px;padding:5px 0}
+      .offer-cycle-label{font-size:10px}
+      .offer-cycle-counter span{min-width:37px;padding:4px 5px}
+      .offer-cycle-counter b{font-size:15px}
+.topbar{top:58px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .offer-cycle-pulse{animation:none}
+    }
+
+
+    .all-tools-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+      margin-top:22px
+    }
+    .all-tools-unit{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:var(--shadow-soft)
+    }
+    .all-tools-unit-head{
+      padding-bottom:13px;
+      margin-bottom:10px;
+      border-bottom:1px solid #E9EFEC
+    }
+    .all-tools-unit-meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:7px
+    }
+    .all-tools-unit-meta span{
+      display:inline-flex;
+      padding:5px 9px;
+      border-radius:999px;
+      background:#EDF7F2;
+      color:#155C4A;
+      font-size:11px;
+      font-weight:900
+    }
+    .all-tools-unit-meta b{
+      color:#7B8984;
+      font-size:11px
+    }
+    .all-tools-unit h3{
+      margin:0;
+      color:var(--green);
+      font-size:20px;
+      line-height:1.4
+    }
+    .all-tools-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      gap:7px
+    }
+    .all-tools-list li{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 10px;
+      border-radius:13px;
+      background:#FAFCFB;
+      border:1px solid #EEF2F0;
+      min-width:0
+    }
+    .tool-number{
+      flex:0 0 34px;
+      width:34px;
+      height:34px;
+      border-radius:11px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(180deg,#185D4E,#0A3B32);
+      color:#fff;
+      font-size:11px;
+      font-weight:900;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.18)
+    }
+    .all-tools-list strong{
+      color:#263A34;
+      font-size:13px;
+      line-height:1.5
+    }
+    .tools-value-line{
+      margin-top:16px;
+      padding:15px 18px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#F2F8F5,#FFF9EF);
+      border:1px solid #DFE9E4;
+      color:#53645F;
+      font-size:13px;
+      text-align:center
+    }
+    .tools-value-line strong{color:var(--green)}
+    @media(max-width:860px){
+      .all-tools-grid{grid-template-columns:1fr}
+      .all-tools-unit{padding:16px}
+      .all-tools-unit h3{font-size:18px}
+    }
+
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cta{transition:none}}
+    @media(max-width:950px){
+      .nav{display:none}
+      .hero-grid,.authority,.authority-v2,.offer-grid{grid-template-columns:1fr}
+      .grid3,.value-grid{grid-template-columns:1fr}
+      .tool-grid,.grid2{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .wrap{width:min(100% - 20px,1120px)}
+      .section{padding:58px 0}
+      .hero{padding:34px 0 28px}
+      h1{font-size:39px}
+      .brand small{display:none}
+      .topbar .cta.small{display:none}
+      .hero-actions{display:grid}
+      .hero-actions .cta{width:100%}
+      .counter{grid-template-columns:repeat(2,1fr)}
+      .installments{grid-template-columns:1fr}
+      .tool img{height:auto}
+      .portrait-card img{height:360px}
+      .conversion-steps{grid-template-columns:1fr}
+      .trust-strip{grid-template-columns:repeat(2,1fr)}
+      .book-proof-real{grid-template-columns:1fr}
+      .book-proof-real img{width:140px}
+      .guided-grid,.learning-compare{grid-template-columns:1fr}
+      .journey-grid,.bundle-grid{grid-template-columns:1fr 1fr}
+      .early-offer{background:#FFFFFF;border:1px solid rgba(245,166,35,.55);grid-template-columns:1fr;text-align:center}
+      .guided-benefits{grid-template-columns:1fr}
+      .accountability-strip{grid-template-columns:repeat(2,1fr)}
+      .trust-rail-grid{grid-template-columns:repeat(2,1fr)}
+      .trust-rail-item:nth-child(2){border-left:0}
+      .trust-rail-item{border-bottom:1px solid var(--line)}
+      .footer-row{display:block}
+      .journey-grid,.bundle-grid,.bonus-grid,.tool-grid{grid-template-columns:1fr}
+      .urgency-inner{gap:8px;font-size:10px;flex-wrap:wrap;padding:5px 0}
+      .mobile-sticky{
+        display:block;position:fixed;left:10px;right:10px;bottom:10px;z-index:100;
+        background:rgba(255,253,248,.96);backdrop-filter:blur(12px);
+        border:1px solid rgba(18,63,54,.12);border-radius:17px;padding:9px;
+        box-shadow:0 16px 45px rgba(18,63,54,.18)
+      }
+      .mobile-sticky .row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}
+      .mobile-sticky p{margin:0;font-size:11px;line-height:1.45;color:#5A6965}
+      .mobile-sticky b{color:var(--green)}
+      .mobile-sticky .cta{min-height:48px;padding:0 16px;border-radius:13px;font-size:13px}
+    }
+  
+    .tool-grid{align-items:start}
+    .tool{display:flex;flex-direction:column}
+    .tool figcaption{min-height:88px}
+    img{image-rendering:auto}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"التشخيص قبل الحل — من الفكرة أو المشروع إلى قرار مبني على دليل وأرقام","description":"برنامج تدريبي تطبيقي مباشر عبر Zoom لأصحاب المشروعات الصغيرة والمتوسطة، يركز على التشخيص، التسعير، نقطة التعادل، السيولة، مؤشرات الأداء واتخاذ القرار.","provider":{"@type":"Organization","name":"لعبة البزنس"},"instructor":{"@type":"Person","name":"حاتم نجيب","jobTitle":"استشاري مشروعات صغيرة ومتوسطة"},"hasCourseInstance":{"@type":"CourseInstance","courseMode":"Online","startDate":"2026-10-01T19:00:00+03:00","location":{"@type":"VirtualLocation","name":"Zoom"}},"offers":{"@type":"Offer","price":"7500","priceCurrency":"EGP","availability":"https://schema.org/LimitedAvailability"}}</script>
+</head>
+<body>
+<div class="offer-cycle-bar" id="offer-cycle-bar">
+<div class="wrap offer-cycle-inner">
+<div class="offer-cycle-label">
+<span aria-hidden="true" class="offer-cycle-pulse"></span>
+<strong id="offer-cycle-status">ينتهي العرض الحالي بعد</strong>
+</div>
+<div aria-label="الوقت المتبقي في العرض الحالي" class="offer-cycle-counter">
+<span><b id="cycle-days">00</b><small>يوم</small></span>
+<i>:</i>
+<span><b id="cycle-hours">00</b><small>ساعة</small></span>
+<i>:</i>
+<span><b id="cycle-minutes">00</b><small>دقيقة</small></span>
+<i>:</i>
+<span><b id="cycle-seconds">00</b><small>ثانية</small></span>
+</div>
+</div>
+</div><header class="topbar">
+<div class="wrap topbar-inner">
+<a aria-label="لعبة البزنس - أعلى الصفحة" class="brand" href="#top">
+<img alt="لوجو لعبة البزنس" height="52" src="business_game_logo.webp" width="52"/>
+<div>لعبة البزنس<small>التشخيص قبل الحل</small></div>
+</a>
+<nav aria-label="التنقل الرئيسي" class="nav">
+<a href="#journey">الرحلة</a>
+<a href="#tools">الأدوات</a>
+<a href="#hatem">عن حاتم</a>
+<a href="#bundle">الباقة</a>
+<a href="#offer">السعر</a>
+<a href="#faq">الأسئلة</a>
+</nav>
+<a class="cta small booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز مقعدك</a>
+</div>
+</header>
+<main id="top">
+<section class="hero">
+<div class="wrap hero-grid">
+<div class="hero-copy">
+<div class="eyebrow">برنامج تطبيقي مباشر — لأصحاب المشروعات الجادين في اتخاذ قرارات أفضل</div>
+<h1>حوِّل قرارات مشروعك من <span>التخمين إلى الوضوح</span> خلال 12 أسبوعًا من التطبيق المباشر.</h1>
+<p>برنامج Live عملي لأصحاب المشروعات القائمة: يساعدك تبني قرارًا أوضح في التسعير والسيولة والتشغيل والتوسع، وتخرج بملف قرار وخطة 90 يومًا بدل الحيرة والتأجيل.</p>
+<p>
+          برنامج <b>«التشخيص قبل الحل»</b> يساعدك خلال 12 أسبوعًا على فهم مشروعك بصورة أعمق،
+          استخدام أدوات وأرقام عملية، وبناء <b>ملف قرار وخطة 90 يومًا</b> بدل التخمين وردود الأفعال.
+        </p>
+<div class="truth"><b>وعد البرنامج واضح:</b> بنهاية الرحلة يكون معك أدوات عملية، ملف قرار، وخطة 90 يومًا تساعدك تدير مشروعك بوضوح أكبر وتتحرك بثقة أعلى.</div>
+<div class="hero-actions">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز واحدًا من الـ6 مقاعد المتبقية</a>
+<a class="cta secondary" href="#tools">شوف الأدوات اللي هتشتغل عليها</a>
+</div>
+<div aria-label="تفاصيل البرنامج" class="badges">
+<span class="badge">12 أسبوعًا</span>
+<span class="badge">24 جلسة</span>
+<span class="badge">60 دقيقة للجلسة</span>
+<span class="badge">Zoom مباشر</span>
+<span class="badge">تسجيلات Telegram لمدة 6 أشهر</span>
+<span class="badge">15 متدربًا كحد أقصى</span>
+</div><div class="early-offer">
+<div class="eo-copy">
+<b>سعر الدفعة الأولى</b>
+<span>3 دفعات متساوية بدون زيادة</span>
+</div>
+<div class="eo-price">
+<strong data-discount-price="1">7,500 جنيه</strong>
+<small data-discount-installment="1">3 × 2,500</small>
+</div>
+<a class="cta small booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز مقعدك</a>
+</div>
+</div>
+<aside aria-label="تفاصيل وموعد البرنامج" class="hero-side">
+<div class="card">
+<h3>تفاصيل سريعة</h3>
+<div class="fact"><span>بداية الدفعة</span><b>1 أكتوبر 2026</b></div>
+<div class="fact"><span>طريقة الدراسة</span><b>Live على Zoom</b></div>
+<div class="fact"><span>عدد الجلسات</span><b>24 جلسة</b></div>
+<div class="fact"><span>مدة الجلسة</span><b>60 دقيقة</b></div>
+<div class="fact"><span>موعد الجلسات</span><b>7:00 مساءً بتوقيت مصر</b></div>
+<div class="fact"><span>المخرج النهائي</span><b>ملف قرار + خطة 90 يومًا</b></div>
+<div class="fact"><span>مصمم بشكل أساسي لـ</span><b>أصحاب مشروعات قائمة</b></div>
+<div class="bridge refund-reassure" style="margin-top:14px">
+<b>تحفيز الحجز بدون مخاطرة مبالغ فيها:</b><br/>
+      احضر أول جلسة تدريب فعلية، وإذا وجدت أن البرنامج غير مناسب لمرحلتك يمكنك طلب الاسترداد وفق الشروط الموضحة.
+    </div></div>
+<div class="card seat-card"><h3>المقاعد المتبقية في الدفعة الأولى</h3><p class="micro">العدد الأقصى للدفعة 15 متدربًا.</p><div class="seat-summary">
+<div><strong>9 / 15</strong> مقعدًا تم حجزهم</div>
+<div><b>المتبقي: 6 مقاعد</b></div>
+<div aria-label="9 مقاعد محجوزة من 15" aria-valuemax="15" aria-valuemin="0" aria-valuenow="9" class="progress" role="progressbar"><span></span></div>
+<div class="micro" style="margin-top:7px">بحسب الحجوزات المؤكدة — آخر تحديث: 6 سبتمبر 2026.</div>
+</div></div>
+</aside>
+</div>
+</section><div class="trust-rail">
+<div class="wrap trust-rail-grid">
+<div class="trust-rail-item"><b>24 جلسة Live</b><span>تفاعل ونقاش أثناء الرحلة</span></div>
+<div class="trust-rail-item"><b>WhatsApp لكل دفعة</b><span>متابعة منظمة بين الجلسات</span></div>
+<div class="trust-rail-item"><b>Telegram لمدة 6 أشهر</b><span>التسجيلات طوال البرنامج وبعده</span></div>
+<div class="trust-rail-item"><b><a href="#proof">تجربة عميل بالفيديو</a></b><span>مذاق سيناء — تجربة من أرض الواقع</span></div>
+</div>
+</div>
+<section class="section" id="pain">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">قبل الحل… السؤال الأول</div>
+<h2>ممكن تاخد قرار شكله صح… لمشكلة غلط.</h2>
+<p class="lead">وده من أغلى الأخطاء في مشروع شغال؛ لأن كل قرار بعده ممكن يستهلك فلوس ووقت إضافي.</p>
+</div>
+<div class="grid3">
+<article class="item">
+<div aria-hidden="true" class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 19V9m6 10V5m6 14v-7m4 7V3"></path></svg></div>
+<h3>المبيعات قلت؟</h3>
+<p>فتزود إعلانات فورًا… مع إن المشكلة ممكن تكون في العرض أو السعر أو تجربة العميل.</p>
+</article>
+<article class="item">
+<div aria-hidden="true" class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8M12 8v8"></path></svg></div>
+<h3>الكاش قليل؟</h3>
+<p>فتقلل مصاريف… مع إن الاختناق ممكن يكون في التحصيل أو دورة النقد أو هامش المساهمة.</p>
+</article>
+<article class="item">
+<div aria-hidden="true" class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l6-6 4 4 8-9"></path><path d="M15 6h6v6"></path></svg></div>
+<h3>المشروع مستقر؟</h3>
+<p>فتفكر في التوسع… قبل ما تعرف هل النظام الحالي أصلًا قادر يتحمل حجمًا أكبر.</p>
+</article>
+</div>
+<div class="bridge">
+<b>الفكرة مش إن الإعلانات أو خفض المصروفات أو التوسع قرارات غلط.</b>
+        الفكرة إنك قبل القرار لازم تعرف: <b>إيه المشكلة؟ إيه الدليل؟ وإيه الرقم اللي يغيّر القرار؟</b>
+</div><div class="section-cta">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">لو عندك قرار شاغلك حاليًا — ابدأ المحادثة</a>
+</div>
+</div>
+</section>
+<section class="section alt" id="value">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">القيمة اللي هتخرج بيها</div>
+<h2>مش هتخرج بمعلومات أكتر… هتخرج بطريقة أفضل لاتخاذ القرار.</h2>
+<p class="lead">كل جزء في البرنامج مرتبط بقرار أو أداة أو تطبيق على مشروعك.</p>
+</div>
+<div class="value-grid">
+<article class="item"><h3>شخّص قبل ما تصرف</h3><p>اعرف أين المشكلة الفعلية قبل إعلان جديد، تخفيض تكلفة أو توسع.</p></article>
+<article class="item"><h3>افهم ربحك وكاشك</h3><p>فرّق بين الإيراد، هامش المساهمة، نقطة التعادل والسيولة.</p></article>
+<article class="item"><h3>سعّر بمنطق</h3><p>اختبر هل السعر يغطي التكلفة ويترك مساهمة كافية بدل التسعير بالانطباع.</p></article>
+<article class="item"><h3>اعرف الاختناق</h3><p>حدد الجزء الذي يقيّد أداء المشروع بدل تشتيت الجهد على كل الأقسام.</p></article>
+<article class="item"><h3>تابع أرقامًا لها معنى</h3><p>اختر مؤشرات مرتبطة بقرار، لا Dashboard مليئة بأرقام لا تغيّر شيئًا.</p></article>
+<article class="item"><h3>انتهِ بخطة 90 يومًا</h3><p>حوّل التشخيص إلى أولويات ومسؤوليات ومواعيد مراجعة واضحة.</p></article>
+</div>
+<div style="margin-top:22px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">اسأل عن مكانك واعرف هل البرنامج مناسب لمشروعك</a>
+</div>
+</div>
+</section>
+<section class="section alt" id="transformation">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">التحول اللي البرنامج معمول عشانه</div>
+<h2>من قرار بيتاخد تحت الضغط… لقرار له منطق ودليل وخطوة تالية واضحة.</h2>
+<p class="lead">تتعلم تستخدم الأدوات كجزء من طريقة اتخاذ القرار في مشروعك.</p>
+</div>
+<div class="grid2">
+<article class="item">
+<h3>قبل البرنامج</h3>
+<ul>
+<li>المشكلة تظهر → تبدأ تبحث عن حل سريع.</li>
+<li>الأرقام موجودة لكن مش واضح أي رقم يغيّر القرار.</li>
+<li>التسويق أو خفض التكلفة يصبح أول رد فعل.</li>
+<li>أكثر من أولوية تتنافس على نفس الوقت والكاش.</li>
+</ul>
+</article>
+<article class="item">
+<h3>الطريقة اللي هتتدرب عليها</h3>
+<ul>
+<li>تشخيص المشكلة قبل اختيار الحل.</li>
+<li>تحديد الدليل والرقم المرتبط بالقرار.</li>
+<li>استخدام أداة واحدة مناسبة بدل زحمة الأدوات.</li>
+<li>تحويل القرار إلى خطة 90 يومًا ومؤشر مراجعة.</li>
+</ul>
+</article>
+</div>
+</div>
+</section>
+<section class="section" id="journey">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">رحلة الـ12 أسبوع</div>
+<h2>من تشخيص المشكلة… لقرار واضح وخطة تنفيذ.</h2>
+<p class="lead">كل مرحلة تبني على اللي قبلها، من التشخيص حتى خطة التنفيذ.</p>
+</div>
+<div class="journey-grid">
+<article class="journey-card">
+<div class="stage">المرحلة الأولى</div>
+<h3>التشخيص والافتراضات</h3>
+<p>تحدد المشكلة والقرار المطلوب، وتفصل بين الدليل والافتراض قبل ما تبدأ العلاج.</p>
+</article>
+<article class="journey-card">
+<div class="stage">المرحلة الثانية</div>
+<h3>العميل ونموذج العمل</h3>
+<p>تراجع العميل والقيمة وطريقة دخول المال والعوامل اللي بتغيّر منطق المشروع.</p>
+</article>
+<article class="journey-card">
+<div class="stage">المرحلة الثالثة</div>
+<h3>التسعير والسيولة</h3>
+<p>تشتغل على التكلفة، هامش المساهمة، نقطة التعادل والتدفق النقدي بأدوات فعلية.</p>
+</article>
+<article class="journey-card">
+<div class="stage">المرحلة الرابعة</div>
+<h3>القرار وخطة 90 يومًا</h3>
+<p>تقارن البدائل، تحدد الأولويات، وتحوّل التشخيص لخطة تنفيذ ومؤشرات مراجعة.</p>
+</article>
+</div>
+<div class="section-cta">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">اسأل عن مكانك في الدفعة الأولى</a>
+</div>
+</div>
+</section><section class="section" id="tools">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">24 أداة تطبيقية</div>
+<h2>أداة أساسية في كل جلسة — والنتيجة تتراكم في ملف قرار مشروعك.</h2>
+<p class="lead">من أول تحديد القرار والمشكلة، مرورًا بالعميل والسوق والتسعير والسيولة والتشغيل، لحد القرار النهائي وخطة الـ90 يوم.</p>
+</div>
+<div class="all-tools-grid" id="all-tools-grid"><article class="all-tools-unit"><div class="all-tools-unit-head"><div class="all-tools-unit-meta"><span>الوحدة 1</span><b>الجلسات 1–4</b></div><h3>من التخمين إلى سؤال قرار</h3></div><ul class="all-tools-list"><li><span class="tool-number">01</span><strong>بطاقة قرار المشروع</strong></li><li><span class="tool-number">02</span><strong>مصفوفة الملاءمة والقيود</strong></li><li><span class="tool-number">03</span><strong>بطاقة المشكلة والفرصة</strong></li><li><span class="tool-number">04</span><strong>سجل الأدلة</strong></li></ul></article><article class="all-tools-unit"><div class="all-tools-unit-head"><div class="all-tools-unit-meta"><span>الوحدة 2</span><b>الجلسات 5–8</b></div><h3>العميل والدليل والتجربة</h3></div><ul class="all-tools-list"><li><span class="tool-number">05</span><strong>ملف قرار العميل</strong></li><li><span class="tool-number">06</span><strong>سُلّم دليل المشكلة</strong></li><li><span class="tool-number">07</span><strong>جملة عرض القيمة</strong></li><li><span class="tool-number">08</span><strong>بطاقة التجربة</strong></li></ul></article><article class="all-tools-unit"><div class="all-tools-unit-head"><div class="all-tools-unit-meta"><span>الوحدة 3</span><b>الجلسات 9–12</b></div><h3>منطق المشروع والسوق والقناة</h3></div><ul class="all-tools-list"><li><span class="tool-number">09</span><strong>جدول أدلة الطلب</strong></li><li><span class="tool-number">10</span><strong>خريطة البدائل</strong></li><li><span class="tool-number">11</span><strong>خريطة منطق المشروع</strong></li><li><span class="tool-number">12</span><strong>مصفوفة القناة</strong></li></ul></article><article class="all-tools-unit"><div class="all-tools-unit-head"><div class="all-tools-unit-meta"><span>الوحدة 4</span><b>الجلسات 13–16</b></div><h3>اقتصاديات الوحدة والسيولة</h3></div><ul class="all-tools-list"><li><span class="tool-number">13</span><strong>كشف التكاليف</strong></li><li><span class="tool-number">14</span><strong>محاكي التسعير والمساهمة</strong></li><li><span class="tool-number">15</span><strong>حاسبة التعادل</strong></li><li><span class="tool-number">16</span><strong>توقع نقدي 90 يومًا</strong></li></ul></article><article class="all-tools-unit"><div class="all-tools-unit-head"><div class="all-tools-unit-meta"><span>الوحدة 5</span><b>الجلسات 17–20</b></div><h3>جودة الإيراد والتشغيل</h3></div><ul class="all-tools-list"><li><span class="tool-number">17</span><strong>متتبع مسار البيع</strong></li><li><span class="tool-number">18</span><strong>فحص جودة الإيراد</strong></li><li><span class="tool-number">19</span><strong>خريطة العملية الدنيا</strong></li><li><span class="tool-number">20</span><strong>بطاقة الاختناق</strong></li></ul></article><article class="all-tools-unit"><div class="all-tools-unit-head"><div class="all-tools-unit-meta"><span>الوحدة 6</span><b>الجلسات 21–24</b></div><h3>التشخيص والقرار وخطة 90 يومًا</h3></div><ul class="all-tools-list"><li><span class="tool-number">21</span><strong>لوحة المؤشرات</strong></li><li><span class="tool-number">22</span><strong>خريطة السبب والأولوية</strong></li><li><span class="tool-number">23</span><strong>بوابة الجاهزية وسجل المخاطر</strong></li><li><span class="tool-number">24</span><strong>مصفوفة القرار وخطة 90 يومًا</strong></li></ul></article></div>
+<div class="tools-value-line">
+<strong>مش مجرد أسماء أدوات:</strong>
+          كل أداة مرتبطة بتطبيق على مشروعك ومخرج تستخدمه في المرحلة التالية.
+        </div>
+</div>
+</section>
+<section class="section alt" id="guided-program">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">ليه البرنامج Live وممتد 12 أسبوعًا؟</div>
+<h2>لأن الفرق الحقيقي مش في عدد الفيديوهات… الفرق في اللي بيحصل بين المعلومة والتطبيق.</h2>
+<p class="lead">«التشخيص قبل الحل» برنامج Live تطبيقي: لقاءات مباشرة، نقاش، تصحيح ومتابعة مستمرة.</p>
+</div>
+<div class="guided-grid">
+<article class="guided-story">
+<h3>وده سبب شخصي كمان.</h3>
+<p>المشاهدة وحدها لا تكفي؛ لذلك البرنامج مبني على الالتزام والتطبيق والمتابعة.</p>
+<div class="quote">علشان كده بنيت البرنامج بالشكل اللي كنت أتمنى ألاقيه أنا: محتوى + تطبيق + متابعة + مساحة تسأل فيها وتراجع فهمك، ومع نهاية الرحلة تخرج بملفاتك وأدواتك وهدية إتمام تكمل بيها بعد البرنامج.</div>
+</article>
+<div class="guided-benefits">
+<article class="guided-benefit"><div class="gb-icon">01</div><h3>لقاء مباشر</h3><p>تسأل وقت ما النقطة تكون قدامك، بدل ما تسيبها معلقة وتكمل عليها.</p></article>
+<article class="guided-benefit"><div class="gb-icon">02</div><h3>تطبيق على مشروعك</h3><p>كل أداة تتحول من مثال نظري إلى استخدام على أرقام وقرارات مرتبطة بواقعك.</p></article>
+<article class="guided-benefit"><div class="gb-icon">03</div><h3>تصحيح أثناء الرحلة</h3><p>لو فهمت أداة أو رقم بطريقة غير دقيقة، نراجعه بدري قبل ما يبقى أساس لقرار أكبر.</p></article>
+<article class="guided-benefit"><div class="gb-icon">04</div><h3>التزام ومتابعة</h3><p>فيه حضور، تطبيقات، اختبارات قصيرة، ومتابعة للتقدم بدل الاعتماد على الحماس وحده.</p></article>
+<article class="guided-benefit"><div class="gb-icon">05</div><h3>جروب WhatsApp خاص بالدفعة</h3><p>كل دفعة لها مساحة متابعة منفصلة للأسئلة، التنبيهات، ومواصلة النقاش بين الجلسات.</p></article>
+<article class="guided-benefit"><div class="gb-icon">06</div><h3>مكتبة تسجيلات على Telegram</h3><p>التسجيلات تفضل معاك طوال البرنامج و3 أشهر بعد نهايته — بإجمالي 6 أشهر من بداية الدفعة.</p></article>
+</div>
+</div>
+<div class="learning-compare">
+<article class="learning-card">
+<span class="lc-label">كورس مسجل ذاتي</span>
+<h3>مرونة كاملة… ومسؤولية كاملة عليك</h3>
+<ul>
+<li>تشاهد وقت ما تحب.</li>
+<li>توقف وتكمل حسب انضباطك الشخصي.</li>
+<li>لو وقفت عند نقطة، غالبًا تكمل البحث وحدك.</li>
+<li>التطبيق والمتابعة يعتمدوا عليك بشكل أساسي.</li>
+</ul>
+</article>
+<article class="learning-card featured">
+<span class="lc-label">التشخيص قبل الحل</span>
+<h3>برنامج Guided: حد ماشي معاك في الرحلة</h3>
+<ul>
+<li>جلستان Live أسبوعيًا على Zoom.</li>
+<li>نقاش وأسئلة أثناء التعلم، مش بعده بشهور.</li>
+<li>تطبيقات مرتبطة بالمشروع وملف القرار النهائي.</li>
+<li>متابعة حضور وتقدم علشان التنفيذ ما يضيعش وسط الانشغال.</li>
+<li>جروب WhatsApp خاص بكل دفعة للمتابعة بين الجلسات.</li>
+<li>تسجيلات الجلسات على Telegram لمدة 6 أشهر من بداية الدفعة.</li>
+</ul>
+</article>
+</div>
+<div aria-label="عناصر المتابعة" class="accountability-strip">
+<div>✓ متابعة الحضور</div>
+<div>✓ تطبيقات عملية</div>
+<div>✓ اختبارات قصيرة</div>
+<div>✓ مشروع وملف قرار نهائي</div>
+</div>
+<div class="trainer-proof">
+<b>وطريقة الشرح نفسها جزء من التصميم:</b>
+        حاتم نجيب يجمع بين الخبرة العملية والدراسة الإدارية والتأهيل التدريبي؛ وقد اجتاز برنامج إعداد وتأهيل المدربين لمدة 48 ساعة تدريبية من
+        <span dir="ltr">Arabian Board for Training Research and Information Technology</span>.
+        الهدف إن كل جلسة تبدأ بفكرة واضحة، تمر بالنقاش، وتنتهي بأداة أو تطبيق تقدر تستخدمه.
+      </div>
+<div class="bridge" style="margin-top:18px">
+<b>القيمة مش في عدد ساعات الشرح وحده.</b>
+        القيمة في 12 أسبوعًا تقلل المسافة بين «أنا فهمت المعلومة» و«أنا عرفت أطبقها على قراري».
+      </div>
+<div style="margin-top:20px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">اسأل عن مكانك واعرف هل البرنامج مناسب لمشروعك</a>
+</div>
+</div>
+</section>
+<section class="section alt" id="fit">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">هل البرنامج مناسب لك؟</div>
+<h2>البرنامج مش لكل الناس. وده مقصود.</h2>
+</div>
+<div class="grid2">
+<article class="item">
+<h3>مناسب لك لو:</h3>
+<ul>
+<li>عندك مشروع قائم ومبيعات أو تشغيل فعلي.</li>
+<li>عندك قرار حقيقي في التسعير، السيولة، التشغيل أو التوسع.</li>
+<li>مستعد تفتح أرقامك وتراجع افتراضاتك بصدق.</li>
+<li>عايز تتعلم طريقة القرار وتطبقها بنفسك.</li>
+</ul>
+</article>
+<article class="item">
+<h3>قد لا يكون الاختيار الأنسب لو:</h3>
+<ul>
+<li>تبحث عن نتيجة جاهزة من غير تطبيق ومراجعة لواقع مشروعك.</li>
+<li>تبحث عن شخص يأخذ القرار بدلًا منك، وليس منهجًا يساعدك تبنيه.</li>
+<li>لا تنوي تخصيص وقت للتطبيق أو مراجعة أرقام مشروعك.</li>
+<li>هدفك الأساسي محتوى تحفيزي سريع أكثر من برنامج تطبيقي.</li>
+</ul>
+</article>
+</div>
+<div class="bridge">
+<b>وعندك فكرة جدية ولسه ما بدأتش؟</b>
+        فيه مسار للفكرة/تحت التأسيس يساعدك تختبر الافتراضات قبل ما تدخل في تكلفة تنفيذ كاملة.
+      </div>
+</div>
+</section>
+<section class="section" id="hatem">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">مين حاتم نجيب؟</div>
+<h2>قبل ما تشتري منهج… لازم تعرف مين اللي بيشرحه وليه تثق في طريقته.</h2>
+<p class="lead">البرنامج يجمع بين خبرة الإدارة والتطبيق والتدريب في رحلة واحدة.</p>
+</div>
+<div class="authority-v2">
+<figure class="portrait-card">
+<img alt="حاتم نجيب — استشاري مشروعات صغيرة ومتوسطة ومؤسس لعبة البزنس" decoding="async" height="1200" loading="lazy" src="hatem_naguib.webp" width="800"/>
+<figcaption class="portrait-meta">
+<h3>حاتم نجيب</h3>
+<p>استشاري مشروعات صغيرة ومتوسطة<br/>مؤسس «لعبة البزنس»</p>
+<div class="cred-badges">
+<span class="cred-badge">MBA</span>
+<span class="cred-badge">إدارة شركات المستقبل · London Business School</span>
+<span class="cred-badge">تأهيل مدربين · 48 ساعة</span>
+<span class="cred-badge">مؤلف كتاب</span>
+</div>
+</figcaption>
+</figure>
+<div class="card">
+<div class="logo-proof">
+<img alt="لوجو لعبة البزنس" decoding="async" height="320" loading="lazy" src="business_game_logo.webp" width="320"/>
+<div><b>لعبة البزنس</b><span>التشخيص قبل الحل</span></div>
+</div>
+<p style="margin:0;color:var(--muted);font-size:17px">
+            «أنا ما ببدأش مع صاحب المشروع بنصيحة جاهزة. ببدأ بالسؤال:
+            إيه القرار اللي محتاج توصله؟ وإيه الدليل والأرقام اللي عندك قبل ما تاخده؟»
+          </p>
+<div class="authority-points">
+<div class="authority-point"><b>ماجستير إدارة أعمال (MBA)</b> — خلفية إدارية تدعم قراءة المشروع كمنظومة واحدة مترابطة.</div>
+<div class="authority-point"><b>إدارة شركات المستقبل</b> — University of London · London Business School · 2022.</div>
+<div class="authority-point"><b>خبرة عملية في الإدارة والتشغيل والتسويق والمبيعات</b> — خبرة تساعد على ربط الأرقام بالواقع التشغيلي، مش التعامل معها بمعزل عن المشروع.</div>
+<div class="authority-point"><b>تأهيل تدريبي مهني:</b> اجتياز برنامج إعداد وتأهيل المدربين — 48 ساعة تدريبية.</div>
+<div class="authority-point"><b>منهج لعبة البزنس:</b> تحديد السؤال → مراجعة الدليل → استخدام الأداة → بناء القرار.</div>
+</div>
+<div class="book-proof-real">
+<img alt="غلاف كتاب الخروج من النفق من تأليف حاتم نجيب" decoding="async" height="926" loading="lazy" src="book_khoroog_men_elnfaq.webp" width="700"/>
+<div>
+<h3>مؤلف كتاب «الخروج من النفق»</h3>
+<p>كتاب «الخروج من النفق» تناول قرار البداية من زاوية الخوف والعوائق النفسية. برنامج «التشخيص قبل الحل» ينقل الفكرة لمرحلة أعمق: قرارات مشروع حقيقية مدعومة بتشخيص وأرقام وأدوات تنفيذ.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section alt" id="proof">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">اسمع تجربة عميل اشتغل معايا بالفعل</div>
+<h2>تجربة عميل حقيقية — مذاق سيناء</h2>
+<p class="lead">شاهد تجربة حقيقية بصوت صاحب المشروع نفسه، لتعرف كيف يُترجم التشخيص والمتابعة إلى قيمة عملية في الواقع.</p>
+</div>
+<div class="card video-shell">
+<video aria-label="شهادة أحمد مجدي مؤسس مذاق سيناء" controls="" playsinline="" poster="mazaq_sinai_poster.webp" preload="metadata" src="mazaq_sinai_testimonial_web.mp4">
+</video>
+<p class="video-caption">أحمد مجدي — مؤسس مذاق سيناء</p>
+</div>
+<div style="margin-top:22px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">شاهد التجربة ثم اسأل عن مكانك</a>
+</div>
+</div>
+</section>
+<section class="section bundle-section" id="bundle">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">كل اللي داخل الاشتراك</div>
+<h2>مش 24 جلسة وبس… دي منظومة تطبيق كاملة للدفعة.</h2>
+<p class="lead">كل عنصر في البرنامج يخدم التطبيق والقرار.</p>
+</div>
+<div class="bundle-grid">
+<article class="bundle-card"><div class="bundle-no">01</div><h3>24 جلسة Live</h3><p>جلستان أسبوعيًا، 60 دقيقة للجلسة، مع نقاش وأسئلة مباشرة.</p></article>
+<article class="bundle-card"><div class="bundle-no">02</div><h3>Workbook + أدوات عملية</h3><p>حاسبة تعادل، تدفق نقدي، مصفوفة قرار، خطة 90 يومًا وأدوات أخرى للتطبيق.</p></article>
+<article class="bundle-card"><div class="bundle-no">03</div><h3>متابعة WhatsApp</h3><p>جروب مستقل لكل دفعة للأسئلة والتنبيهات واستمرار المتابعة بين اللقاءات.</p></article>
+<article class="bundle-card"><div class="bundle-no">04</div><h3>تسجيلات Telegram</h3><p>متاحة طوال البرنامج و3 أشهر بعد نهايته — بإجمالي 6 أشهر من بداية الدفعة.</p></article>
+<article class="bundle-card"><div class="bundle-no">05</div><h3>تقييم وتطبيق</h3><p>حضور، تطبيقات، اختبارات قصيرة ومتابعة للتقدم بدل الاعتماد على المشاهدة فقط.</p></article>
+<article class="bundle-card"><div class="bundle-no">06</div><h3>ملف قرار نهائي</h3><p>تجمع فيه تشخيصك، أدواتك، قرارك، وأولويات التنفيذ في خطة 90 يومًا.</p></article>
+</div>
+<div class="bonus-grid">
+<article class="bonus-card">
+<div aria-hidden="true" class="bonus-icon">✓</div>
+<div>
+<h3>حزمة التشخيص وملفات التطبيق</h3>
+<p>مجموعة ملفات وأدوات التشخيص المستخدمة داخل البرنامج، تفضل معاك لاستخدامها بعد انتهاء الرحلة.</p>
+<div class="bonus-price">القيمة الحالية للحزمة: 3,000 جنيه</div>
+</div>
+</article>
+<article class="bonus-card dark">
+<img alt="كتاب الخروج من النفق" class="bonus-book" decoding="async" loading="lazy" src="book_khoroog_men_elnfaq.webp"/>
+<div>
+<h3>هدية إتمام البرنامج: «الخروج من النفق»</h3>
+<p>عند إتمام البرنامج، تصلك نسخة رقمية من كتاب حاتم نجيب «الخروج من النفق» لتكمل معاك رحلة القرار والتنفيذ.</p>
+<div class="bonus-price">قيمة الكتاب: 350 جنيه</div>
+</div>
+</article>
+</div>
+<div class="bonus-value-strip">قيمة الإضافات وحدها: <b>5,300 جنيه</b> — تشمل حزمة التشخيص + الكتاب + الأداة التشخيصية بالذكاء الاصطناعي عند إتاحتها.</div><div class="ai-showcase">
+<div class="ai-showcase-media">
+<img alt="معاينة الأداة التشخيصية بالذكاء الاصطناعي من لعبة البزنس" decoding="async" loading="lazy" src="ai_diagnostic_tool.webp"/>
+</div>
+<div class="ai-showcase-copy">
+<div class="eyebrow">قيد التطوير حاليًا</div>
+<h3>وصول مجاني للأداة التشخيصية بالذكاء الاصطناعي</h3>
+<p>تبدأ إتاحة الأداة بعد مرور شهرين من البرنامج، بعد ما تكون فهمت مشروعك، واتعلمت خطوات التشخيص وقراءة الأرقام واتخاذ القرار. بعدها تستخدم الـAI كأداة تساعدك وتسرّع التحليل، مش كبديل عن فهمك للمشروع.</p>
+<div class="ai-price">السعر المخطط للبيع المنفصل: 1,950 جنيه</div>
+<ul class="ai-feature-list"><li>تُتاح بعد أول شهرين من البرنامج</li><li>تستخدم بعد فهم أساسيات مشروعك والتشخيص</li><li>تساعدك في تنظيم أسئلة القرار وتحليل الحالة بشكل أسرع</li></ul>
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز مقعدك وخد الأداة ضمن الباقة</a>
+</div>
+</div>
+<div class="bundle-total">
+<div>
+<b>24 جلسة Live + المتابعة + الأدوات + إضافات بقيمة 5,300 جنيه</b>
+<span>سعر الدفعة الأولى 7,500 جنيه — والتقسيط 3 دفعات متساوية بدون زيادة.</span>
+</div>
+<div class="eo-price">
+<strong data-discount-price="1" style="font-size:30px;color:var(--green)">7,500 جنيه</strong>
+<small data-discount-installment="1">3 دفعات × 2,500</small>
+</div>
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز مقعدك</a>
+</div>
+</div>
+</section><section class="section" id="offer">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">العرض والحجز</div>
+<h2>سعر الدفعة الأولى: 7,500 جنيه على 3 دفعات متساوية بدون زيادة.</h2>
+</div>
+<div class="offer-grid">
+<div class="card">
+<div class="old-price">السعر الأساسي: 9,000 جنيه</div>
+<div class="price" data-discount-price="1">7,500 <small>جنيه</small></div>
+<div class="tag">عرض الدفعة الأولى</div>
+<div class="tag urgent">متبقي 6 مقاعد فقط</div><div class="bonus-value-strip" style="margin-top:12px">
+      بالإضافة إلى محتوى البرنامج والمتابعة: <b>إضافات بقيمة 5,300 جنيه</b> داخل الاشتراك.
+    </div>
+<div class="bridge" style="margin-top:14px">
+<b>الاشتراك يشمل:</b> 24 جلسة Live + جروب WhatsApp خاص بالدفعة + تسجيلات على Telegram لمدة 6 أشهر + متابعة حضور وتقدم + تطبيقات واختبارات قصيرة + Workbook + أدوات مالية وتشخيصية + ملف قرار + خطة 90 يومًا.
+          </div>
+<div class="bridge" style="margin-top:12px">
+<b>التقسيط بدون زيادة في السعر:</b><br/>
+            3 دفعات متساوية × 2,500 جنيه.
+          </div>
+<div aria-label="مواعيد أقساط البرنامج" class="installments">
+<div class="inst"><b>2,500 جنيه</b><span>عند تأكيد الحجز</span></div>
+<div class="inst"><b>2,500 جنيه</b><span>بداية الشهر الثاني</span></div>
+<div class="inst"><b>2,500 جنيه</b><span>بداية الشهر الثالث</span></div>
+</div>
+<ul class="offer-list">
+<li>12 أسبوعًا — 24 جلسة Live مع نقاش ومتابعة.</li>
+<li>60 دقيقة لكل جلسة — الجلسات المسائية تبدأ الساعة 7:00 مساءً بتوقيت مصر.</li>
+<li>التسجيلات متاحة على Telegram طوال البرنامج و3 أشهر بعد نهايته — بإجمالي 6 أشهر من بداية الدفعة.</li>
+<li>جروب WhatsApp متابعة خاص بكل دفعة طوال رحلة البرنامج.</li>
+<li>Workbook وأدوات تطبيقية واختبارات قصيرة وملف قرار وخطة 90 يومًا.</li>
+<li>العدد الأقصى للدفعة: 15 متدربًا.</li>
+<li>حزمة التشخيص وملفات التطبيق — قيمتها الحالية 3,000 جنيه — ضمن الاشتراك.</li><li>هدية إتمام البرنامج: نسخة رقمية من كتاب «الخروج من النفق» — قيمة الكتاب 350 جنيه.</li><li>وصول مجاني للأداة التشخيصية بالذكاء الاصطناعي بعد مرور شهرين من البرنامج — السعر المخطط للبيع المنفصل 1,950 جنيه.</li></ul>
+<div class="refund">
+<b>سياسة استرداد واضحة:</b><br/>
+            متاح استرداد ما تم دفعه بعد أول جلسة تدريب فعلية فقط إذا وجدت أن طبيعة البرنامج غير مناسبة لك.
+            جلسة 1 أكتوبر جلسة تعريفية، وتكون نافذة الاسترداد مرتبطة بأول جلسة فعلية تليها وفق شروط الحجز.
+          </div>
+<div style="margin-top:18px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">ابدأ الحجز بـ2,500 جنيه</a>
+</div>
+</div>
+<aside class="card">
+<h3>قبل ما تقارن السعر… قارن تكلفة القرار.</h3>
+<p style="color:var(--muted);margin-top:0">
+            القيمة مش في عدد الجلسات وحده. القيمة في إنك تخرج من البرنامج ومعاك أدوات تقدر تستخدمها بعد انتهاء التدريب كل مرة تواجه قرارًا في التسعير أو السيولة أو التشغيل أو التوسع.
+          </p>
+<div class="objection">
+<details open="">
+<summary>«أخاف أدفع وما أستفيد.»</summary>
+<p>أكبر استفادة من البرنامج بتحصل لما تطبق الأدوات على مشروعك أثناء الرحلة، مش لما تكتفي بالمشاهدة.</p>
+</details>
+<details>
+<summary>«أنا محتاج تسويق أكتر.»</summary>
+<p>ممكن. لكن أحيانًا أصل المشكلة مش التسويق: ممكن تكون تسعير، هامش، تحصيل، تشغيل أو عرض.</p>
+</details>
+<details>
+<summary>«هل ده استشارة فردية لمشروعي؟»</summary>
+<p>لا. ده برنامج تدريبي تطبيقي جماعي. هتتعلم الأدوات والمنهجيات وتطبقها على مشروعك بنفسك.</p>
+</details>
+<details>
+<summary>«هل ممكن النتيجة تكون إني ما أتوسعش؟»</summary>
+<p>نعم. القرار الصحيح مش لازم يكون «اعمل أكتر». أحيانًا أفضل قرار هو التأجيل أو التعديل.</p>
+</details>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<section class="section alt" id="next-step">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">بعد ما تضغط «احجز»</div>
+<h2>3 خطوات فقط قبل تأكيد المقعد.</h2>
+<p class="lead">الحجز يبدأ بمحادثة مباشرة على Messenger لتأكيد الملاءمة وتوافر المقعد وخطوات الدفع.</p>
+</div>
+<div class="conversion-steps">
+<article class="conversion-step"><div class="step-no">1</div><h3>افتح Messenger</h3><p>زر الحجز يفتح المحادثة الرسمية مع صفحة «لعبة البزنس».</p></article>
+<article class="conversion-step"><div class="step-no">2</div><h3>عرّفنا بحالتك</h3><p>ابعت اسمك، نوع نشاطك، وأهم قرار محتاج توصله حاليًا.</p></article>
+<article class="conversion-step"><div class="step-no">3</div><h3>أكد المقعد</h3><p>بعد مراجعة الملاءمة وتوافر المقعد، تصلك خطوات دفع أول 2,500 جنيه وتأكيد الحجز.</p></article>
+</div>
+<div style="margin-top:20px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">ابدأ المحادثة الآن</a>
+</div>
+</div>
+</section>
+<section class="section alt" id="faq">
+<div class="wrap">
+<div class="section-head">
+<div class="kicker">الأسئلة الشائعة</div>
+<h2>أسئلة طبيعية قبل ما تدفع.</h2>
+</div>
+<div class="grid2">
+<details><summary>هل البرنامج مناسب لو مشروعي شغال بالفعل؟</summary><p>نعم، وده الجمهور الأساسي للحملة الحالية: أصحاب مشروعات قائمة عندهم قرارات في التسعير، السيولة، التشغيل أو النمو.</p></details>
+<details><summary>هل مناسب لو لسه عندي فكرة؟</summary><p>نعم، يوجد مسار للفكرة أو تحت التأسيس، خصوصًا لاختبار الافتراضات قبل الاستثمار الكامل.</p></details>
+<details><summary>هل هتعملوا دراسة جدوى لمشروعي؟</summary><p>لا. البرنامج ليس إعداد دراسة جدوى رسمية أو رأيًا محاسبيًا أو قانونيًا معتمدًا. هو يبني معك ملف قرار وأدوات حساب وتشخيص عملية.</p></details>
+<details><summary>هل نجاح المشروع مضمون؟</summary><p>البرنامج مصمم ليطور طريقة تشخيصك واتخاذك للقرار ويعطيك أدوات عملية قابلة للتطبيق. أفضل النتائج تظهر مع التطبيق الجاد على مشروعك أثناء الرحلة.</p></details>
+<details><summary>هل الجلسات مسجلة؟ وبتفضل متاحة لحد إمتى؟</summary><p>نعم. تسجيلات الجلسات تُتاح على جروب Telegram خاص بالدفعة طوال مدة البرنامج، وتستمر 3 أشهر بعد نهايته — بإجمالي 6 أشهر من بداية الدفعة.</p></details>
+<details><summary>لو فاتتني جلسة أو وقفت عند نقطة مش فاهمها؟</summary><p>تقدر ترجع لتسجيل الجلسة على Telegram، ومعاك جروب WhatsApp خاص بالدفعة للمتابعة بين اللقاءات. وقيمة البرنامج الأساسية تفضل في التفاعل المباشر والتطبيق، علشان النقطة اللي وقفت عندها ما تتحولش لفجوة تكبر مع الوقت.</p></details>
+<details><summary>هل فيه جروب متابعة للمتدربين؟</summary><p>نعم. لكل دفعة جروب WhatsApp منفصل للمتابعة والأسئلة والتنبيهات طوال البرنامج، بحيث تفضل رحلة كل دفعة منظمة ومستقلة.</p></details>
+<details><summary>هل فيه حضور وتقييم؟</summary><p>نعم. فيه متابعة حضور، تطبيقات، اختبارات قصيرة، ومشروع نهائي. الهدف من التقييم هو متابعة الفهم والتقدم واكتشاف أي فجوة بدري، مش تحويل البرنامج لامتحان أكاديمي.</p></details>
+<details><summary>مواعيد الدفعات إيه؟</summary><p>3 دفعات متساوية × 2,500 جنيه: الأولى عند تأكيد الحجز، والثانية بداية الشهر الثاني، والثالثة بداية الشهر الثالث. إجمالي سعر الخصم 7,500 جنيه حتى انتهاء العداد.</p></details>
+<details><summary>هل فيه استرداد؟</summary><p>متاح بعد أول جلسة تدريب فعلية فقط وفق شروط الحجز. جلسة 1 أكتوبر جلسة تعريفية وليست الجلسة الفعلية المقصودة بسياسة الاسترداد.</p></details>
+<details><summary>إيه اللي يحصل بعد ما أضغط حجز؟</summary><p>هتفتح محادثة Messenger مع لعبة البزنس. هنراجع توافر المقعد، ونوضح خطوات التأكيد والدفع وأي سؤال عندك قبل الإتمام.</p></details>
+<details>
+<summary>هل كتاب «الخروج من النفق» جزء من الاشتراك؟</summary>
+<p>نعم. عند إتمام البرنامج تصلك نسخة رقمية من الكتاب كهدية إتمام، وقيمة الكتاب الحالية 350 جنيه.</p>
+</details>
+<details>
+<summary>هل أدوات وملفات التشخيص تفضل معايا بعد البرنامج؟</summary>
+<p>نعم. حزمة التشخيص وملفات التطبيق المستخدمة في البرنامج تكون ضمن اشتراكك لتقدر ترجع لها وتستخدمها بعد انتهاء الرحلة. القيمة الحالية للحزمة 3,000 جنيه.</p>
+</details>
+<details>
+<summary>إيه وضع الأداة التشخيصية بالذكاء الاصطناعي؟</summary>
+<p>الأداة قيد التطوير حاليًا، وتبدأ إتاحتها للمتدربين بعد مرور شهرين من البرنامج. بنخلي استخدامها في المرحلة دي علشان تكون اتعلمت الأول تفهم مشروعك وتشخّصه وتقرأ أرقامه، وبعدها تستخدم الـAI كأداة مساعدة تسرّع التحليل وتدعم القرار. السعر المخطط للبيع المنفصل 1,950 جنيه.</p>
+</details></div>
+</div>
+</section>
+<section class="section" id="terms">
+<div class="wrap narrow">
+<div class="section-head">
+<div class="kicker">معلومات واضحة قبل الحجز</div>
+<h2>كل التفاصيل واضحة قبل تأكيد الحجز.</h2>
+</div>
+<div class="legal-box">
+<details>
+<summary>شروط الحجز والسداد</summary>
+<p>سعر الدفعة الأولى 7,500 جنيه: 2,500 جنيه عند تأكيد الحجز، 2,500 جنيه في بداية الشهر الثاني، و2,500 جنيه في بداية الشهر الثالث. المقعد يُعتبر مؤكدًا بعد استكمال خطوة الحجز المطلوبة وإرسال تأكيد الدفع.</p>
+</details>
+<details>
+<summary>سياسة الاسترداد</summary>
+<p>متاح استرداد ما تم دفعه بعد أول جلسة تدريب فعلية فقط إذا وجدت أن طبيعة البرنامج غير مناسبة لك. جلسة 1 أكتوبر جلسة تعريفية، ونافذة الاسترداد مرتبطة بأول جلسة فعلية تليها وفق شروط الحجز.</p>
+</details>
+<details>
+<summary>النتائج وحدود البرنامج</summary>
+<p>البرنامج تدريبي تطبيقي جماعي يركز على التشخيص والإدارة واتخاذ القرار. وهو يكمل خبرتك وجهدك التنفيذي، ولا يحل محل الاستشارات الفردية المتخصصة أو الآراء المحاسبية والضريبية والقانونية المعتمدة.</p>
+</details>
+<details>
+<summary>الخصوصية والتتبع</summary>
+<p>الصفحة لا تطلب منك إدخال بيانات شخصية داخلها. عند الضغط على الحجز تنتقل إلى Messenger. بعد الاشتراك قد تُستخدم WhatsApp وTelegram لخدمات المتابعة والتسجيلات الخاصة بالدفعة وفق سياسات كل منصة. وعند تفعيل أدوات القياس مثل Meta Pixel أو Google Analytics قد تُسجَّل بيانات استخدام غير مباشرة لتحسين أداء الحملة والصفحة.</p>
+</details>
+</div>
+</div>
+</section>
+<section class="final">
+<div class="wrap">
+<h2>القرار الجاي في مشروعك يستحق إنك تشوف الصورة كاملة قبل ما تتحرك.</h2>
+<p>12 أسبوعًا من التطبيق والمتابعة، أدوات تفضل معاك، حزمة تشخيص، كتاب هدية، ووصول مجاني للأداة التشخيصية بالذكاء الاصطناعي بعد مرور شهرين من البرنامج — علشان قيمة الرحلة تكمل بعد آخر جلسة.</p>
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز واحدًا من الـ6 مقاعد المتبقية</a>
+<div aria-label="عناصر الثقة" class="trust-strip">
+<div>✓ شهادة عميل فيديو حقيقية</div>
+<div>✓ أدوات البرنامج معروضة فعليًا</div>
+<div>✓ سياسة استرداد واضحة</div>
+<div>✓ منهج واضح وأدوات قابلة لإعادة الاستخدام</div>
+<div>✓ مؤلف كتاب «الخروج من النفق»</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap footer-row">
+<div><b style="color:var(--green)">لعبة البزنس</b> — حاتم نجيب | التشخيص قبل الحل.</div>
+<div>© 2026 جميع الحقوق محفوظة.</div>
+</div>
+</footer>
+<div aria-label="حجز البرنامج" class="mobile-sticky">
+<div class="row">
+<p><b data-discount-price="1">7,500 جنيه</b><br/>3 × 2,500 • باقي 6 مقاعد</p>
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">احجز الآن</a>
+</div>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  const TOTAL_SEATS = 15;
+  const BOOKED_SEATS = 9;
+
+  const OFFER_CYCLE_START = new Date("2026-09-07T00:00:00+03:00").getTime();
+  const OFFER_CYCLE_MS = 5 * 24 * 60 * 60 * 1000;
+
+  function updateOfferCycle(){
+    const now = Date.now();
+    const status = document.getElementById("offer-cycle-status");
+    let diff;
+
+    if(now < OFFER_CYCLE_START){
+      diff = (OFFER_CYCLE_START + OFFER_CYCLE_MS) - now;
+    } else {
+      const elapsed = now - OFFER_CYCLE_START;
+      const positionInCycle = elapsed % OFFER_CYCLE_MS;
+      diff = OFFER_CYCLE_MS - positionInCycle;
+    }
+    if(status) status.textContent = "ينتهي العرض الحالي بعد";
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff / 3600000) % 24);
+    const minutes = Math.floor((diff / 60000) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    const values = {
+      "cycle-days": days,
+      "cycle-hours": hours,
+      "cycle-minutes": minutes,
+      "cycle-seconds": seconds
+    };
+
+    Object.keys(values).forEach(function(id){
+      const el = document.getElementById(id);
+      if(el) el.textContent = String(values[id]).padStart(2,"0");
+    });
+  }
+
+  updateOfferCycle();
+  setInterval(updateOfferCycle,1000);
+
+
+  /* ========= Tracking IDs =========
+     ضع القيم الحقيقية فقط عند توفرها.
+     لو تُركت Placeholder لن يتم تحميل أي Tracking script.
+  */
+  const META_PIXEL_ID = "YOUR_META_PIXEL_ID";
+  const GA4_ID = "G-XXXXXXXXXX";
+
+  /* ========= UTM persistence ========= */
+  const trackedKeys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"];
+  const query = new URLSearchParams(window.location.search);
+  const campaignData = {};
+
+  function safeSessionSet(key,value){
+    try{ window.sessionStorage.setItem(key,value); }catch(e){}
+  }
+  function safeSessionGet(key){
+    try{ return window.sessionStorage.getItem(key); }catch(e){ return null; }
+  }
+
+  trackedKeys.forEach(function(key){
+    const current = query.get(key);
+    if(current) safeSessionSet("bg_"+key, current);
+    const stored = safeSessionGet("bg_"+key) || current;
+    if(stored) campaignData[key] = stored;
+  });
+  window.__businessGameCampaign = campaignData;
+
+  /* ========= Meta Pixel loader ========= */
+  if(META_PIXEL_ID && META_PIXEL_ID !== "YOUR_META_PIXEL_ID"){
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";
+      n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+    }(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+    fbq("init",META_PIXEL_ID);
+    fbq("track","PageView");
+    fbq("track","ViewContent",{content_name:"Diagnosis Before Solution Course",currency:"EGP",value:7500});
+  }
+
+  /* ========= Google Analytics 4 loader ========= */
+  if(GA4_ID && GA4_ID !== "G-XXXXXXXXXX"){
+    const gaScript = document.createElement("script");
+    gaScript.async = true;
+    gaScript.src = "https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(GA4_ID);
+    document.head.appendChild(gaScript);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){dataLayer.push(arguments);}
+    gtag("js",new Date());
+    gtag("config",GA4_ID);
+  }
+
+  function trackBookingClick(){
+    if(typeof window.fbq === "function"){
+      fbq("track","Contact",{content_name:"Course Messenger Booking",currency:"EGP",value:7500});
+    }
+    if(typeof window.gtag === "function"){
+      gtag("event","messenger_booking_click",Object.assign({
+        event_category:"conversion",
+        event_label:"m.me/891183134080763"
+      },campaignData));
+    }
+  }
+
+  document.querySelectorAll(".booking-link").forEach(function(link){
+    link.addEventListener("click",trackBookingClick,{passive:true});
+  });
+
+  
+
+  /* Accessible seat data exposed for future CMS updates */
+  window.__businessGameSeats = {total:TOTAL_SEATS,booked:BOOKED_SEATS,remaining:TOTAL_SEATS-BOOKED_SEATS};
+
+  document.querySelectorAll('.tool-image-wrap img').forEach(function(img){
+    img.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  });
+  document.querySelectorAll('.tool-image-wrap').forEach(function(box){
+    box.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  });
+})();
+</script>
+</body>
+</html>
