@@ -1,0 +1,54 @@
+name: Install Meta Pixel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Meta Pixel in landing page
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          old = 'const META_PIXEL_ID = "YOUR_META_PIXEL_ID";'
+          new = 'const META_PIXEL_ID = "2667954303602754";'
+
+          if old not in text:
+              print('Meta Pixel is already installed; no change needed.')
+              raise SystemExit(0)
+
+          text = text.replace(old, new, 1)
+
+          noscript = '<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2667954303602754&amp;ev=PageView&amp;noscript=1"/></noscript>'
+          if noscript not in text:
+              text = text.replace('<body>', '<body>\n' + noscript, 1)
+
+          path.write_text(text, encoding='utf-8')
+          print('Meta Pixel installed in index.html')
+          PY
+
+      - name: Commit tracking update
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Install Meta Pixel tracking"
+          git push
