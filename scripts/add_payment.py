@@ -1,0 +1,143 @@
+from pathlib import Path
+
+p = Path('index.html')
+s = p.read_text(encoding='utf-8')
+
+css_marker = '    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}'
+payment_css = '''    .payment-box{margin-top:18px;padding:20px;border-radius:20px;background:linear-gradient(135deg,#F3F9F6,#FFF8EC);border:1px solid #DCE8E3;box-shadow:var(--shadow-soft)}
+    .payment-box h3{margin:0 0 5px;font-size:20px}
+    .payment-box>p{margin:0 0 14px;color:var(--muted);font-size:13px}
+    .payment-choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+    .payment-choice div{padding:12px 14px;border-radius:14px;background:#fff;border:1px solid #DFE9E5;text-align:center}
+    .payment-choice b{display:block;color:var(--green);font-size:16px}
+    .payment-choice span{font-size:11px;color:var(--muted)}
+    .payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .payment-method{padding:16px;border-radius:17px;background:#fff;border:1px solid #DCE8E3}
+    .payment-method h4{margin:0 0 7px;color:var(--green);font-size:16px}
+    .payment-method p{margin:3px 0;color:var(--muted);font-size:12px}
+    .payment-method .payment-data{margin:9px 0 12px;padding:10px 12px;border-radius:12px;background:#F7FAF9;border:1px dashed #C9D9D2;font-weight:800;color:#263A34;direction:ltr;text-align:center;word-break:break-all}
+    .payment-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .payment-actions .cta{min-height:45px;padding:0 15px;border-radius:13px;font-size:12px;flex:1}
+    .payment-note{margin-top:12px;padding:11px 13px;border-radius:13px;background:#FFF3DA;color:#6B4B22;font-size:12px}
+    .copy-payment{font-family:inherit}
+    @media(max-width:620px){.payment-choice,.payment-methods{grid-template-columns:1fr}.payment-box{padding:15px}.payment-actions{display:grid}.payment-actions .cta{width:100%}}
+
+'''
+if payment_css not in s:
+    if css_marker not in s:
+        raise SystemExit('CSS insertion marker not found')
+    s = s.replace(css_marker, payment_css + css_marker, 1)
+
+old_offer_cta = '''<div style="margin-top:18px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">ابدأ الحجز بـ2,500 جنيه</a>
+</div>'''
+new_offer_cta = '''<div class="payment-box" id="payment-options">
+<h3>احجز الآن بالطريقة المناسبة لك</h3>
+<p>اختر دفع القسط الأول لتأكيد الحجز أو سداد سعر الدفعة الأولى كاملًا، ثم أرسل إثبات التحويل على Messenger.</p>
+<div class="payment-choice">
+<div><b>2,500 جنيه</b><span>القسط الأول لتأكيد الحجز</span></div>
+<div><b>7,500 جنيه</b><span>سداد سعر الدفعة الأولى كاملًا</span></div>
+</div>
+<div class="payment-methods">
+<div class="payment-method">
+<h4>Vodafone Cash</h4>
+<p>التحويل باسم: <b>Hatem</b></p>
+<div class="payment-data" id="vodafone-number">01011223667</div>
+<div class="payment-actions">
+<button class="cta secondary copy-payment" data-copy="01011223667" type="button">نسخ رقم Vodafone Cash</button>
+</div>
+</div>
+<div class="payment-method">
+<h4>InstaPay</h4>
+<p>استخدم رابط الدفع المباشر عبر InstaPay.</p>
+<div class="payment-data">01007322808</div>
+<div class="payment-actions">
+<a class="cta payment-link" href="https://ipn.eg/S/hatemnageeb/instapay/52oq4Q" rel="noopener" target="_blank">افتح InstaPay</a>
+</div>
+</div>
+</div>
+<div class="payment-note">بعد التحويل، أرسل صورة إثبات الدفع لتأكيد الحجز. لا يعتبر المقعد مؤكدًا قبل مراجعة التحويل.</div>
+<div class="payment-actions" style="margin-top:12px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">تم التحويل — أرسل إثبات الدفع</a>
+</div>
+</div>'''
+if new_offer_cta not in s:
+    if old_offer_cta not in s:
+        raise SystemExit('Offer CTA marker not found')
+    s = s.replace(old_offer_cta, new_offer_cta, 1)
+
+old_next = '''<div class="section-head">
+<div class="kicker">بعد ما تضغط «احجز»</div>
+<h2>3 خطوات فقط قبل تأكيد المقعد.</h2>
+<p class="lead">الحجز يبدأ بمحادثة مباشرة على Messenger لتأكيد الملاءمة وتوافر المقعد وخطوات الدفع.</p>
+</div>
+<div class="conversion-steps">
+<article class="conversion-step"><div class="step-no">1</div><h3>افتح Messenger</h3><p>زر الحجز يفتح المحادثة الرسمية مع صفحة «لعبة البزنس».</p></article>
+<article class="conversion-step"><div class="step-no">2</div><h3>عرّفنا بحالتك</h3><p>ابعت اسمك، نوع نشاطك، وأهم قرار محتاج توصله حاليًا.</p></article>
+<article class="conversion-step"><div class="step-no">3</div><h3>أكد المقعد</h3><p>بعد مراجعة الملاءمة وتوافر المقعد، تصلك خطوات دفع أول 2,500 جنيه وتأكيد الحجز.</p></article>
+</div>
+<div style="margin-top:20px">
+<a class="cta booking-link" href="https://m.me/891183134080763" rel="noopener" target="_blank">ابدأ المحادثة الآن</a>
+</div>'''
+new_next = '''<div class="section-head">
+<div class="kicker">خطوات تأكيد الحجز</div>
+<h2>3 خطوات فقط لتأكيد حجزك.</h2>
+<p class="lead">تقدر تبدأ مباشرة بالقسط الأول أو السداد الكامل عبر Vodafone Cash أو InstaPay، ثم ترسل إثبات التحويل على Messenger.</p>
+</div>
+<div class="conversion-steps">
+<article class="conversion-step"><div class="step-no">1</div><h3>اختر طريقة السداد</h3><p>ادفع 2,500 جنيه كقسط أول أو 7,500 جنيه كاملًا عبر Vodafone Cash أو InstaPay.</p></article>
+<article class="conversion-step"><div class="step-no">2</div><h3>أتم التحويل</h3><p>استخدم بيانات الدفع الموضحة في قسم الحجز واحتفظ بصورة إثبات التحويل.</p></article>
+<article class="conversion-step"><div class="step-no">3</div><h3>أكد الحجز</h3><p>أرسل إثبات التحويل على Messenger لمراجعة العملية وتأكيد الحجز.</p></article>
+</div>
+<div style="margin-top:20px">
+<a class="cta" href="#payment-options">شوف طرق الدفع</a>
+<a class="cta secondary booking-link" href="https://m.me/891183134080763" rel="noopener" style="margin-inline-start:8px" target="_blank">اسأل قبل الدفع</a>
+</div>'''
+if new_next not in s:
+    if old_next not in s:
+        raise SystemExit('Next-step marker not found')
+    s = s.replace(old_next, new_next, 1)
+
+old_faq = '<details><summary>إيه اللي يحصل بعد ما أضغط حجز؟</summary><p>هتفتح محادثة Messenger مع لعبة البزنس. هنراجع توافر المقعد، ونوضح خطوات التأكيد والدفع وأي سؤال عندك قبل الإتمام.</p></details>'
+new_faq = '<details><summary>إزاي أدفع وأأكد الحجز؟</summary><p>تقدر تدفع القسط الأول 2,500 جنيه أو سعر الدفعة الأولى كاملًا 7,500 جنيه عبر Vodafone Cash أو InstaPay من قسم الحجز، ثم ترسل إثبات التحويل على Messenger لمراجعة العملية وتأكيد الحجز.</p></details>'
+if new_faq not in s:
+    if old_faq not in s:
+        raise SystemExit('FAQ marker not found')
+    s = s.replace(old_faq, new_faq, 1)
+
+script_marker = 'document.querySelectorAll(".booking-link").forEach(function(link){\n  link.addEventListener("click",trackBookingClick,{passive:true});\n});'
+payment_js = '''document.querySelectorAll(".copy-payment").forEach(function(button){
+  button.addEventListener("click",function(){
+    var value = button.getAttribute("data-copy") || "";
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(value).then(function(){
+        var oldText = button.textContent;
+        button.textContent = "تم النسخ ✓";
+        setTimeout(function(){button.textContent = oldText;},1800);
+      });
+    }
+    if(typeof window.fbq === "function"){
+      fbq("trackCustom","PaymentMethodClick",{method:"vodafone_cash",amount_options:"2500_or_7500"});
+    }
+    if(typeof window.gtag === "function"){
+      gtag("event","payment_method_click",Object.assign({payment_method:"vodafone_cash"},campaignData));
+    }
+  });
+});
+
+document.querySelectorAll(".payment-link").forEach(function(link){
+  link.addEventListener("click",function(){
+    if(typeof window.fbq === "function"){
+      fbq("trackCustom","PaymentMethodClick",{method:"instapay",amount_options:"2500_or_7500"});
+    }
+    if(typeof window.gtag === "function"){
+      gtag("event","payment_method_click",Object.assign({payment_method:"instapay"},campaignData));
+    }
+  },{passive:true});
+});'''
+if payment_js not in s:
+    if script_marker not in s:
+        raise SystemExit('JS insertion marker not found')
+    s = s.replace(script_marker, script_marker + '\n\n' + payment_js, 1)
+
+p.write_text(s, encoding='utf-8')
