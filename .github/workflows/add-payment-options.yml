@@ -16,7 +16,15 @@ jobs:
         with:
           ref: main
       - name: Apply payment options patch
-        run: python3 scripts/add_payment.py
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/add_payment.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace("script_marker = 'document.querySelectorAll(\".booking-link\").forEach(function(link){\\n  link.addEventListener(\"click\",trackBookingClick,{passive:true});\\n});'", "script_marker = '  document.querySelectorAll(\".booking-link\").forEach(function(link){\\n    link.addEventListener(\"click\",trackBookingClick,{passive:true});\\n  });'")
+          p.write_text(s, encoding='utf-8')
+          PY
+          python3 scripts/add_payment.py
       - name: Commit landing page update
         run: |
           git config user.name "github-actions[bot]"
