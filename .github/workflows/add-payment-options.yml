@@ -31,6 +31,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
           git commit -m "Add Vodafone Cash and InstaPay payment options" || true
-          git rm .github/workflows/add-payment-options.yml scripts/add_payment.py
+          git rm -f .github/workflows/add-payment-options.yml scripts/add_payment.py
           git commit -m "Remove one-time payment updater"
           git push origin main
