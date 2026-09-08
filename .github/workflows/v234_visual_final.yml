@@ -1,0 +1,241 @@
+name: V23.4 final visual conversion polish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v234_visual_final.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Apply final landing-page visual system
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          # Force the corrected academy logo and bust old browser cache.
+          s = s.replace('tbt_academy_logo_v23.svg?v=final-234', 'tbt_academy_logo_v23.svg')
+          s = s.replace('tbt_academy_logo_v23.svg', 'tbt_academy_logo_v23.svg?v=final-234')
+
+          # Add academy logo inside the certificate credibility block.
+          old_cert = '''<div class="certificate-box">
+          <b>بالشراكة مع أكاديمية المدرب الأفضل:</b><br/>
+          يحصل من يستوفي متطلبات الحضور والتطبيق والمشروع النهائي على <b>شهادة إتمام صادرة باسم أكاديمية المدرب الأفضل ولعبة البزنس</b>.
+          
+        </div>'''
+          new_cert = '''<div class="certificate-box certificate-box-final">
+          <div class="certificate-partner-mark"><img src="tbt_academy_logo_v23.svg?v=final-234" alt="أكاديمية المدرب الأفضل"/><div><b>بالشراكة مع أكاديمية المدرب الأفضل</b><span>جهة إصدار شهادة الإتمام بالشراكة مع لعبة البزنس</span></div></div>
+          يحصل من يستوفي متطلبات الحضور والتطبيق والمشروع النهائي على <b>شهادة إتمام صادرة باسم أكاديمية المدرب الأفضل ولعبة البزنس</b>.
+        </div>'''
+          if old_cert in s:
+              s = s.replace(old_cert, new_cert, 1)
+
+          grid_start = '    <div class="bundle-grid" style="margin-top:22px">'
+          ai_start = '    <div class="ai-box">'
+          if grid_start not in s or ai_start not in s:
+              raise SystemExit('Bundle markers not found')
+
+          gs = s.index(grid_start)
+          ae = s.index(ai_start, gs)
+
+          new_grid = '''    <div class="bundle-grid premium-bundle-grid" style="margin-top:22px">
+      <div class="bundle visual-card reveal zoom-card">
+        <div class="visual-media zoom-scene"><div class="zoom-window"><div class="zoom-cam"><svg viewBox="0 0 48 48"><rect x="7" y="12" width="24" height="24" rx="6"/><path d="M31 20l10-6v20l-10-6z"/></svg></div><div class="live-dot"></div><span>LIVE</span></div><div class="zoom-pulse z1"></div><div class="zoom-pulse z2"></div></div>
+        <div class="visual-copy"><div class="bundle-no">01</div><h3>25 لقاء مباشرًا</h3><p>جلسة تعريفية إضافية + 24 جلسة تدريبية فعلية على Zoom.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal tools-card">
+        <div class="visual-media tools-scene"><div class="tool-sheet"><i></i><i></i><i></i></div><div class="tool-chart"><span style="height:34%"></span><span style="height:55%"></span><span style="height:76%"></span><span style="height:100%"></span></div><div class="tool-check">✓</div></div>
+        <div class="visual-copy"><div class="bundle-no">02</div><h3>Workbook + 24 أداة</h3><p>نماذج وأدوات تطبيقية تتجمع تدريجيًا في ملف القرار النهائي.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal whatsapp-card">
+        <div class="visual-media whatsapp-scene"><div class="whatsapp-badge"><svg viewBox="0 0 48 48"><path d="M24 7a16 16 0 0 0-13.8 24L8 40l9.2-2.1A16 16 0 1 0 24 7z"/><path d="M18 17c1 7 6 12 13 13l3-4-5-2-2 2c-3-1-5-3-6-6l2-2-2-5z"/></svg></div><div class="chat-bubble cb1"></div><div class="chat-bubble cb2"></div></div>
+        <div class="visual-copy"><div class="bundle-no">03</div><h3>متابعة عبر WhatsApp</h3><p>جروب خاص للمتابعة وأسئلة التطبيق والتنبيهات بين الجلسات.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal telegram-card">
+        <div class="visual-media telegram-scene"><div class="telegram-badge"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/><path d="M15 31.5 49 18 42.5 47 31 38.5 24.5 44 26.5 35.5z"/></svg></div><div class="telegram-lines"><span></span><span></span><span></span></div></div>
+        <div class="visual-copy"><div class="bundle-no">04</div><h3>تسجيلات على Telegram لمدة 6 أشهر</h3><p>ترجع للجلسات المسجلة من بداية الدفعة طوال فترة الإتاحة.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal decision-card-visual">
+        <div class="visual-media decision-scene"><div class="decision-folder"><b>قرار</b><span></span><span></span></div><div class="roadmap"><i>30</i><i>60</i><i>90</i><em></em></div></div>
+        <div class="visual-copy"><div class="bundle-no">05</div><h3>ملف قرار + خطة 90 يومًا</h3><p>المخرج النهائي: قرار موثق، أولويات تنفيذ ومؤشرات مراجعة للـ90 يوم التالية.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal certificate-card">
+        <div class="visual-media certificate-scene"><div class="certificate-paper"><img src="tbt_academy_logo_v23.svg?v=final-234" alt="أكاديمية المدرب الأفضل"/><span></span><span></span><div class="seal">✓</div></div></div>
+        <div class="visual-copy"><div class="bundle-no">06</div><h3>شهادة إتمام</h3><p>باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء متطلبات الإتمام.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal book-card">
+        <div class="visual-media image-scene book-scene"><img src="book_khoroog_men_elnfaq.webp" alt="كتاب الخروج من النفق" loading="lazy"/></div>
+        <div class="visual-copy"><div class="bundle-no">07</div><h3>كتاب «الخروج من النفق»</h3><p>نسخة رقمية هدية بعد انتهاء نافذة الاسترداد.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal print-card">
+        <div class="visual-media print-scene"><div class="mini-book"><img src="book_khoroog_men_elnfaq.webp" alt="نسخة مطبوعة من كتاب الخروج من النفق" loading="lazy"/></div><div class="print-package"><svg viewBox="0 0 64 64"><path d="M12 20h40v32H12zM20 20V12h24v8M18 38h28M22 32h20"/></svg><b>PRINT</b></div></div>
+        <div class="visual-copy"><div class="bundle-no">08</div><h3>نسخة مطبوعة اختيارية</h3><p>250 جنيه + تكلفة الشحن حسب المنطقة عند الطلب.</p></div>
+      </div>
+
+      <div class="bundle visual-card reveal ai-card-mini">
+        <div class="visual-media ai-mini-scene"><div class="ai-mini-head"><span>AI</span><b>التشخيص قبل الحل</b></div><div class="ai-mini-dashboard"><div class="mini-bars"><i></i><i></i><i></i><i></i></div><div class="mini-donut"></div><div class="mini-checks"><i>✓</i><i>✓</i><i>✓</i></div></div></div>
+        <div class="visual-copy"><div class="bundle-no">09</div><h3>أداة التشخيص بالذكاء الاصطناعي</h3><p>6 أشهر استخدام مجاني للدفعة الأولى، تبدأ من تاريخ تفعيل حسابك على الأداة.</p></div>
+      </div>
+    </div>
+
+'''
+          s = s[:gs] + new_grid + s[ae:]
+
+          ai_start_pos = s.index(ai_start, gs)
+          offer_marker = '\n  </div>\n</section>\n\n<section class="section offer"'
+          ai_end_pos = s.index(offer_marker, ai_start_pos)
+          new_ai = '''    <div class="ai-showcase-final reveal">
+      <div class="ai-product-visual" aria-label="تصور لواجهة أداة AI التشخيص قبل الحل">
+        <div class="ai-product-top"><span>AI</span><div><b>التشخيص قبل الحل</b><small>تصور للواجهة — الأداة قيد التطوير</small></div></div>
+        <div class="ai-product-grid">
+          <div class="ai-panel"><b>مؤشرات المشروع</b><div class="smart-bars"><i style="height:32%"></i><i style="height:48%"></i><i style="height:64%"></i><i style="height:83%"></i></div></div>
+          <div class="ai-panel"><b>أولوية التشخيص</b><div class="smart-ring"><span>72%</span></div></div>
+          <div class="ai-panel wide"><b>قبل القرار</b><div class="diagnosis-list"><span><i></i>حقائق متاحة</span><span><i></i>افتراضات تحتاج اختبار</span><span><i></i>معلومات ناقصة قبل الحكم</span></div></div>
+        </div>
+      </div>
+      <div class="ai-product-copy">
+        <span class="ai-label">ميزة للدفعة الأولى</span>
+        <h3>AI التشخيص قبل الحل</h3>
+        <p>تصور مبدئي لأداة تساعدك على تنظيم أسئلة التشخيص وقراءة المؤشرات وتسريع التحليل بعد ما تتعلم المنهج وتفهم بيانات مشروعك.</p>
+        <div class="ai-access-note"><b>6 أشهر استخدام مجاني</b><span>تبدأ من تاريخ تفعيل حسابك على الأداة.</span></div>
+      </div>
+    </div>
+'''
+          s = s[:ai_start_pos] + new_ai + s[ai_end_pos:]
+
+          css_marker = '/* V23.4 final visual system */'
+          if css_marker not in s:
+              css = r'''
+
+/* V23.4 final visual system */
+.partner-logo.academy-partner,.partner-logo:has(img[src*="tbt_academy_logo_v23"]){background:linear-gradient(145deg,#fff,#fff9ed);border-color:#ead7ad}
+.partner-logo img[src*="tbt_academy_logo_v23"]{width:170px!important;max-width:100%!important;height:108px!important;max-height:108px!important;object-fit:contain!important;filter:none!important}
+.certificate-box-final{display:grid;gap:12px}
+.certificate-partner-mark{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid #ead5aa}
+.certificate-partner-mark img{width:82px;height:64px;object-fit:contain;background:#fff;border-radius:12px;padding:4px;border:1px solid #ead7ad}
+.certificate-partner-mark b{display:block;color:#0E3A32;font-size:14px}
+.certificate-partner-mark span{display:block;color:#6b5a3d;font-size:12px;font-weight:600;line-height:1.6}
+
+.premium-bundle-grid{grid-template-columns:repeat(3,1fr);gap:18px}
+.visual-card{padding:0!important;border-radius:24px!important;overflow:hidden!important;background:#fff;min-height:350px;display:flex;flex-direction:column}
+.visual-media{height:180px;position:relative;overflow:hidden;background:linear-gradient(145deg,#f5faf8,#fff6e7);border-bottom:1px solid #e4ebe7}
+.visual-copy{padding:20px 21px 22px;position:relative;flex:1}
+.visual-copy .bundle-no{font-size:11px;color:#a67118;font-weight:800;margin-bottom:5px}
+.visual-copy h3{font-size:20px;margin-bottom:7px}
+.visual-copy p{margin:0;color:#43544e;font-size:14px;line-height:1.8;font-weight:600}
+
+.zoom-scene{display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#e9f2ff,#f9fbff 55%,#eef6f3)}
+.zoom-window{width:128px;height:92px;border-radius:22px;background:linear-gradient(145deg,#fff,#edf4ff);border:1px solid #c9d9f4;display:grid;place-items:center;box-shadow:0 18px 35px rgba(31,84,166,.16);position:relative;z-index:2}
+.zoom-cam{width:58px;height:58px;border-radius:18px;background:#2d6cdf;color:#fff;display:grid;place-items:center}
+.zoom-cam svg{width:33px;height:33px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.zoom-window>span{position:absolute;top:10px;left:13px;font-size:9px;font-weight:900;color:#c23f3f}
+.live-dot{position:absolute;top:13px;left:45px;width:7px;height:7px;border-radius:50%;background:#e14848;animation:livePulse 1.5s infinite}
+.zoom-pulse{position:absolute;border:1px solid rgba(45,108,223,.18);border-radius:50%;animation:softPulse 3s infinite}
+.zoom-pulse.z1{width:165px;height:165px}.zoom-pulse.z2{width:220px;height:220px;animation-delay:1s}
+
+.tools-scene{display:flex;align-items:center;justify-content:center;gap:16px;background:linear-gradient(145deg,#eff8f4,#fff9ea)}
+.tool-sheet{width:86px;height:116px;background:#fff;border:1px solid #d8e5df;border-radius:16px;padding:22px 15px;box-shadow:0 14px 30px rgba(9,62,50,.12);transform:rotate(-4deg)}
+.tool-sheet i{display:block;height:8px;border-radius:99px;background:#dce9e4;margin-bottom:12px;position:relative}
+.tool-sheet i:before{content:"✓";position:absolute;right:-2px;top:-8px;width:18px;height:18px;border-radius:6px;background:#0f6a55;color:#fff;font-style:normal;font-size:11px;display:grid;place-items:center}
+.tool-chart{height:95px;width:100px;display:flex;gap:7px;align-items:end;padding:15px;border-radius:16px;background:#0d3d33;box-shadow:0 14px 30px rgba(9,62,50,.16)}
+.tool-chart span{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(#ffd782,#d89528);animation:barRise 2.8s ease-in-out infinite alternate}
+.tool-check{position:absolute;left:28px;top:28px;width:38px;height:38px;border-radius:50%;background:#fff;color:#0d6a54;display:grid;place-items:center;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.08)}
+
+.whatsapp-scene{display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#edfff5,#f8fffb 60%,#eef7f3)}
+.whatsapp-badge{width:92px;height:92px;border-radius:28px;background:#20b66b;color:#fff;display:grid;place-items:center;box-shadow:0 18px 36px rgba(32,182,107,.22);z-index:2}
+.whatsapp-badge svg{width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.chat-bubble{position:absolute;width:52px;height:25px;border-radius:13px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.08);animation:chatFloat 3s ease-in-out infinite}
+.cb1{right:32px;top:33px}.cb2{left:32px;bottom:35px;animation-delay:1.2s}
+
+.telegram-scene{display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#eef8ff,#f8fbff 60%,#edf5f8)}
+.telegram-badge{width:104px;height:104px;border-radius:50%;filter:drop-shadow(0 16px 28px rgba(34,158,217,.2));animation:planeFloat 3.2s ease-in-out infinite}
+.telegram-badge svg{width:100%;height:100%}.telegram-badge circle{fill:#229ED9}.telegram-badge path{fill:#fff}
+.telegram-lines{position:absolute;right:28px;bottom:38px;display:grid;gap:7px}
+.telegram-lines span{width:46px;height:5px;border-radius:99px;background:#c6e7f8}.telegram-lines span:nth-child(2){width:34px}.telegram-lines span:nth-child(3){width:24px}
+
+.decision-scene{background:linear-gradient(145deg,#eef7f3,#fff7e7);display:flex;align-items:center;justify-content:center;gap:16px}
+.decision-folder{width:90px;height:112px;border-radius:14px 14px 18px 18px;background:linear-gradient(145deg,#113f35,#082e27);box-shadow:0 16px 30px rgba(5,45,37,.2);padding:22px 14px;color:#fff;transform:rotate(-4deg);position:relative}
+.decision-folder:before{content:"";position:absolute;right:0;top:-11px;width:48px;height:18px;border-radius:9px 9px 0 0;background:#dba138}
+.decision-folder b{display:block;color:#ffd782;font-size:17px;margin-bottom:18px}.decision-folder span{display:block;height:5px;border-radius:99px;background:rgba(255,255,255,.28);margin-top:9px}
+.roadmap{width:138px;height:74px;border-radius:18px;background:#fff;border:1px solid #dbe7e2;display:flex;align-items:center;justify-content:space-around;position:relative;box-shadow:0 13px 28px rgba(9,62,50,.1)}
+.roadmap:before{content:"";position:absolute;left:18px;right:18px;top:36px;height:3px;background:#d9e7e1;border-radius:99px}
+.roadmap i{width:32px;height:32px;border-radius:50%;background:#fff5df;border:2px solid #e6a63d;display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:900;color:#7d571b;z-index:2}
+.roadmap em{position:absolute;width:34px;height:4px;background:#0e705b;border-radius:99px;top:35px;right:19px;animation:roadMove 2.8s ease-in-out infinite}
+
+.certificate-scene{display:grid;place-items:center;background:linear-gradient(145deg,#fff9ec,#f6fbf9)}
+.certificate-paper{width:160px;height:116px;background:#fff;border:1px solid #e4d6b9;border-radius:14px;box-shadow:0 15px 30px rgba(83,58,19,.11);position:relative;padding:10px 16px;transform:rotate(2deg)}
+.certificate-paper img{width:60px;height:45px;object-fit:contain;margin:auto}
+.certificate-paper>span{display:block;height:5px;background:#e5ebe8;border-radius:99px;margin:8px auto;width:82%}.certificate-paper>span:nth-of-type(2){width:58%}
+.seal{position:absolute;width:34px;height:34px;border-radius:50%;background:#e5aa3f;color:#fff;display:grid;place-items:center;left:14px;bottom:10px;font-weight:900;box-shadow:0 7px 15px rgba(213,148,31,.25);animation:sealGlow 2.8s ease-in-out infinite}
+
+.image-scene{display:grid;place-items:center;background:linear-gradient(145deg,#f8f4ea,#fff)}
+.book-scene img{width:132px;height:154px;object-fit:contain;filter:drop-shadow(0 16px 22px rgba(0,0,0,.18));transform:rotate(-3deg);transition:transform .3s ease}
+.book-card:hover .book-scene img{transform:rotate(0) scale(1.04)}
+
+.print-scene{display:flex;align-items:center;justify-content:center;gap:14px;background:linear-gradient(145deg,#fff8eb,#f8fbfa)}
+.mini-book img{width:98px;height:126px;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.16));transform:rotate(-5deg)}
+.print-package{width:92px;height:82px;border-radius:16px;background:#f0dfbd;border:1px solid #d9bc83;color:#7e5a23;display:grid;place-items:center;align-content:center;gap:3px;box-shadow:0 12px 24px rgba(118,83,29,.12)}
+.print-package svg{width:40px;height:40px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.print-package b{font-size:10px;letter-spacing:1px}
+
+.ai-mini-scene{padding:18px;background:linear-gradient(145deg,#0a322a,#104c40);color:#fff}
+.ai-mini-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}.ai-mini-head span{width:36px;height:36px;border-radius:11px;background:#e6a63d;color:#10382f;display:grid;place-items:center;font-weight:900}.ai-mini-head b{font-size:14px;color:#fff}
+.ai-mini-dashboard{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;align-items:center}.mini-bars{height:70px;display:flex;gap:6px;align-items:end;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)}.mini-bars i{flex:1;background:linear-gradient(#ffd782,#d59426);border-radius:5px 5px 2px 2px}.mini-bars i:nth-child(1){height:30%}.mini-bars i:nth-child(2){height:48%}.mini-bars i:nth-child(3){height:72%}.mini-bars i:nth-child(4){height:94%}.mini-donut{width:62px;height:62px;border-radius:50%;background:conic-gradient(#e6a63d 0 72%,rgba(255,255,255,.12) 72%);position:relative}.mini-donut:after{content:"";position:absolute;inset:12px;background:#104c40;border-radius:50%}.mini-checks{grid-column:1/-1;display:flex;gap:7px}.mini-checks i{width:23px;height:23px;border-radius:7px;background:rgba(255,255,255,.1);display:grid;place-items:center;color:#ffd782;font-style:normal;font-size:11px}
+
+.ai-showcase-final{margin-top:22px;border-radius:26px;padding:24px;background:linear-gradient(145deg,#092f27,#104b3f);display:grid;grid-template-columns:1.08fr .92fr;gap:24px;color:#fff;box-shadow:0 22px 55px rgba(5,45,37,.18);overflow:hidden;position:relative}
+.ai-showcase-final:after{content:"";position:absolute;width:240px;height:240px;border:1px solid rgba(255,215,130,.12);border-radius:50%;left:-100px;bottom:-130px}
+.ai-product-visual{background:#f9fdfb;border-radius:21px;padding:17px;color:#173a32;position:relative;z-index:1;box-shadow:0 15px 35px rgba(0,0,0,.18)}
+.ai-product-top{display:flex;align-items:center;gap:10px;padding-bottom:13px;border-bottom:1px solid #dde8e4}.ai-product-top>span{width:42px;height:42px;border-radius:13px;background:#0e3a32;color:#ffd782;display:grid;place-items:center;font-weight:900}.ai-product-top b{display:block;color:#0e3a32;font-size:16px}.ai-product-top small{display:block;color:#6b7a74;font-size:10.5px;font-weight:600;margin-top:2px}
+.ai-product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.ai-panel{background:#fff;border:1px solid #dfe9e5;border-radius:14px;padding:12px}.ai-panel>b{display:block;color:#24463e;font-size:11px;margin-bottom:8px}.ai-panel.wide{grid-column:1/-1}.smart-bars{height:76px;display:flex;align-items:end;gap:7px}.smart-bars i{flex:1;background:linear-gradient(#1f7966,#0e4f42);border-radius:6px 6px 2px 2px;animation:barRise 3s ease-in-out infinite alternate}.smart-ring{width:78px;height:78px;border-radius:50%;margin:auto;background:conic-gradient(#e6a63d 0 72%,#edf2ef 72%);display:grid;place-items:center;position:relative}.smart-ring:before{content:"";position:absolute;inset:12px;background:#fff;border-radius:50%}.smart-ring span{position:relative;z-index:2;font-weight:900;color:#0e3a32}.diagnosis-list{display:grid;gap:7px}.diagnosis-list span{font-size:11px;color:#53645d;font-weight:600;display:flex;align-items:center;gap:7px}.diagnosis-list i{width:7px;height:7px;border-radius:50%;background:#e6a63d}
+.ai-product-copy{align-self:center;position:relative;z-index:1}.ai-product-copy h3{color:#fff;font-size:28px;margin:10px 0}.ai-product-copy p{color:#d7e7e1;font-size:14.5px;line-height:1.9;font-weight:500}.ai-access-note{margin-top:15px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}.ai-access-note b{display:block;color:#ffd782}.ai-access-note span{display:block;color:#d8e8e2;font-size:12px;font-weight:600}
+
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(225,72,72,.35)}50%{box-shadow:0 0 0 8px rgba(225,72,72,0)}}
+@keyframes softPulse{0%,100%{transform:scale(.92);opacity:.45}50%{transform:scale(1.05);opacity:.9}}
+@keyframes barRise{0%{transform:scaleY(.88);transform-origin:bottom}100%{transform:scaleY(1);transform-origin:bottom}}
+@keyframes chatFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes planeFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
+@keyframes roadMove{0%{right:19px;width:30px}50%{right:53px;width:50px}100%{right:88px;width:30px}}
+@keyframes sealGlow{0%,100%{box-shadow:0 7px 15px rgba(213,148,31,.22)}50%{box-shadow:0 7px 25px rgba(213,148,31,.45)}}
+
+@media(max-width:920px){.premium-bundle-grid{grid-template-columns:repeat(2,1fr)}.ai-showcase-final{grid-template-columns:1fr}}
+@media(max-width:640px){.premium-bundle-grid{grid-template-columns:1fr}.visual-card{min-height:0}.visual-media{height:170px}.ai-showcase-final{padding:17px}.ai-product-copy h3{font-size:24px}.certificate-partner-mark{grid-template-columns:72px 1fr}.certificate-partner-mark img{width:68px;height:56px}}
+@media(prefers-reduced-motion:reduce){.live-dot,.zoom-pulse,.tool-chart span,.chat-bubble,.telegram-badge,.roadmap em,.seal,.smart-bars i{animation:none!important}}
+'''
+              s = s.replace('\n</style>', css + '\n</style>', 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit landing page
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Build final premium visual system for V23.4"
+          git push
+
+      - name: Remove one-time workflow
+        run: |
+          rm -f .github/workflows/v234_visual_final.yml
+          git add -A
+          git diff --cached --quiet || git commit -m "Remove one-time V23.4 visual workflow"
+          git push
