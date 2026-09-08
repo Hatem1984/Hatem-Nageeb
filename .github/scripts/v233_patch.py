@@ -1,0 +1,192 @@
+from pathlib import Path
+import re
+
+p=Path('index.html')
+s=p.read_text(encoding='utf-8')
+
+s=s.replace('<!-- V23 CRO Revision — 2026-09-08 -->','<!-- V23.3 Conversion Revision — 2026-09-08 -->')
+
+s=re.sub(r'<div class="top-note">\s*<div class="wrap(?: launch-bar)?">.*?</div>\s*</div>', '''<div class="top-note">
+  <div class="wrap launch-bar">
+    <div class="launch-copy"><b>دفعة أكتوبر تبدأ الخميس 1 أكتوبر 2026</b><span>7:30 مساءً بتوقيت مصر</span></div>
+    <div class="countdown" aria-label="الوقت المتبقي لبدء الدفعة">
+      <div><b id="cd-days">--</b><span>يوم</span></div>
+      <div><b id="cd-hours">--</b><span>ساعة</span></div>
+      <div><b id="cd-mins">--</b><span>دقيقة</span></div>
+      <div><b id="cd-secs">--</b><span>ثانية</span></div>
+    </div>
+  </div>
+</div>''', s, count=1, flags=re.S)
+
+s=s.replace('src="tbt_academy_logo_clean.png"','src="tbt_academy_logo_v23.svg"')
+s=s.replace('src="tbt_academy_logo.svg"','src="tbt_academy_logo_v23.svg"')
+
+s=s.replace('برنامج Live تطبيقي لأصحاب المشروعات','برنامج تطبيقي مباشر لأصحاب المشروعات')
+s=s.replace('25 لقاء Live إجمالًا','25 لقاء مباشرًا إجمالًا')
+s=s.replace('25 لقاء Live','25 لقاء مباشرًا')
+s=s.replace('Orientation إضافية','جلسة تعريفية إضافية')
+
+s=s.replace('>شوف السعر وخطة السداد</a>','>احجز مكانك بـ2,000 جنيه</a>',2)
+s=s.replace('>اسأل هل البرنامج مناسب لمشروعك</a>','>عندك سؤال؟ تواصل معنا</a>')
+s=s.replace('>عندي سؤال قبل الحجز</a>','>عندك سؤال؟ تواصل معنا</a>')
+
+s=s.replace('<span>MBA</span><span>مؤلف كتاب</span><span>تأهيل مدربين 48 ساعة</span>', '<span>MBA</span><span>خبرة إدارية وتشغيلية</span><span>تأهيل مدربين 48 ساعة</span>')
+
+credential_mba = '''<div class="authority-point credential-point"><div class="credential-logo-wrap ebu-wrap" aria-label="Entrepreneurship & Business University"><img class="credential-logo ebu-mark" src="https://www.eb.university/images/logo.svg" alt="Entrepreneurship & Business University (EBU)" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback">EBU</span></div><div class="credential-copy"><b>ماجستير إدارة أعمال (MBA)</b><span>Entrepreneurship & Business University (EBU) — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</span></div></div>'''
+credential_lbs = '''<div class="authority-point credential-point"><div class="credential-logo-wrap lbs-wrap" aria-label="London Business School"><img class="credential-logo lbs-mark" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/London_Business_School_logo.svg" alt="London Business School" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback lbs-fallback">LBS</span></div><div class="credential-copy"><b>إدارة شركات المستقبل</b><span>Leading Businesses into the Future — London Business School · Executive Education · 2022.</span></div></div>'''
+
+s=re.sub(r'<div class="authority-point credential-point">\s*<a class="credential-logo-wrap"[^>]*>.*?</a>\s*<div class="credential-copy"><b>ماجستير إدارة أعمال \(MBA\)</b>.*?</div>\s*</div>', credential_mba, s, count=1, flags=re.S)
+s=re.sub(r'<div class="authority-point credential-point">\s*<div class="credential-logo-wrap[^>]*>.*?</div>\s*<div class="credential-copy"><b>ماجستير إدارة أعمال \(MBA\)</b>.*?</div>\s*</div>', credential_mba, s, count=1, flags=re.S)
+s=s.replace('<div class="authority-point"><b>ماجستير إدارة أعمال (MBA)</b> — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</div>', credential_mba)
+
+s=re.sub(r'<div class="authority-point credential-point">\s*<a class="credential-logo-wrap"[^>]*>.*?</a>\s*<div class="credential-copy"><b>إدارة شركات المستقبل</b>.*?</div>\s*</div>', credential_lbs, s, count=1, flags=re.S)
+s=re.sub(r'<div class="authority-point credential-point">\s*<div class="credential-logo-wrap[^>]*>.*?</div>\s*<div class="credential-copy"><b>إدارة شركات المستقبل</b>.*?</div>\s*</div>', credential_lbs, s, count=1, flags=re.S)
+s=s.replace('<div class="authority-point"><b>إدارة شركات المستقبل</b> — University of London · London Business School · 2022.</div>', credential_lbs)
+
+def replace_bundle(num, title_pattern, new_html):
+    global s
+    patt=rf'<div class="bundle(?: reveal)?"><div class="bundle-no">{num}</div><h3>{title_pattern}</h3><p class="micro">.*?</p></div>'
+    s=re.sub(patt,new_html,s,count=1,flags=re.S)
+
+replace_bundle('01', r'25 لقاء (?:Live|مباشرًا)', '''<div class="bundle reveal featured-bundle"><div class="bundle-icon zoom-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="7" y="12" width="24" height="24" rx="6"/><path d="M31 20l10-6v20l-10-6z"/></svg></div><div class="bundle-no">01</div><h3>25 لقاء مباشرًا</h3><p class="micro">جلسة تعريفية إضافية + 24 جلسة تدريبية فعلية على Zoom.</p></div>''')
+replace_bundle('02', r'(?:Workbook تطبيقي \+ 24 أداة|Workbook \+ 24 أداة)', '''<div class="bundle reveal featured-bundle"><div class="bundle-icon tools-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="11" y="8" width="26" height="32" rx="5"/><path d="M18 8v-2h12v2M17 18h14M17 25h14M17 32h9"/></svg></div><div class="bundle-no">02</div><h3>Workbook + 24 أداة</h3><p class="micro">نماذج وأدوات تطبيقية تتجمع في ملف القرار النهائي.</p></div>''')
+replace_bundle('03', r'(?:WhatsApp|متابعة عبر WhatsApp)', '''<div class="bundle reveal featured-bundle"><div class="bundle-icon whatsapp-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7a16 16 0 0 0-13.8 24L8 40l9.2-2.1A16 16 0 1 0 24 7z"/><path d="M18 17c1 7 6 12 13 13l3-4-5-2-2 2c-3-1-5-3-6-6l2-2-2-5z"/></svg></div><div class="bundle-no">03</div><h3>متابعة عبر WhatsApp</h3><p class="micro">جروب خاص للمتابعة وأسئلة التطبيق والتنبيهات بين الجلسات.</p></div>''')
+replace_bundle('06', r'شهادة إتمام', '''<div class="bundle reveal featured-bundle"><div class="bundle-icon certificate-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="25" rx="4"/><path d="M15 16h18M15 22h13"/><circle cx="31" cy="31" r="6"/><path d="M28 36l-2 7 5-3 5 3-2-7"/></svg></div><div class="bundle-no">06</div><h3>شهادة إتمام</h3><p class="micro">باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء المتطلبات.</p></div>''')
+s=s.replace('<div class="bundle">','<div class="bundle reveal">')
+
+s=re.sub(r'<div class="ai-box">\s*<img src="ai_diagnostic_tool\.webp"[^>]*>\s*<div>', '''<div class="ai-box">
+      <div class="ai-preview" aria-label="تصور مبسط لواجهة أداة التشخيص">
+        <div class="ai-preview-head"><span>AI</span><b>التشخيص قبل الحل</b></div>
+        <div class="ai-preview-row"><i></i><div><b>بيانات المشروع</b><span>مدخلاتك أولًا</span></div></div>
+        <div class="ai-preview-row"><i></i><div><b>مؤشرات التشخيص</b><span>حقائق • احتمالات • معلومات ناقصة</span></div></div>
+        <div class="ai-preview-row"><i></i><div><b>أولوية القرار</b><span>ما الذي يحتاج اختبارًا قبل التنفيذ؟</span></div></div>
+      </div>
+      <div>''',s,count=1,flags=re.S)
+s=s.replace('ميزة خاصة بالدفعة الأولى:</b> 6 أشهر استخدام مجاني عند تفعيل الأداة.','ميزة خاصة بالدفعة الأولى:</b> 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابك على الأداة.')
+
+s=s.replace('<h2>4,500 جنيه للسداد الكامل، أو 5,000 جنيه بالتقسيط.</h2>', '<h2>عرض إطلاق الدفعة الأولى: 4,500 جنيه بدل 9,000 جنيه.</h2>')
+s=s.replace('<p class="lead">السعر المعلن خاص بالدفعة الأولى. اختر السداد الكامل أو خطة التقسيط حسب الأنسب لك.</p>', '<p class="lead">خصم إطلاق 50% على السعر القياسي للبرنامج. ولو مش مناسب تدفع كامل الآن، تقدر تحجز مكانك بـ2,000 جنيه فقط.</p><div class="offer-trust-strip"><span>خصم إطلاق 50%</span><span>وفر 4,500 جنيه</span><span>احجز بـ2,000 جنيه</span><span>سياسة استرداد واضحة</span></div>')
+
+s=s.replace('<span class="price-tag">أفضل قيمة</span>\n        <h3>السداد الكامل</h3>\n        <div class="price">4,500 <small>جنيه</small></div>', '''<span class="price-tag">عرض إطلاق الدفعة الأولى</span>
+        <h3>السداد الكامل</h3>
+        <div class="standard-price">السعر القياسي <del>9,000 جنيه</del></div>
+        <div class="launch-saving">خصم 50% • وفر 4,500 جنيه</div>
+        <div class="price">4,500 <small>جنيه</small></div>''')
+s=s.replace('<a class="cta" href="#payment-options" data-track-pricing>اختار السداد الكامل</a>', '<a class="cta" href="#payment-options" data-track-pricing>احجز الآن بـ2,000 أو ادفع 4,500</a>')
+
+old='<div class="founding"><b style="color:#FFD782">مرونة في السداد:</b> تقدر تبدأ بحجز 2,000 جنيه، ولو أكملت باقي السداد قبل أول جلسة تدريب فعلية يظل إجمالي اشتراكك 4,500 جنيه.</div>'
+new='<div class="founding"><b style="color:#FFD782">ابدأ بأقل التزام نقدي:</b> احجز مكانك بـ2,000 جنيه، ولو أكملت 2,500 قبل أول جلسة تدريب فعلية يظل إجمالي اشتراكك 4,500 جنيه. ولو اخترت التقسيط الممتد يكون الإجمالي 5,000 جنيه.</div><div class="value-math">4,500 جنيه ÷ 25 لقاء مباشرًا = <b>180 جنيه تقريبًا للقاء</b>، قبل احتساب الأدوات والمتابعة والتسجيلات وباقي المزايا.</div>'
+s=s.replace(old,new)
+
+if 'class="after-payment"' not in s:
+    block='''<div class="after-payment">
+        <b>بعد التحويل مباشرة:</b>
+        <ol><li>اكتب اسمك بالكامل.</li><li>أرسل رقم الهاتف المستخدم للتواصل.</li><li>أرسل لقطة شاشة أو صورة إثبات التحويل على Messenger.</li></ol>
+      </div>\n\n      '''
+    s=s.replace('<div class="payment-proof">',block+'<div class="payment-proof">',1)
+
+final_start=s.find('<section class="final">')
+if final_start!=-1:
+    head=s[:final_start]; tail=s[final_start:]
+    tail=tail.replace('>شوف طرق الدفع</a>','>احجز مكانك الآن</a>',1)
+    s=head+tail
+
+css=r'''
+/* V23.3 psychological selling + visual system */
+.launch-bar{display:flex!important;justify-content:space-between!important;gap:18px!important;padding:8px 0;min-height:62px!important}
+.launch-copy{display:flex;flex-direction:column;align-items:flex-start;line-height:1.35}
+.launch-copy b{font-size:13.5px;color:#fff3cf}
+.launch-copy span{font-size:11.5px;color:#e2d1aa;font-weight:600}
+.countdown{display:flex;gap:7px;direction:ltr}
+.countdown div{min-width:54px;padding:5px 7px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);text-align:center}
+.countdown b{display:block;color:#FFD782;font-family:"Cairo",sans-serif;font-size:17px;line-height:1.1}
+.countdown span{display:block;color:#f0e5cc;font-size:9.5px;font-weight:700;margin-top:3px}
+.credential-logo-wrap{cursor:default}
+.credential-logo-wrap.ebu-wrap{background:#0b2843;border-color:#1d4564}
+.credential-logo-wrap.ebu-wrap .credential-logo{filter:none;max-width:86px;max-height:66px}
+.credential-logo-wrap.lbs-wrap{background:#fff}
+.partner-logo img[src*="tbt_academy_logo_v23"]{max-height:108px;max-width:170px}
+.cred span{font-size:12px;font-weight:700}
+.micro,.tool-mini span,.authority-point,.credential-copy span,.stage-card p,.guided span,.bundle p,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p{font-weight:600}
+.tool-mini span,.authority-point,.credential-copy span,.stage-card p,.guided span,.bundle p{font-size:14.5px;line-height:1.85}
+.faq p,.legal p{font-size:14.5px;line-height:1.9}
+.bundle{position:relative;overflow:hidden;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+.bundle:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(5,45,37,.10);border-color:#cbded6}
+.featured-bundle{padding-top:74px}
+.bundle-icon{position:absolute;top:16px;right:18px;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#eef7f3,#fff3dd);color:#0f4a3e;box-shadow:0 8px 20px rgba(7,60,50,.10);transition:transform .3s ease,box-shadow .3s ease}
+.bundle-icon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.bundle:hover .bundle-icon{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 26px rgba(7,60,50,.16)}
+.whatsapp-icon{color:#147a58;background:linear-gradient(145deg,#e8fff3,#f5fffa)}
+.certificate-icon{color:#9a6816;background:linear-gradient(145deg,#fff3d8,#fffaf0)}
+.zoom-icon{color:#215db8;background:linear-gradient(145deg,#edf4ff,#f9fbff)}
+.tools-icon{color:#0e5b4b}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease,box-shadow .28s ease,border-color .28s ease}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.ai-preview{min-height:245px;border-radius:17px;background:linear-gradient(145deg,#f8fffc,#eef7f3);border:1px solid #d6e7df;padding:17px;color:#163a31;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
+.ai-preview-head{display:flex;align-items:center;gap:9px;padding-bottom:13px;border-bottom:1px solid #dbe9e3}
+.ai-preview-head>span{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#0f4a3e;color:#fff;font-weight:800}
+.ai-preview-head b{font-family:"Cairo",sans-serif;font-size:14px}
+.ai-preview-row{display:grid;grid-template-columns:10px 1fr;gap:10px;align-items:start;padding:13px 0;border-bottom:1px dashed #dce8e3}
+.ai-preview-row:last-child{border-bottom:0}
+.ai-preview-row i{width:8px;height:8px;border-radius:50%;background:#e6a63d;margin-top:6px;box-shadow:0 0 0 4px rgba(230,166,61,.12)}
+.ai-preview-row b{display:block;font-size:13px;color:#0e3a32}
+.ai-preview-row span{display:block;font-size:11.5px;color:#52645d;font-weight:600;line-height:1.55;margin-top:2px}
+.offer-trust-strip{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 2px}
+.offer-trust-strip span{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,215,130,.24);background:rgba(255,255,255,.07);color:#ffe0a0;font-size:12px;font-weight:700}
+.standard-price{color:#6f7d78;font-size:13px;font-weight:700;margin-top:9px}
+.standard-price del{font-size:18px;color:#8c6b62;margin-right:6px;text-decoration-thickness:2px}
+.launch-saving{display:inline-flex;margin-top:8px;padding:6px 9px;border-radius:10px;background:#fff2d8;color:#875a14;font-size:12px;font-weight:800}
+.value-math{margin-top:12px;padding:13px 15px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);color:#e1eee9;font-size:13px;line-height:1.75}
+.value-math b{color:#FFD782}
+.after-payment{margin-top:16px;padding:16px 17px;border-radius:17px;background:#eef7f3;border:1px solid #d9e8e2;color:#334942}
+.after-payment>b{display:block;color:#0e3a32;margin-bottom:6px}
+.after-payment ol{margin:0;padding-right:20px;font-size:13.5px;font-weight:600;line-height:1.9}
+.final .cta.secondary{white-space:normal;padding-inline:20px}
+@media(max-width:640px){
+  .launch-bar{flex-direction:column;align-items:stretch!important;gap:7px!important;padding:7px 0}
+  .launch-copy{align-items:center;text-align:center}
+  .countdown{justify-content:center;gap:5px}
+  .countdown div{min-width:48px;padding:5px}
+  .countdown b{font-size:15px}
+  .countdown span{font-size:9px}
+  .tool-mini span,.authority-point,.credential-copy span,.stage-card p,.guided span,.bundle p,.faq p,.legal p{font-size:14px}
+  .featured-bundle{padding-top:70px}
+  .bundle-icon{width:44px;height:44px}
+  .offer-trust-strip{gap:6px}
+  .offer-trust-strip span{font-size:11px}
+  .final .cta.secondary{min-width:0;width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .bundle,.bundle-icon{transition:none}
+}
+'''
+if '/* V23.3 psychological selling + visual system */' not in s:
+    s=s.replace('</style>',css+'\n</style>',1)
+
+js=r'''
+(function(){
+  const launchAt = new Date('2026-10-01T19:30:00+03:00').getTime();
+  const d=document.getElementById('cd-days'),h=document.getElementById('cd-hours'),m=document.getElementById('cd-mins'),sec=document.getElementById('cd-secs');
+  function updateCountdown(){
+    if(!d||!h||!m||!sec)return;
+    let diff=launchAt-Date.now();
+    if(diff<=0){d.textContent='0';h.textContent='0';m.textContent='0';sec.textContent='0';return;}
+    const day=Math.floor(diff/86400000); diff%=86400000;
+    const hour=Math.floor(diff/3600000); diff%=3600000;
+    const min=Math.floor(diff/60000); diff%=60000;
+    const second=Math.floor(diff/1000);
+    d.textContent=String(day);h.textContent=String(hour).padStart(2,'0');m.textContent=String(min).padStart(2,'0');sec.textContent=String(second).padStart(2,'0');
+  }
+  updateCountdown(); setInterval(updateCountdown,1000);
+  const items=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}}),{threshold:.13});
+    items.forEach((el,i)=>{el.style.transitionDelay=Math.min(i%4,3)*70+'ms';io.observe(el)});
+  }else items.forEach(el=>el.classList.add('is-visible'));
+})();
+'''
+if "const launchAt = new Date('2026-10-01T19:30:00+03:00')" not in s:
+    s=s.replace('</body>','<script>'+js+'</script>\n</body>',1)
+
+p.write_text(s,encoding='utf-8')
