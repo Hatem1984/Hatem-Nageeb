@@ -1,0 +1,164 @@
+name: V23.1 refine landing page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v231_refine.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Refine copy and visual system
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+
+          replacements = {
+            'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap': 'https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap',
+            'الدفعة التأسيسية الأولى • تبدأ 1 أكتوبر 2026 • 20 مشاركًا كحد أقصى للتطبيق والمتابعة': 'الدفعة الأولى تبدأ 1 أكتوبر 2026 • 20 مشاركًا كحد أقصى لضمان مساحة للتطبيق والمناقشة',
+            'بالشراكة بين «لعبة البزنس» وأكاديمية المدرب الأفضل': 'برنامج «التشخيص قبل الحل» • بالشراكة مع أكاديمية المدرب الأفضل',
+            'قبل ما تغيّر سعرك أو تزود إعلانك أو توسّع مشروعك… <span>شخّص الأول إيه اللي محتاج قرار.</span>': 'قبل ما تغيّر سعرك أو تزود إعلانك أو توسّع مشروعك… <span>شخّص الأول، وبعدها قرّر.</span>',
+            'برنامج Live تطبيقي لأصحاب المشروعات يساعدك تختار': 'برنامج تطبيقي مباشر لأصحاب المشروعات يساعدك تختار',
+            '<div class="hero-truth"><b>وعد البرنامج محدد:</b> لا نَعِد بزيادة أرباح أو نتيجة مالية مضمونة. نَعِد بمنهج تطبيق وأدوات تساعدك تبني قرارًا أوضح على مشروعك أنت.</div>': '<div class="hero-truth"><b>بنهاية البرنامج:</b> يكون عندك ملف قرار لمشروعك مبني على الأدلة والأرقام، وخطة 90 يومًا بأولويات واضحة ومؤشرات تراجعها أثناء التنفيذ.</div>',
+            '25 لقاء Live إجمالًا': '25 لقاء مباشرًا إجمالًا',
+            'Zoom + WhatsApp + Telegram': 'Zoom • WhatsApp • Telegram',
+            '<div class="limit-box"><b>لماذا 20 فقط؟</b> لأن البرنامج يعتمد على تطبيق جماعي، أسئلة مباشرة ومراجعات دورية للحالات، وليس مشاهدة محتوى مسجل فقط.</div>': '<div class="limit-box"><b>عدد الدفعة: حتى 20 مشاركًا.</b> العدد المحدود يتيح مساحة أفضل للأسئلة والتطبيق والمراجعات الجماعية طوال البرنامج.</div>',
+            '<div class="trust-item"><b>شراكة تشغيلية</b><span>لعبة البزنس × أكاديمية المدرب الأفضل</span></div>': '<div class="trust-item"><b>بالشراكة مع الأكاديمية</b><span>لعبة البزنس × أكاديمية المدرب الأفضل</span></div>',
+            '<div class="trust-item"><b>تجربة عميل حقيقية</b><span>شهادة فيديو من مشروع فعلي</span></div>': '<div class="trust-item"><b>تجربة استشارية فعلية</b><span>صاحب المشروع يشرح تجربته بنفسه</span></div>',
+            '<div class="icon">₹</div>': '<div class="icon">ج.م</div>',
+            '<div class="kicker">النتيجة التي نبيعها</div>': '<div class="kicker">المخرج النهائي</div>',
+            '<div class="kicker">الدليل قبل الادعاء</div>': '<div class="kicker">شوف طريقة العمل قبل ما تقرر</div>',
+            '<h2>لأنها أول دفعة للبرنامج، بنعرض لك دليل المنهج والأدوات المتاحة بالفعل بدل ما ننسب للبرنامج نتائج لم تحدث بعد.</h2>': '<h2>أدوات تطبيق واضحة وتجربة استشارية فعلية تساعدك تفهم أسلوب العمل قبل الاشتراك.</h2>',
+            '<p class="lead">عندنا تجربة استشارية حقيقية، وأدوات ومخرجات واضحة تقدر تشوف طبيعتها قبل ما تدفع.</p>': '<p class="lead">شوف نماذج من الأدوات اللي هتستخدمها داخل البرنامج، واسمع تجربة صاحب مشروع تعامل مع نفس منهج التشخيص والمتابعة.</p>',
+            'شهادة فيديو من تجربة استشارية فعلية — ليست شهادة عن هذا البرنامج التدريبي.': 'تجربة استشارية سابقة بصوت صاحب المشروع، توضح أسلوب التشخيص والمتابعة في العمل الفعلي.',
+            '<div class="limit-box" style="margin-top:12px"><b>Proof of Method:</b> الأدوات نفسها جزء من ملف القرار النهائي، مش Bonus منفصل نحطه لرفع قيمة شكلية للعرض.</div>': '<div class="limit-box" style="margin-top:12px"><b>التطبيق مترابط:</b> كل أداة تنتج مخرجًا تستخدمه في المرحلة التالية، وفي النهاية تتجمع المخرجات داخل ملف القرار وخطة الـ90 يوم.</div>',
+            '<div class="kicker">الـ24 أداة بالتفصيل</div>': '<div class="kicker">تفاصيل المنهج والأدوات</div>',
+            '<h2>لو حابب تشوف العمق… افتح كل وحدة.</h2>': '<h2>6 وحدات مترابطة، وفي كل وحدة 4 أدوات تطبيقية.</h2>',
+            '<p class="lead">الأسماء موجودة للشفافية، لكن البيع الأساسي على المخرج وليس عدد الملفات.</p>': '<p class="lead">افتح أي وحدة لتشوف الأدوات المستخدمة فيها وكيف تتدرج الرحلة من سؤال القرار إلى خطة التنفيذ.</p>',
+            '<div class="kicker">ليه Live؟</div>': '<div class="kicker">ليه البرنامج مباشر؟</div>',
+            '<div class="guided"><b>Hot Seats دورية</b><span>مراجعات لحالات مختارة بالتناوب؛ ليست استشارة فردية لكل متدرب في كل جلسة.</span></div>': '<div class="guided"><b>مراجعات تطبيقية دورية</b><span>مراجعة حالات مختارة بالتناوب داخل الجلسات لتوضيح طريقة التطبيق على مواقف حقيقية.</span></div>',
+            '<div class="guided"><b>WhatsApp بين الجلسات</b><span>متابعة جماعية لأسئلة التطبيق والتنبيهات، وليست استشارة فردية غير محدودة 24/7.</span></div>': '<div class="guided"><b>WhatsApp بين الجلسات</b><span>جروب خاص بالدفعة لمتابعة أسئلة التطبيق والتنبيهات واستمرار التواصل بين اللقاءات.</span></div>',
+            'تستخدم Validation KPIs بدل مؤشرات تشغيل لمشروع لم يبدأ بعد.': 'تستخدم مؤشرات تحقق (Validation KPIs) بدل مؤشرات تشغيل لمشروع لم يبدأ بعد.',
+            '<div class="limit-box" style="margin-top:14px"><b>المسار الأساسي للبرنامج:</b> أصحاب المشروعات القائمة. مسار الفكرة موجود، لكن لا نخلط التقديرات ببيانات التشغيل الفعلية.</div>': '<div class="limit-box" style="margin-top:14px"><b>المسار الأساسي للبرنامج:</b> أصحاب المشروعات القائمة. وفي مسار الفكرة تُستخدم التقديرات والسيناريوهات كافتراضات قابلة للاختبار إلى أن تتوفر بيانات فعلية.</div>',
+            '<div class="bundle"><div class="bundle-no">01</div><h3>25 لقاء Live</h3><p class="micro">Orientation إضافية + 24 جلسة تدريبية فعلية.</p></div>': '<div class="bundle"><div class="bundle-no">01</div><h3>25 لقاء مباشرًا</h3><p class="micro">جلسة تعريفية إضافية + 24 جلسة تدريبية فعلية.</p></div>',
+            '<div class="bundle"><div class="bundle-no">02</div><h3>Workbook + 24 أداة</h3>': '<div class="bundle"><div class="bundle-no">02</div><h3>Workbook تطبيقي + 24 أداة</h3>',
+            '<div class="bundle"><div class="bundle-no">09</div><h3>AI Founding Access</h3><p class="micro">6 أشهر مجانًا من تاريخ تفعيل حسابك على الأداة.</p></div>': '<div class="bundle"><div class="bundle-no">09</div><h3>وصول مجاني لأداة AI</h3><p class="micro">6 أشهر مجانًا تبدأ من تاريخ تفعيل حسابك على الأداة.</p></div>',
+            '<span class="ai-label">قيد التطوير — تصور مبدئي للواجهة</span>': '<span class="ai-label">الأداة قيد التطوير</span>',
+            '<p>لن نبيعها كأنها منتج جاهز. أعضاء الدفعة التأسيسية يحصلون على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم عليها. الـAI دوره يساعدك في تنظيم الأسئلة وتسريع التحليل بعد ما تكون فهمت منهج التشخيص؛ مش بديل عن فهم المشروع.</p>': '<p>يحصل أعضاء الدفعة الأولى على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم على الأداة. صُممت الأداة لمساعدتك في تنظيم أسئلة التشخيص وتسريع التحليل بعد ما تتعلم المنهج وتفهم بيانات مشروعك.</p>',
+            '<p style="margin-bottom:0"><b style="color:#FFD782">السعر المخطط للبيع المستقل لاحقًا: 1,950 جنيه</b> — وقد يتغير قبل الإطلاق النهائي بناءً على تكلفة التشغيل والنسخة الفعلية.</p>': '<p style="margin-bottom:0"><b style="color:#FFD782">ميزة خاصة بالدفعة الأولى:</b> 6 أشهر استخدام مجاني عند تفعيل الأداة.</p>',
+            '<div class="kicker" style="color:#FFD782">السعر التأسيسي للدفعة الأولى</div>': '<div class="kicker" style="color:#FFD782">السعر وخيارات السداد</div>',
+            '<h2>سعر أقل لأول مجموعة… لأن أول دفعة تبني معنا الـProof الحقيقي.</h2>': '<h2>4,500 جنيه للسداد الكامل، أو 5,000 جنيه بالتقسيط.</h2>',
+            '<p class="lead">مش «خصم 50%» من رقم مصطنع. ده سعر تأسيسي للدفعة الأولى، ومع كل دفعة لاحقة نراجع السعر بناءً على النتائج والطلب والتجربة الفعلية.</p>': '<p class="lead">السعر المعلن خاص بالدفعة الأولى. اختر السداد الكامل أو خطة التقسيط حسب الأنسب لك.</p>',
+            '<div class="founding"><b style="color:#FFD782">ليه السعر تأسيسي؟</b> لأن دي أول دفعة من البرنامج، وأول مجموعة هتساعدنا بFeedback حقيقي في تحسين تجربة الأدوات والأداة التشخيصية. مش مطلوب منك Review إيجابي؛ المطلوب Feedback صادق.</div>': '<div class="founding"><b style="color:#FFD782">مرونة في السداد:</b> تقدر تبدأ بحجز 2,000 جنيه، ولو أكملت باقي السداد قبل أول جلسة تدريب فعلية يظل إجمالي اشتراكك 4,500 جنيه.</div>',
+            '<p class="lead" style="font-size:14px">بيانات Vodafone Cash غير معروضة على الصفحة؛ زر النسخ ينسخ الرقم مباشرة. InstaPay يفتح رابط الدفع.</p>': '<p class="lead" style="font-size:14px">استخدم الأزرار أدناه للسداد عبر Vodafone Cash أو InstaPay، ثم أرسل إثبات التحويل لتأكيد الحجز.</p>',
+            'بعد حضورها، لو وجدت أن طبيعة البرنامج غير مناسبة لك': 'بعد انتهائها، لو وجدت أن طبيعة البرنامج غير مناسبة لك',
+            '<div class="kicker">3 مواعيد لازم تكون واضحة</div>': '<div class="kicker">مواعيد البداية والاسترداد</div>',
+            '<h2>مفيش مفاجآت في البداية أو السداد أو الاسترداد.</h2>': '<h2>اعرف التواريخ الأساسية قبل تأكيد الحجز.</h2>',
+            'Orientation إضافية • 7:30–8:30 مساءً.': 'جلسة تعريفية إضافية • 7:30–8:30 مساءً.',
+            '<details><summary>هل ينفع لو لسه عندي فكرة؟</summary><p>نعم، لكن تطبيقك هيكون على افتراضات وسيناريوهات وتجارب Validation، مش هنقدم الأرقام التقديرية كأنها بيانات تشغيل فعلية.</p></details>': '<details><summary>هل ينفع لو لسه عندي فكرة؟</summary><p>نعم. التطبيق في مسار الفكرة يعتمد على افتراضات وسيناريوهات وتجارب لاختبار الطلب والسعر، وتُعامل الأرقام كتقديرات قابلة للاختبار إلى أن تتوفر بيانات فعلية.</p></details>',
+            '<details><summary>هل هراجع مشروعي بشكل فردي كل جلسة؟</summary><p>البرنامج جماعي تطبيقي. فيه أسئلة مباشرة ومراجعات Hot Seat دورية لحالات مختارة بالتناوب، لكن الاشتراك لا يعني استشارة فردية غير محدودة لكل متدرب في كل جلسة.</p></details>': '<details><summary>هل فيه مراجعة مباشرة للحالات؟</summary><p>نعم. البرنامج يتضمن أسئلة مباشرة ومراجعات تطبيقية دورية لحالات مختارة بالتناوب داخل الجلسات. البرنامج جماعي في أساسه، والمراجعات هدفها توضيح طريقة التطبيق على مواقف فعلية.</p></details>',
+            '<details><summary>هل فيه شهادة؟</summary><p>نعم. شهادة إتمام صادرة باسم أكاديمية المدرب الأفضل ولعبة البزنس لمن يستوفي متطلبات الحضور والتطبيق والمشروع النهائي. لا ندّعي في الصفحة اعتمادًا خارجيًا محددًا ما لم يتم توثيقه رسميًا.</p></details>': '<details><summary>هل فيه شهادة؟</summary><p>نعم. يحصل من يستوفي متطلبات الحضور والتطبيق والمشروع النهائي على شهادة إتمام صادرة باسم أكاديمية المدرب الأفضل ولعبة البزنس.</p></details>',
+            '<details><summary>إيه وضع أداة الـAI؟</summary><p>الأداة قيد التطوير وليست منتجًا جاهزًا وقت الحجز. أعضاء الدفعة التأسيسية يحصلون على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم عليها.</p></details>': '<details><summary>إيه وضع أداة الـAI؟</summary><p>الأداة قيد التطوير. أعضاء الدفعة الأولى يحصلون على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم عليها.</p></details>',
+            '<div class="kicker">شروط واضحة قبل الحجز</div>': '<div class="kicker">شروط الحجز</div>',
+            '<h2>نقفل مناطق الخلاف قبل الدفع.</h2>': '<h2>تفاصيل السداد والاسترداد والتسجيل واضحة من البداية.</h2>',
+            'نافذة الاسترداد تبدأ بعد حضور أول جلسة تدريب فعلية في 4 أكتوبر': 'نافذة الاسترداد تبدأ بعد انتهاء أول جلسة تدريب فعلية في 4 أكتوبر',
+            '<details><summary>التسجيل والخصوصية</summary><p>الجلسات قد تُسجل لإتاحتها لأعضاء الدفعة.': '<details><summary>التسجيل والخصوصية</summary><p>تُسجل الجلسات بهدف إتاحتها لأعضاء الدفعة.',
+            '<details><summary>الشهادة</summary><p>شهادة الإتمام تصدر باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء متطلبات الإتمام المحددة للدفعة، ومنها الحضور والتطبيق والمشروع النهائي. لا يُستخدم وصف «معتمدة» بمعنى اعتماد خارجي محدد إلا عند وجود مستند رسمي يثبت جهة ونطاق الاعتماد.</p></details>': '<details><summary>الشهادة</summary><p>شهادة الإتمام تصدر باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء متطلبات الإتمام المحددة للدفعة، ومنها الحضور والتطبيق والمشروع النهائي.</p></details>',
+            'الدفعة التأسيسية تبدأ 1 أكتوبر. 25 لقاء Live إجمالًا، 24 جلسة تدريبية، ملف قرار وخطة 90 يومًا، بسعر تأسيسي 4,500 جنيه للسداد الكامل أو 5,000 بالتقسيط.': 'الدفعة الأولى تبدأ 1 أكتوبر. 25 لقاء مباشرًا إجمالًا، منها 24 جلسة تدريبية، وتنتهي الرحلة بملف قرار وخطة 90 يومًا. السداد الكامل 4,500 جنيه أو 5,000 بالتقسيط.'
+          }
+          for old,new in replacements.items():
+              if old in s:
+                  s=s.replace(old,new)
+
+          visual = r'''
+          /* V23.1 visual refinement */
+          body{font-family:"IBM Plex Sans Arabic","Cairo",Tahoma,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.78;text-rendering:optimizeLegibility}
+          h1,h2,h3,.brand,.cta,.kicker{font-family:"Cairo","IBM Plex Sans Arabic",sans-serif}
+          .section{padding:68px 0}
+          .kicker{font-weight:700;font-size:13px;color:#9a6816}
+          h1{font-size:clamp(34px,4.8vw,58px);line-height:1.22;letter-spacing:-.45px;font-weight:800}
+          h2{font-size:clamp(27px,3.5vw,40px);line-height:1.38;font-weight:800;max-width:880px}
+          h3{font-size:20px;line-height:1.5;font-weight:700}
+          .lead{font-size:17px;line-height:1.9;max-width:860px}
+          .micro{font-size:13px;line-height:1.75}
+          .card{border-radius:22px;box-shadow:0 14px 38px rgba(5,45,37,.075)}
+          .cta{min-height:54px;border-radius:15px;background:linear-gradient(180deg,#1b6958,#0b493d);font-size:14px;font-weight:700;box-shadow:0 10px 24px rgba(5,55,45,.22);line-height:1.4}
+          .hero .cta.secondary,.final .cta.secondary{color:#fff!important;border-color:rgba(255,255,255,.40);background:rgba(255,255,255,.06)}
+          .hero .cta.secondary:hover,.final .cta.secondary:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.56)}
+          .top-note{background:#0a392f;color:#f4e1b3;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08)}
+          .brand{font-weight:800}
+          .nav{font-size:13px;font-weight:500;gap:20px}
+          .hero p{font-size:17.5px;line-height:1.9;max-width:720px}
+          .eyebrow{font-weight:700}
+          .badge{font-size:12px;font-weight:500}
+          .trust-item b{font-weight:700}
+          .trust-item span{font-size:11.5px;line-height:1.55}
+          .item p,.item li{font-size:14px;line-height:1.8}
+          .icon{font-weight:700;font-size:15px}
+          .step span{font-size:13px;line-height:1.65}
+          .proof-note{font-size:13px;line-height:1.7}
+          .tool-mini span{font-size:12.5px;line-height:1.65}
+          .cred span{font-size:11px;font-weight:600}
+          .authority-point{font-size:14px;line-height:1.75}
+          .stage-card p{font-size:13.5px;line-height:1.7}
+          .curriculum summary,.faq summary,.legal summary{font-weight:700}
+          .curriculum ul{font-size:14px;line-height:1.8}
+          .guided b{font-weight:700}
+          .guided span{font-size:13px;line-height:1.7}
+          .bundle-no,.ai-label,.price-tag{font-weight:700}
+          .price{font-size:46px;font-weight:800}
+          .price-card ul{font-size:13.5px;line-height:1.8}
+          .founding{line-height:1.75}
+          .pay-plan p{font-size:12.5px;line-height:1.7}
+          .payment-proof span{font-size:12.5px}
+          .date-card span{font-size:12.5px;line-height:1.65}
+          .faq p,.legal p{font-size:13.5px;line-height:1.8}
+          .footer{font-size:12px}
+          .pay-actions .cta{width:100%;white-space:normal;min-height:52px;padding:9px 14px;font-size:13px}
+          .final .actions{justify-content:center}
+          .final .cta.secondary{min-width:190px}
+          @media(max-width:640px){
+            h1{font-size:32px;line-height:1.28;letter-spacing:0}
+            h2{font-size:27px;line-height:1.42}
+            .hero p,.lead{font-size:16px}
+            .actions{gap:9px}
+            .hero .actions .cta,.final .actions .cta{width:100%}
+            .fact{font-size:12.5px;align-items:flex-start}
+            .fact b{max-width:62%;line-height:1.55}
+            .trust-item:last-child:nth-child(odd){grid-column:1 / -1}
+            .partner-logo{min-height:108px}
+            .partner-logo img{max-height:76px}
+            .payment-panel{padding:18px}
+            .price-card{padding:20px}
+            .mobile-sticky p{font-size:11px}
+            .mobile-sticky b{font-size:15px}
+            .mobile-sticky .cta{font-size:12.5px}
+          }
+          '''
+          if '/* V23.1 visual refinement */' not in s:
+              s=s.replace('</style>', visual+'\n</style>')
+
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Remove one-time workflow and commit
+        shell: bash
+        run: |
+          rm -f .github/workflows/v231_refine.yml
+          git config user.name "Hatem1984"
+          git config user.email "88743642+Hatem1984@users.noreply.github.com"
+          git add index.html .github/workflows/v231_refine.yml
+          git commit -m "Refine V23.1 copy credibility and visual hierarchy"
+          git push origin main
