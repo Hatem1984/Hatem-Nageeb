@@ -18,115 +18,114 @@ jobs:
           ref: main
 
       - name: Install image tools
-        run: |
-          python -m pip install --quiet pillow cairosvg
+        run: python -m pip install --quiet pillow numpy
 
-      - name: Download official credential logos
-        run: |
-          curl -L --fail --retry 3 -o ebu_logo.svg "https://www.eb.university/images/about-us/ebu-logo-shield.svg"
-          curl -L --fail --retry 3 -o lbs_logo.svg "https://upload.wikimedia.org/wikipedia/commons/b/bc/London_Business_School_logo.svg"
-
-      - name: Clean academy logo and refine page
+      - name: Refine logos typography and credentials
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          from io import BytesIO
+          import base64
+          import re
           import numpy as np
           from PIL import Image
-          import cairosvg
 
-          # Clean the Academy logo by removing the dark rectangular background.
-          cairosvg.svg2png(url='tbt_academy_logo.svg', write_to='tbt_render.png', output_width=540, output_height=420)
-          im = Image.open('tbt_render.png').convert('RGBA')
+          # Produce a transparent Academy mark from the logo already in the repo.
+          svg = Path('tbt_academy_logo.svg').read_text(encoding='utf-8')
+          m = re.search(r'data:image/webp;base64,([^"\']+)', svg)
+          if not m:
+              raise SystemExit('Embedded Academy logo not found')
+          im = Image.open(BytesIO(base64.b64decode(m.group(1)))).convert('RGBA')
           arr = np.array(im).astype(np.float32)
           rgb = arr[:, :, :3]
-          lum = 0.2126*rgb[:,:,0] + 0.7152*rgb[:,:,1] + 0.0722*rgb[:,:,2]
+          lum = 0.2126 * rgb[:, :, 0] + 0.7152 * rgb[:, :, 1] + 0.0722 * rgb[:, :, 2]
           mn = rgb.min(axis=2)
-          gold = (rgb[:,:,0] > 120) & (rgb[:,:,1] > 65) & (rgb[:,:,2] < 115)
+          gold = (rgb[:, :, 0] > 120) & (rgb[:, :, 1] > 65) & (rgb[:, :, 2] < 125)
           white = mn > 145
-          alpha = np.clip((lum - 38) / 70 * 255, 0, 255)
-          alpha[gold] = np.maximum(alpha[gold], 235)
+          alpha = np.clip((lum - 36) / 72 * 255, 0, 255)
+          alpha[gold] = np.maximum(alpha[gold], 238)
           alpha[white] = 255
-          alpha[(lum < 82) & (~gold) & (~white)] *= 0.08
+          alpha[(lum < 82) & (~gold) & (~white)] *= 0.05
           out = arr.copy()
-          out[:,:,3] = alpha
-          Image.fromarray(np.uint8(np.clip(out,0,255))).save('tbt_academy_logo_clean.png', optimize=True)
-          Path('tbt_render.png').unlink(missing_ok=True)
+          out[:, :, 3] = alpha
+          Image.fromarray(np.uint8(np.clip(out, 0, 255))).save('tbt_academy_logo_clean.png', optimize=True)
 
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-
-          # Use the cleaned Academy mark.
           s = s.replace('src="tbt_academy_logo.svg"', 'src="tbt_academy_logo_clean.png"')
 
-          # Credential rows with institutional logos and clearer attribution.
           old_mba = '<div class="authority-point"><b>ماجستير إدارة أعمال (MBA)</b> — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</div>'
-          new_mba = '''<div class="authority-point credential-point">
-            <a class="credential-logo-wrap" href="https://www.eb.university/" target="_blank" rel="noopener" aria-label="Entrepreneurship & Business University">
-              <img class="credential-logo" src="ebu_logo.svg" alt="Entrepreneurship & Business University (EBU)"/>
-            </a>
-            <div class="credential-copy"><b>ماجستير إدارة أعمال (MBA)</b><span>Entrepreneurship & Business University (EBU) — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</span></div>
-          </div>'''
+          new_mba = (
+              '<div class="authority-point credential-point">'
+              '<a class="credential-logo-wrap" href="https://www.eb.university/" target="_blank" rel="noopener" aria-label="Entrepreneurship & Business University">'
+              '<img class="credential-logo" src="https://www.eb.university/images/logo.svg" alt="Entrepreneurship & Business University (EBU)" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\'"/>'
+              '<span class="credential-fallback">EBU</span></a>'
+              '<div class="credential-copy"><b>ماجستير إدارة أعمال (MBA)</b>'
+              '<span>Entrepreneurship & Business University (EBU) — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</span></div>'
+              '</div>'
+          )
           if old_mba not in s:
-              raise SystemExit('MBA authority line not found')
+              raise SystemExit('MBA line not found')
           s = s.replace(old_mba, new_mba)
 
           old_lbs = '<div class="authority-point"><b>إدارة شركات المستقبل</b> — University of London · London Business School · 2022.</div>'
-          new_lbs = '''<div class="authority-point credential-point">
-            <a class="credential-logo-wrap" href="https://www.london.edu/executive-education/leadership/leading-businesses-into-the-future" target="_blank" rel="noopener" aria-label="London Business School">
-              <img class="credential-logo lbs-mark" src="lbs_logo.svg" alt="London Business School"/>
-            </a>
-            <div class="credential-copy"><b>إدارة شركات المستقبل</b><span>Leading Businesses into the Future — London Business School · Executive Education · 2022.</span></div>
-          </div>'''
+          new_lbs = (
+              '<div class="authority-point credential-point">'
+              '<a class="credential-logo-wrap" href="https://www.london.edu/executive-education/leadership/leading-businesses-into-the-future" target="_blank" rel="noopener" aria-label="London Business School">'
+              '<img class="credential-logo lbs-mark" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/London_Business_School_logo.svg" alt="London Business School" referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\'"/>'
+              '<span class="credential-fallback lbs-fallback">LBS</span></a>'
+              '<div class="credential-copy"><b>إدارة شركات المستقبل</b>'
+              '<span>Leading Businesses into the Future — London Business School · Executive Education · 2022.</span></div>'
+              '</div>'
+          )
           if old_lbs not in s:
-              raise SystemExit('LBS authority line not found')
+              raise SystemExit('LBS line not found')
           s = s.replace(old_lbs, new_lbs)
 
-          # Slightly darker global muted tone for easier reading.
-          s = s.replace('--paper:#FFFDF8;--ivory:#FFF7ED;--ink:#15251f;--muted:#61706b;--line:#DDE7E2;', '--paper:#FFFDF8;--ivory:#FFF7ED;--ink:#15251f;--muted:#4B5C56;--line:#DDE7E2;')
+          s = s.replace(
+              '--paper:#FFFDF8;--ivory:#FFF7ED;--ink:#15251f;--muted:#61706b;--line:#DDE7E2;',
+              '--paper:#FFFDF8;--ivory:#FFF7ED;--ink:#15251f;--muted:#4B5C56;--line:#DDE7E2;'
+          )
 
-          polish = r'''
-/* V23.2 legibility + credential identity */
-body{font-weight:500}
-.lead,.item p,.item li,.step span,.proof-note,.tool-mini span,.authority-point,.stage-card p,.curriculum ul,.guided span,.micro,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p,.founding,.ai-box p,.price-card ul,.trust-item span,.partner-logo small{font-weight:600;color:#43544e}
-.hero p,.hero-truth,.offer .lead,.founding,.ai-box p,.final p{font-weight:500}
-.tool-mini span{display:block;font-size:13.5px;line-height:1.75;margin-top:4px}
-.authority-point{font-size:14.5px;line-height:1.85}
-.authority-point b{font-weight:800}
-.guided span,.stage-card p,.proof-note,.micro{font-size:13.5px}
-.faq p,.legal p{font-size:14px;line-height:1.9}
-.pay-plan p,.payment-proof span,.date-card span{font-size:13px}
-.trust-item span{font-size:12px}
-.partner-logo small{font-size:11.5px}
-.curriculum ul,.price-card ul{font-size:14px}
-.credential-point{display:grid;grid-template-columns:92px 1fr;gap:15px;align-items:center;padding:14px 16px}
-.credential-logo-wrap{width:88px;height:74px;border-radius:14px;background:#fff;border:1px solid #d9e5df;display:grid;place-items:center;padding:8px;box-shadow:0 6px 18px rgba(5,45,37,.06)}
-.credential-logo{width:100%;height:100%;object-fit:contain}
-.credential-logo.lbs-mark{padding:2px}
-.credential-copy b{display:block;color:var(--green);margin-bottom:2px}
-.credential-copy span{display:block;color:#43544e;font-size:13.5px;font-weight:600;line-height:1.75}
-.partner-logo img[src*="tbt_academy_logo_clean"]{max-height:102px;max-width:158px}
-@media(max-width:640px){
-  body{font-weight:500}
-  .credential-point{grid-template-columns:76px 1fr;gap:11px;padding:13px}
-  .credential-logo-wrap{width:72px;height:64px;padding:7px}
-  .credential-copy span{font-size:13px;line-height:1.7}
-  .tool-mini span,.guided span,.stage-card p,.proof-note,.micro{font-size:13px}
-  .faq p,.legal p{font-size:13.5px}
-}
-'''
+          css = '\n'.join([
+              '/* V23.2 legibility + credential identity */',
+              'body{font-weight:500}',
+              '.lead,.item p,.item li,.step span,.proof-note,.tool-mini span,.authority-point,.stage-card p,.curriculum ul,.guided span,.micro,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p,.founding,.ai-box p,.price-card ul,.trust-item span,.partner-logo small{font-weight:600}',
+              '.tool-mini span,.authority-point,.stage-card p,.curriculum ul,.guided span,.micro,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p,.price-card ul,.trust-item span,.partner-logo small{color:#43544e}',
+              '.hero p,.hero-truth,.offer .lead,.founding,.ai-box p,.final p{font-weight:500}',
+              '.tool-mini span{display:block;font-size:14px;line-height:1.8;margin-top:5px}',
+              '.authority-point{font-size:15px;line-height:1.9}',
+              '.authority-point b{font-weight:800}',
+              '.guided span,.stage-card p,.proof-note,.micro{font-size:14px;line-height:1.8}',
+              '.faq p,.legal p{font-size:14px;line-height:1.9}',
+              '.pay-plan p,.payment-proof span,.date-card span{font-size:13.5px}',
+              '.trust-item span{font-size:12.5px}',
+              '.partner-logo small{font-size:12px}',
+              '.curriculum ul,.price-card ul{font-size:14px;line-height:1.85}',
+              '.credential-point{display:grid;grid-template-columns:104px 1fr;gap:16px;align-items:center;padding:15px 17px}',
+              '.credential-logo-wrap{width:100px;height:82px;border-radius:14px;background:#fff;border:1px solid #d9e5df;display:grid;place-items:center;padding:9px;box-shadow:0 6px 18px rgba(5,45,37,.06);position:relative;overflow:hidden}',
+              '.credential-logo{width:100%;height:100%;object-fit:contain}',
+              '.credential-logo.lbs-mark{padding:1px}',
+              '.credential-fallback{display:none;width:100%;height:100%;place-items:center;color:#153b66;font-family:Cairo,sans-serif;font-weight:800;font-size:22px}',
+              '.lbs-fallback{background:#112c49;color:#fff;border-radius:7px}',
+              '.credential-copy b{display:block;color:var(--green);margin-bottom:3px;font-size:15.5px}',
+              '.credential-copy span{display:block;color:#43544e;font-size:14px;font-weight:600;line-height:1.8}',
+              '.partner-logo img[src*="tbt_academy_logo_clean"]{max-height:104px;max-width:162px}',
+              '@media(max-width:640px){body{font-weight:500}.credential-point{grid-template-columns:82px 1fr;gap:12px;padding:13px}.credential-logo-wrap{width:78px;height:68px;padding:7px}.credential-copy b{font-size:14.5px}.credential-copy span{font-size:13.5px;line-height:1.75}.tool-mini span,.guided span,.stage-card p,.proof-note,.micro{font-size:13.5px}.faq p,.legal p{font-size:13.5px}}'
+          ])
           if '/* V23.2 legibility + credential identity */' not in s:
-              s = s.replace('</style>', polish + '\n</style>', 1)
+              s = s.replace('</style>', css + '\n</style>', 1)
 
           p.write_text(s, encoding='utf-8')
           PY
 
-      - name: Commit V23.2
+      - name: Commit V23.2 and remove one-time workflow
         run: |
           git config user.name "Hatem1984"
           git config user.email "88743642+Hatem1984@users.noreply.github.com"
-          git add index.html ebu_logo.svg lbs_logo.svg tbt_academy_logo_clean.png
-          git commit -m "Polish V23.2 typography and credential logos"
+          git add index.html tbt_academy_logo_clean.png
+          git commit -m "Polish V23.2 legibility and credential identity"
           git rm .github/workflows/v232_polish.yml
           git commit -m "Remove one-time V23.2 workflow"
           git push origin main
