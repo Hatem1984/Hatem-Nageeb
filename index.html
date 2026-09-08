@@ -329,6 +329,76 @@ body{font-weight:500}
 .credential-copy span{display:block;color:#43544e;font-size:14px;font-weight:600;line-height:1.8}
 .partner-logo img[src*="tbt_academy_logo_clean"]{max-height:104px;max-width:162px}
 @media(max-width:640px){body{font-weight:500}.credential-point{grid-template-columns:82px 1fr;gap:12px;padding:13px}.credential-logo-wrap{width:78px;height:68px;padding:7px}.credential-copy b{font-size:14.5px}.credential-copy span{font-size:13.5px;line-height:1.75}.tool-mini span,.guided span,.stage-card p,.proof-note,.micro{font-size:13.5px}.faq p,.legal p{font-size:13.5px}}
+
+/* V23.3 psychological selling + visual system */
+.launch-bar{display:flex!important;justify-content:space-between!important;gap:18px!important;padding:8px 0;min-height:62px!important}
+.launch-copy{display:flex;flex-direction:column;align-items:flex-start;line-height:1.35}
+.launch-copy b{font-size:13.5px;color:#fff3cf}
+.launch-copy span{font-size:11.5px;color:#e2d1aa;font-weight:600}
+.countdown{display:flex;gap:7px;direction:ltr}
+.countdown div{min-width:54px;padding:5px 7px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);text-align:center}
+.countdown b{display:block;color:#FFD782;font-family:"Cairo",sans-serif;font-size:17px;line-height:1.1}
+.countdown span{display:block;color:#f0e5cc;font-size:9.5px;font-weight:700;margin-top:3px}
+.credential-logo-wrap{cursor:default}
+.credential-logo-wrap.ebu-wrap{background:#0b2843;border-color:#1d4564}
+.credential-logo-wrap.ebu-wrap .credential-logo{filter:none;max-width:86px;max-height:66px}
+.credential-logo-wrap.lbs-wrap{background:#fff}
+.partner-logo img[src*="tbt_academy_logo_v23"]{max-height:108px;max-width:170px}
+.cred span{font-size:12px;font-weight:700}
+.micro,.tool-mini span,.authority-point,.credential-copy span,.stage-card p,.guided span,.bundle p,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p{font-weight:600}
+.tool-mini span,.authority-point,.credential-copy span,.stage-card p,.guided span,.bundle p{font-size:14.5px;line-height:1.85}
+.faq p,.legal p{font-size:14.5px;line-height:1.9}
+.bundle{position:relative;overflow:hidden;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+.bundle:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(5,45,37,.10);border-color:#cbded6}
+.featured-bundle{padding-top:74px}
+.bundle-icon{position:absolute;top:16px;right:18px;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#eef7f3,#fff3dd);color:#0f4a3e;box-shadow:0 8px 20px rgba(7,60,50,.10);transition:transform .3s ease,box-shadow .3s ease}
+.bundle-icon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.bundle:hover .bundle-icon{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 26px rgba(7,60,50,.16)}
+.whatsapp-icon{color:#147a58;background:linear-gradient(145deg,#e8fff3,#f5fffa)}
+.certificate-icon{color:#9a6816;background:linear-gradient(145deg,#fff3d8,#fffaf0)}
+.zoom-icon{color:#215db8;background:linear-gradient(145deg,#edf4ff,#f9fbff)}
+.tools-icon{color:#0e5b4b}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease,box-shadow .28s ease,border-color .28s ease}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.ai-preview{min-height:245px;border-radius:17px;background:linear-gradient(145deg,#f8fffc,#eef7f3);border:1px solid #d6e7df;padding:17px;color:#163a31;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
+.ai-preview-head{display:flex;align-items:center;gap:9px;padding-bottom:13px;border-bottom:1px solid #dbe9e3}
+.ai-preview-head>span{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#0f4a3e;color:#fff;font-weight:800}
+.ai-preview-head b{font-family:"Cairo",sans-serif;font-size:14px}
+.ai-preview-row{display:grid;grid-template-columns:10px 1fr;gap:10px;align-items:start;padding:13px 0;border-bottom:1px dashed #dce8e3}
+.ai-preview-row:last-child{border-bottom:0}
+.ai-preview-row i{width:8px;height:8px;border-radius:50%;background:#e6a63d;margin-top:6px;box-shadow:0 0 0 4px rgba(230,166,61,.12)}
+.ai-preview-row b{display:block;font-size:13px;color:#0e3a32}
+.ai-preview-row span{display:block;font-size:11.5px;color:#52645d;font-weight:600;line-height:1.55;margin-top:2px}
+.offer-trust-strip{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 2px}
+.offer-trust-strip span{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,215,130,.24);background:rgba(255,255,255,.07);color:#ffe0a0;font-size:12px;font-weight:700}
+.standard-price{color:#6f7d78;font-size:13px;font-weight:700;margin-top:9px}
+.standard-price del{font-size:18px;color:#8c6b62;margin-right:6px;text-decoration-thickness:2px}
+.launch-saving{display:inline-flex;margin-top:8px;padding:6px 9px;border-radius:10px;background:#fff2d8;color:#875a14;font-size:12px;font-weight:800}
+.value-math{margin-top:12px;padding:13px 15px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);color:#e1eee9;font-size:13px;line-height:1.75}
+.value-math b{color:#FFD782}
+.after-payment{margin-top:16px;padding:16px 17px;border-radius:17px;background:#eef7f3;border:1px solid #d9e8e2;color:#334942}
+.after-payment>b{display:block;color:#0e3a32;margin-bottom:6px}
+.after-payment ol{margin:0;padding-right:20px;font-size:13.5px;font-weight:600;line-height:1.9}
+.final .cta.secondary{white-space:normal;padding-inline:20px}
+@media(max-width:640px){
+  .launch-bar{flex-direction:column;align-items:stretch!important;gap:7px!important;padding:7px 0}
+  .launch-copy{align-items:center;text-align:center}
+  .countdown{justify-content:center;gap:5px}
+  .countdown div{min-width:48px;padding:5px}
+  .countdown b{font-size:15px}
+  .countdown span{font-size:9px}
+  .tool-mini span,.authority-point,.credential-copy span,.stage-card p,.guided span,.bundle p,.faq p,.legal p{font-size:14px}
+  .featured-bundle{padding-top:70px}
+  .bundle-icon{width:44px;height:44px}
+  .offer-trust-strip{gap:6px}
+  .offer-trust-strip span{font-size:11px}
+  .final .cta.secondary{min-width:0;width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .bundle,.bundle-icon{transition:none}
+}
+
 </style>
 
 <script type="application/ld+json">
@@ -356,10 +426,18 @@ body{font-weight:500}
 </script>
 </head>
 <body>
-<!-- V23 CRO Revision — 2026-09-08 -->
+<!-- V23.3 Conversion Revision — 2026-09-08 -->
 
 <div class="top-note">
-  <div class="wrap">الدفعة الأولى تبدأ 1 أكتوبر 2026 • 20 مشاركًا كحد أقصى لضمان مساحة للتطبيق والمناقشة</div>
+  <div class="wrap launch-bar">
+    <div class="launch-copy"><b>دفعة أكتوبر تبدأ الخميس 1 أكتوبر 2026</b><span>7:30 مساءً بتوقيت مصر</span></div>
+    <div class="countdown" aria-label="الوقت المتبقي لبدء الدفعة">
+      <div><b id="cd-days">--</b><span>يوم</span></div>
+      <div><b id="cd-hours">--</b><span>ساعة</span></div>
+      <div><b id="cd-mins">--</b><span>دقيقة</span></div>
+      <div><b id="cd-secs">--</b><span>ثانية</span></div>
+    </div>
+  </div>
 </div>
 
 <header class="topbar">
@@ -375,7 +453,7 @@ body{font-weight:500}
       <a href="#offer" data-track-pricing>السعر</a>
       <a href="#faq">الأسئلة</a>
     </nav>
-    <a class="cta small" href="#offer" data-track-pricing>شوف السعر وخطة السداد</a>
+    <a class="cta small" href="#offer" data-track-pricing>احجز مكانك بـ2,000 جنيه</a>
   </div>
 </header>
 
@@ -388,8 +466,8 @@ body{font-weight:500}
       <p>برنامج تطبيقي مباشر لأصحاب المشروعات يساعدك تختار <b>قرارًا رئيسيًا واحدًا</b>، تجمع له الدليل والأرقام، وتخرج بملف قرار وخطة 90 يومًا بدل ردود الأفعال والتجريب العشوائي.</p>
       <div class="hero-truth"><b>بنهاية البرنامج:</b> يكون عندك ملف قرار لمشروعك مبني على الأدلة والأرقام، وخطة 90 يومًا بأولويات واضحة ومؤشرات تراجعها أثناء التنفيذ.</div>
       <div class="actions">
-        <a class="cta" href="#offer" data-track-pricing>شوف السعر وخطة السداد</a>
-        <a class="cta secondary" href="https://m.me/891183134080763" target="_blank" rel="noopener" data-track-contact>اسأل هل البرنامج مناسب لمشروعك</a>
+        <a class="cta" href="#offer" data-track-pricing>احجز مكانك بـ2,000 جنيه</a>
+        <a class="cta secondary" href="https://m.me/891183134080763" target="_blank" rel="noopener" data-track-contact>عندك سؤال؟ تواصل معنا</a>
       </div>
       <div class="badges">
         <span class="badge">25 لقاء مباشرًا إجمالًا</span>
@@ -415,7 +493,7 @@ body{font-weight:500}
           <small>لعبة البزنس</small>
         </div>
         <div class="partner-logo">
-          <img src="tbt_academy_logo_clean.png" alt="أكاديمية المدرب الأفضل"/>
+          <img src="tbt_academy_logo_v23.svg" alt="أكاديمية المدرب الأفضل"/>
           <small>أكاديمية المدرب الأفضل</small>
         </div>
       </div>
@@ -506,14 +584,13 @@ body{font-weight:500}
           <h3>حاتم نجيب</h3>
           <p class="micro">استشاري مشروعات صغيرة ومتوسطة • مؤسس لعبة البزنس</p>
           <div class="cred">
-            <span>MBA</span><span>مؤلف كتاب</span><span>تأهيل مدربين 48 ساعة</span>
+            <span>MBA</span><span>خبرة إدارية وتشغيلية</span><span>تأهيل مدربين 48 ساعة</span>
           </div>
         </figcaption>
       </figure>
       <div>
         <div class="authority-points">
-          <div class="authority-point credential-point"><a class="credential-logo-wrap" href="https://www.eb.university/" target="_blank" rel="noopener" aria-label="Entrepreneurship & Business University"><img class="credential-logo" src="https://www.eb.university/images/logo.svg" alt="Entrepreneurship & Business University (EBU)" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback">EBU</span></a><div class="credential-copy"><b>ماجستير إدارة أعمال (MBA)</b><span>Entrepreneurship & Business University (EBU) — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</span></div></div>
-          <div class="authority-point credential-point"><a class="credential-logo-wrap" href="https://www.london.edu/executive-education/leadership/leading-businesses-into-the-future" target="_blank" rel="noopener" aria-label="London Business School"><img class="credential-logo lbs-mark" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/London_Business_School_logo.svg" alt="London Business School" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback lbs-fallback">LBS</span></a><div class="credential-copy"><b>إدارة شركات المستقبل</b><span>Leading Businesses into the Future — London Business School · Executive Education · 2022.</span></div></div>
+          <div class="authority-point credential-point"><div class="credential-logo-wrap lbs-wrap" aria-label="London Business School"><img class="credential-logo lbs-mark" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/London_Business_School_logo.svg" alt="London Business School" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback lbs-fallback">LBS</span></div><div class="credential-copy"><b>إدارة شركات المستقبل</b><span>Leading Businesses into the Future — London Business School · Executive Education · 2022.</span></div></div>
           <div class="authority-point"><b>خبرة عملية في الإدارة والتشغيل والتسويق والمبيعات</b> — ربط الأرقام بواقع المشروع وليس التعامل معها بمعزل عن التشغيل.</div>
           <div class="authority-point"><b>منهج لعبة البزنس</b> — السؤال → الدليل → الأداة → القرار.</div>
         </div>
@@ -603,24 +680,29 @@ body{font-weight:500}
     <div class="kicker">الاشتراك يشمل</div>
     <h2>منظومة تطبيق كاملة — من أول لقاء لحد ملف القرار.</h2>
     <div class="bundle-grid" style="margin-top:22px">
-      <div class="bundle"><div class="bundle-no">01</div><h3>25 لقاء مباشرًا</h3><p class="micro">جلسة تعريفية إضافية + 24 جلسة تدريبية فعلية.</p></div>
-      <div class="bundle"><div class="bundle-no">02</div><h3>Workbook تطبيقي + 24 أداة</h3><p class="micro">تطبيقات تتجمع في ملف القرار النهائي.</p></div>
-      <div class="bundle"><div class="bundle-no">03</div><h3>WhatsApp</h3><p class="micro">متابعة جماعية بين الجلسات.</p></div>
-      <div class="bundle"><div class="bundle-no">04</div><h3>Telegram 6 أشهر</h3><p class="micro">التسجيلات من بداية الدفعة.</p></div>
-      <div class="bundle"><div class="bundle-no">05</div><h3>ملف قرار + خطة 90 يومًا</h3><p class="micro">المشروع النهائي للرحلة.</p></div>
-      <div class="bundle"><div class="bundle-no">06</div><h3>شهادة إتمام</h3><p class="micro">باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء المتطلبات.</p></div>
-      <div class="bundle"><div class="bundle-no">07</div><h3>كتاب «الخروج من النفق»</h3><p class="micro">نسخة رقمية هدية بعد انتهاء نافذة الاسترداد.</p></div>
-      <div class="bundle"><div class="bundle-no">08</div><h3>نسخة مطبوعة اختيارية</h3><p class="micro">250 جنيه + الشحن حسب المنطقة عند الطلب.</p></div>
-      <div class="bundle"><div class="bundle-no">09</div><h3>وصول مجاني لأداة AI</h3><p class="micro">6 أشهر مجانًا تبدأ من تاريخ تفعيل حسابك على الأداة.</p></div>
+      <div class="bundle reveal featured-bundle"><div class="bundle-icon zoom-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="7" y="12" width="24" height="24" rx="6"/><path d="M31 20l10-6v20l-10-6z"/></svg></div><div class="bundle-no">01</div><h3>25 لقاء مباشرًا</h3><p class="micro">جلسة تعريفية إضافية + 24 جلسة تدريبية فعلية على Zoom.</p></div>
+      <div class="bundle reveal featured-bundle"><div class="bundle-icon tools-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="11" y="8" width="26" height="32" rx="5"/><path d="M18 8v-2h12v2M17 18h14M17 25h14M17 32h9"/></svg></div><div class="bundle-no">02</div><h3>Workbook + 24 أداة</h3><p class="micro">نماذج وأدوات تطبيقية تتجمع في ملف القرار النهائي.</p></div>
+      <div class="bundle reveal featured-bundle"><div class="bundle-icon whatsapp-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7a16 16 0 0 0-13.8 24L8 40l9.2-2.1A16 16 0 1 0 24 7z"/><path d="M18 17c1 7 6 12 13 13l3-4-5-2-2 2c-3-1-5-3-6-6l2-2-2-5z"/></svg></div><div class="bundle-no">03</div><h3>متابعة عبر WhatsApp</h3><p class="micro">جروب خاص للمتابعة وأسئلة التطبيق والتنبيهات بين الجلسات.</p></div>
+      <div class="bundle reveal"><div class="bundle-no">04</div><h3>Telegram 6 أشهر</h3><p class="micro">التسجيلات من بداية الدفعة.</p></div>
+      <div class="bundle reveal"><div class="bundle-no">05</div><h3>ملف قرار + خطة 90 يومًا</h3><p class="micro">المشروع النهائي للرحلة.</p></div>
+      <div class="bundle reveal featured-bundle"><div class="bundle-icon certificate-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="25" rx="4"/><path d="M15 16h18M15 22h13"/><circle cx="31" cy="31" r="6"/><path d="M28 36l-2 7 5-3 5 3-2-7"/></svg></div><div class="bundle-no">06</div><h3>شهادة إتمام</h3><p class="micro">باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء المتطلبات.</p></div>
+      <div class="bundle reveal"><div class="bundle-no">07</div><h3>كتاب «الخروج من النفق»</h3><p class="micro">نسخة رقمية هدية بعد انتهاء نافذة الاسترداد.</p></div>
+      <div class="bundle reveal"><div class="bundle-no">08</div><h3>نسخة مطبوعة اختيارية</h3><p class="micro">250 جنيه + الشحن حسب المنطقة عند الطلب.</p></div>
+      <div class="bundle reveal"><div class="bundle-no">09</div><h3>وصول مجاني لأداة AI</h3><p class="micro">6 أشهر مجانًا تبدأ من تاريخ تفعيل حسابك على الأداة.</p></div>
     </div>
 
     <div class="ai-box">
-      <img src="ai_diagnostic_tool.webp" alt="تصور مبدئي لأداة التشخيص بالذكاء الاصطناعي" loading="lazy"/>
+      <div class="ai-preview" aria-label="تصور مبسط لواجهة أداة التشخيص">
+        <div class="ai-preview-head"><span>AI</span><b>التشخيص قبل الحل</b></div>
+        <div class="ai-preview-row"><i></i><div><b>بيانات المشروع</b><span>مدخلاتك أولًا</span></div></div>
+        <div class="ai-preview-row"><i></i><div><b>مؤشرات التشخيص</b><span>حقائق • احتمالات • معلومات ناقصة</span></div></div>
+        <div class="ai-preview-row"><i></i><div><b>أولوية القرار</b><span>ما الذي يحتاج اختبارًا قبل التنفيذ؟</span></div></div>
+      </div>
       <div>
         <span class="ai-label">الأداة قيد التطوير</span>
         <h3>أداة التشخيص بالذكاء الاصطناعي</h3>
         <p>يحصل أعضاء الدفعة الأولى على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم على الأداة. صُممت الأداة لمساعدتك في تنظيم أسئلة التشخيص وتسريع التحليل بعد ما تتعلم المنهج وتفهم بيانات مشروعك.</p>
-        <p style="margin-bottom:0"><b style="color:#FFD782">ميزة خاصة بالدفعة الأولى:</b> 6 أشهر استخدام مجاني عند تفعيل الأداة.</p>
+        <p style="margin-bottom:0"><b style="color:#FFD782">ميزة خاصة بالدفعة الأولى:</b> 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابك على الأداة.</p>
       </div>
     </div>
   </div>
@@ -629,19 +711,21 @@ body{font-weight:500}
 <section class="section offer" id="offer">
   <div class="wrap">
     <div class="kicker" style="color:#FFD782">السعر وخيارات السداد</div>
-    <h2>4,500 جنيه للسداد الكامل، أو 5,000 جنيه بالتقسيط.</h2>
-    <p class="lead">السعر المعلن خاص بالدفعة الأولى. اختر السداد الكامل أو خطة التقسيط حسب الأنسب لك.</p>
+    <h2>عرض إطلاق الدفعة الأولى: 4,500 جنيه بدل 9,000 جنيه.</h2>
+    <p class="lead">خصم إطلاق 50% على السعر القياسي للبرنامج. ولو مش مناسب تدفع كامل الآن، تقدر تحجز مكانك بـ2,000 جنيه فقط.</p><div class="offer-trust-strip"><span>خصم إطلاق 50%</span><span>وفر 4,500 جنيه</span><span>احجز بـ2,000 جنيه</span><span>سياسة استرداد واضحة</span></div>
 
     <div class="offer-grid">
       <article class="price-card recommended">
-        <span class="price-tag">أفضل قيمة</span>
+        <span class="price-tag">عرض إطلاق الدفعة الأولى</span>
         <h3>السداد الكامل</h3>
+        <div class="standard-price">السعر القياسي <del>9,000 جنيه</del></div>
+        <div class="launch-saving">خصم 50% • وفر 4,500 جنيه</div>
         <div class="price">4,500 <small>جنيه</small></div>
         <ul>
           <li>يمكنك السداد كاملًا الآن.</li>
           <li>أو تبدأ بـ2,000 جنيه، ثم تكمل 2,500 جنيه قبل أول جلسة تدريب فعلية يوم 4 أكتوبر، فيظل إجمالي اشتراكك 4,500 جنيه.</li>
         </ul>
-        <a class="cta" href="#payment-options" data-track-pricing>اختار السداد الكامل</a>
+        <a class="cta" href="#payment-options" data-track-pricing>احجز الآن بـ2,000 أو ادفع 4,500</a>
       </article>
 
       <article class="price-card">
@@ -657,7 +741,7 @@ body{font-weight:500}
       </article>
     </div>
 
-    <div class="founding"><b style="color:#FFD782">مرونة في السداد:</b> تقدر تبدأ بحجز 2,000 جنيه، ولو أكملت باقي السداد قبل أول جلسة تدريب فعلية يظل إجمالي اشتراكك 4,500 جنيه.</div>
+    <div class="founding"><b style="color:#FFD782">ابدأ بأقل التزام نقدي:</b> احجز مكانك بـ2,000 جنيه، ولو أكملت 2,500 قبل أول جلسة تدريب فعلية يظل إجمالي اشتراكك 4,500 جنيه. ولو اخترت التقسيط الممتد يكون الإجمالي 5,000 جنيه.</div><div class="value-math">4,500 جنيه ÷ 25 لقاء مباشرًا = <b>180 جنيه تقريبًا للقاء</b>، قبل احتساب الأدوات والمتابعة والتسجيلات وباقي المزايا.</div>
 
     <div class="payment-panel" id="payment-options">
       <h3>اختار المبلغ اللي هتحوله الآن</h3>
@@ -680,6 +764,11 @@ body{font-weight:500}
             <a class="cta" href="https://ipn.eg/S/hatemnageeb/instapay/52oq4Q" target="_blank" rel="noopener" data-track-payment data-amount="2000" data-method="instapay">افتح InstaPay — حوّل 2,000</a>
           </div>
         </div>
+      </div>
+
+      <div class="after-payment">
+        <b>بعد التحويل مباشرة:</b>
+        <ol><li>اكتب اسمك بالكامل.</li><li>أرسل رقم الهاتف المستخدم للتواصل.</li><li>أرسل لقطة شاشة أو صورة إثبات التحويل على Messenger.</li></ol>
       </div>
 
       <div class="payment-proof">
@@ -747,8 +836,8 @@ body{font-weight:500}
     <h2>القرار الجاي في مشروعك يستحق تشخيصًا أوضح قبل ما تصرف عليه وقت وفلوس.</h2>
     <p>الدفعة التأسيسية تبدأ 1 أكتوبر. 25 لقاء مباشرًا إجمالًا، 24 جلسة تدريبية، ملف قرار وخطة 90 يومًا، بسعر تأسيسي 4,500 جنيه للسداد الكامل أو 5,000 بالتقسيط.</p>
     <div class="actions" style="justify-content:center">
-      <a class="cta" href="#payment-options" data-track-pricing>شوف طرق الدفع</a>
-      <a class="cta secondary" href="https://m.me/891183134080763" target="_blank" rel="noopener" data-track-contact>عندي سؤال قبل الحجز</a>
+      <a class="cta" href="#payment-options" data-track-pricing>احجز مكانك الآن</a>
+      <a class="cta secondary" href="https://m.me/891183134080763" target="_blank" rel="noopener" data-track-contact>عندك سؤال؟ تواصل معنا</a>
     </div>
   </div>
 </section>
@@ -841,6 +930,28 @@ body{font-weight:500}
     }catch(e){showToast('تعذر النسخ تلقائيًا — افتح Messenger للمساعدة');}
   }
   document.querySelectorAll('[data-copy-vodafone]').forEach(btn=>btn.addEventListener('click',copyVodafone));
+})();
+</script>
+<script>
+(function(){
+  const launchAt = new Date('2026-10-01T19:30:00+03:00').getTime();
+  const d=document.getElementById('cd-days'),h=document.getElementById('cd-hours'),m=document.getElementById('cd-mins'),sec=document.getElementById('cd-secs');
+  function updateCountdown(){
+    if(!d||!h||!m||!sec)return;
+    let diff=launchAt-Date.now();
+    if(diff<=0){d.textContent='0';h.textContent='0';m.textContent='0';sec.textContent='0';return;}
+    const day=Math.floor(diff/86400000); diff%=86400000;
+    const hour=Math.floor(diff/3600000); diff%=3600000;
+    const min=Math.floor(diff/60000); diff%=60000;
+    const second=Math.floor(diff/1000);
+    d.textContent=String(day);h.textContent=String(hour).padStart(2,'0');m.textContent=String(min).padStart(2,'0');sec.textContent=String(second).padStart(2,'0');
+  }
+  updateCountdown(); setInterval(updateCountdown,1000);
+  const items=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}}),{threshold:.13});
+    items.forEach((el,i)=>{el.style.transitionDelay=Math.min(i%4,3)*70+'ms';io.observe(el)});
+  }else items.forEach(el=>el.classList.add('is-visible'));
 })();
 </script>
 </body>
