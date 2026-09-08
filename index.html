@@ -44,7 +44,7 @@ gtag('config','G-C2N57VGT70');
 <style>
 :root{
   --green:#0E3A32;--green2:#155446;--deep:#061f1a;--gold:#E6A63D;--gold2:#FFD782;
-  --paper:#FFFDF8;--ivory:#FFF7ED;--ink:#15251f;--muted:#61706b;--line:#DDE7E2;
+  --paper:#FFFDF8;--ivory:#FFF7ED;--ink:#15251f;--muted:#4B5C56;--line:#DDE7E2;
   --soft:#EEF7F3;--softgold:#FFF2D8;--danger:#94502f;--shadow:0 18px 55px rgba(5,45,37,.10);
   --radius:24px;
 }
@@ -305,6 +305,30 @@ h3{font-size:20px;line-height:1.5;font-weight:700}
   .mobile-sticky .cta{font-size:12.5px}
 }
 
+/* V23.2 legibility + credential identity */
+body{font-weight:500}
+.lead,.item p,.item li,.step span,.proof-note,.tool-mini span,.authority-point,.stage-card p,.curriculum ul,.guided span,.micro,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p,.founding,.ai-box p,.price-card ul,.trust-item span,.partner-logo small{font-weight:600}
+.tool-mini span,.authority-point,.stage-card p,.curriculum ul,.guided span,.micro,.pay-plan p,.payment-proof span,.date-card span,.faq p,.legal p,.price-card ul,.trust-item span,.partner-logo small{color:#43544e}
+.hero p,.hero-truth,.offer .lead,.founding,.ai-box p,.final p{font-weight:500}
+.tool-mini span{display:block;font-size:14px;line-height:1.8;margin-top:5px}
+.authority-point{font-size:15px;line-height:1.9}
+.authority-point b{font-weight:800}
+.guided span,.stage-card p,.proof-note,.micro{font-size:14px;line-height:1.8}
+.faq p,.legal p{font-size:14px;line-height:1.9}
+.pay-plan p,.payment-proof span,.date-card span{font-size:13.5px}
+.trust-item span{font-size:12.5px}
+.partner-logo small{font-size:12px}
+.curriculum ul,.price-card ul{font-size:14px;line-height:1.85}
+.credential-point{display:grid;grid-template-columns:104px 1fr;gap:16px;align-items:center;padding:15px 17px}
+.credential-logo-wrap{width:100px;height:82px;border-radius:14px;background:#fff;border:1px solid #d9e5df;display:grid;place-items:center;padding:9px;box-shadow:0 6px 18px rgba(5,45,37,.06);position:relative;overflow:hidden}
+.credential-logo{width:100%;height:100%;object-fit:contain}
+.credential-logo.lbs-mark{padding:1px}
+.credential-fallback{display:none;width:100%;height:100%;place-items:center;color:#153b66;font-family:Cairo,sans-serif;font-weight:800;font-size:22px}
+.lbs-fallback{background:#112c49;color:#fff;border-radius:7px}
+.credential-copy b{display:block;color:var(--green);margin-bottom:3px;font-size:15.5px}
+.credential-copy span{display:block;color:#43544e;font-size:14px;font-weight:600;line-height:1.8}
+.partner-logo img[src*="tbt_academy_logo_clean"]{max-height:104px;max-width:162px}
+@media(max-width:640px){body{font-weight:500}.credential-point{grid-template-columns:82px 1fr;gap:12px;padding:13px}.credential-logo-wrap{width:78px;height:68px;padding:7px}.credential-copy b{font-size:14.5px}.credential-copy span{font-size:13.5px;line-height:1.75}.tool-mini span,.guided span,.stage-card p,.proof-note,.micro{font-size:13.5px}.faq p,.legal p{font-size:13.5px}}
 </style>
 
 <script type="application/ld+json">
@@ -391,7 +415,7 @@ h3{font-size:20px;line-height:1.5;font-weight:700}
           <small>لعبة البزنس</small>
         </div>
         <div class="partner-logo">
-          <img src="tbt_academy_logo.svg" alt="أكاديمية المدرب الأفضل"/>
+          <img src="tbt_academy_logo_clean.png" alt="أكاديمية المدرب الأفضل"/>
           <small>أكاديمية المدرب الأفضل</small>
         </div>
       </div>
@@ -488,8 +512,8 @@ h3{font-size:20px;line-height:1.5;font-weight:700}
       </figure>
       <div>
         <div class="authority-points">
-          <div class="authority-point"><b>ماجستير إدارة أعمال (MBA)</b> — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</div>
-          <div class="authority-point"><b>إدارة شركات المستقبل</b> — University of London · London Business School · 2022.</div>
+          <div class="authority-point credential-point"><a class="credential-logo-wrap" href="https://www.eb.university/" target="_blank" rel="noopener" aria-label="Entrepreneurship & Business University"><img class="credential-logo" src="https://www.eb.university/images/logo.svg" alt="Entrepreneurship & Business University (EBU)" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback">EBU</span></a><div class="credential-copy"><b>ماجستير إدارة أعمال (MBA)</b><span>Entrepreneurship & Business University (EBU) — خلفية إدارية تساعد على قراءة المشروع كنظام مترابط.</span></div></div>
+          <div class="authority-point credential-point"><a class="credential-logo-wrap" href="https://www.london.edu/executive-education/leadership/leading-businesses-into-the-future" target="_blank" rel="noopener" aria-label="London Business School"><img class="credential-logo lbs-mark" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/London_Business_School_logo.svg" alt="London Business School" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"/><span class="credential-fallback lbs-fallback">LBS</span></a><div class="credential-copy"><b>إدارة شركات المستقبل</b><span>Leading Businesses into the Future — London Business School · Executive Education · 2022.</span></div></div>
           <div class="authority-point"><b>خبرة عملية في الإدارة والتشغيل والتسويق والمبيعات</b> — ربط الأرقام بواقع المشروع وليس التعامل معها بمعزل عن التشغيل.</div>
           <div class="authority-point"><b>منهج لعبة البزنس</b> — السؤال → الدليل → الأداة → القرار.</div>
         </div>
