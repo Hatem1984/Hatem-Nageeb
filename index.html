@@ -11,13 +11,13 @@
 <meta property="og:locale" content="ar_EG"/>
 <meta property="og:site_name" content="لعبة البزنس"/>
 <meta property="og:title" content="التشخيص قبل الحل — الدفعة التأسيسية الأولى"/>
-<meta property="og:description" content="25 لقاء Live إجمالًا | 24 جلسة تدريبية | الأحد والأربعاء 7:30–8:30 مساءً | ملف قرار + خطة 90 يومًا"/>
+<meta property="og:description" content="25 لقاء مباشرًا إجمالًا | 24 جلسة تدريبية | الأحد والأربعاء 7:30–8:30 مساءً | ملف قرار + خطة 90 يومًا"/>
 <meta property="og:image" content="business_game_logo.webp"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="business_game_logo.webp" type="image/webp"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
 <!-- Meta Pixel -->
 <script>
@@ -240,6 +240,71 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
   .mobile-sticky b{color:var(--green);font-size:14px}
   .mobile-sticky .cta{min-height:46px;padding:0 16px;font-size:12px}
 }
+
+/* V23.1 visual refinement */
+body{font-family:"IBM Plex Sans Arabic","Cairo",Tahoma,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.78;text-rendering:optimizeLegibility}
+h1,h2,h3,.brand,.cta,.kicker{font-family:"Cairo","IBM Plex Sans Arabic",sans-serif}
+.section{padding:68px 0}
+.kicker{font-weight:700;font-size:13px;color:#9a6816}
+h1{font-size:clamp(34px,4.8vw,58px);line-height:1.22;letter-spacing:-.45px;font-weight:800}
+h2{font-size:clamp(27px,3.5vw,40px);line-height:1.38;font-weight:800;max-width:880px}
+h3{font-size:20px;line-height:1.5;font-weight:700}
+.lead{font-size:17px;line-height:1.9;max-width:860px}
+.micro{font-size:13px;line-height:1.75}
+.card{border-radius:22px;box-shadow:0 14px 38px rgba(5,45,37,.075)}
+.cta{min-height:54px;border-radius:15px;background:linear-gradient(180deg,#1b6958,#0b493d);font-size:14px;font-weight:700;box-shadow:0 10px 24px rgba(5,55,45,.22);line-height:1.4}
+.hero .cta.secondary,.final .cta.secondary{color:#fff!important;border-color:rgba(255,255,255,.40);background:rgba(255,255,255,.06)}
+.hero .cta.secondary:hover,.final .cta.secondary:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.56)}
+.top-note{background:#0a392f;color:#f4e1b3;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand{font-weight:800}
+.nav{font-size:13px;font-weight:500;gap:20px}
+.hero p{font-size:17.5px;line-height:1.9;max-width:720px}
+.eyebrow{font-weight:700}
+.badge{font-size:12px;font-weight:500}
+.trust-item b{font-weight:700}
+.trust-item span{font-size:11.5px;line-height:1.55}
+.item p,.item li{font-size:14px;line-height:1.8}
+.icon{font-weight:700;font-size:15px}
+.step span{font-size:13px;line-height:1.65}
+.proof-note{font-size:13px;line-height:1.7}
+.tool-mini span{font-size:12.5px;line-height:1.65}
+.cred span{font-size:11px;font-weight:600}
+.authority-point{font-size:14px;line-height:1.75}
+.stage-card p{font-size:13.5px;line-height:1.7}
+.curriculum summary,.faq summary,.legal summary{font-weight:700}
+.curriculum ul{font-size:14px;line-height:1.8}
+.guided b{font-weight:700}
+.guided span{font-size:13px;line-height:1.7}
+.bundle-no,.ai-label,.price-tag{font-weight:700}
+.price{font-size:46px;font-weight:800}
+.price-card ul{font-size:13.5px;line-height:1.8}
+.founding{line-height:1.75}
+.pay-plan p{font-size:12.5px;line-height:1.7}
+.payment-proof span{font-size:12.5px}
+.date-card span{font-size:12.5px;line-height:1.65}
+.faq p,.legal p{font-size:13.5px;line-height:1.8}
+.footer{font-size:12px}
+.pay-actions .cta{width:100%;white-space:normal;min-height:52px;padding:9px 14px;font-size:13px}
+.final .actions{justify-content:center}
+.final .cta.secondary{min-width:190px}
+@media(max-width:640px){
+  h1{font-size:32px;line-height:1.28;letter-spacing:0}
+  h2{font-size:27px;line-height:1.42}
+  .hero p,.lead{font-size:16px}
+  .actions{gap:9px}
+  .hero .actions .cta,.final .actions .cta{width:100%}
+  .fact{font-size:12.5px;align-items:flex-start}
+  .fact b{max-width:62%;line-height:1.55}
+  .trust-item:last-child:nth-child(odd){grid-column:1 / -1}
+  .partner-logo{min-height:108px}
+  .partner-logo img{max-height:76px}
+  .payment-panel{padding:18px}
+  .price-card{padding:20px}
+  .mobile-sticky p{font-size:11px}
+  .mobile-sticky b{font-size:15px}
+  .mobile-sticky .cta{font-size:12.5px}
+}
+
 </style>
 
 <script type="application/ld+json">
@@ -270,7 +335,7 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 <!-- V23 CRO Revision — 2026-09-08 -->
 
 <div class="top-note">
-  <div class="wrap">الدفعة التأسيسية الأولى • تبدأ 1 أكتوبر 2026 • 20 مشاركًا كحد أقصى للتطبيق والمتابعة</div>
+  <div class="wrap">الدفعة الأولى تبدأ 1 أكتوبر 2026 • 20 مشاركًا كحد أقصى لضمان مساحة للتطبيق والمناقشة</div>
 </div>
 
 <header class="topbar">
@@ -294,19 +359,19 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">بالشراكة بين «لعبة البزنس» وأكاديمية المدرب الأفضل</div>
-      <h1>قبل ما تغيّر سعرك أو تزود إعلانك أو توسّع مشروعك… <span>شخّص الأول إيه اللي محتاج قرار.</span></h1>
-      <p>برنامج Live تطبيقي لأصحاب المشروعات يساعدك تختار <b>قرارًا رئيسيًا واحدًا</b>، تجمع له الدليل والأرقام، وتخرج بملف قرار وخطة 90 يومًا بدل ردود الأفعال والتجريب العشوائي.</p>
-      <div class="hero-truth"><b>وعد البرنامج محدد:</b> لا نَعِد بزيادة أرباح أو نتيجة مالية مضمونة. نَعِد بمنهج تطبيق وأدوات تساعدك تبني قرارًا أوضح على مشروعك أنت.</div>
+      <div class="eyebrow">برنامج «التشخيص قبل الحل» • بالشراكة مع أكاديمية المدرب الأفضل</div>
+      <h1>قبل ما تغيّر سعرك أو تزود إعلانك أو توسّع مشروعك… <span>شخّص الأول، وبعدها قرّر.</span></h1>
+      <p>برنامج تطبيقي مباشر لأصحاب المشروعات يساعدك تختار <b>قرارًا رئيسيًا واحدًا</b>، تجمع له الدليل والأرقام، وتخرج بملف قرار وخطة 90 يومًا بدل ردود الأفعال والتجريب العشوائي.</p>
+      <div class="hero-truth"><b>بنهاية البرنامج:</b> يكون عندك ملف قرار لمشروعك مبني على الأدلة والأرقام، وخطة 90 يومًا بأولويات واضحة ومؤشرات تراجعها أثناء التنفيذ.</div>
       <div class="actions">
         <a class="cta" href="#offer" data-track-pricing>شوف السعر وخطة السداد</a>
         <a class="cta secondary" href="https://m.me/891183134080763" target="_blank" rel="noopener" data-track-contact>اسأل هل البرنامج مناسب لمشروعك</a>
       </div>
       <div class="badges">
-        <span class="badge">25 لقاء Live إجمالًا</span>
+        <span class="badge">25 لقاء مباشرًا إجمالًا</span>
         <span class="badge">24 جلسة تدريبية فعلية</span>
         <span class="badge">الأحد والأربعاء 7:30–8:30 مساءً</span>
-        <span class="badge">Zoom + WhatsApp + Telegram</span>
+        <span class="badge">Zoom • WhatsApp • Telegram</span>
       </div>
     </div>
 
@@ -330,18 +395,18 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
           <small>أكاديمية المدرب الأفضل</small>
         </div>
       </div>
-      <div class="limit-box"><b>لماذا 20 فقط؟</b> لأن البرنامج يعتمد على تطبيق جماعي، أسئلة مباشرة ومراجعات دورية للحالات، وليس مشاهدة محتوى مسجل فقط.</div>
+      <div class="limit-box"><b>عدد الدفعة: حتى 20 مشاركًا.</b> العدد المحدود يتيح مساحة أفضل للأسئلة والتطبيق والمراجعات الجماعية طوال البرنامج.</div>
     </aside>
   </div>
 </section>
 
 <div class="trust">
   <div class="wrap trust-grid">
-    <div class="trust-item"><b>شراكة تشغيلية</b><span>لعبة البزنس × أكاديمية المدرب الأفضل</span></div>
+    <div class="trust-item"><b>بالشراكة مع الأكاديمية</b><span>لعبة البزنس × أكاديمية المدرب الأفضل</span></div>
     <div class="trust-item"><b>شهادة إتمام</b><span>بعد استيفاء متطلبات الإتمام</span></div>
     <div class="trust-item"><b>تسجيلات 6 أشهر</b><span>من بداية الدفعة</span></div>
     <div class="trust-item"><b>سياسة استرداد محددة</b><span>بعد أول تدريب فعلي وقبل التالي</span></div>
-    <div class="trust-item"><b>تجربة عميل حقيقية</b><span>شهادة فيديو من مشروع فعلي</span></div>
+    <div class="trust-item"><b>تجربة استشارية فعلية</b><span>صاحب المشروع يشرح تجربته بنفسه</span></div>
   </div>
 </div>
 
@@ -351,7 +416,7 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
     <h2>ممكن تاخد قرار شكله صح… لمشكلة غلط.</h2>
     <p class="lead">وأغلى قرار مش بالضرورة القرار الكبير؛ أحيانًا قرار صغير مبني على تشخيص غلط يبدأ سلسلة تكلفة كاملة.</p>
     <div class="grid4" style="margin-top:25px">
-      <article class="item"><div class="icon">₹</div><h3>التسعير</h3><p>ترفع أو تخفض السعر بدون ما تعرف أثره على المساهمة والطلب والسيولة.</p></article>
+      <article class="item"><div class="icon">ج.م</div><h3>التسعير</h3><p>ترفع أو تخفض السعر بدون ما تعرف أثره على المساهمة والطلب والسيولة.</p></article>
       <article class="item"><div class="icon">↔</div><h3>السيولة</h3><p>المبيعات موجودة لكن توقيت التحصيل والدفع يخنق الكاش.</p></article>
       <article class="item"><div class="icon">◎</div><h3>التسويق</h3><p>تزود إعلان قبل ما تعرف هل المشكلة في العرض أو التحويل أو القناة.</p></article>
       <article class="item"><div class="icon">↗</div><h3>التوسع</h3><p>تفتح فرع أو تزود قدرة تشغيلية قبل التأكد من الجاهزية.</p></article>
@@ -361,7 +426,7 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section alt" id="result">
   <div class="wrap">
-    <div class="kicker">النتيجة التي نبيعها</div>
+    <div class="kicker">المخرج النهائي</div>
     <h2>مش 24 معلومة جديدة… قرار رئيسي واحد مبني على دليل وأرقام.</h2>
     <p class="lead">كل متدرب يختار قرارًا فعليًا يحتاجه مشروعه، والبرنامج يبني حوله ملف القرار خطوة بخطوة.</p>
     <div class="outcome" style="margin-top:25px">
@@ -384,13 +449,13 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section" id="proof">
   <div class="wrap">
-    <div class="kicker">الدليل قبل الادعاء</div>
-    <h2>لأنها أول دفعة للبرنامج، بنعرض لك دليل المنهج والأدوات المتاحة بالفعل بدل ما ننسب للبرنامج نتائج لم تحدث بعد.</h2>
-    <p class="lead">عندنا تجربة استشارية حقيقية، وأدوات ومخرجات واضحة تقدر تشوف طبيعتها قبل ما تدفع.</p>
+    <div class="kicker">شوف طريقة العمل قبل ما تقرر</div>
+    <h2>أدوات تطبيق واضحة وتجربة استشارية فعلية تساعدك تفهم أسلوب العمل قبل الاشتراك.</h2>
+    <p class="lead">شوف نماذج من الأدوات اللي هتستخدمها داخل البرنامج، واسمع تجربة صاحب مشروع تعامل مع نفس منهج التشخيص والمتابعة.</p>
     <div class="proof-grid" style="margin-top:25px">
       <div class="card video-shell">
         <video controls playsinline preload="metadata" poster="mazaq_sinai_poster.webp" src="mazaq_sinai_testimonial_web.mp4" aria-label="شهادة أحمد مجدي مؤسس مذاق سيناء"></video>
-        <p class="proof-note">شهادة فيديو من تجربة استشارية فعلية — ليست شهادة عن هذا البرنامج التدريبي.</p>
+        <p class="proof-note">تجربة استشارية سابقة بصوت صاحب المشروع، توضح أسلوب التشخيص والمتابعة في العمل الفعلي.</p>
       </div>
       <div>
         <h3>أمثلة من الأدوات اللي هتشتغل عليها</h3>
@@ -400,7 +465,7 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
           <div class="tool-mini"><b>توقع نقدي 90 يومًا</b><span>تشوف توقيت الدخول والخروج النقدي.</span></div>
           <div class="tool-mini"><b>مصفوفة القرار وخطة 90 يومًا</b><span>تقفل التحليل بقرار وخطوة تنفيذ قابلة للمراجعة.</span></div>
         </div>
-        <div class="limit-box" style="margin-top:12px"><b>Proof of Method:</b> الأدوات نفسها جزء من ملف القرار النهائي، مش Bonus منفصل نحطه لرفع قيمة شكلية للعرض.</div>
+        <div class="limit-box" style="margin-top:12px"><b>التطبيق مترابط:</b> كل أداة تنتج مخرجًا تستخدمه في المرحلة التالية، وفي النهاية تتجمع المخرجات داخل ملف القرار وخطة الـ90 يوم.</div>
       </div>
     </div>
   </div>
@@ -456,9 +521,9 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section alt curriculum" id="tools">
   <div class="wrap">
-    <div class="kicker">الـ24 أداة بالتفصيل</div>
-    <h2>لو حابب تشوف العمق… افتح كل وحدة.</h2>
-    <p class="lead">الأسماء موجودة للشفافية، لكن البيع الأساسي على المخرج وليس عدد الملفات.</p>
+    <div class="kicker">تفاصيل المنهج والأدوات</div>
+    <h2>6 وحدات مترابطة، وفي كل وحدة 4 أدوات تطبيقية.</h2>
+    <p class="lead">افتح أي وحدة لتشوف الأدوات المستخدمة فيها وكيف تتدرج الرحلة من سؤال القرار إلى خطة التنفيذ.</p>
     <div style="margin-top:22px">
       <details><summary>الوحدة 1 — من التخمين إلى سؤال قرار</summary><ul><li>بطاقة قرار المشروع</li><li>مصفوفة الملاءمة والقيود</li><li>بطاقة المشكلة والفرصة</li><li>سجل الأدلة</li></ul></details>
       <details><summary>الوحدة 2 — العميل والدليل والتجربة</summary><ul><li>ملف قرار العميل</li><li>سُلّم دليل المشكلة</li><li>جملة عرض القيمة</li><li>بطاقة التجربة</li></ul></details>
@@ -472,12 +537,12 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section" id="guided">
   <div class="wrap">
-    <div class="kicker">ليه Live؟</div>
+    <div class="kicker">ليه البرنامج مباشر؟</div>
     <h2>القيمة مش إنك تسمع المعلومة… القيمة إنك تطبقها وتعرف أين أخطأت.</h2>
     <div class="guided-grid" style="margin-top:22px">
       <div class="guided"><b>تطبيق جماعي</b><span>شرح مختصر ثم تمرين على القرار والأداة بدل محاضرة طويلة.</span></div>
-      <div class="guided"><b>Hot Seats دورية</b><span>مراجعات لحالات مختارة بالتناوب؛ ليست استشارة فردية لكل متدرب في كل جلسة.</span></div>
-      <div class="guided"><b>WhatsApp بين الجلسات</b><span>متابعة جماعية لأسئلة التطبيق والتنبيهات، وليست استشارة فردية غير محدودة 24/7.</span></div>
+      <div class="guided"><b>مراجعات تطبيقية دورية</b><span>مراجعة حالات مختارة بالتناوب داخل الجلسات لتوضيح طريقة التطبيق على مواقف حقيقية.</span></div>
+      <div class="guided"><b>WhatsApp بين الجلسات</b><span>جروب خاص بالدفعة لمتابعة أسئلة التطبيق والتنبيهات واستمرار التواصل بين اللقاءات.</span></div>
       <div class="guided"><b>تسجيلات 6 أشهر</b><span>على Telegram من بداية الدفعة، للاستخدام الشخصي للمتدرب وعدم إعادة النشر.</span></div>
     </div>
   </div>
@@ -501,11 +566,11 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
         <ul>
           <li>تتعامل مع الأرقام كافتراضات وسيناريوهات وليست حقائق.</li>
           <li>تختبر الطلب والسعر قبل التوسع في التنفيذ.</li>
-          <li>تستخدم Validation KPIs بدل مؤشرات تشغيل لمشروع لم يبدأ بعد.</li>
+          <li>تستخدم مؤشرات تحقق (Validation KPIs) بدل مؤشرات تشغيل لمشروع لم يبدأ بعد.</li>
         </ul>
       </article>
     </div>
-    <div class="limit-box" style="margin-top:14px"><b>المسار الأساسي للبرنامج:</b> أصحاب المشروعات القائمة. مسار الفكرة موجود، لكن لا نخلط التقديرات ببيانات التشغيل الفعلية.</div>
+    <div class="limit-box" style="margin-top:14px"><b>المسار الأساسي للبرنامج:</b> أصحاب المشروعات القائمة. وفي مسار الفكرة تُستخدم التقديرات والسيناريوهات كافتراضات قابلة للاختبار إلى أن تتوفر بيانات فعلية.</div>
   </div>
 </section>
 
@@ -514,24 +579,24 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
     <div class="kicker">الاشتراك يشمل</div>
     <h2>منظومة تطبيق كاملة — من أول لقاء لحد ملف القرار.</h2>
     <div class="bundle-grid" style="margin-top:22px">
-      <div class="bundle"><div class="bundle-no">01</div><h3>25 لقاء Live</h3><p class="micro">Orientation إضافية + 24 جلسة تدريبية فعلية.</p></div>
-      <div class="bundle"><div class="bundle-no">02</div><h3>Workbook + 24 أداة</h3><p class="micro">تطبيقات تتجمع في ملف القرار النهائي.</p></div>
+      <div class="bundle"><div class="bundle-no">01</div><h3>25 لقاء مباشرًا</h3><p class="micro">جلسة تعريفية إضافية + 24 جلسة تدريبية فعلية.</p></div>
+      <div class="bundle"><div class="bundle-no">02</div><h3>Workbook تطبيقي + 24 أداة</h3><p class="micro">تطبيقات تتجمع في ملف القرار النهائي.</p></div>
       <div class="bundle"><div class="bundle-no">03</div><h3>WhatsApp</h3><p class="micro">متابعة جماعية بين الجلسات.</p></div>
       <div class="bundle"><div class="bundle-no">04</div><h3>Telegram 6 أشهر</h3><p class="micro">التسجيلات من بداية الدفعة.</p></div>
       <div class="bundle"><div class="bundle-no">05</div><h3>ملف قرار + خطة 90 يومًا</h3><p class="micro">المشروع النهائي للرحلة.</p></div>
       <div class="bundle"><div class="bundle-no">06</div><h3>شهادة إتمام</h3><p class="micro">باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء المتطلبات.</p></div>
       <div class="bundle"><div class="bundle-no">07</div><h3>كتاب «الخروج من النفق»</h3><p class="micro">نسخة رقمية هدية بعد انتهاء نافذة الاسترداد.</p></div>
       <div class="bundle"><div class="bundle-no">08</div><h3>نسخة مطبوعة اختيارية</h3><p class="micro">250 جنيه + الشحن حسب المنطقة عند الطلب.</p></div>
-      <div class="bundle"><div class="bundle-no">09</div><h3>AI Founding Access</h3><p class="micro">6 أشهر مجانًا من تاريخ تفعيل حسابك على الأداة.</p></div>
+      <div class="bundle"><div class="bundle-no">09</div><h3>وصول مجاني لأداة AI</h3><p class="micro">6 أشهر مجانًا تبدأ من تاريخ تفعيل حسابك على الأداة.</p></div>
     </div>
 
     <div class="ai-box">
       <img src="ai_diagnostic_tool.webp" alt="تصور مبدئي لأداة التشخيص بالذكاء الاصطناعي" loading="lazy"/>
       <div>
-        <span class="ai-label">قيد التطوير — تصور مبدئي للواجهة</span>
+        <span class="ai-label">الأداة قيد التطوير</span>
         <h3>أداة التشخيص بالذكاء الاصطناعي</h3>
-        <p>لن نبيعها كأنها منتج جاهز. أعضاء الدفعة التأسيسية يحصلون على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم عليها. الـAI دوره يساعدك في تنظيم الأسئلة وتسريع التحليل بعد ما تكون فهمت منهج التشخيص؛ مش بديل عن فهم المشروع.</p>
-        <p style="margin-bottom:0"><b style="color:#FFD782">السعر المخطط للبيع المستقل لاحقًا: 1,950 جنيه</b> — وقد يتغير قبل الإطلاق النهائي بناءً على تكلفة التشغيل والنسخة الفعلية.</p>
+        <p>يحصل أعضاء الدفعة الأولى على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم على الأداة. صُممت الأداة لمساعدتك في تنظيم أسئلة التشخيص وتسريع التحليل بعد ما تتعلم المنهج وتفهم بيانات مشروعك.</p>
+        <p style="margin-bottom:0"><b style="color:#FFD782">ميزة خاصة بالدفعة الأولى:</b> 6 أشهر استخدام مجاني عند تفعيل الأداة.</p>
       </div>
     </div>
   </div>
@@ -539,9 +604,9 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section offer" id="offer">
   <div class="wrap">
-    <div class="kicker" style="color:#FFD782">السعر التأسيسي للدفعة الأولى</div>
-    <h2>سعر أقل لأول مجموعة… لأن أول دفعة تبني معنا الـProof الحقيقي.</h2>
-    <p class="lead">مش «خصم 50%» من رقم مصطنع. ده سعر تأسيسي للدفعة الأولى، ومع كل دفعة لاحقة نراجع السعر بناءً على النتائج والطلب والتجربة الفعلية.</p>
+    <div class="kicker" style="color:#FFD782">السعر وخيارات السداد</div>
+    <h2>4,500 جنيه للسداد الكامل، أو 5,000 جنيه بالتقسيط.</h2>
+    <p class="lead">السعر المعلن خاص بالدفعة الأولى. اختر السداد الكامل أو خطة التقسيط حسب الأنسب لك.</p>
 
     <div class="offer-grid">
       <article class="price-card recommended">
@@ -568,11 +633,11 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
       </article>
     </div>
 
-    <div class="founding"><b style="color:#FFD782">ليه السعر تأسيسي؟</b> لأن دي أول دفعة من البرنامج، وأول مجموعة هتساعدنا بFeedback حقيقي في تحسين تجربة الأدوات والأداة التشخيصية. مش مطلوب منك Review إيجابي؛ المطلوب Feedback صادق.</div>
+    <div class="founding"><b style="color:#FFD782">مرونة في السداد:</b> تقدر تبدأ بحجز 2,000 جنيه، ولو أكملت باقي السداد قبل أول جلسة تدريب فعلية يظل إجمالي اشتراكك 4,500 جنيه.</div>
 
     <div class="payment-panel" id="payment-options">
       <h3>اختار المبلغ اللي هتحوله الآن</h3>
-      <p class="lead" style="font-size:14px">بيانات Vodafone Cash غير معروضة على الصفحة؛ زر النسخ ينسخ الرقم مباشرة. InstaPay يفتح رابط الدفع.</p>
+      <p class="lead" style="font-size:14px">استخدم الأزرار أدناه للسداد عبر Vodafone Cash أو InstaPay، ثم أرسل إثبات التحويل لتأكيد الحجز.</p>
 
       <div class="pay-plans" style="margin-top:18px">
         <div class="pay-plan">
@@ -600,7 +665,7 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
       <div class="refund">
         <b>سياسة الاسترداد للدفعة الأولى:</b><br/>
-        جلسة الخميس 1 أكتوبر تعريفية ولا تبدأ معها نافذة الاسترداد. أول جلسة تدريب فعلية هي الأحد 4 أكتوبر. بعد حضورها، لو وجدت أن طبيعة البرنامج غير مناسبة لك، يمكنك طلب استرداد ما دفعته <b>قبل بدء الجلسة التدريبية التالية يوم الأربعاء 7 أكتوبر الساعة 7:30 مساءً بتوقيت مصر</b>.
+        جلسة الخميس 1 أكتوبر تعريفية ولا تبدأ معها نافذة الاسترداد. أول جلسة تدريب فعلية هي الأحد 4 أكتوبر. بعد انتهائها، لو وجدت أن طبيعة البرنامج غير مناسبة لك، يمكنك طلب استرداد ما دفعته <b>قبل بدء الجلسة التدريبية التالية يوم الأربعاء 7 أكتوبر الساعة 7:30 مساءً بتوقيت مصر</b>.
       </div>
     </div>
   </div>
@@ -608,10 +673,10 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section alt" id="dates">
   <div class="wrap">
-    <div class="kicker">3 مواعيد لازم تكون واضحة</div>
-    <h2>مفيش مفاجآت في البداية أو السداد أو الاسترداد.</h2>
+    <div class="kicker">مواعيد البداية والاسترداد</div>
+    <h2>اعرف التواريخ الأساسية قبل تأكيد الحجز.</h2>
     <div class="timeline">
-      <div class="date-card"><b>الخميس 1 أكتوبر</b><span>Orientation إضافية • 7:30–8:30 مساءً.</span></div>
+      <div class="date-card"><b>الخميس 1 أكتوبر</b><span>جلسة تعريفية إضافية • 7:30–8:30 مساءً.</span></div>
       <div class="date-card"><b>الأحد 4 أكتوبر</b><span>أول جلسة تدريب فعلية • 7:30–8:30 مساءً.</span></div>
       <div class="date-card"><b>الأربعاء 7 أكتوبر</b><span>الجلسة التدريبية الثانية • انتهاء نافذة طلب الاسترداد قبل بدئها.</span></div>
     </div>
@@ -624,13 +689,13 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
     <h2>اقرأ التفاصيل قبل ما تقرر.</h2>
     <div class="faq" style="margin-top:20px">
       <details><summary>هل البرنامج مناسب لو مشروعي شغال؟</summary><p>نعم، وده الجمهور الأساسي: أصحاب مشروعات قائمة عندهم قرار فعلي في التسعير أو السيولة أو المبيعات أو التشغيل أو النمو.</p></details>
-      <details><summary>هل ينفع لو لسه عندي فكرة؟</summary><p>نعم، لكن تطبيقك هيكون على افتراضات وسيناريوهات وتجارب Validation، مش هنقدم الأرقام التقديرية كأنها بيانات تشغيل فعلية.</p></details>
+      <details><summary>هل ينفع لو لسه عندي فكرة؟</summary><p>نعم. التطبيق في مسار الفكرة يعتمد على افتراضات وسيناريوهات وتجارب لاختبار الطلب والسعر، وتُعامل الأرقام كتقديرات قابلة للاختبار إلى أن تتوفر بيانات فعلية.</p></details>
       <details><summary>هل الـ25 لقاء كلهم تدريب؟</summary><p>لا. الخميس 1 أكتوبر جلسة تعريفية إضافية، وبعدها 24 جلسة تدريبية فعلية على مدار 12 أسبوعًا، الأحد والأربعاء من 7:30 إلى 8:30 مساءً بتوقيت مصر.</p></details>
-      <details><summary>هل هراجع مشروعي بشكل فردي كل جلسة؟</summary><p>البرنامج جماعي تطبيقي. فيه أسئلة مباشرة ومراجعات Hot Seat دورية لحالات مختارة بالتناوب، لكن الاشتراك لا يعني استشارة فردية غير محدودة لكل متدرب في كل جلسة.</p></details>
+      <details><summary>هل فيه مراجعة مباشرة للحالات؟</summary><p>نعم. البرنامج يتضمن أسئلة مباشرة ومراجعات تطبيقية دورية لحالات مختارة بالتناوب داخل الجلسات. البرنامج جماعي في أساسه، والمراجعات هدفها توضيح طريقة التطبيق على مواقف فعلية.</p></details>
       <details><summary>لو فاتتني جلسة؟</summary><p>التسجيلات متاحة على Telegram لمدة 6 أشهر من بداية الدفعة. ويظل التفاعل المباشر والتطبيق هما القيمة الأساسية للبرنامج.</p></details>
-      <details><summary>هل فيه شهادة؟</summary><p>نعم. شهادة إتمام صادرة باسم أكاديمية المدرب الأفضل ولعبة البزنس لمن يستوفي متطلبات الحضور والتطبيق والمشروع النهائي. لا ندّعي في الصفحة اعتمادًا خارجيًا محددًا ما لم يتم توثيقه رسميًا.</p></details>
+      <details><summary>هل فيه شهادة؟</summary><p>نعم. يحصل من يستوفي متطلبات الحضور والتطبيق والمشروع النهائي على شهادة إتمام صادرة باسم أكاديمية المدرب الأفضل ولعبة البزنس.</p></details>
       <details><summary>هل كتاب «الخروج من النفق» ضمن الاشتراك؟</summary><p>النسخة الرقمية هدية بعد انتهاء نافذة الاسترداد. لو حبيت نسخة مطبوعة فهي اختيارية بسعر 250 جنيه + تكلفة الشحن التي تتحدد حسب المنطقة.</p></details>
-      <details><summary>إيه وضع أداة الـAI؟</summary><p>الأداة قيد التطوير وليست منتجًا جاهزًا وقت الحجز. أعضاء الدفعة التأسيسية يحصلون على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم عليها.</p></details>
+      <details><summary>إيه وضع أداة الـAI؟</summary><p>الأداة قيد التطوير. أعضاء الدفعة الأولى يحصلون على 6 أشهر استخدام مجاني تبدأ من تاريخ تفعيل حسابهم عليها.</p></details>
       <details><summary>إيه الفرق بين 4,500 و5,000؟</summary><p>4,500 هو سعر السداد الكامل. لو بدأت بـ2,000 ثم أكملت 2,500 قبل أول تدريب فعلي يوم 4 أكتوبر يظل الإجمالي 4,500. لو استمريت على الأقساط يكون الإجمالي 5,000: 2,000 + 1,500 في 1 نوفمبر + 1,500 في 1 ديسمبر.</p></details>
       <details><summary>هل البرنامج دراسة جدوى أو استشارة محاسبية؟</summary><p>لا. هو برنامج تدريبي تطبيقي في التشخيص والإدارة واتخاذ القرار، ولا يحل محل رأي محاسبي أو ضريبي أو قانوني معتمد أو استشارة فردية متخصصة.</p></details>
     </div>
@@ -639,15 +704,15 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 
 <section class="section alt" id="terms">
   <div class="wrap narrow">
-    <div class="kicker">شروط واضحة قبل الحجز</div>
-    <h2>نقفل مناطق الخلاف قبل الدفع.</h2>
+    <div class="kicker">شروط الحجز</div>
+    <h2>تفاصيل السداد والاسترداد والتسجيل واضحة من البداية.</h2>
     <div class="legal">
       <details open><summary>شروط السداد والأقساط</summary><p>السداد الكامل 4,500 جنيه. خطة التقسيط إجماليها 5,000 جنيه: 2,000 عند الحجز، 1,500 في 1 نوفمبر 2026، و1,500 في 1 ديسمبر 2026. إذا بدأ المتدرب بـ2,000 ثم أكمل 2,500 قبل أول جلسة تدريب فعلية في 4 أكتوبر، يُعامل كسداد كامل بإجمالي 4,500. عند تأخر قسط مستحق، قد يتوقف الوصول إلى الجلسات والمواد الجديدة لحين تسوية القسط.</p></details>
-      <details><summary>سياسة الاسترداد</summary><p>جلسة 1 أكتوبر تعريفية. نافذة الاسترداد تبدأ بعد حضور أول جلسة تدريب فعلية في 4 أكتوبر وتنتهي قبل بدء الجلسة التدريبية التالية في 7 أكتوبر الساعة 7:30 مساءً بتوقيت مصر. بعد انتهاء النافذة، الانقطاع الشخصي لا يعني تلقائيًا استرداد الأقساط المدفوعة.</p></details>
+      <details><summary>سياسة الاسترداد</summary><p>جلسة 1 أكتوبر تعريفية. نافذة الاسترداد تبدأ بعد انتهاء أول جلسة تدريب فعلية في 4 أكتوبر وتنتهي قبل بدء الجلسة التدريبية التالية في 7 أكتوبر الساعة 7:30 مساءً بتوقيت مصر. بعد انتهاء النافذة، الانقطاع الشخصي لا يعني تلقائيًا استرداد الأقساط المدفوعة.</p></details>
       <details><summary>في حال تعذر بدء أو استمرار الدفعة من جهة التنظيم</summary><p>إذا أُلغيت الدفعة من جهة التنظيم قبل أول جلسة تدريب فعلية، تُرد المبالغ المدفوعة بالكامل. وإذا تعذر الاستمرار بعد البدء، يتم إخطار المشتركين بوضوح بخيارات الاستكمال أو التسوية المناسبة.</p></details>
-      <details><summary>التسجيل والخصوصية</summary><p>الجلسات قد تُسجل لإتاحتها لأعضاء الدفعة. غير مطلوب منك عرض بيانات تجارية حساسة علنًا؛ يمكنك استخدام نسب أو أرقام مجهلة. التسجيلات للاستخدام الشخصي للمتدرب ولا يجوز إعادة نشرها أو مشاركتها خارج الدفعة.</p></details>
+      <details><summary>التسجيل والخصوصية</summary><p>تُسجل الجلسات بهدف إتاحتها لأعضاء الدفعة. غير مطلوب منك عرض بيانات تجارية حساسة علنًا؛ يمكنك استخدام نسب أو أرقام مجهلة. التسجيلات للاستخدام الشخصي للمتدرب ولا يجوز إعادة نشرها أو مشاركتها خارج الدفعة.</p></details>
       <details><summary>WhatsApp وحدود المتابعة</summary><p>جروب WhatsApp مخصص لمتابعة أسئلة التطبيق والتنبيهات المتعلقة بالبرنامج بين الجلسات. لا يمثل اشتراكًا في استشارة فردية غير محدودة أو دعمًا فوريًا على مدار الساعة.</p></details>
-      <details><summary>الشهادة</summary><p>شهادة الإتمام تصدر باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء متطلبات الإتمام المحددة للدفعة، ومنها الحضور والتطبيق والمشروع النهائي. لا يُستخدم وصف «معتمدة» بمعنى اعتماد خارجي محدد إلا عند وجود مستند رسمي يثبت جهة ونطاق الاعتماد.</p></details>
+      <details><summary>الشهادة</summary><p>شهادة الإتمام تصدر باسم أكاديمية المدرب الأفضل ولعبة البزنس بعد استيفاء متطلبات الإتمام المحددة للدفعة، ومنها الحضور والتطبيق والمشروع النهائي.</p></details>
       <details><summary>النتائج وحدود البرنامج</summary><p>البرنامج لا يضمن ربحًا أو مبيعات أو نموًا أو نتيجة مالية بعينها. جودة القرار تعتمد أيضًا على جودة البيانات التي يقدمها المتدرب وعلى التطبيق والتنفيذ الفعلي.</p></details>
     </div>
   </div>
@@ -656,7 +721,7 @@ linear-gradient(145deg,#051b17,#082f28 50%,#10483c)}
 <section class="final">
   <div class="wrap">
     <h2>القرار الجاي في مشروعك يستحق تشخيصًا أوضح قبل ما تصرف عليه وقت وفلوس.</h2>
-    <p>الدفعة التأسيسية تبدأ 1 أكتوبر. 25 لقاء Live إجمالًا، 24 جلسة تدريبية، ملف قرار وخطة 90 يومًا، بسعر تأسيسي 4,500 جنيه للسداد الكامل أو 5,000 بالتقسيط.</p>
+    <p>الدفعة التأسيسية تبدأ 1 أكتوبر. 25 لقاء مباشرًا إجمالًا، 24 جلسة تدريبية، ملف قرار وخطة 90 يومًا، بسعر تأسيسي 4,500 جنيه للسداد الكامل أو 5,000 بالتقسيط.</p>
     <div class="actions" style="justify-content:center">
       <a class="cta" href="#payment-options" data-track-pricing>شوف طرق الدفع</a>
       <a class="cta secondary" href="https://m.me/891183134080763" target="_blank" rel="noopener" data-track-contact>عندي سؤال قبل الحجز</a>
