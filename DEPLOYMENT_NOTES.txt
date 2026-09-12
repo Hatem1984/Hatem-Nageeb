@@ -11,6 +11,15 @@ Implemented:
 - Added a lightweight 1200x630 social sharing image and reduced the main HTML payload.
 - Preserved the accepted testimonials, offer stack, refund terms and partner branding.
 
+Campaign refinement:
+- Made the free diagnostic the primary hero CTA and kept program details secondary.
+- Updated campaign capacity to 20 paid participants.
+- Made Messenger the only customer-contact and payment-proof channel.
+- Unified payment access through the plan-first modal flow.
+- Limited InitiateCheckout to the first checkout open per page load.
+- Added plan-aware PaymentMethodClick and PaymentProofClick events without firing Purchase.
+- Loaded the hero image eagerly and added a lightweight header-logo asset.
+
 Before launch:
 - Upload the full bundle, including index.html, 404.html, assets/ and diagnosis/.
 - Test the payment modal and both payment methods on real Android/iPhone devices.
