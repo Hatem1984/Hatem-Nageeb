@@ -1,0 +1,18 @@
+V34 Diagnostic Lead Magnet / Production Bundle
+
+Implemented:
+- Integrated "اختبار قرار مشروعك" as a free lead magnet at /diagnosis/.
+- Added lead-magnet CTAs in the hero, navigation and a dedicated landing-page section.
+- Added a two-page direct PDF decision report while keeping visitor answers on-device.
+- Added diagnostic funnel events to Meta Pixel and GA4.
+- Corrected the payment modal, plan totals and duplicated checkout/payment tracking.
+- Updated the cohort cap to 15 and clarified reservation, full-pay and installment dates.
+- Marked the AI tool as ready and updated education/accreditation wording.
+- Added a lightweight 1200x630 social sharing image and reduced the main HTML payload.
+- Preserved the accepted testimonials, offer stack, refund terms and partner branding.
+
+Before launch:
+- Upload the full bundle, including index.html, 404.html, assets/ and diagnosis/.
+- Test the payment modal and both payment methods on real Android/iPhone devices.
+- Complete the diagnostic test once and verify the two-page PDF download on iPhone and Android.
+- Verify GA4 and Meta Pixel events after deployment.
