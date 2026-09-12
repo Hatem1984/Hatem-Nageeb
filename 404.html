@@ -2508,19 +2508,19 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 <div class="section-inner lead-magnet-grid">
 <div class="lead-magnet-copy reveal">
 <span class="mini-kicker">هدية مجانية قبل الحجز</span>
-<h2>اختبر قرار مشروعك في 10 دقائق</h2>
-<p>جاوب عن 10 أسئلة عملية، وخد قراءة مبدئية توضّح أقوى نقطة عندك، أخطر فجوة في الدليل، والخطوة الأصغر اللي تنفذها خلال 7 أيام.</p>
+<h2>مختبر قرار مشروعك</h2>
+<p>احكي المشكلة، اختبر الدليل، واعرف خطوتك التالية قبل ما تزود التزامك.</p>
 <div class="lead-magnet-points">
-<div class="lead-magnet-point">مسار منفصل لصاحب الفكرة ومسار للمشروع القائم.</div>
-<div class="lead-magnet-point">تقييم عبر 5 محاور مرتبطة بالعميل والطلب والأرقام والتنفيذ والقرار.</div>
-<div class="lead-magnet-point">تقرير شخصي من صفحتين تقدر تنزّله PDF على جهازك فورًا.</div>
+<div class="lead-magnet-point">يقرأ وصف حالتك ويحدد نوع القرار الأقرب قبل ما يبدأ الأسئلة.</div>
+<div class="lead-magnet-point">يسألك أسئلة مناسبة لمرحلتك وإجاباتك، ويكشف أهم فجوات الدليل.</div>
+<div class="lead-magnet-point">يعطيك خطة 7 أيام وتجربة تالية وتقرير PDF من 3 صفحات — مجانًا.</div>
 </div>
-<a class="lead-magnet-cta" data-track-leadmagnet="section" href="diagnosis/">ابدأ الاختبار المجاني</a>
-<span class="lead-magnet-note">مش هنطلب رقم هاتف أو بيانات مالية. النتيجة قراءة تعليمية مبدئية وليست ضمانًا لنجاح المشروع.</span>
+<a class="lead-magnet-cta" data-track-leadmagnet="section" href="diagnosis/">ابدأ اختبار قرار مشروعك مجانًا</a>
+<span class="lead-magnet-note">مش هنطلب رقم هاتف أو WhatsApp أو بريد أو بيانات مالية. إجاباتك تظل على جهازك.</span>
 </div>
 <div class="diagnostic-preview reveal" aria-label="تصور لنتيجة اختبار قرار مشروعك">
-<div class="diagnostic-preview-top"><div class="diagnostic-preview-brand"><img alt="شعار لعبة البزنس" loading="lazy" src="assets/شعار_لعبة_البزنس_خفيف.webp"/><span>اختبار قرار مشروعك</span></div><span>إجاباتك على جهازك</span></div>
-<div class="diagnostic-preview-card"><small>قراءتك المبدئية</small><h3>اعرف الدليل الناقص قبل ما تزيد التزامك</h3><div class="diagnostic-preview-stats"><div><b>10</b>أسئلة</div><div><b>5</b>محاور</div><div><b>7</b>أيام</div></div><div class="diagnostic-preview-bar"><i></i></div></div>
+<div class="diagnostic-preview-top"><div class="diagnostic-preview-brand"><img alt="شعار لعبة البزنس" loading="lazy" src="assets/شعار_لعبة_البزنس_خفيف.webp"/><span>مختبر قرار مشروعك</span></div><span>إجاباتك على جهازك</span></div>
+<div class="diagnostic-preview-card"><small>تجربة تشخيصية متكيّفة</small><h3>اعرف الدليل الناقص قبل ما تزيد التزامك</h3><div class="diagnostic-preview-stats"><div><b>10</b>أسئلة</div><div><b>5 + 1</b>محاور</div><div><b>7</b>أيام</div></div><div class="diagnostic-preview-bar"><i></i></div></div>
 </div>
 </div>
 </section><section class="section-light reveal section-premium" id="testimonial">
@@ -3180,9 +3180,8 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 
   document.querySelectorAll('[data-track-leadmagnet]').forEach(function(el){
     el.addEventListener('click',function(){
-      var placement = el.getAttribute('data-track-leadmagnet') || 'page';
-      try{fbq('trackCustom','DiagnosticToolClick',{placement:placement})}catch(e){}
-      try{gtag('event','diagnostic_tool_click',{placement:placement})}catch(e){}
+      try{fbq('trackCustom','DiagnosticToolClick')}catch(e){}
+      try{gtag('event','diagnostic_tool_click')}catch(e){}
     });
   });
 

@@ -1,12 +1,18 @@
-V34 Diagnostic Lead Magnet / Production Bundle
+V34 -> Adaptive Diagnostic Upgrade / Pre-Publication Bundle
+
+Rollback checkpoint (verified before publication):
+- Stable main SHA: 2edfabd0f34e1648af99686fe24b7a8ac368a96c
+- Required tag before replacement: pre-adaptive-diagnosis-v34
+- Recovery command: deploy the tagged commit or reset main to the verified SHA through a new revert commit.
+- Do not overwrite main until the tag is visible on the remote repository.
 
 Implemented:
 - Integrated "اختبار قرار مشروعك" as a free lead magnet at /diagnosis/.
 - Added lead-magnet CTAs in the hero, navigation and a dedicated landing-page section.
-- Added a two-page direct PDF decision report while keeping visitor answers on-device.
+- Added a three-page direct PDF decision report while keeping visitor answers on-device.
 - Added diagnostic funnel events to Meta Pixel and GA4.
 - Corrected the payment modal, plan totals and duplicated checkout/payment tracking.
-- Updated the cohort cap to 15 and clarified reservation, full-pay and installment dates.
+- Updated the cohort cap to 20 and clarified reservation, full-pay and installment dates.
 - Marked the AI tool as ready and updated education/accreditation wording.
 - Added a lightweight 1200x630 social sharing image and reduced the main HTML payload.
 - Preserved the accepted testimonials, offer stack, refund terms and partner branding.
@@ -19,9 +25,11 @@ Campaign refinement:
 - Limited InitiateCheckout to the first checkout open per page load.
 - Added plan-aware PaymentMethodClick and PaymentProofClick events without firing Purchase.
 - Loaded the hero image eagerly and added a lightweight header-logo asset.
+- Displays readiness and evidence as scores out of 100, explicitly not success probabilities.
+- Displays risk only as a qualitative level plus traffic light; the numeric risk value stays internal.
 
 Before launch:
 - Upload the full bundle, including index.html, 404.html, assets/ and diagnosis/.
 - Test the payment modal and both payment methods on real Android/iPhone devices.
-- Complete the diagnostic test once and verify the two-page PDF download on iPhone and Android.
+- Complete the diagnostic test once and verify the three-page PDF download on iPhone and Android.
 - Verify GA4 and Meta Pixel events after deployment.
