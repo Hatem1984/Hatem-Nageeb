@@ -2,9 +2,8 @@ V34 -> Adaptive Diagnostic Upgrade / Pre-Publication Bundle
 
 Rollback checkpoint (verified before publication):
 - Stable main SHA: 2edfabd0f34e1648af99686fe24b7a8ac368a96c
-- Required tag before replacement: pre-adaptive-diagnosis-v34
-- Recovery command: deploy the tagged commit or reset main to the verified SHA through a new revert commit.
-- Do not overwrite main until the tag is visible on the remote repository.
+- Verified rollback branch: rollback/pre-adaptive-diagnosis-v34
+- Recovery target: restore main from the verified rollback branch or its exact stable SHA.
 
 Implemented:
 - Integrated "اختبار قرار مشروعك" as a free lead magnet at /diagnosis/.
