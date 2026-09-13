@@ -133,7 +133,7 @@
     $('sevenDays').innerHTML=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${step}</li>`).join('');
     const x=r.experiment;
     $('experiment').innerHTML=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
-    $('adaptiveCtaContext').textContent=r.decision.cta; $('adaptiveCta').textContent='شوف البرنامج مناسب لحالتك إزاي'; $('adaptiveCta').href='../#offer';
+    $('adaptiveCtaContext').textContent=r.decision.cta; $('adaptiveCta').textContent='شوف البرنامج مناسب لحالتك إزاي'; $('adaptiveCta').href='../#tracks';
     $('localContext').textContent=r.extraNote?`ملاحظة أخذتها معك: ${r.extraNote}`:'';
     $('localContext').classList.toggle('hidden',!r.extraNote);
     save();

@@ -366,6 +366,7 @@ gtag('config','G-C2N57VGT70');
   --blur:18px;
 }
 html{scroll-behavior:smooth}
+section[id],details[id],#payment-methods{scroll-margin-top:24px}
 body.premium-page{
   background:
     radial-gradient(900px 420px at 10% 0%, rgba(58,136,255,.07), transparent 60%),
@@ -2452,7 +2453,7 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 <div class="brand-copy"><b>لعبة البزنس</b><span>التشخيص قبل الحل</span></div>
 </div>
 <div class="navlinks"><a href="#problem">البرنامج</a><a href="#free-test">اختبار مجاني</a><a href="#testimonial">تجربة عميل</a><a href="#offer">السعر</a></div>
-<a aria-label="اكتشف تفاصيل البرنامج" class="navcta" href="#problem">اكتشف تفاصيل البرنامج</a>
+<a aria-label="اكتشف مسارات البرنامج وتفاصيله" class="navcta" href="#tracks">اكتشف تفاصيل البرنامج</a>
 </nav>
 <div class="wrap">
 <div class="copy">
@@ -2675,7 +2676,7 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 <h3>ثبّت مقعدك الآن</h3>
 <div class="plan-price">2,000 <small>جنيه</small></div>
 <p>ثم استكمل 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر، ويظل الإجمالي 4,500 جنيه.</p>
-<button aria-label="ابدأ تشخيص مشروعك واحجز مقعدك" class="plan-action js-open-payment" data-amount="2000" data-plan="reserve" type="button">ابدأ تشخيص مشروعك الآن</button>
+<button aria-label="اختَر تثبيت المقعد بدفع 2,000 جنيه الآن" class="plan-action js-open-payment" data-amount="2000" data-plan="reserve" type="button">اختَر تثبيت المقعد</button>
 </article><article class="payment-plan-card plan-full">
 <span class="plan-badge">أفضل سعر</span>
 <h3>السداد الكامل</h3>
@@ -2697,7 +2698,7 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 <h3>احضر أول جلسة تدريب فعلية، وبعدها قرر.</h3>
 <p>لو بعد جلسة 4 أكتوبر حسيت إن البرنامج مش مناسب لك، تقدر تطلب استرداد المبلغ المدفوع قبل بدء الجلسة التالية يوم 7 أكتوبر الساعة 7:30 مساءً بتوقيت مصر.</p>
 </div><div class="offer-cta">
-<a aria-label="ابدأ تشخيص مشروعك واحجز مقعدك" class="js-open-payment" data-plan="reserve" data-track-checkout="" href="#payment-methods">ابدأ تشخيص مشروعك الآن</a>
+<a aria-label="افتح خطط الدفع واختر طريقة الحجز" class="js-open-payment" data-plan="reserve" data-track-checkout="" href="#payment-methods">اختَر خطة الدفع واحجز مكانك</a>
 <div class="offer-note">اختر طريقة الدفع المناسبة في الخطوة التالية — الحجز يتأكد بعد مراجعة التحويل واستلام بياناتك.</div>
 </div><div class="payment-methods glass-card lift-hover reveal" id="payment-methods">
 <h3>ابدأ باختيار خطة الدفع</h3>
@@ -3173,7 +3174,7 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 <svg viewbox="0 0 64 64"><path d="M12 49h40"></path><path d="M18 43l10-10 8 6 12-17"></path><path d="M41 22h7v7"></path></svg>
 </span>قبل ما تغيّر الحل… اتأكد إنك شخصت المشكلة صح</h2>
 <p>لو عندك فكرة جادة أو مشروع قائم، وعايز توقف القرارات المبنية على التخمين، برنامج «التشخيص قبل الحل» مصمم علشان يحول المعلومات المتفرقة إلى قرار أوضح وخطة تنفيذ عملية.</p>
-<div class="final-cta"><a aria-label="ابدأ تشخيص مشروعك واحجز مقعدك" class="js-open-payment" data-plan="reserve" data-track-checkout="" href="#payment-methods">ابدأ تشخيص مشروعك الآن</a></div>
+<div class="final-cta"><a aria-label="افتح خطط الدفع واختر طريقة الحجز" class="js-open-payment" data-plan="reserve" data-track-checkout="" href="#payment-methods">اختَر خطة الدفع واحجز مكانك</a></div>
 <div class="final-price">عرض الدفعة الأولى 4,500 جنيه — خيارات الدفع تبدأ من 2,000 جنيه.</div>
 <div class="footer">
 <div>لعبة البزنس × أكاديمية المدرب الأفضل</div>
@@ -3202,6 +3203,20 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
       try{gtag('event','diagnostic_tool_click')}catch(e){}
     });
   });
+
+  function revealHashTarget(){
+    if(!window.location.hash) return;
+    var target=document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    if(target && target.tagName==='DETAILS') target.open=true;
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var target=document.getElementById(decodeURIComponent(this.getAttribute('href').slice(1)));
+      if(target && target.tagName==='DETAILS') target.open=true;
+    });
+  });
+  window.addEventListener('hashchange',revealHashTarget);
+  revealHashTarget();
 
 })();
 
