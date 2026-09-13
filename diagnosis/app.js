@@ -95,9 +95,9 @@
     $('questionCount').textContent=`السؤال ${state.index+1} من 10`;
     $('progressBar').style.width=`${(state.index+1)*10}%`;
     $('stageText').textContent=Lab.STAGES[state.stage];
-    $('axisTag').textContent=q.axis?Lab.AXES[q.axis]:'قوة الدليل';
+    $('axisTag').textContent=q.axis?Lab.AXES[q.axis]:'إجاباتك مبنية على إيه؟';
     $('questionText').textContent=q.prompt;
-    $('questionHelp').textContent=state.index<6?'اختر الوصف الأقرب لما تملكه الآن، لا لما تتمنى الوصول إليه.':'هذا السؤال ظهر لأن إجاباتك السابقة ونوع القرار يحتاجان فحص هذه النقطة.';
+    $('questionHelp').textContent=state.index<6?'اختار الإجابة اللي بتحصل فعلًا دلوقتي، مش اللي نفسك يحصل.':'السؤال ده ظهر مخصوص لأن إجاباتك بتقول إن النقطة دي محتاجة نتأكد منها.';
     $('answers').innerHTML=q.options.map(option=>`<label class="answer"><input type="radio" name="answer" value="${option.value}" ${state.answers[q.id]===option.value?'checked':''}><span>${option.label}</span></label>`).join('');
     document.querySelectorAll('input[name="answer"]').forEach(input=>input.addEventListener('change',e=>{
       state.answers[q.id]=Number(e.target.value); $('nextBtn').disabled=false; save();
@@ -124,16 +124,16 @@
     const r=state.result;
     $('traffic').className=`traffic ${r.traffic.key}`; $('trafficIcon').textContent=r.traffic.icon; $('trafficTitle').textContent=r.traffic.title;
     $('resultType').textContent=r.decision.label; $('resultSummary').textContent=r.summary;
-    $('readinessValue').textContent=`${r.readiness}/100`; $('readinessBand').textContent=`التقييم: ${r.readinessBand} — ليست نسبة نجاح`;
-    $('evidenceValue').textContent=`${r.evidence}/100`; $('evidenceBand').textContent=`التقييم: ${r.evidenceBand} — ليست نسبة نجاح`;
+    $('readinessValue').textContent=`${r.readiness}/100`; $('readinessBand').textContent=`الدرجة: ${r.readinessBand} — ده مش احتمال نجاح`;
+    $('evidenceValue').textContent=`${r.evidence}/100`; $('evidenceBand').textContent=`الدرجة: ${r.evidenceBand} — ده مش احتمال نجاح`;
     $('riskBand').textContent=r.riskBand;
     $('axisBars').innerHTML=Object.entries(r.axisScores).map(([axis,value])=>`<div class="bar-row"><b>${Lab.AXES[axis]}</b><div class="track"><i style="width:${value}%"></i></div><span>${value}/100</span></div>`).join('');
-    $('gaps').innerHTML=r.gaps.map((gap,index)=>`<article class="gap"><span>${index+1}</span><div><h4>${gap.label} · ${gap.score}/100</h4><p>${gap.why}</p><small>الدليل الناقص: ${gap.missing}</small></div></article>`).join('');
+    $('gaps').innerHTML=r.gaps.map((gap,index)=>`<article class="gap"><span>${index+1}</span><div><h4>${gap.label} · ${gap.score}/100</h4><p>${gap.why}</p><small>اللي محتاج تثبته: ${gap.missing}</small></div></article>`).join('');
     $('noGo').textContent=r.decision.noGo;
     $('sevenDays').innerHTML=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${step}</li>`).join('');
     const x=r.experiment;
-    $('experiment').innerHTML=[['الفرضية',x.hypothesis],['الاختبار',x.test],['المدة',x.duration],['سقف التكلفة',x.cost],['علامة النجاح',x.success],['حد الإيقاف',x.stop],['موعد المراجعة',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
-    $('adaptiveCta').textContent=r.decision.cta; $('adaptiveCta').href='../#offer';
+    $('experiment').innerHTML=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
+    $('adaptiveCtaContext').textContent=r.decision.cta; $('adaptiveCta').textContent='شوف البرنامج مناسب لحالتك إزاي'; $('adaptiveCta').href='../#offer';
     $('localContext').textContent=r.extraNote?`ملاحظة أخذتها معك: ${r.extraNote}`:'';
     $('localContext').classList.toggle('hidden',!r.extraNote);
     save();
@@ -163,18 +163,18 @@
   function pdfPage(page,r,logo){
     const brand=`<div class="brand"><img src="${logo}"><div><b>لعبة البزنس</b><small>مختبر قرار مشروعك</small></div></div>`;
     const foot=`<div class="foot"><span>حاتم نجيب · التشخيص قبل الحل</span><span>صفحة ${page} من 3</span></div>`;
-    const top=`<div class="top">${brand}<div class="kicker">تقرير تشخيصي مبدئي · ${escapeHtml(new Intl.DateTimeFormat('ar-EG',{dateStyle:'long'}).format(new Date()))}</div></div>`;
+    const top=`<div class="top">${brand}<div class="kicker">ملخص يساعدك تراجع قرارك · ${escapeHtml(new Intl.DateTimeFormat('ar-EG',{dateStyle:'long'}).format(new Date()))}</div></div>`;
     if(page===1){
       const axes=Object.entries(r.axisScores).map(([axis,value])=>`<div class="axis"><b>${Lab.AXES[axis]}</b><div class="track"><div class="fill" style="width:${value}%"></div></div><strong>${value}/100</strong></div>`).join('');
-      return `<style>${pdfCss()}</style><div class="page">${top}<div class="hero"><div class="light">${r.traffic.icon}</div><h1>${escapeHtml(r.traffic.title)}</h1><p>${escapeHtml(r.summary)}</p></div><div class="metrics"><div class="metric"><span>درجة جاهزية القرار</span><b>${r.readiness}/100</b><small>${r.readinessBand}</small></div><div class="metric"><span>درجة قوة الدليل</span><b>${r.evidence}/100</b><small>${r.evidenceBand}</small></div><div class="metric"><span>مستوى المخاطرة</span><b>${r.riskBand}</b><small>تقدير نوعي</small></div></div><div class="summary"><b>تنبيه:</b> درجات الجاهزية والدليل تقيس اكتمال عناصر القرار والمعلومات المتاحة، وليست نسبة نجاح للمشروع.<br><br><b>الموقف الذي وصفته</b><br>${escapeHtml(r.problem)}<br><b>نوع القرار:</b> ${escapeHtml(r.decision.label)}</div><h2 class="title">صورة القرار عبر خمسة محاور</h2><div class="axes">${axes}</div><p class="note">هذه قراءة تعليمية بقواعد ثابتة، وليست احتمال نجاح أو فشل ولا بديلًا عن مراجعة متخصصة.</p>${foot}</div>`;
+      return `<style>${pdfCss()}</style><div class="page">${top}<div class="hero"><div class="light">${r.traffic.icon}</div><h1>${escapeHtml(r.traffic.title)}</h1><p>${escapeHtml(r.summary)}</p></div><div class="metrics"><div class="metric"><span>قد إيه الصورة واضحة قبل ما تتحرك؟</span><b>${r.readiness}/100</b><small>${r.readinessBand}</small></div><div class="metric"><span>قد إيه إجاباتك مبنية على حاجات حصلت فعلًا؟</span><b>${r.evidence}/100</b><small>${r.evidenceBand}</small></div><div class="metric"><span>قد إيه محتاج تتأكد أكتر؟</span><b>${r.riskBand}</b><small>منخفضة / متوسطة / مرتفعة</small></div></div><div class="summary"><b>مهم:</b> الدرجتان من 100 علشان يوضحوا قد إيه الصورة والمعلومات مكتملين. ده مش احتمال نجاح أو فشل للمشروع.<br><br><b>الموقف اللي وصفته</b><br>${escapeHtml(r.problem)}<br><b>أقرب حاجة فهمناها:</b> ${escapeHtml(r.decision.label)}</div><h2 class="title">مشروعك واقف فين دلوقتي؟</h2><div class="axes">${axes}</div><p class="note">النتيجة مبنية على إجاباتك وقواعد ثابتة. هي نقطة بداية للمراجعة، مش ضمانًا لنجاح أو فشل المشروع.</p>${foot}</div>`;
     }
     if(page===2){
-      const gaps=r.gaps.map((gap,index)=>`<div class="gap"><h3>${index+1}. ${gap.label} · ${gap.score}/100</h3><p>${gap.why}</p><small>الدليل الناقص: ${gap.missing}</small></div>`).join('');
-      return `<style>${pdfCss()}</style><div class="page">${top}<h2 class="title">الفجوات الثلاث الأهم الآن</h2><div class="gaps">${gaps}</div><h2 class="title">ما الذي لا ننصحك به الآن؟</h2><div class="warn">${escapeHtml(r.decision.noGo)}</div><h2 class="title">معنى النتيجة</h2><div class="summary">المطلوب ليس جمع معلومات أكثر بلا نهاية. المطلوب تقوية الدليل الأضعف الذي يمكنه تغيير القرار، ثم المراجعة في موعد واضح.</div><p class="note">لم تُرسل إجاباتك أو نص المشكلة أو اسمك إلى Meta أو GA4. التقرير تم إنشاؤه داخل متصفحك.</p>${foot}</div>`;
+      const gaps=r.gaps.map((gap,index)=>`<div class="gap"><h3>${index+1}. ${gap.label} · ${gap.score}/100</h3><p>${gap.why}</p><small>اللي محتاج تثبته: ${gap.missing}</small></div>`).join('');
+      return `<style>${pdfCss()}</style><div class="page">${top}<h2 class="title">أهم 3 حاجات ناقصة قبل ما تتحرك</h2><div class="gaps">${gaps}</div><h2 class="title">إيه اللي الأفضل ما تعملوش دلوقتي؟</h2><div class="warn">${escapeHtml(r.decision.noGo)}</div><h2 class="title">النتيجة معناها إيه؟</h2><div class="summary">مش محتاج تجمع معلومات بلا نهاية. ركّز على الحاجة الناقصة اللي ممكن تغيّر قرارك، وبعدها راجع النتيجة في اليوم اللي حددته.</div><p class="note">إجاباتك ونص المشكلة واسمك لم تُرسل إلى Meta أو GA4. التقرير اتعمل داخل متصفحك.</p>${foot}</div>`;
     }
     const days=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${escapeHtml(step)}</li>`).join('');
-    const x=r.experiment,experiment=[['الفرضية',x.hypothesis],['الاختبار',x.test],['المدة',x.duration],['سقف التكلفة',x.cost],['علامة النجاح',x.success],['حد الإيقاف',x.stop],['موعد المراجعة',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${escapeHtml(value)}</b></div>`).join('');
-    return `<style>${pdfCss()}</style><div class="page">${top}<h2 class="title">خطة العمل خلال 7 أيام</h2><ol class="days">${days}</ol><h2 class="title">التجربة التالية المقترحة</h2><div class="experiment">${experiment}</div>${r.nextDecision?`<div class="summary" style="margin-top:15px"><b>القرار الذي تريد حسمه:</b> ${escapeHtml(r.nextDecision)}</div>`:''}<div class="cta"><h3>${escapeHtml(r.decision.cta)}</h3><p>برنامج «التشخيص قبل الحل» يساعدك على بناء ملف قرار قائم على دليل وأرقام وخطة تنفيذ قابلة للمراجعة.</p></div><p class="note">هذه قراءة تعليمية مبدئية، وليست رأيًا قانونيًا أو محاسبيًا أو ضريبيًا.</p>${foot}</div>`;
+    const x=r.experiment,experiment=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${escapeHtml(value)}</b></div>`).join('');
+    return `<style>${pdfCss()}</style><div class="page">${top}<h2 class="title">خطة العمل خلال 7 أيام</h2><ol class="days">${days}</ol><h2 class="title">جرّب إيه الأول قبل ما تصرف أو تلتزم؟</h2><div class="experiment">${experiment}</div>${r.nextDecision?`<div class="summary" style="margin-top:15px"><b>القرار اللي عايز تحسمه:</b> ${escapeHtml(r.nextDecision)}</div>`:''}<div class="cta"><h3>${escapeHtml(r.decision.cta)}</h3><p>برنامج «التشخيص قبل الحل» يساعدك تجمع المعلومات المهمة، تفهم أرقامك، وتحدد خطوة واضحة تراجع نتيجتها.</p></div><p class="note">دي قراءة أولية تساعدك تفكر، ومش بديلًا عن رأي قانوني أو محاسبي أو ضريبي متخصص.</p>${foot}</div>`;
   }
   async function markupToJpeg(markup){
     const width=794,height=1123,svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml">${markup}</div></foreignObject></svg>`,url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'})),image=new Image();
@@ -218,22 +218,22 @@
     if(page===1){
       const gradient=ctx.createLinearGradient(56,0,738,0);gradient.addColorStop(0,'#102340');gradient.addColorStop(1,'#07111f');roundBox(ctx,56,128,682,165,22,gradient);
       pdfFont(ctx,30,'700','#fff');ctx.fillText(r.traffic.title,700,151);pdfFont(ctx,14,'400','#dce7f5');wrapCanvasText(ctx,r.summary,700,202,610,23,3);
-      metricCanvas(ctx,56,313,216,'درجة جاهزية القرار',`${r.readiness}/100`,r.readinessBand);metricCanvas(ctx,289,313,216,'درجة قوة الدليل',`${r.evidence}/100`,r.evidenceBand);metricCanvas(ctx,522,313,216,'مستوى المخاطرة',r.riskBand,'تقدير نوعي');
-      roundBox(ctx,56,430,682,150,16,'#eef7ff');pdfFont(ctx,13,'700','#173a73');ctx.fillText('تنبيه مهم',716,448);pdfFont(ctx,12,'400','#465d79');let y=wrapCanvasText(ctx,'درجات الجاهزية والدليل تقيس اكتمال عناصر القرار والمعلومات المتاحة، وليست نسبة نجاح للمشروع.',716,474,640,20,3);pdfFont(ctx,12,'700','#0b1730');ctx.fillText('الموقف الذي وصفته',716,y+5);pdfFont(ctx,11,'400','#53657d');wrapCanvasText(ctx,r.problem,716,y+30,640,19,2);
-      pdfFont(ctx,21,'700');ctx.fillText('صورة القرار عبر خمسة محاور',738,610);
+      metricCanvas(ctx,56,313,216,'قد إيه الصورة واضحة؟',`${r.readiness}/100`,r.readinessBand);metricCanvas(ctx,289,313,216,'إجاباتك مبنية على إيه؟',`${r.evidence}/100`,r.evidenceBand);metricCanvas(ctx,522,313,216,'قد إيه محتاج تتأكد أكتر؟',r.riskBand,'منخفضة / متوسطة / مرتفعة');
+      roundBox(ctx,56,430,682,150,16,'#eef7ff');pdfFont(ctx,13,'700','#173a73');ctx.fillText('مهم',716,448);pdfFont(ctx,12,'400','#465d79');let y=wrapCanvasText(ctx,'الدرجتان من 100 علشان يوضحوا قد إيه الصورة والمعلومات مكتملين. ده مش احتمال نجاح أو فشل للمشروع.',716,474,640,20,3);pdfFont(ctx,12,'700','#0b1730');ctx.fillText('الموقف اللي وصفته',716,y+5);pdfFont(ctx,11,'400','#53657d');wrapCanvasText(ctx,r.problem,716,y+30,640,19,2);
+      pdfFont(ctx,21,'700');ctx.fillText('مشروعك واقف فين دلوقتي؟',738,610);
       let axisY=660;Object.entries(r.axisScores).forEach(([axis,value])=>{pdfFont(ctx,12,'700');ctx.fillText(Lab.AXES[axis],738,axisY-5);roundBox(ctx,220,axisY,350,12,6,'#e5edf6');const bar=ctx.createLinearGradient(220,0,570,0);bar.addColorStop(0,'#6656ff');bar.addColorStop(1,'#2ca7ff');roundBox(ctx,220,axisY,350*value/100,12,6,bar);pdfFont(ctx,12,'700','#3157ca','left');ctx.direction='ltr';ctx.fillText(`${value}/100`,150,axisY-6);axisY+=68;});
-      pdfFont(ctx,10,'400','#75849a');wrapCanvasText(ctx,'هذه قراءة تعليمية بقواعد ثابتة، وليست احتمال نجاح أو فشل ولا بديلًا عن مراجعة متخصصة.',738,1015,682,17,2);
+      pdfFont(ctx,10,'400','#75849a');wrapCanvasText(ctx,'النتيجة مبنية على إجاباتك وقواعد ثابتة. هي نقطة بداية للمراجعة، مش ضمانًا لنجاح أو فشل المشروع.',738,1015,682,17,2);
     }else if(page===2){
-      pdfFont(ctx,23,'700');ctx.fillText('الفجوات الثلاث الأهم الآن',738,132);let y=180;
-      r.gaps.forEach((gap,index)=>{roundBox(ctx,56,y,682,145,16,'#f4f7fb','#e1e8f1');roundBox(ctx,684,y+16,36,36,18,'#e4edff');pdfFont(ctx,16,'700','#3157ca','center');ctx.direction='ltr';ctx.fillText(String(index+1),702,y+23);pdfFont(ctx,16,'700');ctx.fillText(`${gap.label} · ${gap.score}/100`,666,y+16);pdfFont(ctx,11,'400','#596b83');wrapCanvasText(ctx,gap.why,666,y+49,585,19,2);pdfFont(ctx,11,'700','#3157ca');wrapCanvasText(ctx,`الدليل الناقص: ${gap.missing}`,666,y+93,585,18,2);y+=160;});
-      pdfFont(ctx,21,'700');ctx.fillText('ما الذي لا ننصحك به الآن؟',738,675);roundBox(ctx,56,718,682,118,16,'#fff3e8','#f0c69e');ctx.fillStyle='#e28227';ctx.fillRect(724,718,14,118);pdfFont(ctx,13,'700','#503822');wrapCanvasText(ctx,r.decision.noGo,704,743,620,23,4);
-      pdfFont(ctx,21,'700');ctx.fillText('معنى النتيجة',738,866);roundBox(ctx,56,908,682,100,15,'#eef7ff');pdfFont(ctx,12,'400','#465d79');wrapCanvasText(ctx,'المطلوب ليس جمع معلومات أكثر بلا نهاية. المطلوب تقوية الدليل الأضعف الذي يمكنه تغيير القرار، ثم المراجعة في موعد واضح.',716,929,640,21,4);
+      pdfFont(ctx,23,'700');ctx.fillText('أهم 3 حاجات ناقصة قبل ما تتحرك',738,132);let y=180;
+      r.gaps.forEach((gap,index)=>{roundBox(ctx,56,y,682,145,16,'#f4f7fb','#e1e8f1');roundBox(ctx,684,y+16,36,36,18,'#e4edff');pdfFont(ctx,16,'700','#3157ca','center');ctx.direction='ltr';ctx.fillText(String(index+1),702,y+23);pdfFont(ctx,16,'700');ctx.fillText(`${gap.label} · ${gap.score}/100`,666,y+16);pdfFont(ctx,11,'400','#596b83');wrapCanvasText(ctx,gap.why,666,y+49,585,19,2);pdfFont(ctx,11,'700','#3157ca');wrapCanvasText(ctx,`اللي محتاج تثبته: ${gap.missing}`,666,y+93,585,18,2);y+=160;});
+      pdfFont(ctx,21,'700');ctx.fillText('إيه اللي الأفضل ما تعملوش دلوقتي؟',738,675);roundBox(ctx,56,718,682,118,16,'#fff3e8','#f0c69e');ctx.fillStyle='#e28227';ctx.fillRect(724,718,14,118);pdfFont(ctx,13,'700','#503822');wrapCanvasText(ctx,r.decision.noGo,704,743,620,23,4);
+      pdfFont(ctx,21,'700');ctx.fillText('النتيجة معناها إيه؟',738,866);roundBox(ctx,56,908,682,100,15,'#eef7ff');pdfFont(ctx,12,'400','#465d79');wrapCanvasText(ctx,'مش محتاج تجمع معلومات بلا نهاية. ركّز على الحاجة الناقصة اللي ممكن تغيّر قرارك، وبعدها راجع النتيجة في اليوم اللي حددته.',716,929,640,21,4);
     }else{
       pdfFont(ctx,23,'700');ctx.fillText('خطة العمل خلال 7 أيام',738,132);let y=178;
       r.plan.forEach((step,index)=>{const col=index%2,row=Math.floor(index/2),x=col===0?404:56,boxY=y+row*80,w=334;roundBox(ctx,x,boxY,w,67,13,'#f1f6fc');pdfFont(ctx,10,'700','#3157ca');ctx.fillText(`اليوم ${index+1}`,x+w-13,boxY+10);pdfFont(ctx,11,'600','#0b1730');wrapCanvasText(ctx,step,x+w-13,boxY+29,w-26,17,2);});
-      pdfFont(ctx,21,'700');ctx.fillText('التجربة التالية المقترحة',738,510);const x=r.experiment,items=[['الفرضية',x.hypothesis],['الاختبار',x.test],['المدة',x.duration],['سقف التكلفة',x.cost],['علامة النجاح',x.success],['حد الإيقاف',x.stop],['موعد المراجعة',x.review]];
+      pdfFont(ctx,21,'700');ctx.fillText('جرّب إيه الأول قبل ما تصرف أو تلتزم؟',738,510);const x=r.experiment,items=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]];
       items.forEach(([label,value],index)=>{const col=index%2,row=Math.floor(index/2),bx=col===0?404:56,by=552+row*70,w=334;roundBox(ctx,bx,by,w,58,12,'#f5f2ff');pdfFont(ctx,9,'700','#6656ff');ctx.fillText(label,bx+w-12,by+8);pdfFont(ctx,10,'600');wrapCanvasText(ctx,value,bx+w-12,by+25,w-24,15,2);});
-      roundBox(ctx,56,848,682,128,17,'#07111f');pdfFont(ctx,17,'700','#fff');wrapCanvasText(ctx,r.decision.cta,716,871,640,24,2);pdfFont(ctx,11,'400','#dce7f5');wrapCanvasText(ctx,'برنامج «التشخيص قبل الحل» يساعدك على بناء ملف قرار قائم على دليل وأرقام وخطة تنفيذ قابلة للمراجعة.',716,924,640,18,3);pdfFont(ctx,9,'400','#75849a');wrapCanvasText(ctx,'هذه قراءة تعليمية مبدئية، وليست رأيًا قانونيًا أو محاسبيًا أو ضريبيًا.',738,1015,682,16,2);
+      roundBox(ctx,56,848,682,128,17,'#07111f');pdfFont(ctx,17,'700','#fff');wrapCanvasText(ctx,r.decision.cta,716,871,640,24,2);pdfFont(ctx,11,'400','#dce7f5');wrapCanvasText(ctx,'برنامج «التشخيص قبل الحل» يساعدك تجمع المعلومات المهمة، تفهم أرقامك، وتحدد خطوة واضحة تراجع نتيجتها.',716,924,640,18,3);pdfFont(ctx,9,'400','#75849a');wrapCanvasText(ctx,'دي قراءة أولية تساعدك تفكر، ومش بديلًا عن رأي قانوني أو محاسبي أو ضريبي متخصص.',738,1015,682,16,2);
     }
     return canvas.toDataURL('image/jpeg',.92).split(',')[1];
   }

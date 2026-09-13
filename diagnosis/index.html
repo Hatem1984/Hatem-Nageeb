@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
-  <meta name="description" content="مختبر قرار مشروعك: احكي المشكلة، اختبر الدليل، واعرف خطوتك التالية قبل ما تزود التزامك.">
+  <meta name="description" content="مختبر قرار مشروعك: احكي اللي حاصل، جاوب على 10 أسئلة بسيطة، واعرف إيه اللي محتاج تتأكد منه قبل قرارك الجاي.">
   <title>مختبر قرار مشروعك | لعبة البزنس</title>
   <link rel="canonical" href="https://hatem1984.github.io/Hatem-Nageeb/diagnosis/">
   <meta property="og:title" content="اختبار قرار مشروعك مجانًا | لعبة البزنس">
-  <meta property="og:description" content="أسئلة تتكيّف مع مشكلتك، قراءة لخمس محاور، خطة 7 أيام، وتقرير PDF مجاني.">
+  <meta property="og:description" content="10 أسئلة بسيطة بتتغير حسب حالتك، وخطة 7 أيام، وتقرير PDF مجاني من غير مصطلحات معقدة.">
   <meta property="og:type" content="website"><meta property="og:url" content="https://hatem1984.github.io/Hatem-Nageeb/diagnosis/">
   <meta property="og:image" content="https://hatem1984.github.io/Hatem-Nageeb/assets/og-share.jpg"><meta name="twitter:card" content="summary_large_image">
   <script>
@@ -25,6 +25,7 @@
   </style>
   <style>
     .bar-row{grid-template-columns:130px 1fr 58px}
+    .diagnosis-program-difference{display:block;margin:11px 0 13px;color:#607187;font-size:.76rem;line-height:1.75}
     @media(max-width:650px){.bar-row{grid-template-columns:105px 1fr 52px}}
   </style>
 </head>
@@ -34,27 +35,28 @@
 
     <section class="card pad accent" id="intake">
       <div class="resume hidden" id="resumeNote">لقينا تقدمًا محفوظًا على جهازك. تقدر تكمّل أو تعدّل الإجابات.</div>
-      <span class="eyebrow">تجربة تشخيصية مجانية</span><h1>مختبر قرار مشروعك</h1>
-      <p class="lead">احكي المشكلة، اختبر الدليل، واعرف خطوتك التالية قبل ما تزود التزامك.</p>
-      <div class="promise"><div><b>8–11</b>سؤالًا حسب حالتك</div><div><b>5 + 1</b>محاور وقوة الدليل</div><div><b>7 أيام</b>خطة وتجربة تالية</div></div>
+      <span class="eyebrow">اختبار مجاني لقرارك</span><h1>مختبر قرار مشروعك</h1>
+      <p class="lead">احكي اللي حاصل في مشروعك، جاوب على 10 أسئلة بسيطة، واعرف إيه اللي محتاج تتأكد منه قبل قرارك الجاي.</p>
+      <div class="promise"><div><b>10</b>أسئلة بسيطة</div><div><b>حسب حالتك</b>أسئلة بتتغير</div><div><b>7 أيام</b>خطة عملية</div></div>
+      <p class="small-note">من غير محاسبة ولا مصطلحات معقدة.</p>
       <label class="section-label" for="problemInput">إيه المشكلة أو القرار اللي شاغلك دلوقتي؟ <span class="required">*</span></label>
       <textarea class="textarea" id="problemInput" maxlength="600" placeholder="مثال: المبيعات كويسة بس آخر الشهر مفيش كاش… أو بفكر أفتح فرع جديد"></textarea>
       <span class="section-label">أو اختار أقرب موضوع بسرعة</span>
       <div class="quick-grid">
-        <button class="quick" type="button" data-quick="عندي فكرة مشروع">عندي فكرة مشروع</button><button class="quick" type="button" data-quick="التسعير">التسعير</button><button class="quick" type="button" data-quick="المبيعات">المبيعات</button><button class="quick" type="button" data-quick="السيولة والتحصيل">السيولة والتحصيل</button><button class="quick" type="button" data-quick="التشغيل">التشغيل</button><button class="quick" type="button" data-quick="التكاليف">التكاليف</button><button class="quick" type="button" data-quick="التوسع">التوسع</button><button class="quick" type="button" data-quick="فتح فرع">فتح فرع</button><button class="quick" type="button" data-quick="منتج أو خدمة جديدة">منتج جديد</button><button class="quick" type="button" data-quick="قرار آخر">قرار آخر</button>
+        <button class="quick" type="button" data-quick="عندي فكرة مشروع">عندي فكرة مشروع</button><button class="quick" type="button" data-quick="التسعير">التسعير</button><button class="quick" type="button" data-quick="المبيعات">المبيعات</button><button class="quick" type="button" data-quick="السيولة والتحصيل">الفلوس مش متاحة أو العملاء متأخرين في الدفع</button><button class="quick" type="button" data-quick="التشغيل">التشغيل والتسليم</button><button class="quick" type="button" data-quick="التكاليف">المصاريف</button><button class="quick" type="button" data-quick="التوسع">تكبير الشغل</button><button class="quick" type="button" data-quick="فتح فرع">فتح فرع</button><button class="quick" type="button" data-quick="منتج أو خدمة جديدة">منتج جديد</button><button class="quick" type="button" data-quick="قرار آخر">قرار آخر</button>
       </div>
       <span class="section-label">مرحلة المشروع <span class="required">*</span></span>
       <div class="stage-grid"><label class="stage-option"><input type="radio" name="stage" value="idea"><span>فكرة / تحت التأسيس</span></label><label class="stage-option"><input type="radio" name="stage" value="running"><span>مشروع قائم بالفعل</span></label></div>
       <span class="section-label">اختياري — لتحسين صياغة التقرير على جهازك</span>
       <div class="optional"><label><span>اسمك الأول</span><input id="firstName" type="text" maxlength="40" autocomplete="given-name" placeholder="مثال: أحمد"></label><label><span>اسم المشروع أو الفكرة</span><input id="projectName" type="text" maxlength="70" placeholder="وصف مختصر"></label></div>
       <div class="privacy">لا نطلب هاتفًا أو WhatsApp أو بريدًا أو بيانات مالية. نص المشكلة والاسم والتفاصيل لا تُرسل إلى Meta أو GA4، وحفظ التقدم محلي على جهازك.</div>
-      <button class="primary wide" id="understandBtn" disabled>خلّينا نفهم القرار</button><p class="save-hint" id="saveHint"></p>
+      <button class="primary wide" id="understandBtn" disabled>خلّينا نفهم اللي حاصل</button><p class="save-hint" id="saveHint"></p>
     </section>
 
     <section class="card pad hidden" id="confirm">
-      <span class="eyebrow">تأكيد الفهم قبل الأسئلة</span><h2>اللي فهمناه من حالتك</h2>
-      <div class="confirm-box"><small>نوع القرار الأقرب</small><h3 id="confirmType"></h3><blockquote id="confirmProblem"></blockquote><p class="confirm-question" id="confirmQuestion"></p></div>
-      <p class="small-note">التصنيف يتم بقواعد وكلمات دلالية داخل المتصفح، ويمكنك الرجوع وتعديل وصفك.</p>
+      <span class="eyebrow">خلّينا نتأكد إننا فاهمينك صح</span><h2>اللي فهمناه من حالتك</h2>
+      <div class="confirm-box"><small>أقرب حاجة فهمناها من كلامك</small><h3 id="confirmType"></h3><blockquote id="confirmProblem"></blockquote><p class="confirm-question" id="confirmQuestion"></p></div>
+      <p class="small-note">لو فهمنا مش دقيق، ارجع وعدّل وصفك قبل ما تبدأ الأسئلة.</p>
       <div class="actions"><button class="primary" id="confirmBtn">أيوه، كمّل</button><button class="secondary" id="editProblemBtn">عدّل المشكلة</button></div>
     </section>
 
@@ -64,29 +66,29 @@
     </section>
 
     <section class="card pad hidden" id="context">
-      <span class="eyebrow">سياق اختياري</span><h2>لو فيه تفصيلة مهمة، ضيفها قبل النتيجة</h2><p class="context-copy">الإجابات دي لا تغيّر الدرجة، لكنها تظهر في تقريرك المحلي وتساعدك تصيغ القرار بوضوح.</p>
+      <span class="eyebrow">في حاجة مهمة حابب تضيفها؟</span><h2>لو فيه تفصيلة مهمة، ضيفها قبل النتيجة</h2><p class="context-copy">الإجابات دي لا تغيّر الدرجة، لكنها تظهر في تقريرك على جهازك وتساعدك توضح قرارك.</p>
       <label class="section-label" for="extraNote">معلومة إضافية عن الموقف</label><textarea class="textarea small" id="extraNote" maxlength="500" placeholder="اختياري"></textarea>
-      <label class="section-label" for="nextDecision">ما القرار الذي تريد حسمه خلال 30 يومًا؟</label><textarea class="textarea small" id="nextDecision" maxlength="300" placeholder="اختياري — مثال: أفتح الفرع أو أختبر المنطقة أولًا"></textarea>
-      <div class="actions" style="margin-top:18px"><button class="primary" id="resultBtn">اعرض تشخيصي</button><button class="secondary" id="contextBackBtn">السابق</button></div>
+      <label class="section-label" for="nextDecision">لو فيه قرار واحد نفسك تحسمه خلال الشهر الجاي، هيكون إيه؟</label><textarea class="textarea small" id="nextDecision" maxlength="300" placeholder="اختياري — مثال: أفتح الفرع أو أجرب البيع في المنطقة الأول"></textarea>
+      <div class="actions" style="margin-top:18px"><button class="primary" id="resultBtn">اعرض نتيجتي</button><button class="secondary" id="contextBackBtn">السابق</button></div>
     </section>
 
     <section class="card hidden" id="results" aria-live="polite">
       <div class="traffic" id="traffic"><div class="icon" id="trafficIcon"></div><div><small id="resultType"></small><h2 id="trafficTitle"></h2><p id="resultSummary"></p></div></div>
       <div class="result-body">
-        <div class="metrics"><div class="metric"><span>درجة جاهزية القرار</span><b id="readinessValue"></b><small id="readinessBand"></small></div><div class="metric"><span>درجة قوة الدليل</span><b id="evidenceValue"></b><small id="evidenceBand"></small></div><div class="metric"><span>مستوى المخاطرة</span><b id="riskBand"></b><small>تقدير نوعي — ليس احتمال فشل</small></div></div>
-        <div class="privacy">درجات الجاهزية والدليل من 100 لقياس اكتمال عناصر القرار وقوة المعلومات المتاحة فقط. ليست نسبة نجاح للمشروع.</div>
-        <h3 class="section-title">صورتك عبر محاور القرار</h3><div class="bar-list" id="axisBars"></div>
-        <h3 class="section-title">الفجوات الثلاث الأهم</h3><div class="gaps" id="gaps"></div>
-        <h3 class="section-title">ما الذي لا ننصحك به الآن؟</h3><div class="no-go" id="noGo"></div>
+        <div class="metrics"><div class="metric"><span>قد إيه الصورة واضحة قبل ما تتحرك؟</span><b id="readinessValue"></b><small id="readinessBand"></small></div><div class="metric"><span>قد إيه إجاباتك مبنية على حاجات حصلت فعلًا؟</span><b id="evidenceValue"></b><small id="evidenceBand"></small></div><div class="metric"><span>قد إيه محتاج تتأكد أكتر قبل ما تصرف أو تلتزم؟</span><b id="riskBand"></b><small>منخفضة / متوسطة / مرتفعة</small></div></div>
+        <div class="privacy">الدرجتان من 100 علشان يوضحوا قد إيه الصورة والمعلومات مكتملين. ده مش احتمال نجاح أو فشل للمشروع.</div>
+        <h3 class="section-title">مشروعك واقف فين دلوقتي؟</h3><div class="bar-list" id="axisBars"></div>
+        <h3 class="section-title">أهم 3 حاجات ناقصة قبل ما تتحرك</h3><div class="gaps" id="gaps"></div>
+        <h3 class="section-title">إيه اللي الأفضل ما تعملوش دلوقتي؟</h3><div class="no-go" id="noGo"></div>
         <h3 class="section-title">خطة 7 أيام</h3><ol class="days" id="sevenDays"></ol>
-        <h3 class="section-title">التجربة التالية المقترحة</h3><div class="experiment" id="experiment"></div><p class="local-context hidden" id="localContext"></p>
-        <div class="cta-box"><h3>الخطوة التالية حسب نوع قرارك</h3><p>لو عايز تبني ملف القرار كاملًا بدل الاعتماد على تشخيص مبدئي:</p><a class="primary" id="adaptiveCta" href="../#offer"></a></div>
+        <h3 class="section-title">جرّب إيه الأول قبل ما تصرف أو تلتزم؟</h3><div class="experiment" id="experiment"></div><p class="local-context hidden" id="localContext"></p>
+        <div class="cta-box"><h3>عرفت أول نقطة محتاجة اهتمام</h3><p>في البرنامج هتشتغل على حالتك وتبني ملف قرار وخطة تنفيذ.</p><small class="diagnosis-program-difference">الاختبار المجاني بيديك قراءة أولية وخطة 7 أيام. أداة AI المشمولة في الاشتراك تساعدك ترتب معلومات قراراتك أثناء التطبيق.</small><strong class="diagnosis-program-difference" id="adaptiveCtaContext"></strong><a class="primary" id="adaptiveCta" href="../#offer">شوف البرنامج مناسب لحالتك إزاي</a></div>
         <div class="result-actions"><button class="primary" id="pdfBtn">تنزيل تقرير PDF من 3 صفحات</button><a class="dark-link" id="programBtn" href="../#offer">شوف تفاصيل البرنامج والحجز</a><a class="dark-link" id="messengerBtn" href="https://m.me/891183134080763" target="_blank" rel="noopener">اسأل على Messenger</a><button class="secondary" id="restartBtn">ابدأ تشخيصًا جديدًا</button></div><p class="pdf-status" id="pdfStatus"></p>
         <div class="privacy">هذه قراءة تعليمية مبدئية مبنية على إجاباتك وقواعد ثابتة، وليست ضمانًا لنجاح المشروع أو رأيًا قانونيًا أو محاسبيًا أو ضريبيًا.</div>
       </div>
     </section>
     <p class="footer">إعداد حاتم نجيب — لعبة البزنس<br>برنامج «التشخيص قبل الحل» بالتعاون مع أكاديمية المدرب الأفضل</p>
   </main>
-  <script src="engine.js?v=20260912-3"></script><script src="app.js?v=20260912-3"></script>
+  <script src="engine.js?v=20260912-4"></script><script src="app.js?v=20260912-4"></script>
 </body>
 </html>
