@@ -8,43 +8,47 @@ permalink: /
 .ai-access-grid .ai-access-box{margin-top:0;height:100%}
 .ai-price-box{background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(102,86,255,.14))!important;border-color:rgba(255,194,79,.25)!important}
 .ai-price-box .ai-access-kicker{color:#ffd27a!important}
-.payment-proof-reply-note{display:block;margin-top:12px;padding:12px 14px;border-radius:12px;background:#eefbf2;border:1px solid #bfe8ca;color:#215a31;font-size:13px;line-height:1.75;text-align:right}
-.payment-proof-reply-note b{display:block;margin-bottom:4px;color:#164724}
-@media(max-width:700px){.hero h1{font-size:28px!important;line-height:1.3!important}.ai-access-grid{grid-template-columns:1fr}}
+.gift-bundle{margin-top:28px;padding:22px;border-radius:22px;background:linear-gradient(135deg,rgba(44,167,255,.10),rgba(102,86,255,.12));border:1px solid rgba(102,86,255,.22)}
+.gift-bundle-head{text-align:center;margin-bottom:16px}.gift-bundle-head span{display:inline-block;padding:7px 12px;border-radius:999px;background:#fff;color:#4f5fd7;font-weight:900;font-size:13px}.gift-bundle-head strong{display:block;margin-top:10px;font-size:22px;color:#10264e}.gift-bundle-head small{display:block;margin-top:6px;color:#66758b;line-height:1.7}
+.gift-bundle-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.gift-bundle-item{padding:18px;border-radius:18px;background:#fff;border:1px solid #dfe7f4;box-shadow:0 10px 28px rgba(18,42,82,.07)}.gift-bundle-item .gift-icon{font-size:26px;display:block;margin-bottom:8px}.gift-bundle-item b{display:block;color:#10264e;font-size:18px;margin-bottom:6px}.gift-bundle-item strong{display:block;color:#3d5ed7;font-size:20px;margin:4px 0 7px}.gift-bundle-item p{margin:0;color:#66758b;font-size:14px;line-height:1.75}.gift-bundle-foot{margin-top:13px;text-align:center;color:#32415a;font-size:13px;font-weight:800}
+#paymentProofLink{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}.messenger-mark{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#00b2ff,#6c4cff);flex:0 0 25px}.messenger-mark svg{width:16px;height:16px;fill:#fff}
+@media(max-width:700px){.hero h1{font-size:28px!important;line-height:1.3!important}.ai-access-grid,.gift-bundle-grid{grid-template-columns:1fr}.gift-bundle{padding:17px}.gift-bundle-head strong{font-size:19px}}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', hero_patch %}
-{% assign page = page | replace: 'support-card glass-card lift-hover reveal support-messenger', 'support-card glass-card lift-hover reveal support-whatsapp' %}
-{% assign page = page | replace: 'live-icon live-messenger', 'live-icon live-whatsapp' %}
-{% assign page = page | replace: 'متابعة تعليمية عبر Messenger', 'متابعة تعليمية عبر WhatsApp' %}
-{% assign page = page | replace: '<svg viewbox="0 0 64 64"><path d="M32 10c-12.7 0-23 9.2-23 20.5 0 6.4 3.3 12.1 8.6 15.8V54l7.1-3.9c2.3.6 4.7.9 7.3.9 12.7 0 23-9.2 23-20.5S44.7 10 32 10Z"></path><path class="fill" d="m20 37 9-10 7 6 8-9-9 13-7-6-8 6Z"></path></svg>', '<svg viewbox="0 0 64 64"><path d="M32 8a23 23 0 0 0-20 34l-3 13 13-4A23 23 0 1 0 32 8Z"></path><path d="M23 20c1-2 3-2 4 0l3 6c1 2 0 3-2 4l-2 1c2 5 6 9 11 11l1-2c1-2 3-2 4-1l6 3c2 1 2 3 0 4-2 2-5 4-9 3-10-2-21-13-23-23-1-4 1-7 3-9 2-1 3 0 4 3Z"></path></svg>' %}
-{% assign page = page | replace: 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك، وتشمل 6 أشهر استخدام مجاني من تاريخ تفعيل حسابك فعليًا.', 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك. وللدفعة الأولى: استخدام مجاني مدى الحياة بواقع اختبار واحد كل أسبوع. الاشتراك المنفصل في الأداة 699 جنيه شهريًا.' %}
+{% assign page = page | replace: 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك، وتشمل 6 أشهر استخدام مجاني من تاريخ تفعيل حسابك فعليًا.', 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك. وللدفعة الأولى: باكدج هدايا يشمل استخدام الأداة مجانًا مدى الحياة بواقع اختبار واحد كل أسبوع + نسخة رقمية مجانية من كتاب «الخروج من النفق».' %}
 {% capture ai_access_old %}<div class="ai-access-box">
 <span class="ai-access-kicker">ميزة للدفعة الأولى</span>
 <strong>6 أشهر استخدام مجاني</strong>
 <span>تبدأ من تاريخ تفعيل حسابك الفعلي على الأداة — بدون تكلفة إضافية.</span>
 </div>{% endcapture %}
-{% capture ai_access_new %}<div class="ai-access-grid">
-<div class="ai-access-box">
-<span class="ai-access-kicker">ميزة للدفعة الأولى</span>
+{% capture ai_access_new %}<div class="gift-bundle">
+<div class="gift-bundle-head">
+<span>🎁 باكدج هدايا الدفعة الأولى</span>
+<strong>الأداة + الكتاب الرقمي معًا بدون تكلفة إضافية</strong>
+<small>ميزتين عمليتين تكملوا بعض: تشخيص مستمر لقراراتك + مرجع رقمي ترجع له وقت ما تحتاج.</small>
+</div>
+<div class="gift-bundle-grid">
+<div class="gift-bundle-item">
+<span class="gift-icon">🧠</span>
+<b>أداة AI «التشخيص قبل الحل»</b>
 <strong>مجانية مدى الحياة</strong>
-<span>بواقع اختبار واحد كل أسبوع على أداة AI التشخيص قبل الحل — بدون تكلفة إضافية.</span>
+<p>بواقع اختبار واحد كل أسبوع. ولو اشتركت فيها منفصلة عن البرنامج فسعرها 699 جنيه / شهر.</p>
 </div>
-<div class="ai-access-box ai-price-box">
-<span class="ai-access-kicker">لو اشتركت في الأداة منفصلة</span>
-<strong>699 جنيه / شهر</strong>
-<span>ده سعر الاشتراك الشهري في الأداة خارج اشتراك برنامج «التشخيص قبل الحل».</span>
+<div class="gift-bundle-item">
+<span class="gift-icon">📘</span>
+<b>كتاب «الخروج من النفق»</b>
+<strong>نسخة رقمية مجانية</strong>
+<p>سعر النسخة الرقمية منفردة 250 جنيه، ومشمولة مجانًا ضمن باكدج الدفعة الأولى.</p>
 </div>
+</div>
+<div class="gift-bundle-foot">الباكدج مخصص للدفعة الأولى ومشمول ضمن الاشتراك بدون رسوم إضافية.</div>
 </div>{% endcapture %}
 {% assign page = page | replace: ai_access_old, ai_access_new %}
-{% assign page = page | replace: 'الستة أشهر المجانية تبدأ من تاريخ تفعيل حسابك فعليًا.', 'للدفعة الأولى، الاستخدام مجاني مدى الحياة بواقع اختبار واحد كل أسبوع. ولو اشتركت في الأداة بشكل منفصل عن البرنامج فسعر الاشتراك 699 جنيه شهريًا.' %}
-{% assign page = page | replace: 'مادة مساندة', 'هدية للدفعة الأولى · قيمة 250 جنيه' %}
-{% assign page = page | replace: 'نسخة رقمية بعد انتهاء نافذة الاسترداد.', 'نسخة رقمية سعرها منفردة 250 جنيه، ومجانية للدفعة الأولى بعد انتهاء نافذة الاسترداد.' %}
-{% assign page = page | replace: 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ.', 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ. النسخة الرقمية تُباع منفردة بـ250 جنيه، وتُمنح مجانًا للدفعة الأولى.' %}
-{% assign page = page | replace: 'ابعت اسمك الكامل وصورة إثبات التحويل على Messenger.', 'ابعت اسمك الكامل وصورة إثبات التحويل على WhatsApp.' %}
-{% assign page = page | replace: 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 2,000 جنيه على Messenger. يتأكد المقعد بعد مراجعة التحويل واستلام البيانات.', 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 2,000 جنيه على WhatsApp. يتأكد المقعد بعد مراجعة التحويل واستلام البيانات.' %}
-{% assign page = page | replace: 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 4,500 جنيه على Messenger. يتأكد الاشتراك بعد مراجعة التحويل واستلام البيانات.', 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 4,500 جنيه على WhatsApp. يتأكد الاشتراك بعد مراجعة التحويل واستلام البيانات.' %}
-{% assign page = page | replace: 'ابعت الاسم الكامل + Screenshot لإثبات تحويل أول 2,000 جنيه على Messenger. الأقساط التالية: 1,500 يوم 1 نوفمبر و1,500 يوم 1 ديسمبر.', 'ابعت الاسم الكامل + Screenshot لإثبات تحويل أول 2,000 جنيه على WhatsApp. الأقساط التالية: 1,500 يوم 1 نوفمبر و1,500 يوم 1 ديسمبر.' %}
+{% assign page = page | replace: 'الستة أشهر المجانية تبدأ من تاريخ تفعيل حسابك فعليًا.', 'للدفعة الأولى، أداة AI مجانية مدى الحياة بواقع اختبار واحد كل أسبوع، والكتاب الرقمي مشمول معها ضمن باكدج هدايا الدفعة الأولى. سعر الأداة منفصلة 699 جنيه شهريًا، وسعر الكتاب الرقمي منفردًا 250 جنيه.' %}
+{% assign page = page | replace: 'مادة مساندة', 'ضمن باكدج هدايا الدفعة الأولى · قيمة 250 جنيه' %}
+{% assign page = page | replace: 'نسخة رقمية بعد انتهاء نافذة الاسترداد.', 'نسخة رقمية سعرها منفردة 250 جنيه، ومشمولة مجانًا مع أداة AI ضمن باكدج الدفعة الأولى بعد انتهاء نافذة الاسترداد.' %}
+{% assign page = page | replace: 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ.', 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ. النسخة الرقمية سعرها منفردة 250 جنيه، وهي مشمولة مجانًا مع أداة AI ضمن باكدج هدايا الدفعة الأولى.' %}
 {% capture proof_old %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات التحويل على Messenger</a>{% endcapture %}
-{% capture proof_new %}<a data-track-contact="" href="https://wa.me/201011223667?text=%D8%A5%D8%B1%D8%B3%D9%84%20%D8%A7%D8%AB%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AF%D9%81%D8%B9" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات الدفع على WhatsApp</a><span class="payment-proof-reply-note"><b>بعد إرسال إثبات الدفع</b>رسالة تأكيد الاستلام: «تم استلام إثبات الدفع الخاص بك وسيتم التحقق وتأكيد الحجز<br>انتظر رسالة التأكيد والكود الخاص بك»</span>{% endcapture %}
+{% capture proof_new %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank"><span class="messenger-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 10c-12.7 0-23 9.2-23 20.5 0 6.4 3.3 12.1 8.6 15.8V54l7.1-3.9c2.3.6 4.7.9 7.3.9 12.7 0 23-9.2 23-20.5S44.7 10 32 10Z"></path><path d="m20 37 9-10 7 6 8-9-9 13-7-6-8 6Z"></path></svg></span><span>إرسال إثبات الدفع على Messenger</span></a>{% endcapture %}
 {% assign page = page | replace: proof_old, proof_new %}
 {{ page }}
