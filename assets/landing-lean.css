@@ -1,0 +1,58 @@
+/* Lean conversion layout for the paid-program landing page */
+.lean-hidden{display:none!important}
+
+/* Lead magnet */
+#free-test.lean-compact .lead-magnet-grid{grid-template-columns:1fr!important;max-width:900px;margin:auto;text-align:center}
+#free-test.lean-compact .lead-magnet-copy{max-width:820px;margin:auto}
+#free-test.lean-compact .lead-magnet-points{grid-template-columns:repeat(3,1fr);gap:12px;text-align:right}
+#free-test.lean-compact .lead-magnet-point{padding:14px;border:1px solid rgba(255,255,255,.11);border-radius:15px;background:rgba(255,255,255,.055)}
+
+/* Social proof */
+#testimonial.lean-compact .consultation-client-grid{grid-template-columns:repeat(3,1fr)}
+#testimonial.lean-compact .proof-method-bridge{margin-bottom:20px}
+#testimonial.lean-compact .consultation-clients{margin-top:24px;padding-top:20px}
+
+/* Combined outcomes + tools */
+.lean-tools-block{margin-top:42px;padding-top:34px;border-top:1px solid #e3eaf3}
+.lean-tools-head{text-align:center;max-width:820px;margin:0 auto 22px}
+.lean-tools-head .mini-kicker{margin-bottom:6px}
+.lean-tools-head h3{margin:0;color:#10264e;font-size:26px;line-height:1.45}
+.lean-tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:940px;margin:0 auto}
+.lean-tools-grid .tool-line{border:1px solid #e0e8f2!important;border-radius:16px!important;padding:17px!important;background:#fff!important}
+.lean-tools-grid .tool-line b{font-size:16px!important;margin-bottom:6px!important}
+.lean-tools-grid .tool-line .live-icon{display:none!important}
+.lean-tool-preview{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:800px;margin:20px auto 0}
+.lean-tool-preview .toolshot{margin:0}
+
+/* Presenter trust merge */
+.lean-trust-inline{margin-top:24px;padding-top:20px;border-top:1px solid #e1e8f1}
+.lean-trust-inline h3{margin:0 0 12px;color:#10264e;font-size:19px}
+.lean-credential-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.lean-credential{padding:13px;border:1px solid #e0e7f0;border-radius:14px;background:#f8fbff}
+.lean-credential b{display:block;color:#10264e;font-size:13px;line-height:1.5}
+.lean-credential span{display:block;color:#738298;font-size:11px;line-height:1.6;margin-top:4px}
+.lean-partner{display:flex;align-items:center;gap:12px;margin-top:13px;padding:13px;border-radius:14px;background:#f6f9ff;border:1px solid #dfe7f5}
+.lean-partner img{width:110px;max-height:54px;object-fit:contain;border-radius:8px}
+.lean-partner div{color:#52647b;font-size:12px;line-height:1.7}
+.lean-partner b{display:block;color:#10264e;font-size:13px}
+
+/* Offer merge */
+.lean-gift-wrap{margin:28px 0 12px}
+.lean-schedule-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 26px}
+.lean-schedule-item{padding:14px;border-radius:15px;background:#f7faff;border:1px solid #e0e8f2;text-align:center}
+.lean-schedule-item b{display:block;color:#10264e;font-size:14px;margin-bottom:4px}
+.lean-schedule-item span{display:block;color:#6f7f94;font-size:11px;line-height:1.6}
+
+/* FAQ */
+#faq.lean-compact .faq{max-width:900px;margin:auto}
+.lean-privacy-note{max-width:900px;margin:14px auto 0;color:#7a889b;font-size:11px;line-height:1.8;text-align:center}
+
+@media(max-width:850px){
+  #free-test.lean-compact .lead-magnet-points,
+  #testimonial.lean-compact .consultation-client-grid,
+  .lean-tools-grid,
+  .lean-tool-preview,
+  .lean-credential-grid,
+  .lean-schedule-strip{grid-template-columns:1fr}
+  .lean-partner{align-items:flex-start}
+}
