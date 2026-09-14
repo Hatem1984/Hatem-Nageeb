@@ -36,16 +36,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
     const block=document.createElement('div');
     block.className='lean-tools-block';
-    block.innerHTML='<div class="lean-tools-head"><span class="mini-kicker">أهم أدوات التطبيق</span><h3>أربع أدوات مرتبطة مباشرة بقرارات السعر والسيولة والتعادل والتنفيذ</h3></div><div class="lean-tools-grid"></div><div class="lean-tool-preview"></div><a class="lean-continue-cue" href="#presenter" aria-label="انتقل إلى قسم مقدم البرنامج"><span>التالي: مين هيقودك للتطبيق؟</span><span class="lean-arrow" aria-hidden="true">↓</span></a>';
+    block.innerHTML='<div class="lean-tools-head"><span class="mini-kicker">أهم أدوات التطبيق</span><h3>أربع أدوات مرتبطة مباشرة بقرارات السعر والسيولة والتعادل والتنفيذ</h3></div><div class="lean-tools-grid"></div><div class="lean-tools-outro"><strong>الأدوات دي مش الهدف في حد ذاتها.</strong><span>الهدف إنك تستخدمها علشان توصل لقرار مشروعك على دليل وأرقام.</span></div><a class="lean-continue-cue" href="#presenter" aria-label="انتقل إلى قسم مقدم البرنامج"><span>التالي: مين هيقودك للتطبيق؟</span><span class="lean-arrow" aria-hidden="true">↓</span></a>';
     const grid=qs('.lean-tools-grid',block);
-    const preview=qs('.lean-tool-preview',block);
     const wanted=['حاسبة التسعير وهامش المساهمة','حاسبة نقطة التعادل','توقع التدفق النقدي 90 يومًا','مصفوفة القرار وخطة 90 يومًا'];
     qsa('.tool-line',tools).forEach(line=>{
       if(wanted.some(name=>line.textContent.includes(name))) grid.appendChild(line.cloneNode(true));
-    });
-    const wantedShots=['حاسبة نقطة التعادل','توقع التدفق النقدي'];
-    qsa('.toolshot',tools).forEach(shot=>{
-      if(wantedShots.some(name=>shot.textContent.includes(name))) preview.appendChild(shot.cloneNode(true));
     });
     const inner=qs('.section-inner',outcomes) || outcomes;
     inner.appendChild(block);
