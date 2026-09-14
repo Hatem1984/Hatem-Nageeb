@@ -3,7 +3,7 @@ permalink: /
 ---
 {% capture page %}{% include landing-base.html %}{% endcapture %}
 {% capture hero_patch %}<style id="hero-title-size-refinement">
-.hero h1{font-size:clamp(30px,3.4vw,46px)!important;line-height:1.25!important}
+.hero h1{font-size:clamp(27px,3vw,42px)!important;line-height:1.25!important}
 .ai-access-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
 .ai-access-grid .ai-access-box{margin-top:0;height:100%}
 .ai-price-box{background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(102,86,255,.14))!important;border-color:rgba(255,194,79,.25)!important}
@@ -12,7 +12,7 @@ permalink: /
 .gift-bundle-head{text-align:center;margin-bottom:16px}.gift-bundle-head span{display:inline-block;padding:7px 12px;border-radius:999px;background:#fff;color:#4f5fd7;font-weight:900;font-size:13px}.gift-bundle-head strong{display:block;margin-top:10px;font-size:22px;color:#10264e}.gift-bundle-head small{display:block;margin-top:6px;color:#66758b;line-height:1.7}
 .gift-bundle-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.gift-bundle-item{padding:18px;border-radius:18px;background:#fff;border:1px solid #dfe7f4;box-shadow:0 10px 28px rgba(18,42,82,.07)}.gift-bundle-item .gift-icon{font-size:26px;display:block;margin-bottom:8px}.gift-bundle-item b{display:block;color:#10264e;font-size:18px;margin-bottom:6px}.gift-bundle-item strong{display:block;color:#3d5ed7;font-size:20px;margin:4px 0 7px}.gift-bundle-item p{margin:0;color:#66758b;font-size:14px;line-height:1.75}.gift-bundle-foot{margin-top:13px;text-align:center;color:#32415a;font-size:13px;font-weight:800}
 #paymentProofLink{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}.messenger-mark{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#00b2ff,#6c4cff);flex:0 0 25px}.messenger-mark svg{width:16px;height:16px;fill:#fff}
-@media(max-width:700px){.hero h1{font-size:28px!important;line-height:1.3!important}.ai-access-grid,.gift-bundle-grid{grid-template-columns:1fr}.gift-bundle{padding:17px}.gift-bundle-head strong{font-size:19px}}
+@media(max-width:700px){.hero h1{font-size:25px!important;line-height:1.3!important}.ai-access-grid,.gift-bundle-grid{grid-template-columns:1fr}.gift-bundle{padding:17px}.gift-bundle-head strong{font-size:19px}}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', hero_patch %}
 {% assign page = page | replace: 'مش هنطلب رقم هاتف أو WhatsApp أو بريد أو بيانات مالية.', 'مش هنطلب رقم هاتف أو بريد أو بيانات مالية.' %}
