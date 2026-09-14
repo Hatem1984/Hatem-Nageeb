@@ -1,0 +1,1 @@
+Planned diagnosis UX improvements: quick choices first, optional free-text context, trust strip, and unified 10-questions / 5-axes wording.
