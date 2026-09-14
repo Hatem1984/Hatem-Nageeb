@@ -132,4 +132,5 @@ document.addEventListener('DOMContentLoaded', function(){
   if(presenter && offer) presenter.insertAdjacentElement('afterend',offer);
 
   document.documentElement.classList.add('lean-v7');
+  // Deployment retry marker: no functional change.
 });
