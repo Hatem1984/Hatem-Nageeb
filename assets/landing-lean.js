@@ -5,5 +5,13 @@ document.addEventListener('DOMContentLoaded', function(){
   // Step 1: simplify the hero and remove repeated problem statements.
   remove('.hero .lead');
   remove('.hero-pain-strip');
-  document.documentElement.classList.add('lean-v1');
+
+  // Step 2: keep the free diagnostic focused on value + CTA, not a second demo screen.
+  const freeTest=qs('#free-test');
+  if(freeTest){
+    freeTest.classList.add('lean-compact');
+    remove('.diagnostic-preview',freeTest);
+  }
+
+  document.documentElement.classList.add('lean-v2');
 });
