@@ -148,5 +148,20 @@ document.addEventListener('DOMContentLoaded', function(){
     inner.appendChild(privacy);
   }
 
-  document.documentElement.classList.add('lean-v8');
+  // Step 9: educational follow-up is on WhatsApp; payment proof remains on Messenger.
+  const supportCard=qsa('.support-card').find(card=>card.textContent.includes('متابعة تعليمية عبر Messenger'));
+  if(supportCard){
+    const heading=qs('h3',supportCard);
+    if(heading) heading.textContent='متابعة تعليمية عبر WhatsApp';
+    supportCard.classList.remove('support-messenger');
+    supportCard.classList.add('support-whatsapp');
+    const icon=qs('.live-icon',supportCard);
+    if(icon){
+      icon.classList.remove('live-messenger');
+      icon.classList.add('live-whatsapp');
+      icon.innerHTML='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8a23 23 0 0 0-19.7 34.8L9 55l12.5-3.2A23 23 0 1 0 32 8Z"></path><path d="M24 20c-1.7 0-3 1.3-3 3.1 0 8.9 11 20 20 20 1.8 0 3.1-1.3 3.1-3l-1.1-5-6-2.7-2.6 3.2c-4.7-2.2-7.7-5.3-9.9-9.9l3.2-2.6L25 20h-1Z"></path></svg>';
+    }
+  }
+
+  document.documentElement.classList.add('lean-v9');
 });
