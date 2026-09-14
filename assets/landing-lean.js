@@ -131,6 +131,22 @@ document.addEventListener('DOMContentLoaded', function(){
   if(schedule) schedule.remove();
   if(presenter && offer) presenter.insertAdjacentElement('afterend',offer);
 
-  document.documentElement.classList.add('lean-v7');
-  // Deployment retry marker: no functional change.
+  // Step 8: retain only the objections that can materially affect the booking decision.
+  const faq=qs('#faq');
+  if(faq){
+    faq.classList.add('lean-compact');
+    const keepQuestions=['هل البرنامج مناسب لو عندي مجرد فكرة ولسه ما بدأتش؟','ولو عندي مشروع شغال بالفعل؟','هل ده استشارة فردية لمشروعي؟','لو فاتتني جلسة؟','هل فيه ضمان إني أنجح أو أزود أرباحي؟','ماذا لو حضرت أول جلسة فعلية وحسيت إن البرنامج مش مناسب؟','إيه سياسة الحجز والدفع؟'];
+    qsa('details',faq).forEach(item=>{
+      const summary=qs('summary',item);
+      const question=summary ? summary.textContent.trim() : '';
+      if(!keepQuestions.includes(question)) item.remove();
+    });
+    const inner=qs('.section-inner',faq) || faq;
+    const privacy=document.createElement('p');
+    privacy.className='lean-privacy-note';
+    privacy.textContent='لتأكيد الحجز نطلب الاسم الكامل وصورة إثبات التحويل عبر Messenger. الصفحة تستخدم Google Analytics وMeta Pixel لقياس الزيارات والتفاعل وتحسين أداء الإعلانات.';
+    inner.appendChild(privacy);
+  }
+
+  document.documentElement.classList.add('lean-v8');
 });
