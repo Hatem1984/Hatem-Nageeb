@@ -114,5 +114,22 @@ document.addEventListener('DOMContentLoaded', function(){
   if(education) education.remove();
   if(trust) trust.remove();
 
-  document.documentElement.classList.add('lean-v6');
+  // Step 7: keep scheduling near the buying decision, trim secondary inclusions, and enforce the lean section order.
+  const schedule=qs('#schedule');
+  if(offer){
+    qsa('.subscription-extras .value-stack-card',offer).forEach(card=>{
+      if(card.textContent.includes('تطبيق على حالتك') || card.textContent.includes('الخروج من النفق')) card.remove();
+    });
+    const price=qs('.price-top',offer);
+    if(price){
+      const scheduleStrip=document.createElement('div');
+      scheduleStrip.className='lean-schedule-strip';
+      scheduleStrip.innerHTML='<div class="lean-schedule-item"><b>1 أكتوبر · 7:30 مساءً</b><span>جلسة تعريفية مباشرة</span></div><div class="lean-schedule-item"><b>4 أكتوبر · 7:30 مساءً</b><span>أول تدريب فعلي</span></div><div class="lean-schedule-item"><b>الأحد والأربعاء</b><span>7:30–8:30 مساءً · حتى 23 ديسمبر</span></div>';
+      price.parentNode.insertBefore(scheduleStrip,price);
+    }
+  }
+  if(schedule) schedule.remove();
+  if(presenter && offer) presenter.insertAdjacentElement('afterend',offer);
+
+  document.documentElement.classList.add('lean-v7');
 });
