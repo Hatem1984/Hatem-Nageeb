@@ -4,11 +4,35 @@ permalink: /preview-offer.html
 {% capture page %}{% include landing-base.html %}{% endcapture %}
 {% capture hero_patch %}<style id="hero-title-size-refinement">
 .hero h1{font-size:clamp(30px,3.4vw,46px)!important;line-height:1.25!important}
-@media(max-width:700px){.hero h1{font-size:28px!important;line-height:1.3!important}}
+.ai-access-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.ai-access-grid .ai-access-box{margin-top:0;height:100%}
+.ai-price-box{background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(102,86,255,.14))!important;border-color:rgba(255,194,79,.25)!important}
+.ai-price-box .ai-access-kicker{color:#ffd27a!important}
+@media(max-width:700px){.hero h1{font-size:28px!important;line-height:1.3!important}.ai-access-grid{grid-template-columns:1fr}}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', hero_patch %}
 {% assign page = page | replace: 'support-card glass-card lift-hover reveal support-messenger', 'support-card glass-card lift-hover reveal support-whatsapp' %}
 {% assign page = page | replace: 'live-icon live-messenger', 'live-icon live-whatsapp' %}
 {% assign page = page | replace: 'متابعة تعليمية عبر Messenger', 'متابعة تعليمية عبر WhatsApp' %}
 {% assign page = page | replace: '<svg viewbox="0 0 64 64"><path d="M32 10c-12.7 0-23 9.2-23 20.5 0 6.4 3.3 12.1 8.6 15.8V54l7.1-3.9c2.3.6 4.7.9 7.3.9 12.7 0 23-9.2 23-20.5S44.7 10 32 10Z"></path><path class="fill" d="m20 37 9-10 7 6 8-9-9 13-7-6-8 6Z"></path></svg>', '<svg viewbox="0 0 64 64"><path d="M32 8a23 23 0 0 0-20 34l-3 13 13-4A23 23 0 1 0 32 8Z"></path><path d="M23 20c1-2 3-2 4 0l3 6c1 2 0 3-2 4l-2 1c2 5 6 9 11 11l1-2c1-2 3-2 4-1l6 3c2 1 2 3 0 4-2 2-5 4-9 3-10-2-21-13-23-23-1-4 1-7 3-9 2-1 3 0 4 3Z"></path></svg>' %}
+{% assign page = page | replace: 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك، وتشمل 6 أشهر استخدام مجاني من تاريخ تفعيل حسابك فعليًا.', 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك. وللدفعة الأولى: استخدام مجاني مدى الحياة بواقع اختبار واحد كل أسبوع. الاشتراك المنفصل في الأداة 699 جنيه شهريًا.' %}
+{% capture ai_access_old %}<div class="ai-access-box">
+<span class="ai-access-kicker">ميزة للدفعة الأولى</span>
+<strong>6 أشهر استخدام مجاني</strong>
+<span>تبدأ من تاريخ تفعيل حسابك الفعلي على الأداة — بدون تكلفة إضافية.</span>
+</div>{% endcapture %}
+{% capture ai_access_new %}<div class="ai-access-grid">
+<div class="ai-access-box">
+<span class="ai-access-kicker">ميزة للدفعة الأولى</span>
+<strong>مجانية مدى الحياة</strong>
+<span>بواقع اختبار واحد كل أسبوع على أداة AI التشخيص قبل الحل — بدون تكلفة إضافية.</span>
+</div>
+<div class="ai-access-box ai-price-box">
+<span class="ai-access-kicker">لو اشتركت في الأداة منفصلة</span>
+<strong>699 جنيه / شهر</strong>
+<span>ده سعر الاشتراك الشهري في الأداة خارج اشتراك برنامج «التشخيص قبل الحل».</span>
+</div>
+</div>{% endcapture %}
+{% assign page = page | replace: ai_access_old, ai_access_new %}
+{% assign page = page | replace: 'الستة أشهر المجانية تبدأ من تاريخ تفعيل حسابك فعليًا.', 'للدفعة الأولى، الاستخدام مجاني مدى الحياة بواقع اختبار واحد كل أسبوع. ولو اشتركت في الأداة بشكل منفصل عن البرنامج فسعر الاشتراك 699 جنيه شهريًا.' %}
 {{ page }}
