@@ -27,5 +27,30 @@ document.addEventListener('DOMContentLoaded', function(){
     remove('.consultation-proof-note',proof);
   }
 
-  document.documentElement.classList.add('lean-v3');
+  // Step 4: merge the journey, outputs and the four decision-critical tools into one section.
+  const outcomes=qs('#outcomes');
+  const tools=qs('#tools');
+  if(outcomes && tools){
+    const title=qs('.section-title',outcomes);
+    if(title) title.textContent='خلال 12 أسبوعًا هتشتغل على إيه وهتخرج بإيه؟';
+
+    const block=document.createElement('div');
+    block.className='lean-tools-block';
+    block.innerHTML='<div class="lean-tools-head"><span class="mini-kicker">أهم أدوات التطبيق</span><h3>أربع أدوات مرتبطة مباشرة بقرارات السعر والسيولة والتعادل والتنفيذ</h3></div><div class="lean-tools-grid"></div><div class="lean-tool-preview"></div>';
+    const grid=qs('.lean-tools-grid',block);
+    const preview=qs('.lean-tool-preview',block);
+    const wanted=['حاسبة التسعير وهامش المساهمة','حاسبة نقطة التعادل','توقع التدفق النقدي 90 يومًا','مصفوفة القرار وخطة 90 يومًا'];
+    qsa('.tool-line',tools).forEach(line=>{
+      if(wanted.some(name=>line.textContent.includes(name))) grid.appendChild(line.cloneNode(true));
+    });
+    const wantedShots=['حاسبة نقطة التعادل','توقع التدفق النقدي'];
+    qsa('.toolshot',tools).forEach(shot=>{
+      if(wantedShots.some(name=>shot.textContent.includes(name))) preview.appendChild(shot.cloneNode(true));
+    });
+    const inner=qs('.section-inner',outcomes) || outcomes;
+    inner.appendChild(block);
+    tools.remove();
+  }
+
+  document.documentElement.classList.add('lean-v4');
 });
