@@ -52,4 +52,8 @@ permalink: /
 {% capture proof_old %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات التحويل على Messenger</a>{% endcapture %}
 {% capture proof_new %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank"><span class="messenger-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 10c-12.7 0-23 9.2-23 20.5 0 6.4 3.3 12.1 8.6 15.8V54l7.1-3.9c2.3.6 4.7.9 7.3.9 12.7 0 23-9.2 23-20.5S44.7 10 32 10Z"></path><path d="m20 37 9-10 7 6 8-9-9 13-7-6-8 6Z"></path></svg></span><span>إرسال إثبات الدفع على Messenger</span></a>{% endcapture %}
 {% assign page = page | replace: proof_old, proof_new %}
+{% capture lean_head %}<link rel="stylesheet" href="assets/landing-lean.css"/></head>{% endcapture %}
+{% assign page = page | replace: '</head>', lean_head %}
+{% capture lean_body %}<script src="assets/landing-lean.js"></script></body>{% endcapture %}
+{% assign page = page | replace: '</body>', lean_body %}
 {{ page }}
