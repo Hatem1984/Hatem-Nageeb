@@ -8,6 +8,8 @@ permalink: /
 .ai-access-grid .ai-access-box{margin-top:0;height:100%}
 .ai-price-box{background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(102,86,255,.14))!important;border-color:rgba(255,194,79,.25)!important}
 .ai-price-box .ai-access-kicker{color:#ffd27a!important}
+.payment-proof-reply-note{display:block;margin-top:12px;padding:12px 14px;border-radius:12px;background:#eefbf2;border:1px solid #bfe8ca;color:#215a31;font-size:13px;line-height:1.75;text-align:right}
+.payment-proof-reply-note b{display:block;margin-bottom:4px;color:#164724}
 @media(max-width:700px){.hero h1{font-size:28px!important;line-height:1.3!important}.ai-access-grid{grid-template-columns:1fr}}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', hero_patch %}
@@ -38,4 +40,11 @@ permalink: /
 {% assign page = page | replace: 'مادة مساندة', 'هدية للدفعة الأولى · قيمة 250 جنيه' %}
 {% assign page = page | replace: 'نسخة رقمية بعد انتهاء نافذة الاسترداد.', 'نسخة رقمية سعرها منفردة 250 جنيه، ومجانية للدفعة الأولى بعد انتهاء نافذة الاسترداد.' %}
 {% assign page = page | replace: 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ.', 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ. النسخة الرقمية تُباع منفردة بـ250 جنيه، وتُمنح مجانًا للدفعة الأولى.' %}
+{% assign page = page | replace: 'ابعت اسمك الكامل وصورة إثبات التحويل على Messenger.', 'ابعت اسمك الكامل وصورة إثبات التحويل على WhatsApp.' %}
+{% assign page = page | replace: 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 2,000 جنيه على Messenger. يتأكد المقعد بعد مراجعة التحويل واستلام البيانات.', 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 2,000 جنيه على WhatsApp. يتأكد المقعد بعد مراجعة التحويل واستلام البيانات.' %}
+{% assign page = page | replace: 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 4,500 جنيه على Messenger. يتأكد الاشتراك بعد مراجعة التحويل واستلام البيانات.', 'ابعت الاسم الكامل + Screenshot لإثبات تحويل 4,500 جنيه على WhatsApp. يتأكد الاشتراك بعد مراجعة التحويل واستلام البيانات.' %}
+{% assign page = page | replace: 'ابعت الاسم الكامل + Screenshot لإثبات تحويل أول 2,000 جنيه على Messenger. الأقساط التالية: 1,500 يوم 1 نوفمبر و1,500 يوم 1 ديسمبر.', 'ابعت الاسم الكامل + Screenshot لإثبات تحويل أول 2,000 جنيه على WhatsApp. الأقساط التالية: 1,500 يوم 1 نوفمبر و1,500 يوم 1 ديسمبر.' %}
+{% capture proof_old %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات التحويل على Messenger</a>{% endcapture %}
+{% capture proof_new %}<a data-track-contact="" href="https://wa.me/201011223667?text=%D8%A5%D8%B1%D8%B3%D9%84%20%D8%A7%D8%AB%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AF%D9%81%D8%B9" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات الدفع على WhatsApp</a><span class="payment-proof-reply-note"><b>بعد إرسال إثبات الدفع</b>رسالة تأكيد الاستلام: «تم استلام إثبات الدفع الخاص بك وسيتم التحقق وتأكيد الحجز<br>انتظر رسالة التأكيد والكود الخاص بك»</span>{% endcapture %}
+{% assign page = page | replace: proof_old, proof_new %}
 {{ page }}
