@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function(){
     remove('.diagnostic-preview',freeTest);
   }
 
-  // Step 3: keep one video + the three strongest written consultation testimonials.
+  // Step 3: keep one video + four complementary written consultation testimonials.
   const proof=qs('#testimonial');
   if(proof){
     proof.classList.add('lean-compact');
-    const keepNames=['أحمد الشيخ','خيري أبو حجر','إيهاب محمود'];
+    const keepNames=['أحمد الشيخ','خيري أبو حجر','إيهاب محمود','عبدالحميد عادل'];
     qsa('.consultation-client-card',proof).forEach(card=>{
       if(!keepNames.some(name=>card.textContent.includes(name))) card.remove();
     });
@@ -47,17 +47,36 @@ document.addEventListener('DOMContentLoaded', function(){
     tools.remove();
   }
 
-  // Step 5: make AI a supporting bonus, not a competing full section.
+  // Step 5: make AI + the digital book one visual first-cohort gift bundle.
   const ai=qs('#ai-diagnosis');
   const offer=qs('#offer');
   if(ai && offer){
     const bundle=qs('.gift-bundle',ai);
-    const price=qs('.price-top',offer);
-    if(bundle && price){
+    if(bundle){
+      bundle.classList.add('lean-gift-bundle');
+      qsa('.gift-bundle-item',bundle).forEach(item=>{
+        remove('.gift-icon',item);
+        const media=document.createElement('div');
+        media.className='gift-media';
+        if(item.textContent.includes('أداة AI')){
+          item.classList.add('gift-ai-item');
+          media.classList.add('gift-ai-media');
+          media.setAttribute('aria-label','معاينة مصغرة لأداة AI التشخيص قبل الحل');
+          media.innerHTML='<div class="gift-ai-screen"><div class="gift-ai-top"><span>AI</span><i></i></div><b>التشخيص</b><span class="gift-ai-line"></span><span class="gift-ai-line short"></span><em>قرار أوضح</em></div>';
+        }else if(item.textContent.includes('الخروج من النفق')){
+          item.classList.add('gift-book-item');
+          media.classList.add('gift-book-media');
+          media.innerHTML='<img src="assets/غلاف_كتاب_الخروج_من_النفق.webp" alt="غلاف كتاب الخروج من النفق" loading="lazy" decoding="async">';
+        }
+        item.prepend(media);
+      });
       const wrap=document.createElement('div');
       wrap.className='lean-gift-wrap';
       wrap.appendChild(bundle);
-      price.parentNode.insertBefore(wrap,price);
+      const extras=qs('.subscription-extras',offer);
+      const price=qs('.price-top',offer);
+      if(extras) extras.insertAdjacentElement('afterend',wrap);
+      else if(price) price.parentNode.insertBefore(wrap,price);
     }
     qsa('.core-value-card',offer).forEach(card=>{
       if(card.textContent.includes('AI التشخيص قبل الحل')){
@@ -109,18 +128,32 @@ document.addEventListener('DOMContentLoaded', function(){
   if(education) education.remove();
   if(trust) trust.remove();
 
-  // Step 7: keep scheduling near the buying decision, trim secondary inclusions, and enforce the lean section order.
+  // Step 7: put price + booking decision earlier, keep schedule beside payment plans, and trim duplication.
   const schedule=qs('#schedule');
   if(offer){
     qsa('.subscription-extras .value-stack-card',offer).forEach(card=>{
       if(card.textContent.includes('تطبيق على حالتك') || card.textContent.includes('الخروج من النفق')) card.remove();
     });
-    const price=qs('.price-top',offer);
-    if(price){
+
+    const plans=qs('.payment-plan-grid',offer);
+    if(plans){
       const scheduleStrip=document.createElement('div');
       scheduleStrip.className='lean-schedule-strip';
       scheduleStrip.innerHTML='<div class="lean-schedule-item"><b>1 أكتوبر · 7:30 مساءً</b><span>جلسة تعريفية مباشرة</span></div><div class="lean-schedule-item"><b>4 أكتوبر · 7:30 مساءً</b><span>أول تدريب فعلي</span></div><div class="lean-schedule-item"><b>الأحد والأربعاء</b><span>7:30–8:30 مساءً · حتى 23 ديسمبر</span></div>';
-      price.parentNode.insertBefore(scheduleStrip,price);
+      plans.parentNode.insertBefore(scheduleStrip,plans);
+    }
+
+    const offerCard=qs('.offer-card',offer);
+    const reminder=qs('.offer-result-reminder',offer);
+    const price=qs('.price-top',offer);
+    const seat=qs('.seat-capacity-status',offer);
+    const offerCta=qs('.offer-cta',offer);
+    if(price){
+      const launch=qs('.launch-tag',price);
+      if(launch) price.insertBefore(launch,price.firstChild);
+      if(offerCard && reminder) reminder.insertAdjacentElement('afterend',price);
+      if(seat) price.insertAdjacentElement('afterend',seat);
+      if(offerCta) (seat || price).insertAdjacentElement('afterend',offerCta);
     }
   }
   if(schedule) schedule.remove();
@@ -187,6 +220,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   });
 
-  document.documentElement.classList.remove('lean-v9');
-  document.documentElement.classList.add('lean-v10');
+  document.documentElement.classList.remove('lean-v9','lean-v10');
+  document.documentElement.classList.add('lean-v11');
 });
