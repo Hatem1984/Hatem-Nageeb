@@ -13,7 +13,7 @@
 #testimonial.lean-compact .consultation-clients{margin-top:24px;padding-top:20px}
 
 /* Combined outcomes + tools */
-#outcomes.section-light{padding-bottom:52px!important}
+#outcomes.section-light{padding-bottom:30px!important}
 .lean-tools-block{margin-top:30px;padding-top:26px;border-top:1px solid #e3eaf3;margin-bottom:0}
 .lean-tools-head{text-align:center;max-width:820px;margin:0 auto 18px}
 .lean-tools-head .mini-kicker{margin-bottom:6px}
@@ -24,13 +24,13 @@
 .lean-tools-grid .tool-line>span:not(.live-icon){grid-column:2}
 .lean-tools-grid .tool-line .live-icon{display:inline-flex!important;grid-column:1;grid-row:1 / span 2;width:34px!important;height:34px!important;margin:0!important;align-items:center;justify-content:center;flex:0 0 34px}
 .lean-tools-grid .tool-line .live-icon svg{width:28px!important;height:28px!important}
-.lean-tool-preview{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:800px;margin:16px auto 0}
-.lean-tool-preview:empty{display:none!important;margin:0!important}
-.lean-tool-preview .toolshot{margin:0}
-.lean-continue-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:720px;margin:24px auto 0;padding:11px 16px;border-radius:999px;background:#f4f7ff;border:1px solid #dce5f5;color:#50627b;font-size:12px;font-weight:800;text-align:center}
+.lean-tools-outro{max-width:760px;margin:18px auto 0;padding:14px 18px;border-radius:16px;background:#f8faff;border:1px solid #e1e8f4;text-align:center;color:#5d6f86;line-height:1.75}
+.lean-tools-outro strong{display:block;color:#10264e;font-size:14px;margin-bottom:2px}
+.lean-tools-outro span{display:block;font-size:12px;font-weight:700}
+.lean-continue-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:720px;margin:14px auto 0;padding:10px 16px;border-radius:999px;background:#f4f7ff;border:1px solid #dce5f5;color:#50627b;font-size:12px;font-weight:800;text-align:center;text-decoration:none}
 .lean-continue-cue .lean-arrow{font-size:17px;line-height:1;color:#4f66dc;animation:leanArrow 1.5s ease-in-out infinite}
 @keyframes leanArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-#presenter.section-soft{padding-top:54px!important}
+#presenter.section-soft{padding-top:34px!important}
 
 /* Presenter trust merge */
 .lean-trust-inline{margin-top:24px;padding-top:20px;border-top:1px solid #e1e8f1}
@@ -44,12 +44,23 @@
 .lean-partner div{color:#52647b;font-size:12px;line-height:1.7}
 .lean-partner b{display:block;color:#10264e;font-size:13px}
 
-/* Offer merge */
-.lean-gift-wrap{margin:28px 0 12px}
-.lean-schedule-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 26px}
-.lean-schedule-item{padding:14px;border-radius:15px;background:#f7faff;border:1px solid #e0e8f2;text-align:center}
+/* Offer merge and density */
+#offer .offer-card{padding:34px!important}
+#offer .offer-result-reminder{margin-bottom:20px!important;padding:20px!important}
+#offer .subscription-core{margin-bottom:14px!important}
+#offer .subscription-core .core-value-card{min-height:190px!important;padding:17px!important}
+#offer .subscription-extra-head{padding-top:12px!important;margin:2px 0 10px!important}
+#offer .subscription-extras .value-stack-card{min-height:130px!important;padding:16px!important}
+#offer .offer-support-head{margin:24px 0 12px!important}
+#offer .support-grid{margin-top:16px!important;gap:12px!important}
+#offer .support-card{padding:20px!important}
+.lean-gift-wrap{margin:20px 0 8px}
+.lean-schedule-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px}
+.lean-schedule-item{padding:12px;border-radius:15px;background:#f7faff;border:1px solid #e0e8f2;text-align:center}
 .lean-schedule-item b{display:block;color:#10264e;font-size:14px;margin-bottom:4px}
 .lean-schedule-item span{display:block;color:#6f7f94;font-size:11px;line-height:1.6}
+#offer .payment-plan-grid{margin:20px 0 8px!important;gap:12px!important}
+#offer .payment-plan-card{padding:20px 18px!important}
 
 /* WhatsApp educational follow-up only. Payment proof remains on Messenger. */
 .support-whatsapp{border-top:3px solid #25D366!important;background:linear-gradient(180deg,rgba(242,255,247,.96),rgba(255,255,255,.7))!important}
@@ -68,13 +79,34 @@
   #free-test.lean-compact .lead-magnet-points,
   #testimonial.lean-compact .consultation-client-grid,
   .lean-tools-grid,
-  .lean-tool-preview,
   .lean-credential-grid,
   .lean-schedule-strip{grid-template-columns:1fr}
   .lean-partner{align-items:flex-start}
-  #outcomes.section-light{padding-bottom:38px!important}
-  #presenter.section-soft{padding-top:40px!important}
-  .lean-tools-block{margin-top:24px;padding-top:22px}
+  #outcomes.section-light{padding-bottom:22px!important}
+  #presenter.section-soft{padding-top:28px!important}
+  .lean-tools-block{margin-top:22px;padding-top:20px}
+  .lean-tools-head{margin-bottom:14px}
   .lean-tools-head h3{font-size:22px}
-  .lean-continue-cue{margin-top:18px;border-radius:16px}
+  .lean-tools-outro{margin-top:14px;padding:12px 13px}
+  .lean-continue-cue{margin-top:10px;border-radius:14px;padding:9px 12px}
+
+  #offer.section-light{padding-top:50px!important;padding-bottom:50px!important}
+  #offer .section-sub{margin-bottom:28px!important}
+  #offer .offer-card{padding:22px 14px!important;border-radius:22px!important}
+  #offer .offer-result-reminder{padding:16px!important;margin-bottom:16px!important}
+  #offer .offer-result-reminder h3{margin:6px 0!important}
+  #offer .subscription-core{gap:9px!important;margin-bottom:10px!important}
+  #offer .subscription-core .core-value-card{min-height:auto!important;padding:14px!important}
+  #offer .subscription-extra-head{padding-top:10px!important;margin:0 0 8px!important}
+  #offer .subscription-extras{gap:9px!important}
+  #offer .subscription-extras .value-stack-card{min-height:auto!important;padding:14px!important}
+  #offer .offer-support-head{margin:20px 0 10px!important}
+  #offer .support-grid{margin-top:12px!important;gap:9px!important}
+  #offer .support-card{padding:16px!important}
+  #offer .lean-gift-wrap{margin:16px 0 6px}
+  #offer .lean-schedule-strip{gap:8px;margin:12px 0 15px}
+  #offer .lean-schedule-item{padding:10px}
+  #offer .payment-plan-grid{margin:16px 0 6px!important;gap:9px!important}
+  #offer .payment-plan-card{padding:16px 14px!important}
+  #offer .payment-plan-card p{min-height:0!important;margin-bottom:12px!important}
 }
