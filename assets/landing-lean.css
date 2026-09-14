@@ -24,7 +24,9 @@
 .lean-tools-grid .tool-line>span:not(.live-icon){grid-column:2}
 .lean-tools-grid .tool-line .live-icon{display:inline-flex!important;grid-column:1;grid-row:1 / span 2;width:34px!important;height:34px!important;margin:0!important;align-items:center;justify-content:center;flex:0 0 34px}
 .lean-tools-grid .tool-line .live-icon svg{width:28px!important;height:28px!important}
-.lean-tools-outro{max-width:760px;margin:18px auto 0;padding:14px 18px;border-radius:16px;background:#f8faff;border:1px solid #e1e8f4;text-align:center;color:#5d6f86;line-height:1.75}
+/* Hard stop for any cached older JS that still injects the removed image preview. */
+.lean-tool-preview{display:none!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+.lean-tools-outro{display:block!important;max-width:760px;margin:18px auto 0;padding:14px 18px;border-radius:16px;background:#f8faff;border:1px solid #e1e8f4;text-align:center;color:#5d6f86;line-height:1.75}
 .lean-tools-outro strong{display:block;color:#10264e;font-size:14px;margin-bottom:2px}
 .lean-tools-outro span{display:block;font-size:12px;font-weight:700}
 .lean-continue-cue{display:flex;align-items:center;justify-content:center;gap:8px;max-width:720px;margin:14px auto 0;padding:10px 16px;border-radius:999px;background:#f4f7ff;border:1px solid #dce5f5;color:#50627b;font-size:12px;font-weight:800;text-align:center;text-decoration:none}
