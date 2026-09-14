@@ -52,5 +52,26 @@ document.addEventListener('DOMContentLoaded', function(){
     tools.remove();
   }
 
-  document.documentElement.classList.add('lean-v4');
+  // Step 5: make AI a supporting bonus, not a competing full section.
+  const ai=qs('#ai-diagnosis');
+  const offer=qs('#offer');
+  if(ai && offer){
+    const bundle=qs('.gift-bundle',ai);
+    const price=qs('.price-top',offer);
+    if(bundle && price){
+      const wrap=document.createElement('div');
+      wrap.className='lean-gift-wrap';
+      wrap.appendChild(bundle);
+      price.parentNode.insertBefore(wrap,price);
+    }
+    qsa('.core-value-card',offer).forEach(card=>{
+      if(card.textContent.includes('AI التشخيص قبل الحل')){
+        const p=qs('p',card);
+        if(p) p.textContent='أداة مساعدة لترتيب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك.';
+      }
+    });
+    ai.remove();
+  }
+
+  document.documentElement.classList.add('lean-v5');
 });
