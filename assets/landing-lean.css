@@ -43,6 +43,10 @@
 .lean-schedule-item b{display:block;color:#10264e;font-size:14px;margin-bottom:4px}
 .lean-schedule-item span{display:block;color:#6f7f94;font-size:11px;line-height:1.6}
 
+/* WhatsApp educational follow-up only. Payment proof remains on Messenger. */
+.support-whatsapp{border-top:3px solid #25D366!important;background:linear-gradient(180deg,rgba(242,255,247,.96),rgba(255,255,255,.7))!important}
+.live-whatsapp{--c1:#25D366;--c2:#128C7E;--glow:rgba(37,211,102,.24)!important;color:#25D366!important}
+
 /* FAQ */
 #faq.lean-compact .faq{max-width:900px;margin:auto}
 .lean-privacy-note{max-width:900px;margin:14px auto 0;color:#7a889b;font-size:11px;line-height:1.8;text-align:center}
