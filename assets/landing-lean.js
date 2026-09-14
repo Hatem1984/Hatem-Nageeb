@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     const block=document.createElement('div');
     block.className='lean-tools-block';
-    block.innerHTML='<div class="lean-tools-head"><span class="mini-kicker">أهم أدوات التطبيق</span><h3>أربع أدوات مرتبطة مباشرة بقرارات السعر والسيولة والتعادل والتنفيذ</h3></div><div class="lean-tools-grid"></div><div class="lean-tool-preview"></div>';
+    block.innerHTML='<div class="lean-tools-head"><span class="mini-kicker">أهم أدوات التطبيق</span><h3>أربع أدوات مرتبطة مباشرة بقرارات السعر والسيولة والتعادل والتنفيذ</h3></div><div class="lean-tools-grid"></div><div class="lean-tool-preview"></div><a class="lean-continue-cue" href="#presenter" aria-label="انتقل إلى قسم مقدم البرنامج"><span>التالي: مين هيقودك للتطبيق؟</span><span class="lean-arrow" aria-hidden="true">↓</span></a>';
     const grid=qs('.lean-tools-grid',block);
     const preview=qs('.lean-tool-preview',block);
     const wanted=['حاسبة التسعير وهامش المساهمة','حاسبة نقطة التعادل','توقع التدفق النقدي 90 يومًا','مصفوفة القرار وخطة 90 يومًا'];
@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const inner=qs('.section-inner',faq) || faq;
     const privacy=document.createElement('p');
     privacy.className='lean-privacy-note';
+    privacy.id='privacy-note';
     privacy.textContent='لتأكيد الحجز نطلب الاسم الكامل وصورة إثبات التحويل عبر Messenger. الصفحة تستخدم Google Analytics وMeta Pixel لقياس الزيارات والتفاعل وتحسين أداء الإعلانات.';
     inner.appendChild(privacy);
   }
@@ -163,5 +164,34 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  document.documentElement.classList.add('lean-v9');
+  // Step 10: repair every internal link whose original section was merged/removed.
+  const anchorMap={
+    '#tools':'#outcomes',
+    '#ai-diagnosis':'#offer',
+    '#education':'#presenter',
+    '#trust':'#presenter',
+    '#schedule':'#offer'
+  };
+  qsa('a[href^="#"]').forEach(link=>{
+    const href=link.getAttribute('href');
+    if(anchorMap[href]) link.setAttribute('href',anchorMap[href]);
+  });
+
+  // Keep all payment-opening controls explicit and accessible.
+  qsa('.js-open-payment').forEach(control=>{
+    if(!control.getAttribute('data-plan')) control.setAttribute('data-plan','reserve');
+    if(!control.getAttribute('aria-label')) control.setAttribute('aria-label','افتح خيارات الحجز والدفع');
+  });
+
+  // Final internal-link safety check: no CTA should point to a missing section.
+  qsa('a[href^="#"]').forEach(link=>{
+    const href=link.getAttribute('href');
+    if(href && href.length>1 && !qs(href)){
+      link.setAttribute('href','#offer');
+      link.setAttribute('data-anchor-repaired','true');
+    }
+  });
+
+  document.documentElement.classList.remove('lean-v9');
+  document.documentElement.classList.add('lean-v10');
 });
