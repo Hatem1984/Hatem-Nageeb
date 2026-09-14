@@ -73,5 +73,46 @@ document.addEventListener('DOMContentLoaded', function(){
     ai.remove();
   }
 
-  document.documentElement.classList.add('lean-v5');
+  // Step 6: combine presenter, relevant credentials and confirmed partnership into one trust section.
+  const presenter=qs('#presenter');
+  const education=qs('#education');
+  const trust=qs('#trust');
+  if(presenter){
+    const copy=qs('.presenter-copy',presenter);
+    if(copy){
+      remove('.book-mini',copy);
+      remove('.boundary-note',copy);
+      const trustInline=document.createElement('div');
+      trustInline.className='lean-trust-inline';
+      trustInline.innerHTML='<h3>خلفية مهنية مرتبطة بالتطبيق</h3><div class="lean-credential-grid"></div><div class="lean-partner"></div>';
+      const credGrid=qs('.lean-credential-grid',trustInline);
+      const wantedCreds=['ماجستير إدارة الأعمال','Google Project Management Professional Certificate','برنامج إعداد وتأهيل المدربين'];
+      if(education){
+        qsa('.premium-credential-row',education).forEach(row=>{
+          const text=row.textContent;
+          if(wantedCreds.some(name=>text.includes(name))){
+            const card=document.createElement('div');
+            card.className='lean-credential';
+            const h=qs('h3',row);
+            const p=qs('p',row);
+            card.innerHTML='<b>'+(h?h.textContent.trim():'')+'</b><span>'+(p?p.textContent.trim():'')+'</span>';
+            credGrid.appendChild(card);
+          }
+        });
+      }
+      const partner=qs('.lean-partner',trustInline);
+      const trustImg=trust ? qs('.trust-visual img',trust) : null;
+      if(partner){
+        if(trustImg) partner.appendChild(trustImg.cloneNode(true));
+        const text=document.createElement('div');
+        text.innerHTML='<b>بالشراكة مع أكاديمية المدرب الأفضل</b>الشراكة مؤكدة ضمن البرنامج، مع بقاء منهج «التشخيص قبل الحل» هو أساس التطبيق.';
+        partner.appendChild(text);
+      }
+      copy.appendChild(trustInline);
+    }
+  }
+  if(education) education.remove();
+  if(trust) trust.remove();
+
+  document.documentElement.classList.add('lean-v6');
 });
