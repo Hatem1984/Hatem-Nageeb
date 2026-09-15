@@ -12,6 +12,13 @@
 })();
 
 (function(){
+  try{
+    var earlyStyle=document.createElement('style');
+    earlyStyle.id='diagnostic-cta-preload-guard';
+    earlyStyle.textContent='html body .back-link{display:none!important}';
+    document.head.appendChild(earlyStyle);
+  }catch(e){}
+
   function initResultProgramCta(){
     var link=document.querySelector('.back-link');
     var results=document.getElementById('results');
