@@ -56,4 +56,32 @@ permalink: /
 {% assign page = page | replace: '</head>', lean_head %}
 {% capture lean_body %}<script src="assets/landing-lean.js?v=20260914-2200"></script></body>{% endcapture %}
 {% assign page = page | replace: '</body>', lean_body %}
+{% capture compliance_style %}<style id="xpay-contact-compliance">
+.footer-compliance{align-items:flex-start}
+.footer-business{display:grid;gap:5px;text-align:right;line-height:1.65}
+.footer-business strong{color:#fff;font-size:14px}
+.footer-business span{color:#aebbd0}
+.footer-business a{color:#dfe8f5;text-decoration:none;font-weight:800}
+.footer-business a:hover{color:#fff}
+.footer-links a{color:#aebbd0;text-decoration:none}
+.footer-links a:hover{color:#fff}
+@media(max-width:700px){.footer-compliance{display:grid;grid-template-columns:1fr}.footer-business,.footer-links{text-align:center;justify-content:center}.footer-links{gap:14px}}
+</style></head>{% endcapture %}
+{% assign page = page | replace: '</head>', compliance_style %}
+
+{% capture compliance_footer_old %}<div class="footer">
+<div>لعبة البزنس × أكاديمية المدرب الأفضل</div>
+<div class="footer-links"><a href="#privacy-note">سياسة الخصوصية</a><a href="#booking-terms">شروط الحجز</a><a href="https://m.me/891183134080763" rel="noopener" target="_blank">التواصل</a></div>
+</div>{% endcapture %}
+{% capture compliance_footer_new %}<div class="footer footer-compliance">
+<div class="footer-business">
+<strong>لعبة البزنس — حاتم نجيب</strong>
+<span>استشارات وتدريب للمشروعات الصغيرة والمتوسطة</span>
+<span>العنوان: زفتى، محافظة الغربية، مصر</span>
+<a href="tel:+201007322808">رقم التواصل: 01007322808</a>
+</div>
+<div class="footer-links"><a href="#privacy-note">سياسة الخصوصية</a><a href="#booking-terms">شروط الحجز</a><a href="/refund-policy/">سياسة الاسترداد</a><a href="https://m.me/891183134080763" rel="noopener" target="_blank">التواصل</a></div>
+</div>{% endcapture %}
+{% assign page = page | replace: compliance_footer_old, compliance_footer_new %}
+
 {{ page }}
