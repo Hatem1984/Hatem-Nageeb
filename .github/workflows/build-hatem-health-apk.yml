@@ -1,0 +1,40 @@
+name: Build Hatem Health APK
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Generate Android project files
+        working-directory: hatem_health_app
+        run: flutter create --platforms=android --org com.hatemhealth --project-name hatem_health .
+
+      - name: Get dependencies
+        working-directory: hatem_health_app
+        run: flutter pub get
+
+      - name: Build installable APK
+        working-directory: hatem_health_app
+        run: |
+          flutter build apk --debug
+          cp build/app/outputs/flutter-apk/app-debug.apk HatemHealth-v0.1.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: HatemHealth-v0.1-apk
+          path: hatem_health_app/HatemHealth-v0.1.apk
+          if-no-files-found: error
