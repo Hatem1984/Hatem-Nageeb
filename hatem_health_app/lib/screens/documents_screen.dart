@@ -12,14 +12,19 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
   final List<PlatformFile> files = [];
 
   Future<void> _pick() async {
-    final result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
+    final picked = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: const ['pdf', 'jpg', 'jpeg', 'png'],
     );
-    if (result != null && mounted) {
-      setState(() => files.addAll(result.files));
+    if (picked.isNotEmpty && mounted) {
+      setState(() => files.addAll(picked));
     }
+  }
+
+  String _fileInfo(PlatformFile file) {
+    final bytes = file.lengthSync();
+    if (bytes == null) return 'جاهز للمراجعة';
+    return '${(bytes / 1024).toStringAsFixed(1)} KB • جاهز للمراجعة';
   }
 
   @override
@@ -35,7 +40,10 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
           ? const Center(
               child: Padding(
                 padding: EdgeInsets.all(24),
-                child: Text('ارفع تحليل، روشتة، تقرير، ECG أو صورة طبية.\nهذه النسخة التجريبية تعرض الملفات أثناء الجلسة فقط.', textAlign: TextAlign.center),
+                child: Text(
+                  'ارفع تحليل، روشتة، تقرير، ECG أو صورة طبية.\nهذه النسخة التجريبية تعرض الملفات أثناء الجلسة فقط.',
+                  textAlign: TextAlign.center,
+                ),
               ),
             )
           : ListView.builder(
@@ -46,7 +54,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
                 child: ListTile(
                   leading: const Icon(Icons.description_outlined),
                   title: Text(files[i].name),
-                  subtitle: Text('${(files[i].size / 1024).toStringAsFixed(1)} KB • جاهز للمراجعة'),
+                  subtitle: Text(_fileInfo(files[i])),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => setState(() => files.removeAt(i)),
