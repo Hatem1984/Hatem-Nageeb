@@ -84,4 +84,72 @@ permalink: /
 </div>{% endcapture %}
 {% assign page = page | replace: compliance_footer_old, compliance_footer_new %}
 
+
+{% comment %} Final-week conversion patch — IT Plus report 2026-09-23 {% endcomment %}
+{% capture final_week_style %}<style id="final-week-conversion-patch">
+.payment-method-card.xpay{border-color:rgba(78,98,255,.34);background:linear-gradient(145deg,#f4f7ff,#fff);box-shadow:0 12px 28px rgba(74,92,219,.09)}
+.payment-method-card.xpay .payment-method-icon{color:#fff;background:linear-gradient(135deg,#151f3a,#6656ff);font-size:11px;letter-spacing:.2px}
+.payment-method-card.xpay b{color:#16244d}
+.payment-method-card.xpay small{color:#5d6d86}
+</style></head>{% endcapture %}
+{% assign page = page | replace: '</head>', final_week_style %}
+
+{% capture xpay_method_card %}<div class="payment-method-choice">
+<a class="payment-method-card xpay" data-method="xpay" data-track-payment="" href="https://checkout.xpay.app/p/plink_live_2cXiuNHphNY4r5vvAY1STs" id="xpayCardPayment" rel="noopener" target="_blank">
+<span class="payment-method-icon">XPay</span>
+<div>
+<b id="xpayCardTitle">ادفع إلكترونيًا — 2,000 جنيه</b>
+<small>بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع</small>
+</div>
+<span class="payment-arrow">←</span>
+</a>{% endcapture %}
+{% assign page = page | replace: '<div class="payment-method-choice">', xpay_method_card %}
+
+{% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة التحويل', 'اختَر خطة الدفع ثم وسيلة الدفع' %}
+{% assign page = page | replace: 'كل وسائل الدفع موجودة داخل نافذة حجز واحدة، علشان تختار الخطة أولًا ثم وسيلة التحويل المناسبة.', 'اختَر الخطة أولًا. الدفع الإلكتروني متاح عبر XPay بالبطاقة أو Fawry أو ValU، والتحويل اليدوي ما زال متاحًا.' %}
+{% assign page = page | replace: 'اختر طريقة الدفع المناسبة في الخطوة التالية — الحجز يتأكد بعد مراجعة التحويل واستلام بياناتك.', 'اختر طريقة الدفع المناسبة في الخطوة التالية — الدفع الإلكتروني يتأكد بعد نجاح العملية، والتحويل اليدوي يتأكد بعد المراجعة.' %}
+{% assign page = page | replace: 'بعد ما تختار الخطة وتحول، إيه اللي بيحصل؟', 'لو اخترت التحويل اليدوي، إيه اللي بيحصل؟' %}
+
+{% capture seat_old %}<b>الحد الأقصى 20 مقعدًا</b>
+<small>الحجز مفتوح الآن — تثبيت المقعد بـ2,000 جنيه</small>{% endcapture %}
+{% capture seat_new %}<b id="seatCountHeadline">20 مقعدًا متاحًا من 20</b>
+<small id="seatCountDetail">يتم تحديث العدد تلقائيًا بعد كل عملية دفع إلكتروني مؤكدة.</small>{% endcapture %}
+{% assign page = page | replace: seat_old, seat_new %}
+
+{% capture final_week_script %}<script id="final-week-conversion-script">
+document.addEventListener('DOMContentLoaded',function(){
+  var reserveUrl='https://checkout.xpay.app/p/plink_live_2cXiuNHphNY4r5vvAY1STs';
+  var fullUrl='https://checkout.xpay.app/p/plink_live_ZFZtFtZqEYzABzhKKh1Yv';
+  var xpay=document.getElementById('xpayCardPayment');
+  var title=document.getElementById('xpayCardTitle');
+  function syncXpay(){
+    if(!xpay)return;
+    var active=document.querySelector('.amount-option.active[data-payment-plan]');
+    var plan=active?active.getAttribute('data-payment-plan'):'reserve';
+    var full=plan==='full';
+    xpay.href=full?fullUrl:reserveUrl;
+    if(title)title.textContent=full?'ادفع إلكترونيًا — 4,500 جنيه':'ادفع إلكترونيًا — 2,000 جنيه';
+  }
+  document.querySelectorAll('[data-payment-plan],.js-open-payment').forEach(function(el){
+    el.addEventListener('click',function(){setTimeout(syncXpay,0);});
+  });
+  syncXpay();
+  fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/seat-count',{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('seat-count');return r.json();})
+    .then(function(s){
+      var h=document.getElementById('seatCountHeadline');
+      var d=document.getElementById('seatCountDetail');
+      if(!h||!d||typeof s.available!=='number'||typeof s.booked!=='number')return;
+      if(s.available<=0){
+        h.textContent='اكتملت المقاعد المتاحة';
+        d.textContent='تواصل معنا للاستفسار عن قائمة الانتظار أو الدفعة التالية.';
+      }else{
+        h.textContent=s.available+' مقعدًا متاحًا من '+s.capacity;
+        d.textContent='المقاعد المحجوزة المؤكدة: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
+      }
+    }).catch(function(){});
+});
+</script></body>{% endcapture %}
+{% assign page = page | replace: '</body>', final_week_script %}
+
 {{ page }}
