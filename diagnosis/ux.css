@@ -86,7 +86,7 @@ h2{margin:0;color:var(--navy);font-size:clamp(1.35rem,3vw,1.95rem);line-height:1
 .required{color:#d65d48}.optional-label{color:#748399;font-size:.73rem;font-weight:700}
 .stage-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stage-option{position:relative}
-.stage-option input,.answer input{position:absolute;opacity:0;pointer-events:none}
+.stage-option input,.sector-option input,.answer input{position:absolute;opacity:0;pointer-events:none}
 .stage-option span{
   display:flex;align-items:center;justify-content:center;min-height:54px;padding:12px 14px;
   border:1.5px solid #d7e1ec;border-radius:15px;background:#fff;color:#465a74;
@@ -95,6 +95,24 @@ h2{margin:0;color:var(--navy);font-size:clamp(1.35rem,3vw,1.95rem);line-height:1
 .stage-option input:checked+span{
   border-color:#4a86ff;background:linear-gradient(145deg,#ecf7ff,#f1efff);
   box-shadow:inset 0 0 0 1px #4a86ff;color:#153c78
+}
+.sector-hint{text-align:right;margin:-2px 0 9px}
+.sector-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.sector-option{position:relative}
+.sector-option>span{
+  display:block;min-height:76px;padding:13px 14px;border:1.5px solid #d9e2ed;border-radius:15px;
+  background:#fff;color:#42546c;transition:.17s
+}
+.sector-option b{display:block;color:#17304f;font-size:.79rem;line-height:1.55}
+.sector-option small{display:block;margin-top:4px;color:#7a899d;font-size:.65rem;line-height:1.5}
+.sector-option:hover>span{border-color:#a5bce2;transform:translateY(-1px)}
+.sector-option input:checked+span{
+  border-color:#4a86ff;background:linear-gradient(145deg,#eef8ff,#f4f1ff);
+  box-shadow:inset 0 0 0 1px #4a86ff,0 8px 20px rgba(74,134,255,.07)
+}
+.sector-option input:checked+span:after{
+  content:"✓";position:absolute;left:10px;top:10px;width:21px;height:21px;display:grid;place-items:center;
+  border-radius:50%;background:#3157ca;color:#fff;font-size:.68rem;font-weight:900
 }
 .small-note,.save-hint{margin:7px 0 0;text-align:center;color:#748399;font-size:.72rem;line-height:1.65}
 .quick-grid.pain-grid{
@@ -294,7 +312,7 @@ h2{margin:0;color:var(--navy);font-size:clamp(1.35rem,3vw,1.95rem);line-height:1
   h1{font-size:2rem}
   .lead{font-size:.9rem}
   .method-note{grid-template-columns:1fr}
-  .promise,.stage-grid,.quick-grid.pain-grid,.answers,.metrics,.days,.experiment,.result-offer-grid,.result-actions{grid-template-columns:1fr}
+  .promise,.stage-grid,.sector-grid,.quick-grid.pain-grid,.answers,.metrics,.days,.experiment,.result-offer-grid,.result-actions{grid-template-columns:1fr}
   .pain-card{min-height:auto}
   .question h2{font-size:1.3rem}
   .answer span{min-height:64px}
