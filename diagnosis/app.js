@@ -8,8 +8,8 @@
   const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
   const state={
-    problem:'',quickChoice:'',stage:'',firstName:'',projectName:'',decisionType:'',
-    questions:[],answers:{},index:0,result:null,extraNote:'',nextDecision:'',view:'intake'
+    problem:'',quickChoice:'',stage:'',decisionType:'',
+    questions:[],answers:{},index:0,result:null,view:'intake'
   };
 
   function show(id){
@@ -28,10 +28,6 @@
       if(!saved||!saved.stage)return;
       Object.assign(state,saved,{result:null,view:'intake'});
       $('problemInput').value=state.problem||'';
-      $('firstName').value=state.firstName||'';
-      $('projectName').value=state.projectName||'';
-      $('extraNote').value=state.extraNote||'';
-      $('nextDecision').value=state.nextDecision||'';
       const stage=document.querySelector(`input[name="stage"][value="${state.stage}"]`); if(stage)stage.checked=true;
       document.querySelectorAll('[data-quick]').forEach(button=>button.classList.toggle('selected',button.dataset.quick===state.quickChoice));
       $('resumeNote').classList.remove('hidden'); validateIntake();
@@ -71,8 +67,6 @@
     const nextType=Lab.classifyProblem(nextProblem,state.quickChoice,nextStage);
     resumeAvailable=state.problem===nextProblem&&state.stage===nextStage&&state.decisionType===nextType&&state.questions.length>=6&&Object.keys(state.answers).length>0;
     state.problem=nextProblem;
-    state.firstName=$('firstName').value.trim();
-    state.projectName=$('projectName').value.trim();
     state.stage=nextStage;
     state.decisionType=nextType;
     const decision=Lab.DECISIONS[state.decisionType];
@@ -115,9 +109,7 @@
     if(state.index<9){
       state.index++; save(); renderQuestion();
     }else{
-      state.extraNote='';
-      state.nextDecision='';
-      state.result=Lab.analyze({stage:state.stage,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers,extraNote:'',nextDecision:''});
+      state.result=Lab.analyze({stage:state.stage,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers});
       renderResult();
       track('DiagnosticComplete','diagnostic_complete',Lab.safeEventData(state.result));
       show('results');
@@ -184,7 +176,7 @@
     }
     const days=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${escapeHtml(step)}</li>`).join('');
     const x=r.experiment,experiment=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${escapeHtml(value)}</b></div>`).join('');
-    return `<style>${pdfCss()}</style><div class="page">${top}<h2 class="title">خطة العمل خلال 7 أيام</h2><ol class="days">${days}</ol><h2 class="title">جرّب إيه الأول قبل ما تصرف أو تلتزم؟</h2><div class="experiment">${experiment}</div>${r.nextDecision?`<div class="summary" style="margin-top:15px"><b>القرار اللي عايز تحسمه:</b> ${escapeHtml(r.nextDecision)}</div>`:''}<div class="cta"><h3>${escapeHtml(r.decision.cta)}</h3><p>برنامج «التشخيص قبل الحل» يساعدك تجمع المعلومات المهمة، تفهم أرقامك، وتحدد خطوة واضحة تراجع نتيجتها.</p></div><p class="note">دي قراءة أولية تساعدك تفكر، ومش بديلًا عن رأي قانوني أو محاسبي أو ضريبي متخصص.</p>${foot}</div>`;
+    return `<style>${pdfCss()}</style><div class="page">${top}<h2 class="title">خطة العمل خلال 7 أيام</h2><ol class="days">${days}</ol><h2 class="title">جرّب إيه الأول قبل ما تصرف أو تلتزم؟</h2><div class="experiment">${experiment}</div><div class="cta"><h3>الأولوية التالية: ${escapeHtml(r.gaps[0].missing)}</h3><p>استخدم التقرير كخريطة مراجعة: اقفل أكبر فجوة، نفّذ التجربة الصغيرة، وبعدها ارجع للقرار.</p></div><p class="note">دي قراءة أولية تساعدك تفكر، ومش بديلًا عن رأي قانوني أو محاسبي أو ضريبي متخصص.</p>${foot}</div>`;
   }
   async function markupToJpeg(markup){
     const width=794,height=1123,svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml">${markup}</div></foreignObject></svg>`,url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'})),image=new Image();
@@ -243,7 +235,7 @@
       r.plan.forEach((step,index)=>{const col=index%2,row=Math.floor(index/2),x=col===0?404:56,boxY=y+row*80,w=334;roundBox(ctx,x,boxY,w,67,13,'#f1f6fc');pdfFont(ctx,10,'700','#3157ca');ctx.fillText(`اليوم ${index+1}`,x+w-13,boxY+10);pdfFont(ctx,11,'600','#0b1730');wrapCanvasText(ctx,step,x+w-13,boxY+29,w-26,17,2);});
       pdfFont(ctx,21,'700');ctx.fillText('جرّب إيه الأول قبل ما تصرف أو تلتزم؟',738,510);const x=r.experiment,items=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]];
       items.forEach(([label,value],index)=>{const col=index%2,row=Math.floor(index/2),bx=col===0?404:56,by=552+row*70,w=334;roundBox(ctx,bx,by,w,58,12,'#f5f2ff');pdfFont(ctx,9,'700','#6656ff');ctx.fillText(label,bx+w-12,by+8);pdfFont(ctx,10,'600');wrapCanvasText(ctx,value,bx+w-12,by+25,w-24,15,2);});
-      roundBox(ctx,56,848,682,128,17,'#07111f');pdfFont(ctx,17,'700','#fff');wrapCanvasText(ctx,r.decision.cta,716,871,640,24,2);pdfFont(ctx,11,'400','#dce7f5');wrapCanvasText(ctx,'برنامج «التشخيص قبل الحل» يساعدك تجمع المعلومات المهمة، تفهم أرقامك، وتحدد خطوة واضحة تراجع نتيجتها.',716,924,640,18,3);pdfFont(ctx,9,'400','#75849a');wrapCanvasText(ctx,'دي قراءة أولية تساعدك تفكر، ومش بديلًا عن رأي قانوني أو محاسبي أو ضريبي متخصص.',738,1015,682,16,2);
+      roundBox(ctx,56,848,682,128,17,'#07111f');pdfFont(ctx,17,'700','#fff');wrapCanvasText(ctx,'الأولوية التالية: '+r.gaps[0].missing,716,871,640,24,2);pdfFont(ctx,11,'400','#dce7f5');wrapCanvasText(ctx,'برنامج «التشخيص قبل الحل» يساعدك تجمع المعلومات المهمة، تفهم أرقامك، وتحدد خطوة واضحة تراجع نتيجتها.',716,924,640,18,3);pdfFont(ctx,9,'400','#75849a');wrapCanvasText(ctx,'دي قراءة أولية تساعدك تفكر، ومش بديلًا عن رأي قانوني أو محاسبي أو ضريبي متخصص.',738,1015,682,16,2);
     }
     return canvas.toDataURL('image/jpeg',.92).split(',')[1];
   }
