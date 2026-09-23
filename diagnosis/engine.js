@@ -13,6 +13,74 @@
     decision:'عارف هتعمل إيه وإمتى تراجع؟'
   };
   const STAGES={idea:'فكرة / تحت التأسيس',running:'مشروع قائم'};
+  const SECTORS={
+    retail:'تجارة / محل / تجزئة',
+    services:'خدمات / مكتب / مركز',
+    manufacturing:'تصنيع / ورشة / إنتاج',
+    food:'مطعم / كافيه / أغذية',
+    wholesale:'جملة / توزيع / توريد',
+    contracting:'مقاولات / تنفيذ / مشروعات',
+    online:'أونلاين / تجارة إلكترونية',
+    other:'نشاط آخر'
+  };
+  const SECTOR_EXAMPLES={
+    retail:{
+      customer:'فكّر في نوع الزبون، متوسط الفاتورة، التكرار والمنطقة.',
+      demand:'فكّر في حركة المحل والبيع الفعلي، مش عدد الناس اللي دخلت بس.',
+      economics:'فكّر في سعر الشراء، الخصم، الهالك، الإيجار والمبلغ اللي بيفضل من البيعة.',
+      execution:'فكّر في الوردية، الكاشير، المخزون، التسليم وخدمة العميل.',
+      decision:'اربط القرار برقم تقدر تراجعه: بيع، هامش، دوران مخزون أو سيولة.'
+    },
+    services:{
+      customer:'فكّر في نوع العميل اللي بيحجز ويدفع ويرجع، مش مجرد الاستفسار.',
+      demand:'فكّر في الحجوزات أو العقود المدفوعة ومعدل الإلغاء والرجوع.',
+      economics:'فكّر في سعر الخدمة، وقت العامل/المختص، العمولة والمصاريف الثابتة.',
+      execution:'فكّر في الحجز، الانتظار، تقديم الخدمة، الجودة والمتابعة.',
+      decision:'اربط القرار بعدد حجوزات أو نسبة إتمام أو ربحية أو وقت تشغيل.'
+    },
+    manufacturing:{
+      customer:'فكّر في العميل اللي يكرر الطلب والمواصفة اللي بيطلبها باستمرار.',
+      demand:'فكّر في أوامر الشراء الفعلية وتكرارها، مش الاستفسارات فقط.',
+      economics:'فكّر في خامة، هالك، طاقة، عمالة مباشرة، تشغيل ومصاريف ثابتة.',
+      execution:'فكّر في أمر الإنتاج، زمن التشغيل، التوقف، إعادة الشغل والجودة.',
+      decision:'اربط القرار بطاقة إنتاج، تكلفة وحدة، هالك، تسليم أو هامش.'
+    },
+    food:{
+      customer:'فكّر في نوع الزبون، متوسط الفاتورة، التكرار، الصالة أو الدليفري.',
+      demand:'فكّر في الطلبات المدفوعة حسب اليوم والوقت والصنف، مش المتابعين.',
+      economics:'فكّر في تكلفة المكونات، الهالك، العمالة، الإيجار وعمولات التوصيل.',
+      execution:'فكّر في التحضير، الوردية، زمن الطلب، الهالك، الجودة والتوصيل.',
+      decision:'اربط القرار بمتوسط فاتورة، Food Cost، هالك، زمن تجهيز أو تكرار.'
+    },
+    wholesale:{
+      customer:'فكّر في نوع التاجر أو العميل، حجم الطلب، انتظامه وشروطه.',
+      demand:'فكّر في الطلبات المتكررة والكمية الفعلية، مش المكالمات فقط.',
+      economics:'فكّر في هامش الصنف، أجل العميل، أجل المورد، النقل والمخزون.',
+      execution:'فكّر في المخزن، تجهيز الطلب، المندوب، التوصيل والتحصيل.',
+      decision:'اربط القرار بدوران المخزون، أيام التحصيل، هامش أو حجم طلب.'
+    },
+    contracting:{
+      customer:'فكّر في نوع العميل أو المشروع، شروط العقد وسجل التحصيل.',
+      demand:'فكّر في عقود/أوامر إسناد فعلية، مش طلبات عروض أسعار فقط.',
+      economics:'فكّر في خامات، عمالة، مقاول باطن، مستخلصات ودفعات العميل.',
+      execution:'فكّر في البرنامج الزمني، توريد الخامات، العمالة، الجودة والتسليم.',
+      decision:'اربط القرار بهامش المشروع، مدة التنفيذ، دفعة مقدمة أو نقطة توقف.'
+    },
+    online:{
+      customer:'فكّر في المشتري الفعلي، تكرار الطلب والمرتجعات، مش المتابعين.',
+      demand:'فكّر في طلب مؤكد ومدفوع أو مستلم، مش Click أو Message فقط.',
+      economics:'فكّر في تكلفة المنتج/الخدمة، الشحن، المرتجع، العمولة وتكلفة القناة.',
+      execution:'فكّر في تأكيد الطلب، التجهيز، الشحن، التسليم وخدمة ما بعد البيع.',
+      decision:'اربط القرار بطلب مستلم، هامش بعد الشحن والمرتجع، وتكلفة اكتساب.'
+    },
+    other:{
+      customer:'فكّر في العميل اللي يدفع فعلًا وليه بيختارك.',
+      demand:'اعتمد على شراء أو طلب أو عقد فعلي، مش الانطباع.',
+      economics:'اجمع سعر البيع، التكلفة المباشرة، المصاريف الثابتة والتحصيل.',
+      execution:'راجع خطوات الشغل من الطلب للتسليم والتحصيل.',
+      decision:'حدد رقمًا وموعدًا واضحين للمراجعة قبل أي التزام أكبر.'
+    }
+  };
   const SCALE=[
     {value:0,label:'مش عارف / ما عنديش دليل واضح'},
     {value:1,label:'عندي انطباع أو حالات قليلة'},
@@ -110,11 +178,35 @@
       decision:'هل محدد إمتى تعتبر انخفاض الرجوع مشكلة تستحق تعديل المنتج أو الخدمة أو المتابعة؟'
     },
     marketing:{
-      customer:'هل تعرف مين من اللي جايين من الإعلان عميل مناسب فعلًا، ومين مجرد رسالة أو فضول؟',
-      demand:'هل بتقيس كام واحد من الإعلان عمل خطوة شراء حقيقية بدل الاكتفاء بالضغطات والرسائل؟',
-      economics:'هل تكلفة اكتساب العميل متقارنة بالمبلغ اللي بيفضل من بيعته بعد التنفيذ؟',
-      execution:'هل تقدر تربط الحملة بالبيع المؤكد وتعرف فين التسرب بين الإعلان والشراء؟',
-      decision:'هل عندك قاعدة واضحة تقول إمتى تزود الميزانية، إمتى توقف، وإمتى تغيّر الرسالة أو الجمهور؟'
+      customer:'هل تعرف العميل الجديد جه منين وأنهي قناة بتجيب النوع اللي يشتري ويرجع فعلًا؟',
+      demand:'هل بتقيس من كل قناة كام عميل عمل خطوة شراء حقيقية بدل عدّ الزيارات أو المكالمات فقط؟',
+      economics:'هل تكلفة الحصول على عميل من أهم قناة متقارنة بالمبلغ اللي بيفضل من بيعته؟',
+      execution:'هل مصدر العميل بيتسجل من أول تواصل لحد بيع مؤكد وتحصيل؟',
+      decision:'هل عندك قاعدة واضحة تقول إمتى تزود قناة، توقفها، أو تغيّر العرض وطريقة الوصول؟'
+    },
+    procurement:{
+      customer:'هل مشاكل المورد أو الخامة بتوصل للعميل في صورة سعر أعلى أو جودة أقل أو تأخير؟',
+      demand:'هل كمية الشراء مرتبطة بحركة البيع الفعلية ولا بعروض المورد وتوقعاتك؟',
+      economics:'هل سعر الشراء وشروط الدفع والنقل والخصم وفلوس المخزون المحبوسة محسوبين مع بعض؟',
+      execution:'هل مدة توريد أهم الخامات/الأصناف واعتمادية الموردين متسجلة ومقارنة؟',
+      decision:'هل عندك قاعدة لاختيار المورد والكمية ومتى تستخدم مورد بديل؟'
+    },
+    staffing:{
+      customer:'هل مشكلة الفريق ظاهرة للعميل في تأخير أو جودة أو خدمة غير مستقرة؟',
+      demand:'هل حجم الشغل ثابت بما يكفي يبرر تعيينًا دائمًا ولا الضغط موسمي ومتذبذب؟',
+      economics:'هل تكلفة الموظف أو العامل متقارنة بالقيمة/الطاقة اللي بيضيفها فعليًا؟',
+      execution:'هل الأدوار والمسؤوليات ومعيار الشغل واضحين ولا كل حاجة بترجع لصاحب المشروع؟',
+      decision:'هل محدد سبب التعيين أو التغيير، النتيجة المطلوبة، وفترة تجربة تقيس بعدها؟'
+    },
+    procurement:{
+      economics:{why:'سعر الوحدة الأرخص ممكن يكون أغلى على المشروع لو بيحبس سيولة أو يزود نقل أو مرتجع أو هالك.',missing:'مقارنة موردين بالتكلفة الكلية وشروط الدفع والجودة ومدة التوريد.'},
+      execution:{why:'الاعتماد على مورد واحد أو مدة توريد غير مستقرة ممكن يوقف البيع أو الإنتاج حتى لو السعر ممتاز.',missing:'مدة توريد فعلية + نسبة تأخير + مورد بديل مجرّب لأهم الخامات/الأصناف.'},
+      decision:{why:'الشراء برد فعل وقت النفاد أو الخصم بيخلق مخزون زائد مرة ونقص مرة.',missing:'قاعدة شراء ونقطة إعادة طلب مرتبطة بالحركة والسيولة ومدة التوريد.'}
+    },
+    staffing:{
+      execution:{why:'زيادة عدد الناس لا تحل مشكلة دور غير واضح أو اختناق قرار عند صاحب المشروع.',missing:'قياس حمل العمل + وصف مسؤوليات + أين يتوقف الشغل ولماذا.'},
+      economics:{why:'التعيين تكلفة ثابتة نسبيًا ولازم يتقارن بالطاقة أو الإيراد أو الوقت اللي هيضيفه.',missing:'تكلفة الشخص كاملة مقابل حجم شغل أو طاقة أو نتيجة يمكن قياسها.'},
+      decision:{why:'من غير نتيجة متوقعة وفترة تجربة، هتكتشف متأخر إن التعيين لم يحل السبب الحقيقي.',missing:'دور محدد + نتيجة بعد 30 يوم + معيار استمرار أو تعديل أو إنهاء.'}
     },
     cost_reduction:{
       customer:'هل تعرف أي مصاريف العميل بيحس بقيمتها فعلًا وأي مصاريف ممكن تتخفض من غير ما التجربة تتضرر؟',
@@ -177,6 +269,8 @@
     'السيولة والتحصيل':'cashflow',
     'الربحية':'profitability',
     'المخزون':'inventory',
+    'الموردين والتوريد':'procurement',
+    'العمالة والفريق':'staffing',
     'التشغيل':'operations',
     'التكاليف':'cost_reduction',
     'التوسع':'expansion',
@@ -194,7 +288,9 @@
     cashflow:{label:'فهم ليه الفلوس مش متاحة رغم وجود مبيعات',keywords:['كاش','سيولة','تحصيل','قبض','مفيش فلوس','آخر الشهر','اخر الشهر','متاخر في الدفع','متأخر في الدفع'],confirm:'هل المشكلة بسبب تأخر فلوس العملاء، ولا إن المكسب من البيعة قليل، ولا إن المصاريف بتخرج بدري؟',noGo:'ما تزودش المبيعات أو الإعلان قبل ما تفرّق بين البيع والفلوس اللي دخلت فعلًا، وتعرف الفلوس بتدخل بعد كام يوم.',riskBias:5},
     sales:{label:'فهم ليه المهتمين مش بيشتروا',keywords:['مبيعات','بيع','مش ببيع','العملاء مش بتشتري','اقفال','إقفال','صفقات'],confirm:'هل المشكلة في اللي بتعرضه، ولا نوع الناس اللي بتكلمها، ولا خطوة معينة قبل الشراء؟',noGo:'ما تزودش مكالمات أو عروض البيع قبل ما تعرف فين بالضبط الناس بتقف ومابتكملش شراء.',riskBias:2},
     retention:{label:'فهم ليه العميل ما بيرجعش يشتري',keywords:['مش بيرجع','ما بيرجعش','تكرار الشراء','عميل قديم','احتفاظ','retention','repeat'],confirm:'هل عدم الرجوع سببه تجربة العميل، أو المنتج نفسه، أو التوقيت، أو إنك ما بتعملش متابعة مناسبة بعد الشراء؟',noGo:'ما تبدأش خصومات عامة لكل العملاء قبل ما تعرف مين المفروض يرجع، ومين رجع فعلًا، وإيه اللي حصل قبل ما يختفي.',riskBias:3},
-    marketing:{label:'فهم هل الإعلان بيجيب ناس مناسبة وبتشتري',keywords:['اعلان','إعلان','تسويق','حملة','ليدز','عملاء محتملين','تكلفة العميل'],confirm:'هل المشكلة إن إعلانك مش بيوصل للناس المناسبة، ولا رسالته مش واضحة، ولا المهتمين مش بيكملوا شراء؟',noGo:'ما تزودش ميزانية الإعلان قبل ما تعرف هل اللي جايين مناسبين، كام واحد اشترى فعلًا، وبيفضل لك كام من البيعة.',riskBias:4},
+    marketing:{label:'فهم أنهي قناة بتجيب عميل وبيع فعلي',keywords:['اعلان','إعلان','تسويق','حملة','مندوب','احالات','إحالات','قناة بيع','عملاء محتملين','تكلفة العميل'],confirm:'هل تعرف العميل الجديد جه منين — محل، إحالة، مندوب، سوشيال أو إعلان — وأنهي قناة بتتحول لبيع وربح فعلًا؟',noGo:'ما تزودش مصروف أي قناة جذب قبل ما تربطها بعميل مناسب وبيع مؤكد ومبلغ بيفضل لك من البيعة.',riskBias:4},
+    procurement:{label:'تقليل ضغط الموردين والتوريد على السعر والسيولة والتشغيل',keywords:['مورد','موردين','توريد','خامات','خامة','شراء','مشتريات','تأخير المورد','سعر المورد'],confirm:'هل الضغط سببه سعر الشراء، أجل الدفع، الاعتماد على مورد واحد، مدة التوريد، ولا شراء كمية أكبر من احتياجك؟',noGo:'ما تغيّرش المورد أو تشتري كمية كبيرة لمجرد سعر أقل قبل ما تحسب الجودة ومدة التوريد وشروط الدفع والفلوس اللي هتتحبس.',riskBias:6},
+    staffing:{label:'معرفة هل المشكلة فعلًا نقص عمالة ولا تنظيم وأدوار ومتابعة',keywords:['عمالة','موظفين','فريق','تعيين','غياب','استقالة','انتاجية','إنتاجية','تفويض','واقف عليا','واقف عليّ'],confirm:'هل الشغل محتاج ناس أكتر فعلًا، ولا المشكلة في توزيع الأدوار، التدريب، المتابعة أو اعتماد كل القرارات عليك؟',noGo:'ما تعيّنش شخص جديد قبل ما تحدد الشغل اللي هيملكه والنتيجة اللي هتقيسها وهل المشكلة مستمرة ولا موسمية.',riskBias:5},
     cost_reduction:{label:'تقليل المصاريف من غير ما الشغل يتضرر',keywords:['تكاليف','تكلفة','مصروفات','خفض','اوفر','أوفر','غالي عليا'],confirm:'إيه المصروف اللي تقدر تقلله من غير ما البيع أو الجودة أو التسليم يتأثر؟',noGo:'ما تقللش مصروف لمجرد إنه كبير؛ اتأكد الأول إنه مش بيحمي البيع أو الجودة أو التسليم.',riskBias:3},
     operations:{label:'معرفة أكتر خطوة معطلة الشغل',keywords:['تشغيل','تاخير','تأخير','تسليم','جودة','اخطاء','أخطاء','عملية','انتاج','إنتاج'],confirm:'أنهي خطوة بتعطّل التسليم أو بتخليك تعيد الشغل بسبب خطأ أو نقص؟',noGo:'ما تعيّنش ناس جديدة ولا تشتري أدوات قبل ما تعرف أنهي خطوة بتعطل الطلبات أو بتخليك تعيد الشغل.',riskBias:3},
     expansion:{label:'التأكد إن الشغل جاهز يكبر',keywords:['توسع','اتوسع','أوسع','تكبير','سوق جديد','منطقة جديدة','نمو سريع'],confirm:'هل فيه ناس عايزة تشتري في المكان الجديد؟ وهل فريقك وأرقامك يسمحوا بتجربة صغيرة من غير مخاطرة كبيرة؟',noGo:'ما تدخلش في مصاريف ثابتة كبيرة قبل ما تجرب الطلب وقدرة فريقك على شغل زيادة في نطاق صغير.',riskBias:10},
@@ -364,6 +460,34 @@
         {value:1,label:'عندي تقدير لواحد منهم فقط'},
         {value:2,label:'حسبت الاتنين على حملة أو فترة محدودة'},
         {value:3,label:'بتابع تكلفة العميل والعائد من بيعته بانتظام'}
+      ]}
+    ],
+    procurement:[
+      {id:'proc_supplier_risk',axis:'execution',evidenceWeight:1.3,prompt:'بالنسبة لأهم خامة أو صنف، لو المورد الأساسي اتأخر أو وقف أسبوعين، عندك بديل مجرّب؟',options:[
+        {value:0,label:'لا، معتمد على مورد واحد تقريبًا'},
+        {value:1,label:'عارف بدائل لكن ما جرّبتهمش'},
+        {value:2,label:'جرّبت بديلًا في طلبات محدودة'},
+        {value:3,label:'عندي بديل مجرّب وسعر/جودة/مدة توريده معروفة'}
+      ]},
+      {id:'proc_total_cost',axis:'economics',evidenceWeight:1.4,prompt:'لما تقارن موردين، بتحسب السعر لوحده ولا السعر + النقل + الجودة + أجل الدفع + أثر الكمية على السيولة؟',options:[
+        {value:0,label:'غالبًا ببص على سعر الوحدة فقط'},
+        {value:1,label:'بضيف عامل أو اتنين بالتقدير'},
+        {value:2,label:'بقارن أغلب التكلفة والشروط لأهم المشتريات'},
+        {value:3,label:'عندي مقارنة واضحة للتكلفة الكلية وشروط الدفع والمخاطر'}
+      ]}
+    ],
+    staffing:[
+      {id:'staff_need',axis:'execution',evidenceWeight:1.3,prompt:'قبل ما تقول إنك محتاج تعيين، هل عارف كام ساعة/طلب/مهمة فعلًا مش متغطية حاليًا؟',options:[
+        {value:0,label:'لا، الإحساس إن الناس قليلة وخلاص'},
+        {value:1,label:'عارف أماكن الضغط من الخبرة'},
+        {value:2,label:'قست الضغط أو الحمل لفترة محدودة'},
+        {value:3,label:'عندي قياس واضح للحمل والطاقة والفجوة'}
+      ]},
+      {id:'staff_role',axis:'decision',evidenceWeight:1.2,prompt:'لو عيّنت شخص بكرة، هل دوره ونتيجته وصلاحياته ومقياس نجاحه واضحين؟',options:[
+        {value:0,label:'لا، هييجي يساعد في كل حاجة'},
+        {value:1,label:'الدور معروف بشكل عام'},
+        {value:2,label:'المهام والنتيجة متفق عليهم مبدئيًا'},
+        {value:3,label:'الدور والنتيجة والصلاحيات ومراجعة الأداء محددين بوضوح'}
       ]}
     ],
     cost_reduction:[
@@ -576,6 +700,34 @@
         {value:1,label:'بحسب تكلفة العميل أو الهامش لكن مش الاتنين'},
         {value:2,label:'حسبتهم على حملة أو فترة محددة'},
         {value:3,label:'بستخدم المقارنة في قرار أزود/أوقف/أغيّر الحملة'}
+      ]}
+    ],
+    procurement:[
+      {id:'proc_terms',axis:'economics',evidenceWeight:1.2,prompt:'هل فرق شروط الدفع بين الموردين بيتحسب مع فرق السعر؟',options:[
+        {value:0,label:'لا، السعر هو الأساس'},
+        {value:1,label:'بفكر في الأجل لكن من غير حساب'},
+        {value:2,label:'بقارن السعر والأجل لأهم الموردين'},
+        {value:3,label:'بستخدم تكلفة الشراء + أجل الدفع + السيولة في قرار المورد'}
+      ]},
+      {id:'proc_reorder',axis:'decision',evidenceWeight:1.1,prompt:'الشراء بيحصل على أساس احتياج فعلي ونقطة إعادة طلب ولا وقت ما المخزون يخلص أو المورد يعمل عرض؟',options:[
+        {value:0,label:'غالبًا عند النفاد أو وقت عرض المورد'},
+        {value:1,label:'بالخبرة والنظر للمخزون'},
+        {value:2,label:'عندي حدود تقريبية لأهم الأصناف/الخامات'},
+        {value:3,label:'عندي قاعدة شراء مرتبطة بالحركة ومدة التوريد والسيولة'}
+      ]}
+    ],
+    staffing:[
+      {id:'staff_owner',axis:'execution',evidenceWeight:1.2,prompt:'لو غبت 3 أيام، المشكلة الأساسية هتبقى نقص عدد الناس ولا إن القرارات والمعلومات واقفة عندك؟',options:[
+        {value:0,label:'معظم الشغل أو القرارات هتقف عندي'},
+        {value:1,label:'خطوات مهمة كتير محتاجاني'},
+        {value:2,label:'الفريق يكمل لكن نقاط محددة ترجع لي'},
+        {value:3,label:'الأدوار والصلاحيات تسمح للشغل الأساسي يكمل'}
+      ]},
+      {id:'staff_trial',axis:'decision',evidenceWeight:1.1,prompt:'لو جربت تعديل توزيع الشغل أو تعيين جديد، هل محدد هتقيس إيه بعد 30 يوم؟',options:[
+        {value:0,label:'لا، هنشوف الشخص كويس ولا لأ'},
+        {value:1,label:'عندي توقع عام'},
+        {value:2,label:'محدد نتيجة أو رقم مبدئي'},
+        {value:3,label:'محدد نتيجة ورقم وموعد مراجعة وحد قرار واضح'}
       ]}
     ],
     cost_reduction:[
@@ -820,6 +972,8 @@
     sales:{hypothesis:'تغيير خطوة واحدة هيخلي ناس أكتر تكمل للخطوة اللي بعدها.',test:'جرّب نفس التغيير مع 10 أشخاص مهتمين.',duration:'7 أيام',cost:'وقت المتابعة فقط.',success:'عدد أكبر من الناس يكمل مقارنة بما كان بيحصل قبل التغيير.',stop:'مفيش تحسن بعد 10 أشخاص متشابهين.',review:'بعد الشخص العاشر'},
     retention:{hypothesis:'سبب محدد في تجربة ما بعد الشراء أو المتابعة هو اللي بيقلل رجوع العميل.',test:'اختار 10 عملاء اشتروا قبل كده، اسألهم سؤالًا واحدًا عن سبب الرجوع أو عدمه، وجرّب متابعة واحدة محسنة على مجموعة صغيرة.',duration:'7 أيام',cost:'وقت متابعة فقط، من غير خصم عام.',success:'تحدد سببًا متكررًا وتلاحظ استجابة أفضل للمجموعة اللي اتطبقت عليها المتابعة.',stop:'الأسباب متفرقة جدًا أو المتابعة الجديدة ما غيرتش أي سلوك؛ وقتها ارجع للمنتج أو شريحة العميل.',review:'بعد 10 عملاء أو نهاية اليوم السابع'},
     marketing:{hypothesis:'رسالة محددة هتجيب ناس أنسب للشراء، مش مجرد ضغطات أو رسائل أكتر.',test:'اعمل إعلانًا صغيرًا برسالة واحدة ولنفس نوع الناس.',duration:'7 أيام',cost:'اكتب أقصى مبلغ هتصرفه قبل ما تبدأ.',success:'ناس مناسبة أكتر تكمل للشراء أو تعمل خطوة جدية.',stop:'تصرف المبلغ المحدد من غير ما ييجي ناس مناسبة.',review:'لما المبلغ يخلص أو في اليوم السابع'},
+    procurement:{hypothesis:'قرار شراء أو مورد مختلف ممكن يحسن السيولة والاعتمادية حتى لو سعر الوحدة مش الأقل.',test:'اختار أهم خامة/صنف، وقارن المورد الحالي ببديل واحد على السعر الكلي والجودة ومدة التوريد وشروط الدفع، ثم جرّب طلبية صغيرة لو آمن.',duration:'7 أيام',cost:'طلبية اختبار صغيرة فقط؛ من غير نقل مشترياتك كلها لمورد جديد.',success:'تطلع بمقارنة كاملة وتثبت إن البديل أفضل في عامل مهم من غير تدهور جودة أو توريد.',stop:'الجودة أو الالتزام أضعف بوضوح، أو التوفير الظاهر يختفي بعد النقل/الأجل/الهالك.',review:'بعد استلام طلبية الاختبار أو نهاية اليوم السابع'},
+    staffing:{hypothesis:'جزء من ضغط الشغل سببه توزيع أدوار أو اختناق قرار، وليس نقص عدد العاملين فقط.',test:'سجّل لمدة 5 أيام المهام اللي بتتأخر ومين مستني مين، ثم جرّب نقل مسؤولية واحدة بصلاحية ومعيار واضح قبل التعيين.',duration:'7 أيام',cost:'من غير تعيين دائم في أول الاختبار.',success:'الخطوة تتحرك أسرع أو يقل رجوع الفريق لصاحب المشروع من غير تراجع جودة.',stop:'الحمل الفعلي أعلى بوضوح من طاقة الفريق حتى بعد توزيع أفضل؛ وقتها التعيين يبقى فرضية أقوى.',review:'نهاية اليوم السابع'},
     cost_reduction:{hypothesis:'تقدر تقلل مصروفًا واحدًا من غير ما الجودة أو التسليم يتأثروا.',test:'قلل المصروف لفترة قصيرة وفي جزء صغير من الشغل.',duration:'7 أيام',cost:'اختار تغييرًا تقدر ترجع عنه فورًا.',success:'المصروف يقل والجودة وميعاد التسليم يفضلوا زي ما هم.',stop:'أي تراجع واضح في الجودة أو الطلب أو التسليم.',review:'نهاية اليوم السابع'},
     operations:{hypothesis:'حل أكتر خطوة معطلة هيقلل وقت تنفيذ الطلب.',test:'غيّر خطوة واحدة وجرّبها على 10 طلبات.',duration:'7 أيام',cost:'من غير شراء برنامج أو نظام جديد.',success:'الطلبات تخلص أسرع من غير زيادة الأخطاء.',stop:'الأخطاء تزيد، أو تضطر تعيد الشغل، أو التسليم يتأخر.',review:'بعد 10 طلبات'},
     expansion:{hypothesis:'فيه ناس مستعدة تشتري في المكان الجديد، وفريقك يقدر يخدمها من غير مصاريف كبيرة ثابتة.',test:'جرّب البيع في منطقة واحدة أو بطريقة بيع واحدة.',duration:'7 أيام',cost:'حدد مبلغًا صغيرًا كحد أقصى قبل البداية.',success:'طلبات مدفوعة تتسلّم بجودة وميعاد مقبولين.',stop:'مفيش شراء فعلي أو الشغل الحالي اتعطل.',review:'نهاية التجربة'},
@@ -840,6 +994,8 @@
     sales:['demand','customer','execution','decision','economics'],
     retention:['customer','demand','execution','economics','decision'],
     marketing:['demand','economics','customer','decision','execution'],
+    procurement:['economics','execution','decision','demand','customer'],
+    staffing:['execution','decision','economics','customer','demand'],
     cost_reduction:['economics','execution','decision','customer','demand'],
     operations:['execution','customer','economics','decision','demand'],
     expansion:['execution','demand','economics','decision','customer'],
@@ -870,30 +1026,33 @@
     if(bestScore===0&&quickChoice&&QUICK_MAP[quickChoice])return QUICK_MAP[quickChoice];
     return best;
   }
-  function decorate(question){
+  function decorate(question,sector='other'){
+    const example=(SECTOR_EXAMPLES[sector]||SECTOR_EXAMPLES.other)[question.axis]||'';
     const defaults={options:(question.axis&&AXIS_OPTIONS[question.axis])||SCALE,evidenceWeight:0,help:'اختار أقرب وصف لواقعك الحالي واعتمد على حاجة تقدر تراجعها أو تعدّها.'};
-    return Object.assign(defaults,question);
+    const decorated=Object.assign(defaults,question);
+    if(example&&!decorated.help.includes(example)) decorated.help=decorated.help+' '+example;
+    return decorated;
   }
-  function coreQuestions(stage,type='general_decision'){
+  function coreQuestions(stage,type='general_decision',sector='other'){
     const context=CORE_CONTEXT[type]||CORE_CONTEXT.general_decision;
     return (CORE[stage]||CORE.running).map(base=>{
       const prompt=context&&base.axis&&context[base.axis]?context[base.axis]:base.prompt;
       const question=Object.assign({},base,{prompt});
       if(context&&base.axis&&context[base.axis]) question.options=AXIS_OPTIONS[base.axis]||base.options;
       question.help='جاوب من واقع آخر فترة أو آخر تجربة فعلية، مش من اللي المفروض يحصل.';
-      return decorate(question);
+      return decorate(question,sector);
     });
   }
-  function weakAxisFromCore(stage,answers,type='general_decision'){
+  function weakAxisFromCore(stage,answers,type='general_decision',sector='other'){
     const totals={customer:0,demand:0,economics:0,execution:0,decision:0};
-    coreQuestions(stage,type).forEach(q=>{if(q.axis)totals[q.axis]=Number(answers[q.id]??0);});
+    coreQuestions(stage,type,sector).forEach(q=>{if(q.axis)totals[q.axis]=Number(answers[q.id]??0);});
     return rankAxes(type,totals)[0];
   }
-  function adaptiveQuestions(stage,type,answers){
-    const weak=weakAxisFromCore(stage,answers,type);
+  function adaptiveQuestions(stage,type,answers,sector='other'){
+    const weak=weakAxisFromCore(stage,answers,type,sector);
     const route=TYPE_QUESTIONS[type]||TYPE_QUESTIONS.general_decision;
     const checks=DECISION_CHECKS[type]||DECISION_CHECKS.general_decision;
-    return [...route,...checks,WEAK_FOLLOW[weak]].map(decorate);
+    return [...route,...checks,WEAK_FOLLOW[weak]].map(q=>decorate(Object.assign({},q),sector));
   }
   function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
   function band(value,cuts,labels){return value<cuts[0]?labels[0]:value<cuts[1]?labels[1]:labels[2];}
@@ -916,7 +1075,7 @@
   }
 
   function analyze(input){
-    const stage=input.stage||'running',type=DECISIONS[input.decisionType]?input.decisionType:'general_decision';
+    const stage=input.stage||'running',type=DECISIONS[input.decisionType]?input.decisionType:'general_decision',sector=SECTORS[input.sector]?input.sector:'other';
     const questions=input.questions||[],answers=input.answers||{};
     const sums={customer:0,demand:0,economics:0,execution:0,decision:0},counts={customer:0,demand:0,economics:0,execution:0,decision:0};
     let evidenceSum=0,evidenceWeights=0;
@@ -950,7 +1109,7 @@
         : {axis,label:AXES[axis],score:axisScores[axis],why:info.why,missing:info.missing,reviewOnly:false};
     });
     const problem=String(input.problem||input.quickChoice||'القرار الذي تفكر فيه').trim();
-    const summary=`قرارك أقرب إلى: ${DECISIONS[type].label}. أهم نقطة تراجعها الآن: ${gaps[0].label}.`;
+    const summary=`نشاطك: ${SECTORS[sector]}. قرارك أقرب إلى: ${DECISIONS[type].label}. أهم نقطة تراجعها الآن: ${gaps[0].label}.`;
     const experiment=EXPERIMENTS[type]||EXPERIMENTS.general_decision;
     let guidance={
       key:'proceed',
@@ -974,8 +1133,8 @@
       };
     }
     const plan=personalizedPlan(type,gaps,stage);
-    return {stage,type,decision:DECISIONS[type],problem,axisScores,readiness,evidence,riskScore,readinessBand,evidenceBand,riskBand,traffic,gaps,gapsTitle,summary,guidance,plan,experiment};
+    return {stage,sector,sectorLabel:SECTORS[sector],type,decision:DECISIONS[type],problem,axisScores,readiness,evidence,riskScore,readinessBand,evidenceBand,riskBand,traffic,gaps,gapsTitle,summary,guidance,plan,experiment};
   }
   function safeEventData(result){return {stage:result.stage,decision_type:result.type,score_band:result.readinessBand,evidence_band:result.evidenceBand,risk_band:result.riskBand};}
-  return {AXES,STAGES,SCALE,QUICK_MAP,DECISIONS,classifyProblem,coreQuestions,adaptiveQuestions,weakAxisFromCore,analyze,safeEventData};
+  return {AXES,STAGES,SECTORS,SCALE,QUICK_MAP,DECISIONS,classifyProblem,coreQuestions,adaptiveQuestions,weakAxisFromCore,analyze,safeEventData};
 });
