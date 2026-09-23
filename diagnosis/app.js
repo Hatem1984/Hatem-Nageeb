@@ -63,8 +63,13 @@
         button.classList.remove('selected');
       }
     });
+    const more=$('moreRunningDecisions');
+    if(more){
+      more.classList.toggle('hidden',stage!=='running');
+      if(stage!=='running')more.open=false;
+    }
     if(hint) hint.textContent=stage
-      ? (stage==='idea'?'اختار القرار اللي عايز تختبره قبل ما تستثمر وقت أو فلوس أكبر.':'اختار القرار اللي محتاج تشخّصه في مشروعك الحالي.')
+      ? (stage==='idea'?'اختار القرار اللي عايز تختبره قبل ما تستثمر وقت أو فلوس أكبر.':'اختار الوجع الأقرب لواقع مشروعك دلوقتي؛ قرارات التوسع موجودة تحت «قرار نمو أو مخاطرة أكبر».')
       : 'اختار مرحلة المشروع الأول علشان نعرض لك القرارات المناسبة.';
   }
 
