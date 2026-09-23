@@ -3,12 +3,12 @@
   const Lab=window.DecisionLab;
   if(!Lab) throw new Error('DecisionLab engine is unavailable');
 
-  const STORE_KEY='decision_lab_v7';
+  const STORE_KEY='decision_lab_v8';
   const $=id=>document.getElementById(id);
   const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
   const state={
-    problem:'',quickChoice:'',stage:'',decisionType:'',
+    problem:'',quickChoice:'',stage:'',sector:'',decisionType:'',
     questions:[],answers:{},index:0,result:null,view:'intake'
   };
 
@@ -29,6 +29,7 @@
       Object.assign(state,saved,{result:null,view:'intake'});
       $('problemInput').value=state.problem||'';
       const stage=document.querySelector(`input[name="stage"][value="${state.stage}"]`); if(stage)stage.checked=true;
+      const sector=document.querySelector(`input[name="sector"][value="${state.sector||''}"]`); if(sector)sector.checked=true;
       syncDecisionOptions();
       document.querySelectorAll('[data-quick]').forEach(button=>button.classList.toggle('selected',button.dataset.quick===state.quickChoice));
       $('resumeNote').classList.remove('hidden'); validateIntake();
@@ -51,11 +52,14 @@
 
   function syncDecisionOptions(){
     const stageInput=document.querySelector('input[name="stage"]:checked');
+    const sectorInput=document.querySelector('input[name="sector"]:checked');
     const stage=stageInput?stageInput.value:'';
+    const sector=sectorInput?sectorInput.value:'';
     const hint=$('topicStageHint');
     document.querySelectorAll('[data-quick]').forEach(button=>{
-      const allowed=String(button.dataset.stages||'idea,running').split(',');
-      const visible=!!stage&&allowed.includes(stage);
+      const allowedStages=String(button.dataset.stages||'idea,running').split(',');
+      const allowedSectors=button.dataset.sectors?String(button.dataset.sectors).split(','):null;
+      const visible=!!stage&&!!sector&&allowedStages.includes(stage)&&(!allowedSectors||allowedSectors.includes(sector));
       button.dataset.hidden=visible?'false':'true';
       button.disabled=!visible;
       if(!visible&&button.dataset.quick===state.quickChoice){
@@ -65,18 +69,22 @@
     });
     const more=$('moreRunningDecisions');
     if(more){
-      more.classList.toggle('hidden',stage!=='running');
-      if(stage!=='running')more.open=false;
+      more.classList.toggle('hidden',stage!=='running'||!sector);
+      if(stage!=='running'||!sector)more.open=false;
     }
-    if(hint) hint.textContent=stage
-      ? (stage==='idea'?'اختار القرار اللي عايز تختبره قبل ما تستثمر وقت أو فلوس أكبر.':'اختار الوجع الأقرب لواقع مشروعك دلوقتي؛ قرارات التوسع موجودة تحت «قرار نمو أو مخاطرة أكبر».')
-      : 'اختار مرحلة المشروع الأول علشان نعرض لك القرارات المناسبة.';
+    if(hint){
+      if(!stage) hint.textContent='اختار مرحلة المشروع الأول.';
+      else if(!sector) hint.textContent='اختار طبيعة النشاط علشان نعرض لك المشاكل الأقرب لواقعك.';
+      else hint.textContent=stage==='idea'
+        ? 'اختار القرار اللي عايز تختبره قبل ما تربط إيجار أو تجهيز أو خامات أو وقت أكبر.'
+        : 'اختار الوجع الأقرب لواقع نشاطك دلوقتي؛ الأداة هتخصص الأسئلة حسب النشاط والمشكلة.';
+    }
   }
-
   function validateIntake(){
     const hasProblem=$('problemInput').value.trim().length>=8||state.quickChoice;
     const stage=document.querySelector('input[name="stage"]:checked');
-    $('understandBtn').disabled=!(hasProblem&&stage);
+    const sector=document.querySelector('input[name="sector"]:checked');
+    $('understandBtn').disabled=!(hasProblem&&stage&&sector);
   }
   document.querySelectorAll('[data-quick]').forEach(button=>button.addEventListener('click',()=>{
     state.quickChoice=state.quickChoice===button.dataset.quick?'':button.dataset.quick;
@@ -90,17 +98,25 @@
     validateIntake();
     save();
   }));
+  document.querySelectorAll('input[name="sector"]').forEach(input=>input.addEventListener('change',()=>{
+    state.sector=input.value;
+    syncDecisionOptions();
+    validateIntake();
+    save();
+  }));
 
   $('understandBtn').addEventListener('click',()=>{
     const nextProblem=$('problemInput').value.trim();
     const nextStage=document.querySelector('input[name="stage"]:checked').value;
+    const nextSector=document.querySelector('input[name="sector"]:checked').value;
     const nextType=Lab.classifyProblem(nextProblem,state.quickChoice,nextStage);
-    resumeAvailable=state.problem===nextProblem&&state.stage===nextStage&&state.decisionType===nextType&&state.questions.length>=5&&Object.keys(state.answers).length>0;
+    resumeAvailable=state.problem===nextProblem&&state.stage===nextStage&&state.sector===nextSector&&state.decisionType===nextType&&state.questions.length>=5&&Object.keys(state.answers).length>0;
     state.problem=nextProblem;
     state.stage=nextStage;
+    state.sector=nextSector;
     state.decisionType=nextType;
     const decision=Lab.DECISIONS[state.decisionType];
-    $('confirmType').textContent=decision.label;
+    $('confirmType').textContent=decision.label+' · '+(Lab.SECTORS[state.sector]||'');
     $('confirmProblem').textContent=state.problem||state.quickChoice;
     $('confirmQuestion').textContent=decision.confirm;
     track('DiagnosticProblemEntered','diagnostic_problem_entered');
@@ -108,7 +124,7 @@
   });
   $('editProblemBtn').addEventListener('click',()=>show('intake'));
   $('confirmBtn').addEventListener('click',()=>{
-    if(!resumeAvailable){state.questions=Lab.coreQuestions(state.stage,state.decisionType);state.answers={};state.index=0;}
+    if(!resumeAvailable){state.questions=Lab.coreQuestions(state.stage,state.decisionType,state.sector);state.answers={};state.index=0;}
     else{state.index=Math.min(state.index,state.questions.length-1);}
     track('DiagnosticProblemConfirmed','diagnostic_problem_confirmed');
     track('DiagnosticStart','diagnostic_start');
@@ -119,7 +135,7 @@
     const q=state.questions[state.index];
     $('questionCount').textContent=`السؤال ${state.index+1} من 10`;
     $('progressBar').style.width=`${(state.index+1)*10}%`;
-    $('stageText').textContent=Lab.STAGES[state.stage]+' · '+(state.index<5?'أساس التشخيص':'مخصص لحالتك');
+    $('stageText').textContent=(Lab.SECTORS[state.sector]||Lab.STAGES[state.stage])+' · '+(state.index<5?'أساس الحالة':'أسئلة مخصصة');
     $('axisTag').textContent=q.axis?Lab.AXES[q.axis]:'قوة الدليل';
     $('questionText').textContent=q.prompt;
     $('questionHelp').textContent=q.help||(state.index<5?'اختار اللي بيحصل فعلًا في مشروعك دلوقتي، حتى لو الإجابة مش مريحة.':'السؤال ده اتحدد بناءً على نوع القرار وإجاباتك السابقة.');
@@ -137,7 +153,7 @@
     track('DiagnosticQuestionProgress','diagnostic_question_progress');
     if(state.index===4){
       const core=state.questions.slice(0,5);
-      const adaptive=Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers);
+      const adaptive=Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers,state.sector);
       const validIds=new Set([...core,...adaptive].map(item=>item.id));
       Object.keys(state.answers).forEach(id=>{if(!validIds.has(id))delete state.answers[id];});
       state.questions=[...core,...adaptive];
@@ -145,7 +161,7 @@
     if(state.index<9){
       state.index++; save(); renderQuestion();
     }else{
-      state.result=Lab.analyze({stage:state.stage,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers});
+      state.result=Lab.analyze({stage:state.stage,sector:state.sector,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers});
       renderResult();
       track('DiagnosticComplete','diagnostic_complete',Lab.safeEventData(state.result));
       show('results');
@@ -162,7 +178,9 @@
       inventory:'المخزون البطيء، النفاد، ونقطة إعادة الطلب',
       sales:'تشخيص مسار البيع ومكان التسرب قبل الشراء',
       retention:'تكرار الشراء وأسباب عدم رجوع العميل',
-      marketing:'ربط الإعلان بعميل مناسب وببيع مؤكد',
+      marketing:'اختيار قنوات جذب وبيع على أساس عميل مدفوع وربحية، مش ضوضاء تسويقية',
+      procurement:'الموردين والمشتريات وشروط الدفع ومدة التوريد',
+      staffing:'العمالة والأدوار والتفويض وقياس الحاجة للتعيين',
       cost_reduction:'هيكل التكاليف واختبار الخفض من غير ضرب الجودة',
       operations:'اختناقات التشغيل والتسليم واعتماد الشغل على صاحب المشروع',
       expansion:'جاهزية التوسع والقدرة التشغيلية والمالية',
@@ -215,6 +233,7 @@
       const firstGap=r.gaps&&r.gaps[0]?r.gaps[0].label:'';
       const message=[
         'نتيجة اختبار قرار مشروعي:',
+        `طبيعة النشاط: ${r.sectorLabel||''}`,
         `نوع القرار: ${r.decision.label}`,
         `الجاهزية: ${r.readiness}/100`,
         `قوة الدليل: ${r.evidence}/100`,
