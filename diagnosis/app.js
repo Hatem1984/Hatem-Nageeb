@@ -141,6 +141,36 @@
     }
   });
 
+  function programFitModules(r){
+    const byType={
+      idea_validation:'اختبار الفكرة والافتراض الأخطر قبل ما تربط رأس مال',
+      first_customer:'تحديد العميل الأول، العرض، وقناة الوصول',
+      pricing:'التسعير وهامش البيعة واختبار السعر',
+      cashflow:'السيولة والتحصيل وربط البيع بدخول الكاش',
+      profitability:'الربحية الحقيقية، خليط المنتجات، والمصاريف الثابتة',
+      inventory:'المخزون البطيء، النفاد، ونقطة إعادة الطلب',
+      sales:'تشخيص مسار البيع ومكان التسرب قبل الشراء',
+      retention:'تكرار الشراء وأسباب عدم رجوع العميل',
+      marketing:'ربط الإعلان بعميل مناسب وببيع مؤكد',
+      cost_reduction:'هيكل التكاليف واختبار الخفض من غير ضرب الجودة',
+      operations:'اختناقات التشغيل والتسليم واعتماد الشغل على صاحب المشروع',
+      expansion:'جاهزية التوسع والقدرة التشغيلية والمالية',
+      new_branch:'اختبار منطقة الفرع والتعادل قبل الالتزام الثابت',
+      new_product:'اختبار المنتج الجديد قبل حبس فلوس في تطوير أو مخزون',
+      customer_concentration:'مخاطر الاعتماد على عميل كبير وبناء بدائل',
+      general_decision:'مصفوفة القرار والسيناريوهات وحدود التوقف'
+    };
+    const byAxis={
+      customer:'تحديد العميل والمشكلة الحقيقية',
+      demand:'اختبار الطلب بسلوك وشراء فعلي',
+      economics:'التسعير، الهامش، التعادل والسيولة',
+      execution:'التشغيل والاختناقات والمتابعة',
+      decision:'معيار القرار وخطة 90 يومًا'
+    };
+    const items=[byType[r.type],...(r.gaps||[]).map(g=>byAxis[g.axis])].filter(Boolean);
+    return [...new Set(items)].slice(0,3);
+  }
+
   function renderResult(){
     const r=state.result;
     $('traffic').className=`traffic ${r.traffic.key}`; $('trafficIcon').textContent=r.traffic.icon; $('trafficTitle').textContent=r.traffic.title;
@@ -162,6 +192,8 @@
     $('sevenDays').innerHTML=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${step}</li>`).join('');
     const x=r.experiment;
     $('experiment').innerHTML=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
+    const fit=$('programFitItems');
+    if(fit)fit.innerHTML=programFitModules(r).map(item=>`<div><span>✓</span><b>${item}</b></div>`).join('');
     save();
   }
 
