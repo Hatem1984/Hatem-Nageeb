@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var details=document.createElement('details');
       details.className='manual-payment-options';
       var summary=document.createElement('summary');
-      summary.textContent='أو حوّل يدويًا — InstaPay / Vodafone Cash';
+      summary.textContent='أو حوّل يدويًا — InstaPay / محفظة إلكترونية';
       var inner=document.createElement('div');
       inner.className='manual-payment-inner';
       if(instapay)inner.appendChild(instapay);
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded',function(){
 {% assign page = page | replace: 'ادفع إلكترونيًا — 4,500 جنيه', 'ادفع بالكارت عبر XPay — 4,500 جنيه' %}
 {% assign page = page | replace: 'بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع', 'بطاقات بنكية / Fawry / ValU · تأكيد تلقائي بعد نجاح الدفع' %}
 {% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة الدفع', 'اختَر طريقة السداد ثم وسيلة الدفع' %}
-{% assign page = page | replace: 'اختَر الخطة أولًا. الدفع الإلكتروني متاح عبر XPay بالبطاقة أو Fawry أو ValU، والتحويل اليدوي ما زال متاحًا.', 'اختَر بين تثبيت المقعد أو السداد الكامل. الدفع الإلكتروني عبر XPay هو الاختيار الأساسي، والتحويل اليدوي عبر InstaPay أو Vodafone Cash متاح كبديل.' %}
+{% assign page = page | replace: 'اختَر الخطة أولًا. الدفع الإلكتروني متاح عبر XPay بالبطاقة أو Fawry أو ValU، والتحويل اليدوي ما زال متاحًا.', 'اختَر بين تثبيت المقعد أو السداد الكامل. الدفع الإلكتروني عبر XPay هو الاختيار الأساسي، والتحويل اليدوي عبر InstaPay أو محفظة إلكترونية متاح كبديل.' %}
 {% assign page = page | replace: 'ابدأ باختيار خطة الدفع', 'اختَر طريقة السداد' %}
 {% assign page = page | replace: 'اختيار الخطة ووسيلة الدفع', 'اختيار طريقة السداد والدفع' %}
 {% assign page = page | replace: 'اختَر خطة الدفع واحجز مكانك', 'احجز مكانك واختر طريقة الدفع' %}
