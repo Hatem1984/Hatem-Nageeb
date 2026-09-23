@@ -309,8 +309,8 @@
   function metricCanvas(ctx,x,y,w,label,value,note){
     roundBox(ctx,x,y,w,96,15,'#f1f6fc','#e0e8f2');pdfFont(ctx,11,'400','#66758b');ctx.fillText(label,x+w-15,y+13);pdfFont(ctx,24,'700','#173a73');ctx.fillText(value,x+w-15,y+36);pdfFont(ctx,10,'400','#66758b');ctx.fillText(note,x+w-15,y+70);
   }
-  async function canvasPageToJpeg(page,r){
-    const canvas=document.createElement('canvas');canvas.width=794;canvas.height=1123;const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,794,1123);const logo=document.querySelector('.brand img');canvasHeader(ctx,logo,page);
+  async function canvasPageToJpeg(page,r,logo){
+    const canvas=document.createElement('canvas');canvas.width=794;canvas.height=1123;const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,794,1123);canvasHeader(ctx,logo,page);
     if(page===1){
       const gradient=ctx.createLinearGradient(56,0,738,0);gradient.addColorStop(0,'#102340');gradient.addColorStop(1,'#07111f');roundBox(ctx,56,128,682,165,22,gradient);
       pdfFont(ctx,30,'700','#fff');ctx.fillText(r.traffic.title,700,151);pdfFont(ctx,14,'400','#dce7f5');wrapCanvasText(ctx,r.summary,700,202,610,23,3);
@@ -342,10 +342,34 @@
     jpegPages.forEach((encoded,i)=>{const pageId=3+i*3,imageId=pageId+1,contentId=pageId+2,imageBytes=base64Bytes(encoded),name=`Im${i+1}`,content=ascii(`q\n595.28 0 0 841.89 0 0 cm\n/${name} Do\nQ`);obj(pageId,[`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /${name} ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`]);obj(imageId,[`<< /Type /XObject /Subtype /Image /Width 794 /Height 1123 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imageBytes.length} >>\nstream\n`,imageBytes,'\nendstream']);obj(contentId,[`<< /Length ${content.length} >>\nstream\n`,content,'\nendstream']);});
     const xref=length;add(`xref\n0 ${objectCount+1}\n0000000000 65535 f \n`);for(let i=1;i<=objectCount;i++)add(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);add(`trailer\n<< /Size ${objectCount+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);return new Blob(chunks,{type:'application/pdf'});
   }
+  let lastPdfUrl='';
+  function releasePdfUrl(){
+    if(lastPdfUrl){try{URL.revokeObjectURL(lastPdfUrl);}catch(e){} lastPdfUrl='';}
+  }
+  function offerPdfDownload(blob,status){
+    const filename='تقرير-مختبر-قرار-مشروعك.pdf';
+    if(typeof navigator.msSaveOrOpenBlob==='function'){
+      navigator.msSaveOrOpenBlob(blob,filename);
+      status.textContent='تم تجهيز التقرير.';
+      return;
+    }
+    releasePdfUrl();
+    const url=URL.createObjectURL(blob);lastPdfUrl=url;
+    const link=document.createElement('a');link.href=url;link.download=filename;link.rel='noopener';document.body.appendChild(link);link.click();link.remove();
+    status.textContent='تم تجهيز التقرير. لو التنزيل ما بدأش تلقائيًا: ';
+    const fallback=document.createElement('a');fallback.href=url;fallback.download=filename;fallback.target='_blank';fallback.rel='noopener';fallback.textContent='افتح التقرير من هنا';fallback.addEventListener('click',()=>track('DiagnosticPdfFallbackOpen','diagnostic_pdf_fallback_open'));
+    status.appendChild(fallback);
+    setTimeout(()=>{if(lastPdfUrl===url){try{URL.revokeObjectURL(url);}catch(e){} lastPdfUrl='';if(fallback.isConnected){fallback.removeAttribute('href');fallback.removeAttribute('download');fallback.textContent='أعد إنشاء التقرير لو انتهت صلاحية الرابط';}}},300000);
+  }
   $('pdfBtn').addEventListener('click',async()=>{
     if(!state.result)return;const button=$('pdfBtn'),status=$('pdfStatus'),label=button.textContent;button.disabled=true;button.textContent='جارٍ تجهيز التقرير…';status.textContent='يتم إنشاء 3 صفحات داخل متصفحك.';
-    try{await document.fonts.ready;const pages=[];for(let i=1;i<=3;i++)pages.push(await canvasPageToJpeg(i,state.result));const blob=makePdf(pages),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='تقرير-مختبر-قرار-مشروعك.pdf';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);status.textContent='تم تنزيل التقرير.';track('DiagnosticPdfDownload','diagnostic_pdf_download');}
-    catch(error){console.error(error);status.textContent='تعذر التنزيل المباشر. جرّب متصفح Chrome أو Safari حديثًا.';}
+    try{
+      await document.fonts.ready;
+      let logo=null;try{logo=await loadCanvasImage(await getLogoData());}catch(assetError){console.warn('PDF logo fallback used',assetError);}
+      const pages=[];for(let i=1;i<=3;i++)pages.push(await canvasPageToJpeg(i,state.result,logo));
+      const blob=makePdf(pages);offerPdfDownload(blob,status);track('DiagnosticPdfDownload','diagnostic_pdf_download');
+    }
+    catch(error){console.error(error);status.textContent='تعذر إنشاء التقرير على هذا المتصفح. جرّب Chrome أو Safari حديثًا ثم أعد المحاولة.';}
     finally{button.disabled=false;button.textContent=label;}
   });
 
