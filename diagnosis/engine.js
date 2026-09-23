@@ -815,14 +815,14 @@
     else if(riskBand==='متوسطة')traffic={key:'orange',icon:'🟠',title:'اختبر على نطاق صغير قبل ما تكبّر الالتزام'};
     else if(readiness<70||evidence<70)traffic={key:'yellow',icon:'🟡',title:'الصورة قريبة، لكن محتاجة دليل أوضح في نقطة محددة'};
     const rankedAxes=rankAxes(type,axisScores);
-    const weakAxes=rankedAxes.filter(axis=>axisScores[axis]<70);
-    const reviewMode=weakAxes.length===0;
-    const chosenAxes=(reviewMode?rankedAxes.slice(0,3):weakAxes.slice(0,3));
-    const gapsTitle=reviewMode?'نقط راجعها قبل ما تكبّر الالتزام':'أهم الحاجات الناقصة قبل ما تتحرك';
+    const chosenAxes=rankedAxes.slice(0,3);
+    const reviewMode=chosenAxes.every(axis=>axisScores[axis]>=70);
+    const gapsTitle=reviewMode?'3 نقاط راجعها قبل ما تكبّر الالتزام':'أهم 3 نقاط تراجعها قبل ما تتحرك';
     const gaps=chosenAxes.map(axis=>{
       const info=getGapInfo(type,axis);
-      return reviewMode
-        ? {axis,label:AXES[axis],score:axisScores[axis],why:'المحور ده قوي نسبيًا في إجاباتك، لكن راجعه قبل أي التزام أكبر علشان تتأكد إن الدليل ما زال حديثًا.',missing:info.missing,reviewOnly:true}
+      const reviewOnly=axisScores[axis]>=70;
+      return reviewOnly
+        ? {axis,label:AXES[axis],score:axisScores[axis],why:'المحور ده قوي نسبيًا في إجاباتك، لكن راجع أحدث دليل قبل أي التزام أكبر.',missing:info.missing,reviewOnly:true}
         : {axis,label:AXES[axis],score:axisScores[axis],why:info.why,missing:info.missing,reviewOnly:false};
     });
     const problem=String(input.problem||input.quickChoice||'القرار الذي تفكر فيه').trim();
