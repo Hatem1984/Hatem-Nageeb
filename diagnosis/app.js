@@ -3,7 +3,7 @@
   const Lab=window.DecisionLab;
   if(!Lab) throw new Error('DecisionLab engine is unavailable');
 
-  const STORE_KEY='decision_lab_v6';
+  const STORE_KEY='decision_lab_v7';
   const $=id=>document.getElementById(id);
   const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
@@ -108,7 +108,7 @@
   });
   $('editProblemBtn').addEventListener('click',()=>show('intake'));
   $('confirmBtn').addEventListener('click',()=>{
-    if(!resumeAvailable){state.questions=Lab.coreQuestions(state.stage);state.answers={};state.index=0;}
+    if(!resumeAvailable){state.questions=Lab.coreQuestions(state.stage,state.decisionType);state.answers={};state.index=0;}
     else{state.index=Math.min(state.index,state.questions.length-1);}
     track('DiagnosticProblemConfirmed','diagnostic_problem_confirmed');
     track('DiagnosticStart','diagnostic_start');
