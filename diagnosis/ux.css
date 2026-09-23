@@ -116,6 +116,12 @@ h2{margin:0;color:var(--navy);font-size:clamp(1.35rem,3vw,1.95rem);line-height:1
   display:grid;place-items:center;border-radius:50%;background:#3157ca;color:#fff;font-size:.72rem;font-weight:900
 }
 .quick[data-hidden="true"]{display:none!important}
+.more-decisions{grid-column:1/-1;margin-top:2px;border:1px solid #dfe7f1;border-radius:16px;background:#fafcff;overflow:hidden}
+.more-decisions summary{cursor:pointer;list-style:none;padding:13px 15px;color:#435773;font-size:.76rem;font-weight:900}
+.more-decisions summary::-webkit-details-marker{display:none}
+.more-decisions summary:after{content:"＋";float:left;color:#66778d}
+.more-decisions[open] summary:after{content:"−"}
+.more-grid{padding:0 10px 10px}
 .textarea{
   width:100%;min-height:92px;resize:vertical;padding:13px 14px;border:1.5px solid #d4deea;
   border-radius:14px;background:#fff;color:var(--ink);outline:none;line-height:1.75
