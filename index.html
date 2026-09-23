@@ -91,6 +91,13 @@ permalink: /
 .payment-method-card.xpay .payment-method-icon{color:#fff;background:linear-gradient(135deg,#151f3a,#6656ff);font-size:11px;letter-spacing:.2px}
 .payment-method-card.xpay b{color:#16244d}
 .payment-method-card.xpay small{color:#5d6d86}\n.payment-method-card.xpay[aria-disabled=\"true\"]{opacity:.55;pointer-events:none;filter:grayscale(.15)}
+.manual-payment-options{margin-top:12px;border:1px solid #dfe6f0;border-radius:17px;background:#fafcff;overflow:hidden}
+.manual-payment-options summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:900;color:#435773;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.manual-payment-options summary::-webkit-details-marker{display:none}
+.manual-payment-options summary:after{content:"＋";font-size:18px;color:#607187}
+.manual-payment-options[open] summary:after{content:"−"}
+.manual-payment-inner{display:grid;gap:10px;padding:0 12px 12px}
+.manual-confirm-link{display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;background:#eef3ff;color:#3157ca;font-size:12px;font-weight:900;border:1px solid #dce5ff}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', final_week_style %}
 
@@ -133,7 +140,38 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('[data-payment-plan],.js-open-payment').forEach(function(el){
     el.addEventListener('click',function(){setTimeout(syncXpay,0);});
   });
-  syncXpay();
+  var choice=document.querySelector('.payment-method-choice');
+  if(choice){
+    var vodafone=choice.querySelector('.payment-method-card.vodafone');
+    var instapay=choice.querySelector('.payment-method-card.instapay');
+    if(vodafone||instapay){
+      var details=document.createElement('details');
+      details.className='manual-payment-options';
+      var summary=document.createElement('summary');
+      summary.textContent='أو حوّل يدويًا — InstaPay / Vodafone Cash';
+      var inner=document.createElement('div');
+      inner.className='manual-payment-inner';
+      if(instapay)inner.appendChild(instapay);
+      if(vodafone)inner.appendChild(vodafone);
+      var confirmLink=document.createElement('a');
+      confirmLink.className='manual-confirm-link';
+      confirmLink.id='manualPaymentConfirmLink';
+      confirmLink.textContent='حوّلت بالفعل؟ سجّل بيانات التحويل لتأكيد الحجز';
+      inner.appendChild(confirmLink);
+      details.appendChild(summary);details.appendChild(inner);choice.appendChild(details);
+    }
+  }
+  function syncManualConfirm(){
+    var link=document.getElementById('manualPaymentConfirmLink');
+    if(!link)return;
+    var active=document.querySelector('.amount-option.active[data-payment-plan]');
+    var plan=active?active.getAttribute('data-payment-plan'):'reserve';
+    link.href='/manual-payment/?plan='+encodeURIComponent(plan);
+  }
+  document.querySelectorAll('[data-payment-plan],.js-open-payment').forEach(function(el){
+    el.addEventListener('click',function(){setTimeout(syncManualConfirm,0);});
+  });
+  syncManualConfirm();
   fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/seat-count',{cache:'no-store'})
     .then(function(r){if(!r.ok)throw new Error('seat-count');return r.json();})
     .then(function(s){
@@ -141,7 +179,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var d=document.getElementById('seatCountDetail');
       if(!h||!d||typeof s.available!=='number'||typeof s.booked!=='number')return;
       h.textContent='الحد الأقصى '+s.capacity+' مقعدًا';
-      d.textContent='الحجوزات المؤكدة عبر XPay حتى الآن: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
+      d.textContent='الحجوزات المؤكدة حتى الآن: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
     }).catch(function(){});
 });
 </script></body>{% endcapture %}
