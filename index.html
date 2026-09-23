@@ -2,61 +2,14 @@
 permalink: /
 ---
 {% capture page %}{% include landing-base.html %}{% endcapture %}
-{% capture hero_patch %}<style id="hero-title-size-refinement">
-.hero h1{font-size:clamp(23px,2.7vw,38px)!important;line-height:1.25!important}
-.ai-access-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
-.ai-access-grid .ai-access-box{margin-top:0;height:100%}
-.ai-price-box{background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(102,86,255,.14))!important;border-color:rgba(255,194,79,.25)!important}
-.ai-price-box .ai-access-kicker{color:#ffd27a!important}
-.gift-bundle{margin-top:28px;padding:22px;border-radius:22px;background:linear-gradient(135deg,rgba(44,167,255,.10),rgba(102,86,255,.12));border:1px solid rgba(102,86,255,.22)}
-.gift-bundle-head{text-align:center;margin-bottom:16px}.gift-bundle-head span{display:inline-block;padding:7px 12px;border-radius:999px;background:#fff;color:#4f5fd7;font-weight:900;font-size:13px}.gift-bundle-head strong{display:block;margin-top:10px;font-size:22px;color:#10264e}.gift-bundle-head small{display:block;margin-top:6px;color:#66758b;line-height:1.7}
-.gift-bundle-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.gift-bundle-item{padding:18px;border-radius:18px;background:#fff;border:1px solid #dfe7f4;box-shadow:0 10px 28px rgba(18,42,82,.07)}.gift-bundle-item .gift-icon{font-size:26px;display:block;margin-bottom:8px}.gift-bundle-item b{display:block;color:#10264e;font-size:18px;margin-bottom:6px}.gift-bundle-item strong{display:block;color:#3d5ed7;font-size:20px;margin:4px 0 7px}.gift-bundle-item p{margin:0;color:#66758b;font-size:14px;line-height:1.75}.gift-bundle-foot{margin-top:13px;text-align:center;color:#32415a;font-size:13px;font-weight:800}
-#paymentProofLink{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}.messenger-mark{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#00b2ff,#6c4cff);flex:0 0 25px}.messenger-mark svg{width:16px;height:16px;fill:#fff}
-@media(max-width:700px){.hero h1{font-size:21px!important;line-height:1.3!important}.ai-access-grid,.gift-bundle-grid{grid-template-columns:1fr}.gift-bundle{padding:17px}.gift-bundle-head strong{font-size:19px}}
-</style></head>{% endcapture %}
-{% assign page = page | replace: '</head>', hero_patch %}
-{% assign page = page | replace: 'مش هنطلب رقم هاتف أو WhatsApp أو بريد أو بيانات مالية.', 'مش هنطلب رقم هاتف أو بريد أو بيانات مالية.' %}
-{% assign page = page | replace: 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك، وتشمل 6 أشهر استخدام مجاني من تاريخ تفعيل حسابك فعليًا.', 'تساعدك ترتب الحقائق والأسئلة والمعلومات الناقصة قبل قراراتك. وللدفعة الأولى: باكدج هدايا يشمل استخدام الأداة مجانًا مدى الحياة بواقع اختبار واحد كل أسبوع + نسخة رقمية مجانية من كتاب «الخروج من النفق».' %}
-{% capture ai_access_old %}<div class="ai-access-box">
-<span class="ai-access-kicker">ميزة للدفعة الأولى</span>
-<strong>6 أشهر استخدام مجاني</strong>
-<span>تبدأ من تاريخ تفعيل حسابك الفعلي على الأداة — بدون تكلفة إضافية.</span>
-</div>{% endcapture %}
-{% capture ai_access_new %}<div class="gift-bundle">
-<div class="gift-bundle-head">
-<span>🎁 باكدج هدايا الدفعة الأولى</span>
-<strong>الأداة + الكتاب الرقمي معًا بدون تكلفة إضافية</strong>
-<small>ميزتين عمليتين تكملوا بعض: تشخيص مستمر لقراراتك + مرجع رقمي ترجع له وقت ما تحتاج.</small>
-</div>
-<div class="gift-bundle-grid">
-<div class="gift-bundle-item">
-<span class="gift-icon">🧠</span>
-<b>أداة AI «التشخيص قبل الحل»</b>
-<strong>مجانية مدى الحياة</strong>
-<p>بواقع اختبار واحد كل أسبوع. ولو اشتركت فيها منفصلة عن البرنامج فسعرها 699 جنيه / شهر.</p>
-</div>
-<div class="gift-bundle-item">
-<span class="gift-icon">📘</span>
-<b>كتاب «الخروج من النفق»</b>
-<strong>نسخة رقمية مجانية</strong>
-<p>سعر النسخة الرقمية منفردة 250 جنيه، ومشمولة مجانًا ضمن باكدج الدفعة الأولى.</p>
-</div>
-</div>
-<div class="gift-bundle-foot">الباكدج مخصص للدفعة الأولى ومشمول ضمن الاشتراك بدون رسوم إضافية.</div>
-</div>{% endcapture %}
-{% assign page = page | replace: ai_access_old, ai_access_new %}
-{% assign page = page | replace: 'الستة أشهر المجانية تبدأ من تاريخ تفعيل حسابك فعليًا.', 'للدفعة الأولى، أداة AI مجانية مدى الحياة بواقع اختبار واحد كل أسبوع، والكتاب الرقمي مشمول معها ضمن باكدج هدايا الدفعة الأولى. سعر الأداة منفصلة 699 جنيه شهريًا، وسعر الكتاب الرقمي منفردًا 250 جنيه.' %}
-{% assign page = page | replace: 'مادة مساندة', 'ضمن باكدج هدايا الدفعة الأولى · قيمة 250 جنيه' %}
-{% assign page = page | replace: 'نسخة رقمية بعد انتهاء نافذة الاسترداد.', 'نسخة رقمية سعرها منفردة 250 جنيه، ومشمولة مجانًا مع أداة AI ضمن باكدج الدفعة الأولى بعد انتهاء نافذة الاسترداد.' %}
-{% assign page = page | replace: 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ.', 'الكتاب يتناول قرار البداية والعوائق التي تؤثر عليه، بينما البرنامج ينقل الفكرة إلى قرارات مشروع مبنية على تشخيص وأرقام وأدوات تنفيذ. النسخة الرقمية سعرها منفردة 250 جنيه، وهي مشمولة مجانًا مع أداة AI ضمن باكدج هدايا الدفعة الأولى.' %}
-{% capture proof_old %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات التحويل على Messenger</a>{% endcapture %}
-{% capture proof_new %}<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank"><span class="messenger-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 10c-12.7 0-23 9.2-23 20.5 0 6.4 3.3 12.1 8.6 15.8V54l7.1-3.9c2.3.6 4.7.9 7.3.9 12.7 0 23-9.2 23-20.5S44.7 10 32 10Z"></path><path d="m20 37 9-10 7 6 8-9-9 13-7-6-8 6Z"></path></svg></span><span>إرسال إثبات الدفع على Messenger</span></a>{% endcapture %}
-{% assign page = page | replace: proof_old, proof_new %}
-{% capture lean_head %}<link rel="stylesheet" href="assets/landing-lean.css?v=20260914-2200"/></head>{% endcapture %}
+
+{% capture lean_head %}<link rel="stylesheet" href="assets/landing-lean.css?v=20260923-lean1"/></head>{% endcapture %}
 {% assign page = page | replace: '</head>', lean_head %}
-{% capture lean_body %}<script src="assets/landing-lean.js?v=20260914-2200"></script></body>{% endcapture %}
+{% capture lean_body %}<script src="assets/landing-lean.js?v=20260923-lean1"></script></body>{% endcapture %}
 {% assign page = page | replace: '</body>', lean_body %}
-{% capture compliance_style %}<style id="xpay-contact-compliance">
+
+{% capture refinement_style %}<style id="lean-conversion-refinement">
+.hero h1{font-size:clamp(23px,2.7vw,38px)!important;line-height:1.25!important}
 .footer-compliance{align-items:flex-start}
 .footer-business{display:grid;gap:5px;text-align:right;line-height:1.65}
 .footer-business strong{color:#fff;font-size:14px}
@@ -65,9 +18,36 @@ permalink: /
 .footer-business a:hover{color:#fff}
 .footer-links a{color:#aebbd0;text-decoration:none}
 .footer-links a:hover{color:#fff}
-@media(max-width:700px){.footer-compliance{display:grid;grid-template-columns:1fr}.footer-business,.footer-links{text-align:center;justify-content:center}.footer-links{gap:14px}}
+.payment-method-card.xpay{border-color:rgba(78,98,255,.34);background:linear-gradient(145deg,#f4f7ff,#fff);box-shadow:0 12px 28px rgba(74,92,219,.09);grid-template-columns:96px 1fr auto!important}
+.payment-method-card.xpay .payment-method-icon{width:88px!important;height:40px!important;padding:7px 8px!important;border:1px solid #e5e9f4!important;border-radius:12px!important;background:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.payment-method-card.xpay .payment-method-icon img{width:78px!important;height:auto!important;max-height:27px!important;object-fit:contain!important;display:block!important}
+.payment-method-card.xpay b{color:#16244d}
+.payment-method-card.xpay small{color:#5d6d86}
+.manual-payment-options{margin-top:12px;border:1px solid #dfe6f0;border-radius:17px;background:#fafcff;overflow:hidden}
+.manual-payment-options summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:900;color:#435773;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.manual-payment-options summary::-webkit-details-marker{display:none}
+.manual-payment-options summary:after{content:"＋";font-size:18px;color:#607187}
+.manual-payment-options[open] summary:after{content:"−"}
+.manual-payment-inner{display:grid;gap:10px;padding:0 12px 12px}
+.manual-payment-inner .payment-method-card{grid-template-columns:72px 1fr auto!important}
+.manual-payment-inner .payment-method-icon.brand-mark{width:64px!important;height:46px!important;background:#fff!important}
+.manual-payment-inner .payment-brand-image{width:60px!important;height:40px!important;object-fit:contain!important;background:#fff!important}
+.manual-confirm-link{display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;background:#eef3ff;color:#3157ca;font-size:12px;font-weight:900;border:1px solid #dce5ff}
+.payment-plan-grid,.amount-choice{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.payment-plan-grid{max-width:900px;margin-left:auto;margin-right:auto}
+@media(max-width:700px){
+  .hero h1{font-size:21px!important;line-height:1.3!important}
+  .footer-compliance{display:grid;grid-template-columns:1fr}
+  .footer-business,.footer-links{text-align:center;justify-content:center}
+  .footer-links{gap:14px}
+  .payment-plan-grid,.amount-choice{grid-template-columns:1fr!important}
+  .payment-method-card.xpay{grid-template-columns:82px 1fr auto!important}
+  .payment-method-card.xpay .payment-method-icon{width:74px!important}
+  .payment-method-card.xpay .payment-method-icon img{width:66px!important}
+  .manual-payment-inner .payment-method-card{grid-template-columns:64px 1fr auto!important}
+}
 </style></head>{% endcapture %}
-{% assign page = page | replace: '</head>', compliance_style %}
+{% assign page = page | replace: '</head>', refinement_style %}
 
 {% capture compliance_footer_old %}<div class="footer">
 <div>لعبة البزنس × أكاديمية المدرب الأفضل</div>
@@ -84,68 +64,59 @@ permalink: /
 </div>{% endcapture %}
 {% assign page = page | replace: compliance_footer_old, compliance_footer_new %}
 
-
-{% comment %} Final-week conversion patch — IT Plus report 2026-09-23 {% endcomment %}
-{% capture final_week_style %}<style id="final-week-conversion-patch">
-.payment-method-card.xpay{border-color:rgba(78,98,255,.34);background:linear-gradient(145deg,#f4f7ff,#fff);box-shadow:0 12px 28px rgba(74,92,219,.09)}
-.payment-method-card.xpay .payment-method-icon{color:#fff;background:linear-gradient(135deg,#151f3a,#6656ff);font-size:11px;letter-spacing:.2px}
-.payment-method-card.xpay b{color:#16244d}
-.payment-method-card.xpay small{color:#5d6d86}\n.payment-method-card.xpay[aria-disabled=\"true\"]{opacity:.55;pointer-events:none;filter:grayscale(.15)}
-.manual-payment-options{margin-top:12px;border:1px solid #dfe6f0;border-radius:17px;background:#fafcff;overflow:hidden}
-.manual-payment-options summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:900;color:#435773;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.manual-payment-options summary::-webkit-details-marker{display:none}
-.manual-payment-options summary:after{content:"＋";font-size:18px;color:#607187}
-.manual-payment-options[open] summary:after{content:"−"}
-.manual-payment-inner{display:grid;gap:10px;padding:0 12px 12px}
-.manual-confirm-link{display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;background:#eef3ff;color:#3157ca;font-size:12px;font-weight:900;border:1px solid #dce5ff}
-.payment-confirmation-steps,.payment-after{display:none!important}
-</style></head>{% endcapture %}
-{% assign page = page | replace: '</head>', final_week_style %}
-
 {% capture xpay_method_card %}<div class="payment-method-choice">
 <a class="payment-method-card xpay" data-method="xpay" data-track-payment="" href="https://checkout.xpay.app/p/plink_live_2cXiuNHphNY4r5vvAY1STs" id="xpayCardPayment" rel="noopener" target="_blank">
-<span class="payment-method-icon">XPay</span>
+<span class="payment-method-icon"><img alt="XPay" decoding="async" loading="eager" src="/assets/xpay-wordmark.svg"/></span>
 <div>
-<b id="xpayCardTitle">ادفع إلكترونيًا — 2,000 جنيه</b>
-<small id=\"xpayCardNote\">بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع</small>
+<b id="xpayCardTitle">ادفع بالكارت عبر XPay — 2,000 جنيه</b>
+<small id="xpayCardNote">بطاقات بنكية / Fawry / ValU · تأكيد تلقائي بعد نجاح الدفع</small>
 </div>
 <span class="payment-arrow">←</span>
 </a>{% endcapture %}
 {% assign page = page | replace: '<div class="payment-method-choice">', xpay_method_card %}
 
-{% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة التحويل', 'اختَر خطة الدفع ثم وسيلة الدفع' %}
-{% assign page = page | replace: 'كل وسائل الدفع موجودة داخل نافذة حجز واحدة، علشان تختار الخطة أولًا ثم وسيلة التحويل المناسبة.', 'اختَر الخطة أولًا. الدفع الإلكتروني متاح عبر XPay بالبطاقة أو Fawry أو ValU، والتحويل اليدوي ما زال متاحًا.' %}
-{% assign page = page | replace: 'اختر طريقة الدفع المناسبة في الخطوة التالية — الحجز يتأكد بعد مراجعة التحويل واستلام بياناتك.', 'اختر طريقة الدفع المناسبة في الخطوة التالية — الدفع الإلكتروني يتأكد بعد نجاح العملية، والتحويل اليدوي يتأكد بعد المراجعة.' %}
-{% assign page = page | replace: 'بعد ما تختار الخطة وتحول، إيه اللي بيحصل؟', 'لو اخترت التحويل اليدوي، إيه اللي بيحصل؟' %}
+{% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة التحويل', 'اختَر طريقة السداد ثم وسيلة الدفع' %}
+{% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة الدفع', 'اختَر طريقة السداد ثم وسيلة الدفع' %}
+{% assign page = page | replace: 'ابدأ باختيار خطة الدفع', 'اختَر طريقة السداد' %}
+{% assign page = page | replace: 'اختيار الخطة ووسيلة الدفع', 'اختيار طريقة السداد والدفع' %}
+{% assign page = page | replace: 'اختَر خطة الدفع واحجز مكانك', 'احجز مكانك واختر طريقة الدفع' %}
+{% assign page = page | replace: 'مش هنطلب رقم هاتف أو WhatsApp أو بريد أو بيانات مالية.', 'مش هنطلب رقم هاتف أو بريد أو بيانات مالية.' %}
 
 {% capture seat_old %}<b>الحد الأقصى 20 مقعدًا</b>
 <small>الحجز مفتوح الآن — تثبيت المقعد بـ2,000 جنيه</small>{% endcapture %}
-{% capture seat_new %}<b id="seatCountHeadline">20 مقعدًا متاحًا من 20</b>
-<small id="seatCountDetail">يتم تحديث العدد تلقائيًا بعد كل عملية دفع إلكتروني مؤكدة.</small>{% endcapture %}
+{% capture seat_new %}<b id="seatCountHeadline">الحد الأقصى 20 مقعدًا</b>
+<small id="seatCountDetail">يتم تحديث الحجوزات المؤكدة تلقائيًا.</small>{% endcapture %}
 {% assign page = page | replace: seat_old, seat_new %}
 
-{% capture final_week_script %}<script id="final-week-conversion-script">
+{% capture conversion_script %}<script id="conversion-payment-script">
 document.addEventListener('DOMContentLoaded',function(){
   var reserveUrl='https://checkout.xpay.app/p/plink_live_2cXiuNHphNY4r5vvAY1STs';
   var fullUrl='https://checkout.xpay.app/p/plink_live_ZFZtFtZqEYzABzhKKh1Yv';
   var xpay=document.getElementById('xpayCardPayment');
   var title=document.getElementById('xpayCardTitle');
+
+  function activePlan(){
+    var active=document.querySelector('.amount-option.active[data-payment-plan]');
+    return active?active.getAttribute('data-payment-plan'):'reserve';
+  }
   function syncXpay(){
     if(!xpay)return;
-    var active=document.querySelector('.amount-option.active[data-payment-plan]');
-    var plan=active?active.getAttribute('data-payment-plan'):'reserve';
+    var plan=activePlan();
     var full=plan==='full';
     xpay.href=full?fullUrl:reserveUrl;
-    if(title)title.textContent=full?'ادفع إلكترونيًا — 4,500 جنيه':'ادفع إلكترونيًا — 2,000 جنيه';
+    if(title)title.textContent=full?'ادفع بالكارت عبر XPay — 4,500 جنيه':'ادفع بالكارت عبر XPay — 2,000 جنيه';
   }
+
   document.querySelectorAll('[data-payment-plan],.js-open-payment').forEach(function(el){
     el.addEventListener('click',function(){setTimeout(syncXpay,0);});
   });
+
   var choice=document.querySelector('.payment-method-choice');
+  var wallet=null,instapay=null;
   if(choice){
-    var vodafone=choice.querySelector('.payment-method-card.vodafone');
-    var instapay=choice.querySelector('.payment-method-card.instapay');
-    if(vodafone||instapay){
+    wallet=choice.querySelector('.payment-method-card.mobile-wallet');
+    instapay=choice.querySelector('.payment-method-card.instapay');
+    if(wallet||instapay){
       var details=document.createElement('details');
       details.className='manual-payment-options';
       var summary=document.createElement('summary');
@@ -153,107 +124,59 @@ document.addEventListener('DOMContentLoaded',function(){
       var inner=document.createElement('div');
       inner.className='manual-payment-inner';
       if(instapay)inner.appendChild(instapay);
-      if(vodafone)inner.appendChild(vodafone);
+      if(wallet)inner.appendChild(wallet);
       var confirmLink=document.createElement('a');
       confirmLink.className='manual-confirm-link';
       confirmLink.id='manualPaymentConfirmLink';
       confirmLink.textContent='حوّلت بالفعل؟ سجّل بيانات التحويل لتأكيد الحجز';
       inner.appendChild(confirmLink);
-      details.appendChild(summary);details.appendChild(inner);choice.appendChild(details);
+      details.appendChild(summary);
+      details.appendChild(inner);
+      choice.appendChild(details);
     }
   }
+
   var selectedManualMethod='';
-  [instapay,vodafone].forEach(function(el){
+  [instapay,wallet].forEach(function(el){
     if(!el)return;
     el.addEventListener('click',function(){
       selectedManualMethod=el.getAttribute('data-method')||'';
       syncManualConfirm();
     });
   });
+
   function syncManualConfirm(){
     var link=document.getElementById('manualPaymentConfirmLink');
     if(!link)return;
-    var active=document.querySelector('.amount-option.active[data-payment-plan]');
-    var plan=active?active.getAttribute('data-payment-plan'):'reserve';
-    var href='/manual-payment/?plan='+encodeURIComponent(plan);
+    var href='/manual-payment/?plan='+encodeURIComponent(activePlan());
     if(selectedManualMethod)href+='&method='+encodeURIComponent(selectedManualMethod);
     link.href=href;
   }
   document.querySelectorAll('[data-payment-plan],.js-open-payment').forEach(function(el){
     el.addEventListener('click',function(){setTimeout(syncManualConfirm,0);});
   });
+  syncXpay();
   syncManualConfirm();
+
   fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/seat-count',{cache:'no-store'})
     .then(function(r){if(!r.ok)throw new Error('seat-count');return r.json();})
     .then(function(s){
       var h=document.getElementById('seatCountHeadline');
       var d=document.getElementById('seatCountDetail');
-      if(!h||!d||typeof s.available!=='number'||typeof s.booked!=='number')return;
+      if(!h||!d||typeof s.booked!=='number')return;
       h.textContent='الحد الأقصى '+s.capacity+' مقعدًا';
       d.textContent='الحجوزات المؤكدة حتى الآن: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
     }).catch(function(){});
+
+  var requested=new URLSearchParams(window.location.search).get('payment');
+  if(requested==='reserve'||requested==='full'){
+    window.setTimeout(function(){
+      var trigger=document.querySelector('.js-open-payment[data-plan="'+requested+'"]');
+      if(trigger)trigger.click();
+    },80);
+  }
 });
 </script></body>{% endcapture %}
-{% assign page = page | replace: '</body>', final_week_script %}
-
-
-{% comment %} Payment simplification + brand marks — 2026-09-23 {% endcomment %}
-{% capture payment_simplification_style %}<style id="payment-simplification-branding">
-.payment-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:900px;margin-left:auto;margin-right:auto}
-.amount-choice{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.payment-method-card.xpay{grid-template-columns:96px 1fr auto!important}
-.payment-method-card.xpay .payment-method-icon{
-  width:88px!important;height:40px!important;padding:7px 8px!important;
-  border:1px solid #e5e9f4!important;border-radius:12px!important;
-  background:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important
-}
-.payment-method-card.xpay .payment-method-icon img{
-  width:78px!important;height:auto!important;max-height:27px!important;object-fit:contain!important;display:block!important
-}
-.manual-payment-inner .payment-method-card{grid-template-columns:72px 1fr auto!important}
-.manual-payment-inner .payment-method-icon.brand-mark{width:64px!important;height:46px!important;background:#fff!important}
-.manual-payment-inner .payment-brand-image{width:60px!important;height:40px!important;object-fit:contain!important;background:#fff!important}
-.payment-method-card.vodafone .payment-brand-image{border-radius:8px!important}
-@media(max-width:700px){
-  .payment-plan-grid,.amount-choice{grid-template-columns:1fr!important}
-  .payment-method-card.xpay{grid-template-columns:82px 1fr auto!important}
-  .payment-method-card.xpay .payment-method-icon{width:74px!important}
-  .payment-method-card.xpay .payment-method-icon img{width:66px!important}
-  .manual-payment-inner .payment-method-card{grid-template-columns:64px 1fr auto!important}
-}
-</style></head>{% endcapture %}
-{% assign page = page | replace: '</head>', payment_simplification_style %}
-
-{% capture extended_plan_card %}<article class="payment-plan-card plan-installment">
-<span class="plan-badge">تقسيط ممتد</span>
-<h3>إجمالي 5,000 جنيه</h3>
-<div class="installment-steps">
-<div><b>2,000</b><span>عند الحجز</span></div>
-<div><b>1,500</b><span>1 نوفمبر</span></div>
-<div><b>1,500</b><span>1 ديسمبر</span></div>
-</div>
-<p>مناسب لو محتاج توزع السداد على مدة البرنامج.</p>
-<button aria-label="انضم للبرنامج بنظام التقسيط" class="plan-action js-open-payment" data-amount="2000" data-plan="installment" type="button">انضم للبرنامج بنظام التقسيط</button>
-</article>{% endcapture %}
-{% assign page = page | replace: extended_plan_card, '' %}
-
-{% capture extended_modal_option %}<button class="amount-option" data-payment-amount="2000" data-payment-plan="installment" type="button">
-<span>التقسيط الممتد</span>
-<b>2,000 جنيه الآن</b>
-<small>ثم 1,500 في 1 نوفمبر و1,500 في 1 ديسمبر · الإجمالي 5,000</small>
-</button>{% endcapture %}
-{% assign page = page | replace: extended_modal_option, '' %}
-
-{% assign page = page | replace: 'تقدر تثبت المقعد بـ2,000 جنيه، ثم تستكمل 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر ليظل إجمالي الاشتراك 4,500 جنيه. أو تختار خطة التقسيط الممتد بإجمالي 5,000 جنيه: 2,000 عند الحجز + 1,500 يوم 1 نوفمبر + 1,500 يوم 1 ديسمبر. التأخر في القسط قد يوقف الوصول إلى الجلسات أو المواد الجديدة حتى التسوية.', 'تقدر تثبت المقعد بـ2,000 جنيه، ثم تستكمل 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر ليظل إجمالي الاشتراك 4,500 جنيه، أو تسدد 4,500 جنيه دفعة واحدة. أي ترتيب سداد استثنائي يتم فقط بالتواصل المباشر ولا يظهر كخطة عامة على الموقع.' %}
-
-{% assign page = page | replace: '<span class="payment-method-icon">XPay</span>', '<span class="payment-method-icon"><img alt="XPay" decoding="async" loading="eager" src="/assets/xpay-wordmark.svg"/></span>' %}
-{% assign page = page | replace: 'ادفع إلكترونيًا — 2,000 جنيه', 'ادفع بالكارت عبر XPay — 2,000 جنيه' %}
-{% assign page = page | replace: 'ادفع إلكترونيًا — 4,500 جنيه', 'ادفع بالكارت عبر XPay — 4,500 جنيه' %}
-{% assign page = page | replace: 'بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع', 'بطاقات بنكية / Fawry / ValU · تأكيد تلقائي بعد نجاح الدفع' %}
-{% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة الدفع', 'اختَر طريقة السداد ثم وسيلة الدفع' %}
-{% assign page = page | replace: 'اختَر الخطة أولًا. الدفع الإلكتروني متاح عبر XPay بالبطاقة أو Fawry أو ValU، والتحويل اليدوي ما زال متاحًا.', 'اختَر بين تثبيت المقعد أو السداد الكامل. الدفع الإلكتروني عبر XPay هو الاختيار الأساسي، والتحويل اليدوي عبر InstaPay أو محفظة إلكترونية متاح كبديل.' %}
-{% assign page = page | replace: 'ابدأ باختيار خطة الدفع', 'اختَر طريقة السداد' %}
-{% assign page = page | replace: 'اختيار الخطة ووسيلة الدفع', 'اختيار طريقة السداد والدفع' %}
-{% assign page = page | replace: 'اختَر خطة الدفع واحجز مكانك', 'احجز مكانك واختر طريقة الدفع' %}
+{% assign page = page | replace: '</body>', conversion_script %}
 
 {{ page }}
