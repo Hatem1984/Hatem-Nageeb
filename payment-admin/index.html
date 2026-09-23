@@ -34,7 +34,7 @@ permalink: /payment-admin/
    d.items.forEach(x=>{
      const el=document.createElement('article');el.className='item '+x.status;
      const method=x.payment_method==='instapay'?'InstaPay':(x.payment_method==='mobile_wallet'?'محفظة إلكترونية':'Vodafone Cash');
-     const plan={reserve:'تثبيت المقعد',full:'السداد الكامل',installment:'التقسيط الممتد'}[x.payment_plan]||x.payment_plan;
+     const plan={reserve:'تثبيت المقعد',full:'السداد الكامل',installment:'خطة قديمة (متوقفة)'}[x.payment_plan]||x.payment_plan;
      el.innerHTML='<div class="head"><div><div class="ref">'+esc(x.booking_reference)+'</div><div class="note">'+new Date(x.created_at).toLocaleString('ar-EG')+'</div></div><span class="status">'+esc(x.status)+'</span></div>'+
      '<div class="meta"><div><span>العميل</span><b>'+esc(x.customer_name)+'</b></div><div><span>الموبايل</span><b dir="ltr">'+esc(x.customer_phone)+'</b></div><div><span>الدفع</span><b>'+method+' · '+money(x.amount_minor)+'</b></div><div><span>الخطة</span><b>'+esc(plan)+'</b></div></div>'+
      (x.transaction_reference?'<div class="note"><b>مرجع العملية:</b> '+esc(x.transaction_reference)+'</div>':'')+
