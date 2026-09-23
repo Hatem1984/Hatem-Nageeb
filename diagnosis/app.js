@@ -59,7 +59,7 @@
     document.querySelectorAll('[data-quick]').forEach(button=>{
       const allowedStages=String(button.dataset.stages||'idea,running').split(',');
       const allowedSectors=button.dataset.sectors?String(button.dataset.sectors).split(','):null;
-      const visible=!!stage&&!!sector&&allowedStages.includes(stage)&&(!allowedSectors||allowedSectors.includes(sector));
+      const visible=!!stage&&allowedStages.includes(stage)&&(!allowedSectors||!sector||allowedSectors.includes(sector));
       button.dataset.hidden=visible?'false':'true';
       button.disabled=!visible;
       if(!visible&&button.dataset.quick===state.quickChoice){
@@ -74,7 +74,7 @@
     }
     if(hint){
       if(!stage) hint.textContent='اختار مرحلة المشروع الأول.';
-      else if(!sector) hint.textContent='اختار طبيعة النشاط علشان نعرض لك المشاكل الأقرب لواقعك.';
+      else if(!sector) hint.textContent='اختار المشكلة الأقرب لواقعك، وبعدها اختار طبيعة النشاط علشان نخصص الأسئلة.';
       else hint.textContent=stage==='idea'
         ? 'اختار القرار اللي عايز تختبره قبل ما تربط إيجار أو تجهيز أو خامات أو وقت أكبر.'
         : 'اختار الوجع الأقرب لواقع نشاطك دلوقتي؛ الأداة هتخصص الأسئلة حسب النشاط والمشكلة.';
@@ -376,4 +376,7 @@
   load();
   syncDecisionOptions();
   validateIntake();
+  const whatsappBtn=$('whatsappBtn');
+  if(whatsappBtn) whatsappBtn.addEventListener('click',()=>track('DiagnosticWhatsAppClick','diagnostic_whatsapp_click'));
+
 })();
