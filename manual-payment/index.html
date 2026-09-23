@@ -18,8 +18,8 @@ body{margin:0;font-family:Arial,Tahoma,sans-serif;background:radial-gradient(800
 .kicker{display:inline-block;padding:7px 11px;border-radius:999px;background:#eef4ff;color:#365fcf;font-size:12px;font-weight:900}
 h1{font-size:30px;line-height:1.4;margin:14px 0 8px}p{color:var(--muted);line-height:1.8}
 .plan{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.plan div{padding:14px;border-radius:15px;background:#f5f8ff;border:1px solid #e1e8f5}.plan span{display:block;color:#73839a;font-size:12px}.plan b{display:block;margin-top:4px;font-size:20px}
-.methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.method{position:relative}.method input{position:absolute;opacity:0}.method span{display:block;padding:15px;border-radius:14px;border:1.5px solid #d7e1ec;text-align:center;font-weight:900;background:#fff}.method input:checked+span{border-color:#5574ff;background:#f0f4ff;color:#203b82}
-label{display:block;font-weight:800;font-size:14px;margin:15px 0 7px}input,textarea{width:100%;border:1.5px solid #cfdbe7;border-radius:13px;padding:13px 14px;font:inherit;outline:none}textarea{min-height:90px;resize:vertical}input:focus,textarea:focus{border-color:#5574ff;box-shadow:0 0 0 4px rgba(85,116,255,.10)}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.method{position:relative}.method input{position:absolute;opacity:0}.method span{display:flex;align-items:center;justify-content:center;gap:9px;padding:15px;border-radius:14px;border:1.5px solid #d7e1ec;text-align:center;font-weight:900;background:#fff}.method input:checked+span{border-color:#5574ff;background:#f0f4ff;color:#203b82}.method img{width:32px;height:26px;object-fit:contain}.wallet-extra{display:none;margin:-6px 0 14px;padding:14px;border-radius:14px;background:#f7f9ff;border:1px solid #dce5ff}.wallet-extra.show{display:block}.wallet-extra p{margin:0 0 8px;font-size:12px;line-height:1.7}.wallet-extra strong{color:#173a73}
+label{display:block;font-weight:800;font-size:14px;margin:15px 0 7px}input,textarea,select{width:100%;border:1.5px solid #cfdbe7;border-radius:13px;padding:13px 14px;font:inherit;outline:none;background:#fff}textarea{min-height:90px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:#5574ff;box-shadow:0 0 0 4px rgba(85,116,255,.10)}
 .optional{font-weight:500;color:#8592a5;font-size:12px}.privacy{margin-top:14px;padding:12px 14px;border-radius:13px;background:#f5f8fc;color:#6a7990;font-size:12px;line-height:1.7}
 button,.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;border:0;border-radius:14px;padding:15px 18px;font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
 .primary{margin-top:18px;color:#fff;background:linear-gradient(90deg,var(--blue),var(--violet));box-shadow:0 13px 30px rgba(76,104,255,.22)}
@@ -40,13 +40,25 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
 <div class="form" id="formBox">
 <span class="kicker">بعد التحويل فقط</span>
 <h1>سجّل بيانات التحويل علشان نراجعه ونأكد حجزك</h1>
-<p>الخطوة دي خاصة بـInstaPay وVodafone Cash. تسجيل البيانات لا يعني إن الحجز اتأكد؛ التأكيد بيتم بعد مطابقة التحويل فعليًا.</p>
+<p>الخطوة دي خاصة بـInstaPay أو التحويل من أي محفظة إلكترونية مصرية. تسجيل البيانات لا يعني إن الحجز اتأكد؛ التأكيد بيتم بعد مطابقة التحويل فعليًا.</p>
 <div class="plan"><div><span>الخطة</span><b id="planName">تثبيت المقعد</b></div><div><span>المبلغ المطلوب الآن</span><b id="amountText">2,000 جنيه</b></div></div>
 <form id="manualForm">
 <label>طريقة التحويل</label>
 <div class="methods">
-<label class="method"><input type="radio" name="method" value="instapay" required><span>InstaPay</span></label>
-<label class="method"><input type="radio" name="method" value="vodafone_cash" required><span>Vodafone Cash</span></label>
+<label class="method"><input type="radio" name="method" value="instapay" required><span><img src="../assets/InstaPay_2.webp" alt="">InstaPay</span></label>
+<label class="method"><input type="radio" name="method" value="mobile_wallet" required><span><img src="../assets/mobile-wallet.svg" alt="">محفظة إلكترونية</span></label>
+</div>
+<div class="wallet-extra" id="walletExtra">
+<p><strong>رقم الاستقبال:</strong> 01011223667 — مسجل على Vodafone Cash، ويستقبل التحويل من المحافظ الإلكترونية المصرية الأخرى.</p>
+<label for="walletProvider">المحفظة اللي حوّلت منها</label>
+<select id="walletProvider">
+<option value="">اختَر المحفظة</option>
+<option value="vodafone_cash">Vodafone Cash</option>
+<option value="orange_cash">Orange Cash</option>
+<option value="etisalat_cash">e&amp; Cash</option>
+<option value="we_pay">WE Pay</option>
+<option value="other">محفظة أخرى</option>
+</select>
 </div>
 <label for="name">الاسم الكامل</label><input id="name" autocomplete="name" required maxlength="120">
 <label for="phone">رقم الموبايل</label><input id="phone" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx" required maxlength="20">
@@ -80,14 +92,25 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
   const plan=plans[qs.get('plan')]?qs.get('plan'):'reserve';
   document.getElementById('planName').textContent=plans[plan].label;
   document.getElementById('amountText').textContent=plans[plan].amount.toLocaleString('en-US')+' جنيه';
+  const walletExtra=document.getElementById('walletExtra');
+  const walletProvider=document.getElementById('walletProvider');
+  function syncWalletFields(){
+    const checked=document.querySelector('input[name=method]:checked');
+    const isWallet=checked&&checked.value==='mobile_wallet';
+    walletExtra.classList.toggle('show',!!isWallet);
+    if(!isWallet)walletProvider.value='';
+  }
+  document.querySelectorAll('input[name=method]').forEach(r=>r.addEventListener('change',syncWalletFields));
   const preset=qs.get('method'); if(preset){const r=document.querySelector('input[name=method][value="'+preset+'"]');if(r)r.checked=true;}
+  syncWalletFields();
   function cookie(name){const m=document.cookie.match(new RegExp('(?:^|; )'+name.replace(/([.$?*|{}()\[\]\\/+^])/g,'\\$1')+'=([^;]*)'));return m?decodeURIComponent(m[1]):'';}
   function fbc(){let v=cookie('_fbc');if(v)return v;const id=qs.get('fbclid');return id?'fb.1.'+Date.now()+'.'+id:'';}
   const form=document.getElementById('manualForm'),status=document.getElementById('status'),btn=document.getElementById('submitBtn');
   form.addEventListener('submit',async function(e){
     e.preventDefault(); status.textContent=''; btn.disabled=true; btn.textContent='جاري الإرسال...';
     const method=(new FormData(form)).get('method');
-    const payload={payment_method:method,payment_plan:plan,customer_name:document.getElementById('name').value,customer_phone:document.getElementById('phone').value,customer_email:document.getElementById('email').value,transaction_reference:document.getElementById('txref').value,transfer_note:document.getElementById('note').value,fbp:cookie('_fbp'),fbc:fbc(),landing_url:document.referrer||location.href};
+    if(method==='mobile_wallet'&&!walletProvider.value){status.textContent='اختَر المحفظة اللي تم التحويل منها.';btn.disabled=false;btn.textContent='إرسال بيانات التحويل للمراجعة';return;}
+    const payload={payment_method:method,payment_plan:plan,source_wallet_provider:method==='mobile_wallet'?walletProvider.value:'',customer_name:document.getElementById('name').value,customer_phone:document.getElementById('phone').value,customer_email:document.getElementById('email').value,transaction_reference:document.getElementById('txref').value,transfer_note:document.getElementById('note').value,fbp:cookie('_fbp'),fbc:fbc(),landing_url:document.referrer||location.href};
     try{
       const r=await fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/manual-payment-submit',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
       const data=await r.json(); if(!r.ok)throw new Error(data.error||'submit_failed');
