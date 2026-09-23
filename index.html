@@ -185,4 +185,64 @@ document.addEventListener('DOMContentLoaded',function(){
 </script></body>{% endcapture %}
 {% assign page = page | replace: '</body>', final_week_script %}
 
+
+{% comment %} Payment simplification + brand marks — 2026-09-23 {% endcomment %}
+{% capture payment_simplification_style %}<style id="payment-simplification-branding">
+.payment-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:900px;margin-left:auto;margin-right:auto}
+.amount-choice{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.payment-method-card.xpay{grid-template-columns:96px 1fr auto!important}
+.payment-method-card.xpay .payment-method-icon{
+  width:88px!important;height:40px!important;padding:7px 8px!important;
+  border:1px solid #e5e9f4!important;border-radius:12px!important;
+  background:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important
+}
+.payment-method-card.xpay .payment-method-icon img{
+  width:78px!important;height:auto!important;max-height:27px!important;object-fit:contain!important;display:block!important
+}
+.manual-payment-inner .payment-method-card{grid-template-columns:72px 1fr auto!important}
+.manual-payment-inner .payment-method-icon.brand-mark{width:64px!important;height:46px!important;background:#fff!important}
+.manual-payment-inner .payment-brand-image{width:60px!important;height:40px!important;object-fit:contain!important;background:#fff!important}
+.payment-method-card.vodafone .payment-brand-image{border-radius:8px!important}
+@media(max-width:700px){
+  .payment-plan-grid,.amount-choice{grid-template-columns:1fr!important}
+  .payment-method-card.xpay{grid-template-columns:82px 1fr auto!important}
+  .payment-method-card.xpay .payment-method-icon{width:74px!important}
+  .payment-method-card.xpay .payment-method-icon img{width:66px!important}
+  .manual-payment-inner .payment-method-card{grid-template-columns:64px 1fr auto!important}
+}
+</style></head>{% endcapture %}
+{% assign page = page | replace: '</head>', payment_simplification_style %}
+
+{% capture extended_plan_card %}<article class="payment-plan-card plan-installment">
+<span class="plan-badge">تقسيط ممتد</span>
+<h3>إجمالي 5,000 جنيه</h3>
+<div class="installment-steps">
+<div><b>2,000</b><span>عند الحجز</span></div>
+<div><b>1,500</b><span>1 نوفمبر</span></div>
+<div><b>1,500</b><span>1 ديسمبر</span></div>
+</div>
+<p>مناسب لو محتاج توزع السداد على مدة البرنامج.</p>
+<button aria-label="انضم للبرنامج بنظام التقسيط" class="plan-action js-open-payment" data-amount="2000" data-plan="installment" type="button">انضم للبرنامج بنظام التقسيط</button>
+</article>{% endcapture %}
+{% assign page = page | replace: extended_plan_card, '' %}
+
+{% capture extended_modal_option %}<button class="amount-option" data-payment-amount="2000" data-payment-plan="installment" type="button">
+<span>التقسيط الممتد</span>
+<b>2,000 جنيه الآن</b>
+<small>ثم 1,500 في 1 نوفمبر و1,500 في 1 ديسمبر · الإجمالي 5,000</small>
+</button>{% endcapture %}
+{% assign page = page | replace: extended_modal_option, '' %}
+
+{% assign page = page | replace: 'تقدر تثبت المقعد بـ2,000 جنيه، ثم تستكمل 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر ليظل إجمالي الاشتراك 4,500 جنيه. أو تختار خطة التقسيط الممتد بإجمالي 5,000 جنيه: 2,000 عند الحجز + 1,500 يوم 1 نوفمبر + 1,500 يوم 1 ديسمبر. التأخر في القسط قد يوقف الوصول إلى الجلسات أو المواد الجديدة حتى التسوية.', 'تقدر تثبت المقعد بـ2,000 جنيه، ثم تستكمل 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر ليظل إجمالي الاشتراك 4,500 جنيه، أو تسدد 4,500 جنيه دفعة واحدة. أي ترتيب سداد استثنائي يتم فقط بالتواصل المباشر ولا يظهر كخطة عامة على الموقع.' %}
+
+{% assign page = page | replace: '<span class="payment-method-icon">XPay</span>', '<span class="payment-method-icon"><img alt="XPay" decoding="async" loading="eager" src="/assets/xpay-wordmark.svg"/></span>' %}
+{% assign page = page | replace: 'ادفع إلكترونيًا — 2,000 جنيه', 'ادفع بالكارت عبر XPay — 2,000 جنيه' %}
+{% assign page = page | replace: 'ادفع إلكترونيًا — 4,500 جنيه', 'ادفع بالكارت عبر XPay — 4,500 جنيه' %}
+{% assign page = page | replace: 'بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع', 'بطاقات بنكية / Fawry / ValU · تأكيد تلقائي بعد نجاح الدفع' %}
+{% assign page = page | replace: 'اختَر خطة الدفع ثم وسيلة الدفع', 'اختَر طريقة السداد ثم وسيلة الدفع' %}
+{% assign page = page | replace: 'اختَر الخطة أولًا. الدفع الإلكتروني متاح عبر XPay بالبطاقة أو Fawry أو ValU، والتحويل اليدوي ما زال متاحًا.', 'اختَر بين تثبيت المقعد أو السداد الكامل. الدفع الإلكتروني عبر XPay هو الاختيار الأساسي، والتحويل اليدوي عبر InstaPay أو Vodafone Cash متاح كبديل.' %}
+{% assign page = page | replace: 'ابدأ باختيار خطة الدفع', 'اختَر طريقة السداد' %}
+{% assign page = page | replace: 'اختيار الخطة ووسيلة الدفع', 'اختيار طريقة السداد والدفع' %}
+{% assign page = page | replace: 'اختَر خطة الدفع واحجز مكانك', 'احجز مكانك واختر طريقة الدفع' %}
+
 {{ page }}
