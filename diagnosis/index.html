@@ -44,29 +44,32 @@ body.diagnosis-results-ready .back-link{display:inline-flex!important}
 </head>
 <body><main class="shell">
 <header class="brandbar"><div class="brand"><img src="../assets/شعار_لعبة_البزنس_خفيف.webp" width="56" height="56" alt="شعار لعبة البزنس"><span>لعبة البزنس<small>التشخيص قبل الحل</small></span></div><div class="brand-actions"><span class="pill">إجاباتك على جهازك فقط</span><a class="back-link" href="../?payment=reserve#offer" onclick="try{if(typeof fbq==='function')fbq('track','InitiateCheckout',{currency:'EGP',value:2000});if(typeof gtag==='function')gtag('event','begin_checkout',{currency:'EGP',value:2000})}catch(e){}">احجز مقعدك — اختر طريقة الدفع</a></div></header>
-<section class="card pad accent" id="intake"><div class="resume hidden" id="resumeNote">لقينا تقدمًا محفوظًا على جهازك. تقدر تكمّل أو تعدّل الإجابات.</div><span class="eyebrow">اختبار مجاني لقرارك</span><h1>مختبر قرار مشروعك</h1><p class="lead">اختار الموضوع الأقرب لحالتك، جاوب على 10 أسئلة، وخد قراءة أولية + خطة 7 أيام + تقرير PDF.</p>
+<section class="card pad accent" id="intake"><div class="resume hidden" id="resumeNote">لقينا تقدمًا محفوظًا على جهازك. تقدر تكمّل أو تعدّل الإجابات.</div><span class="eyebrow">تشخيص أولي مجاني لقرار مشروعك</span><h1>مختبر قرار مشروعك</h1><p class="lead">اختار الوجع الأقرب للي حاصل عندك فعلًا. هنسألك 10 أسئلة: 5 عن أساس المشروع و5 بتتغيّر حسب مشكلتك وإجاباتك، وبعدها تاخد قرارًا أوليًا وخطة 7 أيام وتقرير PDF.</p>
+<div class="method-note"><b>مش اختبار شخصية.</b><span>الأسئلة مبنية على دليل وسلوك وأرقام: مين بيشتري، الطلب الحقيقي، اقتصاديات البيعة، التنفيذ، ومعيار القرار.</span></div>
 <div class="intro-proof"><img src="../assets/حاتم_نجيب_2.webp" alt="حاتم نجيب" loading="eager"><div><b>حاتم نجيب</b><span>استشاري مشروعات صغيرة ومتوسطة · التشخيص قبل الحل</span></div></div>
 <div class="promise"><div><b>10 أسئلة</b>مباشرة</div><div><b>5 محاور</b>مرتبطة بقرارك</div><div><b>7 أيام</b>خطوة أولى عملية</div></div>
 <span class="section-label">مرحلة المشروع <span class="required">*</span></span><div class="stage-grid"><label class="stage-option"><input type="radio" name="stage" value="idea"><span>فكرة / تحت التأسيس</span></label><label class="stage-option"><input type="radio" name="stage" value="running"><span>مشروع قائم بالفعل</span></label></div>
 <span class="section-label">اختار القرار الأقرب للي شاغلك دلوقتي <span class="required">*</span></span>
 <p class="small-note" id="topicStageHint">اختار مرحلة المشروع الأول علشان نعرض لك القرارات المناسبة.</p>
-<div class="quick-grid" id="decisionQuickGrid">
-<button class="quick" type="button" data-quick="عندي فكرة مشروع" data-stages="idea">اختبار فكرة المشروع</button>
-<button class="quick" type="button" data-quick="التسعير" data-stages="idea,running">التسعير</button>
-<button class="quick" type="button" data-quick="الوصول لأول عميل" data-stages="idea">الوصول لأول عميل</button>
-<button class="quick" type="button" data-quick="المبيعات" data-stages="running">المبيعات</button>
-<button class="quick" type="button" data-quick="العملاء مش بيرجعوا" data-stages="running">العملاء مش بيرجعوا</button>
-<button class="quick" type="button" data-quick="الإعلانات والتسويق" data-stages="running">الإعلانات والتسويق</button>
-<button class="quick" type="button" data-quick="السيولة والتحصيل" data-stages="running">السيولة والتحصيل</button>
-<button class="quick" type="button" data-quick="التشغيل" data-stages="running">التشغيل والتسليم</button>
-<button class="quick" type="button" data-quick="التكاليف" data-stages="running">المصاريف والتكاليف</button>
-<button class="quick" type="button" data-quick="التوسع" data-stages="running">التوسع</button>
-<button class="quick" type="button" data-quick="فتح فرع" data-stages="running">فتح فرع</button>
-<button class="quick" type="button" data-quick="منتج أو خدمة جديدة" data-stages="running">منتج أو خدمة جديدة</button>
-<button class="quick" type="button" data-quick="الاعتماد على عميل كبير" data-stages="running">الاعتماد على عميل كبير</button>
-<button class="quick" type="button" data-quick="قرار آخر" data-stages="idea,running">قرار آخر</button>
+<div class="quick-grid pain-grid" id="decisionQuickGrid">
+<button class="quick pain-card" type="button" data-quick="عندي فكرة مشروع" data-stages="idea"><b>عندي فكرة ومش عارف تستاهل أبدأ</b><small>هل المشكلة حقيقية؟ وهل حد مستعد يدفع؟</small></button>
+<button class="quick pain-card" type="button" data-quick="الوصول لأول عميل" data-stages="idea"><b>مش عارف أوصل لأول عميل</b><small>مين أستهدف؟ أوصل له إزاي؟ وأعرض عليه إيه؟</small></button>
+<button class="quick pain-card" type="button" data-quick="التسعير" data-stages="idea,running"><b>الأسعار بتتغير ومش عارف أسعّر</b><small>التكلفة · هامش البيعة · قبول العميل</small></button>
+<button class="quick pain-card" type="button" data-quick="المبيعات" data-stages="running"><b>فيه ناس بتسأل بس البيع قليل</b><small>فين العميل بيقف قبل ما يدفع؟</small></button>
+<button class="quick pain-card" type="button" data-quick="الإعلانات والتسويق" data-stages="running"><b>الإعلان بيجيب رسائل بس مفيش بيع</b><small>جودة الليد · تكلفة العميل · البيع المؤكد</small></button>
+<button class="quick pain-card" type="button" data-quick="العملاء مش بيرجعوا" data-stages="running"><b>العميل بيشتري مرة ومبيرجعش</b><small>تكرار الشراء · سبب التوقف · المتابعة</small></button>
+<button class="quick pain-card" type="button" data-quick="السيولة والتحصيل" data-stages="running"><b>المبيعات موجودة بس الكاش مش باين</b><small>التحصيل · آجال العملاء · مواعيد الموردين</small></button>
+<button class="quick pain-card" type="button" data-quick="الربحية" data-stages="running"><b>ببيع بس مش عارف بكسب فعلًا ولا لأ</b><small>هامش البيعة · المصاريف الثابتة · السحب الشخصي</small></button>
+<button class="quick pain-card" type="button" data-quick="المخزون" data-stages="running"><b>المخزون راكد أو أصناف مهمة بتخلص</b><small>فلوس محبوسة · نفاد · إعادة الطلب</small></button>
+<button class="quick pain-card" type="button" data-quick="التشغيل" data-stages="running"><b>الطلبات بتتأخر أو الشغل واقف عليّا</b><small>اختناق التشغيل · إعادة الشغل · اعتماد الفريق عليك</small></button>
+<button class="quick pain-card" type="button" data-quick="التكاليف" data-stages="running"><b>المصاريف بتزيد والربح بيتاكل</b><small>إيه يتخفض من غير ما يبوّظ البيع أو الجودة؟</small></button>
+<button class="quick pain-card" type="button" data-quick="التوسع" data-stages="running"><b>عايز أكبر ومش عارف المشروع جاهز ولا لأ</b><small>قدرة التشغيل · الطلب · السيولة</small></button>
+<button class="quick pain-card" type="button" data-quick="فتح فرع" data-stages="running"><b>بفكر أفتح فرع جديد</b><small>اختبار المنطقة · التعادل · مدة التحمل</small></button>
+<button class="quick pain-card" type="button" data-quick="منتج أو خدمة جديدة" data-stages="running"><b>عايز أنزل منتج أو خدمة جديدة</b><small>طلب حقيقي · حجز مسبق · فلوس هتتحبس</small></button>
+<button class="quick pain-card" type="button" data-quick="الاعتماد على عميل كبير" data-stages="running"><b>عميل واحد ماسك نسبة كبيرة من شغلي</b><small>نسبة الاعتماد · الربحية · البدائل</small></button>
+<button class="quick pain-card" type="button" data-quick="قرار آخر" data-stages="idea,running"><b>مشكلتي مختلفة</b><small>اكتبها بطريقتك وإحنا نحدد أقرب مسار</small></button>
 </div>
-<label class="section-label" for="problemInput">لو حابب توضّح أكتر <span class="optional-label">(اختياري)</span></label><textarea class="textarea" id="problemInput" maxlength="600" placeholder="مثال: المبيعات كويسة بس آخر الشهر مفيش كاش… أو بفكر أفتح فرع جديد"></textarea>
+<label class="section-label" for="problemInput">وصف سريع لو فيه تفصيلة مهمة <span class="optional-label">(اختياري)</span></label><textarea class="textarea" id="problemInput" maxlength="600" placeholder="مثال: المورد زوّد الأسعار مرتين، ولسه ببيع بالسعر القديم… أو أكبر عميل عندي بيدفع بعد 60 يوم"></textarea>
 <div class="privacy">لا نطلب هاتفًا أو بريدًا أو بيانات مالية. نص المشكلة لا يُرسل إلى Meta أو GA4، وحفظ التقدم محلي على جهازك.</div><button class="primary wide" id="understandBtn" disabled>ابدأ التشخيص المجاني</button><p class="save-hint" id="saveHint"></p></section>
 <section class="card pad hidden" id="confirm"><span class="eyebrow">خلّينا نتأكد إننا فاهمينك صح</span><h2>اللي فهمناه من حالتك</h2><div class="confirm-box"><small>أقرب حاجة فهمناها من كلامك</small><h3 id="confirmType"></h3><blockquote id="confirmProblem"></blockquote><p class="confirm-question" id="confirmQuestion"></p></div><p class="small-note">لو فهمنا مش دقيق، ارجع وعدّل وصفك قبل ما تبدأ الأسئلة.</p><div class="actions"><button class="primary" id="confirmBtn">أيوه، كمّل</button><button class="secondary" id="editProblemBtn">عدّل المشكلة</button></div></section>
 <section class="card hidden" id="quiz" aria-live="polite"><div class="quiz-head"><div class="quiz-meta"><span id="questionCount">السؤال 1 من 10</span><span id="stageText"></span></div><div class="progress"><i id="progressBar"></i></div></div><div class="question"><span class="axis-tag" id="axisTag"></span><h2 id="questionText"></h2><p class="question-help" id="questionHelp"></p><div class="answers" id="answers"></div><div class="quiz-actions"><button class="secondary" id="prevBtn">السابق</button><button class="primary" id="nextBtn" disabled>التالي</button></div></div></section>
@@ -95,4 +98,4 @@ body.diagnosis-results-ready .back-link{display:inline-flex!important}
 <button class="secondary" id="pdfBtn">نزّل تقرير PDF</button>
 <a class="secondary messenger-mini" id="messengerBtn" href="https://m.me/891183134080763" target="_blank" rel="noopener">عندك سؤال؟ افتح Messenger</a>
 </div><p class="pdf-status" id="pdfStatus"></p><div class="privacy">هذه قراءة تعليمية مبدئية مبنية على إجاباتك وقواعد ثابتة، وليست ضمانًا لنجاح المشروع أو رأيًا قانونيًا أو محاسبيًا أو ضريبيًا.</div></div></section>
-<p class="footer">إعداد حاتم نجيب — لعبة البزنس<br>برنامج «التشخيص قبل الحل» بالتعاون مع أكاديمية المدرب الأفضل</p></main><script src="engine.js?v=20260923-pro3"></script><script src="app.js?v=20260923-pro3"></script></body></html>
+<p class="footer">إعداد حاتم نجيب — لعبة البزنس<br>برنامج «التشخيص قبل الحل» بالتعاون مع أكاديمية المدرب الأفضل</p></main><script src="engine.js?v=20260923-egypt1"></script><script src="app.js?v=20260923-egypt1"></script></body></html>
