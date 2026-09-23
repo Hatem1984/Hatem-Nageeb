@@ -14,6 +14,7 @@
 
   function show(id){
     views.forEach(name=>$(name).classList.toggle('hidden',name!==id));
+    document.body.classList.toggle('diagnosis-results-ready',id==='results');
     state.view=id; save();
     const active=$(id); active.classList.remove('view-enter'); void active.offsetWidth; active.classList.add('view-enter');
     window.scrollTo({top:0,behavior:'smooth'});
