@@ -282,7 +282,7 @@
   }
   $('pdfBtn').addEventListener('click',async()=>{
     if(!state.result)return;const button=$('pdfBtn'),status=$('pdfStatus'),label=button.textContent;button.disabled=true;button.textContent='جارٍ تجهيز التقرير…';status.textContent='يتم إنشاء 3 صفحات داخل متصفحك.';
-    try{await document.fonts.ready;const pages=[];for(let i=1;i<=3;i++)pages.push(await canvasPageToJpeg(i,state.result));const blob=makePdf(pages),url=URL.createObjectURL(blob),link=document.createElement('a'),name=(state.firstName||'صاحب-المشروع').replace(/[^\p{L}\p{N}-]+/gu,'-');link.href=url;link.download=`تقرير-مختبر-قرار-${name}.pdf`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);status.textContent='تم تنزيل التقرير.';track('DiagnosticPdfDownload','diagnostic_pdf_download');}
+    try{await document.fonts.ready;const pages=[];for(let i=1;i<=3;i++)pages.push(await canvasPageToJpeg(i,state.result));const blob=makePdf(pages),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='تقرير-مختبر-قرار-مشروعك.pdf';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);status.textContent='تم تنزيل التقرير.';track('DiagnosticPdfDownload','diagnostic_pdf_download');}
     catch(error){console.error(error);status.textContent='تعذر التنزيل المباشر. جرّب متصفح Chrome أو Safari حديثًا.';}
     finally{button.disabled=false;button.textContent=label;}
   });
