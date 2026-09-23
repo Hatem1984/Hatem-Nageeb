@@ -29,6 +29,7 @@
       Object.assign(state,saved,{result:null,view:'intake'});
       $('problemInput').value=state.problem||'';
       const stage=document.querySelector(`input[name="stage"][value="${state.stage}"]`); if(stage)stage.checked=true;
+      syncDecisionOptions();
       document.querySelectorAll('[data-quick]').forEach(button=>button.classList.toggle('selected',button.dataset.quick===state.quickChoice));
       $('resumeNote').classList.remove('hidden'); validateIntake();
     }catch(e){localStorage.removeItem(STORE_KEY);}
@@ -48,6 +49,25 @@
     try{if(typeof gtag==='function')gtag('event',gaName,safe);}catch(e){}
   }
 
+  function syncDecisionOptions(){
+    const stageInput=document.querySelector('input[name="stage"]:checked');
+    const stage=stageInput?stageInput.value:'';
+    const hint=$('topicStageHint');
+    document.querySelectorAll('[data-quick]').forEach(button=>{
+      const allowed=String(button.dataset.stages||'idea,running').split(',');
+      const visible=!!stage&&allowed.includes(stage);
+      button.dataset.hidden=visible?'false':'true';
+      button.disabled=!visible;
+      if(!visible&&button.dataset.quick===state.quickChoice){
+        state.quickChoice='';
+        button.classList.remove('selected');
+      }
+    });
+    if(hint) hint.textContent=stage
+      ? (stage==='idea'?'اختار القرار اللي عايز تختبره قبل ما تستثمر وقت أو فلوس أكبر.':'اختار القرار اللي محتاج تشخّصه في مشروعك الحالي.')
+      : 'اختار مرحلة المشروع الأول علشان نعرض لك القرارات المناسبة.';
+  }
+
   function validateIntake(){
     const hasProblem=$('problemInput').value.trim().length>=8||state.quickChoice;
     const stage=document.querySelector('input[name="stage"]:checked');
@@ -59,7 +79,12 @@
     validateIntake(); save();
   }));
   $('problemInput').addEventListener('input',validateIntake);
-  document.querySelectorAll('input[name="stage"]').forEach(input=>input.addEventListener('change',validateIntake));
+  document.querySelectorAll('input[name="stage"]').forEach(input=>input.addEventListener('change',()=>{
+    state.stage=input.value;
+    syncDecisionOptions();
+    validateIntake();
+    save();
+  }));
 
   $('understandBtn').addEventListener('click',()=>{
     const nextProblem=$('problemInput').value.trim();
@@ -92,7 +117,7 @@
     $('stageText').textContent=Lab.STAGES[state.stage];
     $('axisTag').textContent=q.axis?Lab.AXES[q.axis]:'إجاباتك مبنية على إيه؟';
     $('questionText').textContent=q.prompt;
-    $('questionHelp').textContent=state.index<6?'اختار الإجابة اللي بتحصل فعلًا دلوقتي، مش اللي نفسك يحصل.':'السؤال ده ظهر مخصوص لأن إجاباتك بتقول إن النقطة دي محتاجة نتأكد منها.';
+    $('questionHelp').textContent=q.help||(state.index<6?'اختار الإجابة اللي بتحصل فعلًا دلوقتي، مش اللي نفسك يحصل.':'السؤال ده ظهر مخصوص لأن إجاباتك بتقول إن النقطة دي محتاجة نتأكد منها.');
     $('answers').innerHTML=q.options.map(option=>`<label class="answer"><input type="radio" name="answer" value="${option.value}" ${state.answers[q.id]===option.value?'checked':''}><span>${option.label}</span></label>`).join('');
     document.querySelectorAll('input[name="answer"]').forEach(input=>input.addEventListener('change',e=>{
       state.answers[q.id]=Number(e.target.value); $('nextBtn').disabled=false; save();
@@ -123,6 +148,13 @@
     $('readinessValue').textContent=`${r.readiness}/100`; $('readinessBand').textContent=`الدرجة: ${r.readinessBand} — ده مش احتمال نجاح`;
     $('evidenceValue').textContent=`${r.evidence}/100`; $('evidenceBand').textContent=`الدرجة: ${r.evidenceBand} — ده مش احتمال نجاح`;
     $('riskBand').textContent=r.riskBand;
+    if(r.guidance){
+      const box=$('decisionGuidance');
+      box.className='decision-guidance '+r.guidance.key;
+      $('guidanceTitle').textContent=r.guidance.title;
+      $('guidanceReason').textContent=r.guidance.reason;
+      $('guidanceAction').textContent=r.guidance.action;
+    }
     $('axisBars').innerHTML=Object.entries(r.axisScores).map(([axis,value])=>`<div class="bar-row"><b>${Lab.AXES[axis]}</b><div class="track"><i style="width:${value}%"></i></div><span>${value}/100</span></div>`).join('');
     $('gaps').innerHTML=r.gaps.map((gap,index)=>`<article class="gap"><span>${index+1}</span><div><h4>${gap.label} · ${gap.score}/100</h4><p>${gap.why}</p><small>اللي محتاج تثبته: ${gap.missing}</small></div></article>`).join('');
     $('noGo').textContent=r.decision.noGo;
