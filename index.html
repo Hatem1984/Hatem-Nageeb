@@ -98,6 +98,7 @@ permalink: /
 .manual-payment-options[open] summary:after{content:"−"}
 .manual-payment-inner{display:grid;gap:10px;padding:0 12px 12px}
 .manual-confirm-link{display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;background:#eef3ff;color:#3157ca;font-size:12px;font-weight:900;border:1px solid #dce5ff}
+.payment-confirmation-steps,.payment-after{display:none!important}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', final_week_style %}
 
@@ -161,12 +162,22 @@ document.addEventListener('DOMContentLoaded',function(){
       details.appendChild(summary);details.appendChild(inner);choice.appendChild(details);
     }
   }
+  var selectedManualMethod='';
+  [instapay,vodafone].forEach(function(el){
+    if(!el)return;
+    el.addEventListener('click',function(){
+      selectedManualMethod=el.getAttribute('data-method')||'';
+      syncManualConfirm();
+    });
+  });
   function syncManualConfirm(){
     var link=document.getElementById('manualPaymentConfirmLink');
     if(!link)return;
     var active=document.querySelector('.amount-option.active[data-payment-plan]');
     var plan=active?active.getAttribute('data-payment-plan'):'reserve';
-    link.href='/manual-payment/?plan='+encodeURIComponent(plan);
+    var href='/manual-payment/?plan='+encodeURIComponent(plan);
+    if(selectedManualMethod)href+='&method='+encodeURIComponent(selectedManualMethod);
+    link.href=href;
   }
   document.querySelectorAll('[data-payment-plan],.js-open-payment').forEach(function(el){
     el.addEventListener('click',function(){setTimeout(syncManualConfirm,0);});
