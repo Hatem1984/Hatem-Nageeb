@@ -86,8 +86,7 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
   const qs=new URLSearchParams(location.search);
   const plans={
     reserve:{label:'تثبيت المقعد',amount:2000},
-    full:{label:'السداد الكامل',amount:4500},
-    installment:{label:'التقسيط الممتد — الدفعة الأولى',amount:2000}
+    full:{label:'السداد الكامل',amount:4500}
   };
   const plan=plans[qs.get('plan')]?qs.get('plan'):'reserve';
   document.getElementById('planName').textContent=plans[plan].label;
