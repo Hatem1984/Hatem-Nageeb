@@ -19,6 +19,39 @@
     {value:2,label:'عندي تجربة أو أرقام لفترة محدودة'},
     {value:3,label:'عندي بيانات أو مواقف متكررة وبراجعها'}
   ];
+  const AXIS_OPTIONS={
+    customer:[
+      {value:0,label:'مش عارف / مبني على افتراض'},
+      {value:1,label:'عندي حالة أو ملاحظة فردية'},
+      {value:2,label:'اتكرر مع أكتر من عميل مناسب'},
+      {value:3,label:'اتكرر ومعاه سلوك أو شراء يؤكد أهميته'}
+    ],
+    demand:[
+      {value:0,label:'مفيش دليل على طلب فعلي'},
+      {value:1,label:'فيه اهتمام أو استفسارات فقط'},
+      {value:2,label:'فيه تجربة أو طلبات أولية'},
+      {value:3,label:'فيه شراء/حجز أو تكرار واضح'}
+    ],
+    economics:[
+      {value:0,label:'مش عارف الرقم أو مش متجمع'},
+      {value:1,label:'عندي تقدير تقريبي'},
+      {value:2,label:'حسبته على عينة أو فترة محدودة'},
+      {value:3,label:'عندي رقم متسق وبراجعه بانتظام'}
+    ],
+    execution:[
+      {value:0,label:'مش متابع أو مش مقاس'},
+      {value:1,label:'بعرف من الخبرة لما المشكلة تحصل'},
+      {value:2,label:'قست أو تابعت عينة/فترة محدودة'},
+      {value:3,label:'متابعها بانتظام وعندي معيار واضح'}
+    ],
+    decision:[
+      {value:0,label:'مفيش معيار قرار واضح'},
+      {value:1,label:'عندي اتجاه عام فقط'},
+      {value:2,label:'محدد معيار مبدئي أو موعد مراجعة'},
+      {value:3,label:'محدد معيار قرار وحد توقف وموعد مراجعة'}
+    ]
+  };
+
   const QUICK_MAP={
     'عندي فكرة مشروع':'idea_validation',
     'التسعير':'pricing',
@@ -277,7 +310,10 @@
     if(bestScore===0&&quickChoice&&QUICK_MAP[quickChoice])return QUICK_MAP[quickChoice];
     return best;
   }
-  function decorate(question){return Object.assign({options:SCALE,evidenceWeight:.25},question);}
+  function decorate(question){
+    const defaults={options:(question.axis&&AXIS_OPTIONS[question.axis])||SCALE,evidenceWeight:.25};
+    return Object.assign(defaults,question);
+  }
   function coreQuestions(stage){return (CORE[stage]||CORE.running).map(decorate);}
   function weakAxisFromCore(stage,answers){
     const totals={customer:0,demand:0,economics:0,execution:0,decision:0};
