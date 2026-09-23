@@ -4,7 +4,7 @@ permalink: /
 {% capture page %}{% include landing-base.html %}{% endcapture %}
 
 {% capture refinement_style %}<style id="lean-conversion-refinement">
-.hero h1{font-size:clamp(23px,2.7vw,38px)!important;line-height:1.25!important}
+.hero h1{font-size:clamp(25px,3vw,42px)!important;line-height:1.28!important;max-width:760px}.hero .sub{max-width:720px}.hero-pain-strip span{font-weight:800}
 .footer-compliance{align-items:flex-start}
 .footer-business{display:grid;gap:5px;text-align:right;line-height:1.65}
 .footer-business strong{color:#fff;font-size:14px}
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var d=document.getElementById('seatCountDetail');
       if(!h||!d||typeof s.booked!=='number')return;
       h.textContent='الحد الأقصى '+s.capacity+' مقعدًا';
-      d.textContent='الحجوزات المؤكدة حتى الآن: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
+      d.textContent='الدفعة الأولى محدودة · تثبيت المقعد بـ2,000 جنيه';
     }).catch(function(){});
 
   var requested=new URLSearchParams(window.location.search).get('payment');
