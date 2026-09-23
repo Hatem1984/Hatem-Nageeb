@@ -155,6 +155,7 @@
       $('guidanceReason').textContent=r.guidance.reason;
       $('guidanceAction').textContent=r.guidance.action;
     }
+    $('gapsTitle').textContent=r.gapsTitle||'أهم الحاجات الناقصة قبل ما تتحرك';
     $('axisBars').innerHTML=Object.entries(r.axisScores).map(([axis,value])=>`<div class="bar-row"><b>${Lab.AXES[axis]}</b><div class="track"><i style="width:${value}%"></i></div><span>${value}/100</span></div>`).join('');
     $('gaps').innerHTML=r.gaps.map((gap,index)=>`<article class="gap"><span>${index+1}</span><div><h4>${gap.label} · ${gap.score}/100</h4><p>${gap.why}</p><small>اللي محتاج تثبته: ${gap.missing}</small></div></article>`).join('');
     $('noGo').textContent=r.decision.noGo;
@@ -288,4 +289,6 @@
   });
 
   load();
+  syncDecisionOptions();
+  validateIntake();
 })();
