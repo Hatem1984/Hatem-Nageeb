@@ -1,0 +1,63 @@
+---
+permalink: /payment-admin/
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>إدارة التحويلات | لعبة البزنس</title><meta name="robots" content="noindex,nofollow">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f4f7fb;color:#10264e}.wrap{width:min(1120px,calc(100% - 24px));margin:auto;padding:26px 0 50px}h1{margin:0 0 8px}.sub{color:#6b7a90;margin:0 0 20px}.login,.panel{background:#fff;border:1px solid #dce5ef;border-radius:22px;padding:22px;box-shadow:0 16px 45px rgba(18,42,82,.08)}.login{max-width:560px;margin:50px auto}.login input{width:100%;padding:13px;border:1.5px solid #cfdbe7;border-radius:12px;font:inherit;margin:10px 0}.btn{border:0;border-radius:12px;padding:11px 14px;font:inherit;font-weight:900;cursor:pointer}.primary{background:linear-gradient(90deg,#2ca7ff,#6656ff);color:#fff}.danger{background:#fff0ef;color:#a33}.ghost{background:#edf2f8;color:#17335f}.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:14px}.grid{display:grid;gap:12px}.item{background:#fff;border:1px solid #dce5ef;border-radius:18px;padding:17px}.item.pending{border-right:5px solid #e6a63d}.item.confirmed{border-right:5px solid #2e9e6f}.item.rejected{opacity:.65;border-right:5px solid #b8c0cc}.head{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.ref{font-weight:900;font-size:17px}.status{font-size:12px;padding:5px 9px;border-radius:999px;background:#eef3fa}.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.meta div{background:#f6f8fb;border-radius:11px;padding:9px}.meta span{display:block;color:#7a8798;font-size:11px}.meta b{display:block;margin-top:3px;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.note{font-size:12px;line-height:1.7;color:#66758b}.hidden{display:none!important}.msg{margin-top:10px;color:#a33;font-size:13px}@media(max-width:700px){.meta{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="login" id="loginBox"><h1>إدارة التحويلات اليدوية</h1><p class="sub">أدخل مفتاح الإدارة. لا تحفظه في رابط ولا تشاركه مع أي شخص.</p><input id="token" type="password" autocomplete="current-password" placeholder="Admin token"><button class="btn primary" id="loginBtn">فتح لوحة المراجعة</button><div class="msg" id="loginMsg"></div></section>
+<section class="panel hidden" id="panel">
+<div class="toolbar"><div><h1>التحويلات اليدوية</h1><p class="sub" style="margin:4px 0">Purchase لا يُرسل إلى Meta إلا عند الضغط على «تأكيد الدفع».</p></div><div><button class="btn ghost" id="refreshBtn">تحديث</button> <button class="btn ghost" id="logoutBtn">خروج</button></div></div>
+<div class="grid" id="list"></div><div class="msg" id="panelMsg"></div>
+</section>
+</main>
+<script>
+(function(){
+ const API='https://mjavabuxdhueziecypdy.supabase.co/functions/v1/manual-payment-admin';
+ const $=id=>document.getElementById(id);let token=sessionStorage.getItem('manualPaymentAdminToken')||'';
+ function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ function money(n){return (Number(n||0)/100).toLocaleString('en-US')+' جنيه';}
+ async function api(method,body){
+   const r=await fetch(API,{method,headers:{'x-admin-token':token,'content-type':'application/json'},body:body?JSON.stringify(body):undefined});
+   const d=await r.json();if(!r.ok)throw new Error(d.error||'request_failed');return d;
+ }
+ async function load(){
+   $('panelMsg').textContent='';const d=await api('GET');$('list').innerHTML='';
+   if(!d.items.length){$('list').innerHTML='<div class="item">لا توجد تحويلات مسجلة حتى الآن.</div>';return;}
+   d.items.forEach(x=>{
+     const el=document.createElement('article');el.className='item '+x.status;
+     const method=x.payment_method==='instapay'?'InstaPay':'Vodafone Cash';
+     const plan={reserve:'تثبيت المقعد',full:'السداد الكامل',installment:'التقسيط الممتد'}[x.payment_plan]||x.payment_plan;
+     el.innerHTML='<div class="head"><div><div class="ref">'+esc(x.booking_reference)+'</div><div class="note">'+new Date(x.created_at).toLocaleString('ar-EG')+'</div></div><span class="status">'+esc(x.status)+'</span></div>'+
+     '<div class="meta"><div><span>العميل</span><b>'+esc(x.customer_name)+'</b></div><div><span>الموبايل</span><b dir="ltr">'+esc(x.customer_phone)+'</b></div><div><span>الدفع</span><b>'+method+' · '+money(x.amount_minor)+'</b></div><div><span>الخطة</span><b>'+esc(plan)+'</b></div></div>'+
+     (x.transaction_reference?'<div class="note"><b>مرجع العملية:</b> '+esc(x.transaction_reference)+'</div>':'')+
+     (x.transfer_note?'<div class="note"><b>ملاحظة:</b> '+esc(x.transfer_note)+'</div>':'')+
+     '<div class="note">Meta: '+(x.meta_sent?'تم إرسال Purchase ✅':'لم يُرسل Purchase بعد')+'</div>'+
+     '<div class="actions">'+
+     (x.status==='pending'?'<button class="btn primary" data-act="confirm">تأكيد الدفع</button><button class="btn danger" data-act="reject">رفض</button>':'')+
+     (x.status==='confirmed'&&!x.meta_sent?'<button class="btn primary" data-act="resend_meta">إعادة إرسال Purchase إلى Meta</button>':'')+
+     '</div>';
+     el.querySelectorAll('[data-act]').forEach(b=>b.onclick=async()=>{if(b.dataset.act==='confirm'&&!confirm('هل تأكدت فعليًا أن التحويل وصل؟'))return;b.disabled=true;try{await api('POST',{id:x.id,action:b.dataset.act});await load();}catch(e){$('panelMsg').textContent='فشل التنفيذ: '+e.message;}finally{b.disabled=false;}});
+     $('list').appendChild(el);
+   });
+ }
+ async function login(){
+   token=$('token').value.trim();$('loginMsg').textContent='';if(!token)return;
+   try{await api('GET');sessionStorage.setItem('manualPaymentAdminToken',token);$('loginBox').classList.add('hidden');$('panel').classList.remove('hidden');await load();}
+   catch(e){$('loginMsg').textContent='المفتاح غير صحيح أو لم يتم تفعيله في Supabase.';}
+ }
+ $('loginBtn').onclick=login;$('token').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+ $('refreshBtn').onclick=()=>load().catch(e=>$('panelMsg').textContent=e.message);
+ $('logoutBtn').onclick=()=>{sessionStorage.removeItem('manualPaymentAdminToken');location.reload();};
+ if(token){$('token').value=token;login();}
+})();
+</script>
+</body>
+</html>
