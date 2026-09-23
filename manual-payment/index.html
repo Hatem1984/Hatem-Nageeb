@@ -1,0 +1,106 @@
+---
+permalink: /manual-payment/
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تأكيد التحويل اليدوي | لعبة البزنس</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*{box-sizing:border-box}
+:root{--navy:#07111f;--blue:#2ca7ff;--violet:#6656ff;--ink:#10264e;--muted:#66758b;--line:#dce6f2}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:radial-gradient(800px 400px at 85% 0%,rgba(44,167,255,.12),transparent 60%),#f5f8fc;color:var(--ink)}
+.wrap{width:min(760px,calc(100% - 28px));margin:auto;padding:28px 0 48px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}.brand img{width:54px;height:54px;border-radius:50%;background:#fff}.brand b{display:block}.brand small{display:block;color:var(--muted);margin-top:3px}
+.card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:30px;box-shadow:0 22px 70px rgba(18,42,82,.10)}
+.kicker{display:inline-block;padding:7px 11px;border-radius:999px;background:#eef4ff;color:#365fcf;font-size:12px;font-weight:900}
+h1{font-size:30px;line-height:1.4;margin:14px 0 8px}p{color:var(--muted);line-height:1.8}
+.plan{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.plan div{padding:14px;border-radius:15px;background:#f5f8ff;border:1px solid #e1e8f5}.plan span{display:block;color:#73839a;font-size:12px}.plan b{display:block;margin-top:4px;font-size:20px}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.method{position:relative}.method input{position:absolute;opacity:0}.method span{display:block;padding:15px;border-radius:14px;border:1.5px solid #d7e1ec;text-align:center;font-weight:900;background:#fff}.method input:checked+span{border-color:#5574ff;background:#f0f4ff;color:#203b82}
+label{display:block;font-weight:800;font-size:14px;margin:15px 0 7px}input,textarea{width:100%;border:1.5px solid #cfdbe7;border-radius:13px;padding:13px 14px;font:inherit;outline:none}textarea{min-height:90px;resize:vertical}input:focus,textarea:focus{border-color:#5574ff;box-shadow:0 0 0 4px rgba(85,116,255,.10)}
+.optional{font-weight:500;color:#8592a5;font-size:12px}.privacy{margin-top:14px;padding:12px 14px;border-radius:13px;background:#f5f8fc;color:#6a7990;font-size:12px;line-height:1.7}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;border:0;border-radius:14px;padding:15px 18px;font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
+.primary{margin-top:18px;color:#fff;background:linear-gradient(90deg,var(--blue),var(--violet));box-shadow:0 13px 30px rgba(76,104,255,.22)}
+.secondary{margin-top:10px;color:#17335f;background:#eef3fa}
+.success{display:none;text-align:center}.success.show{display:block}.form.hidden{display:none}.ref{font-size:28px;font-weight:900;letter-spacing:1px;padding:15px;border-radius:14px;background:#07111f;color:#fff;margin:18px 0;direction:ltr}
+.warn{padding:14px;border-radius:14px;background:#fff6e8;border:1px solid #f0dfbf;color:#76551f;line-height:1.7;font-size:13px;margin-top:15px}
+.status{min-height:20px;margin-top:10px;text-align:center;color:#b23b3b;font-size:13px}
+@media(max-width:600px){.card{padding:24px 18px}.plan,.methods{grid-template-columns:1fr}h1{font-size:26px}}
+</style>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','2667954303602754');fbq('track','PageView');
+</script>
+</head>
+<body>
+<main class="wrap">
+<div class="brand"><img src="../assets/شعار_لعبة_البزنس_خفيف.webp" alt="لعبة البزنس"><div><b>لعبة البزنس</b><small>تأكيد التحويل اليدوي</small></div></div>
+<section class="card">
+<div class="form" id="formBox">
+<span class="kicker">بعد التحويل فقط</span>
+<h1>سجّل بيانات التحويل علشان نراجعه ونأكد حجزك</h1>
+<p>الخطوة دي خاصة بـInstaPay وVodafone Cash. تسجيل البيانات لا يعني إن الحجز اتأكد؛ التأكيد بيتم بعد مطابقة التحويل فعليًا.</p>
+<div class="plan"><div><span>الخطة</span><b id="planName">تثبيت المقعد</b></div><div><span>المبلغ المطلوب الآن</span><b id="amountText">2,000 جنيه</b></div></div>
+<form id="manualForm">
+<label>طريقة التحويل</label>
+<div class="methods">
+<label class="method"><input type="radio" name="method" value="instapay" required><span>InstaPay</span></label>
+<label class="method"><input type="radio" name="method" value="vodafone_cash" required><span>Vodafone Cash</span></label>
+</div>
+<label for="name">الاسم الكامل</label><input id="name" autocomplete="name" required maxlength="120">
+<label for="phone">رقم الموبايل</label><input id="phone" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx" required maxlength="20">
+<label for="email">البريد الإلكتروني <span class="optional">(اختياري)</span></label><input id="email" type="email" autocomplete="email" maxlength="180">
+<label for="txref">رقم/مرجع العملية <span class="optional">(لو ظاهر عندك)</span></label><input id="txref" maxlength="120">
+<label for="note">ملاحظة للمراجعة <span class="optional">(اختياري)</span></label><textarea id="note" maxlength="500" placeholder="مثال: التحويل تم الساعة 8:35 مساءً"></textarea>
+<div class="privacy">بيانات التحويل تُستخدم فقط لمطابقة الدفع وتأكيد الحجز. لا يتم تسجيل Purchase في Meta إلا بعد اعتماد التحويل كمدفوع فعليًا.</div>
+<button class="primary" id="submitBtn" type="submit">إرسال بيانات التحويل للمراجعة</button>
+<div class="status" id="status"></div>
+</form>
+</div>
+<div class="success" id="successBox">
+<span class="kicker">تم استلام البيانات</span>
+<h1>طلبك دخل المراجعة</h1>
+<p>احتفظ برقم الحجز ده، وابعت صورة إثبات التحويل على Messenger ومعاها الرقم.</p>
+<div class="ref" id="bookingRef"></div>
+<a class="btn primary" id="messengerLink" href="https://m.me/891183134080763" target="_blank" rel="noopener">فتح Messenger وإرسال الإثبات</a>
+<button class="secondary" id="copyBtn" type="button">نسخ رقم الحجز</button>
+<div class="warn">الحجز يتأكد فقط بعد مراجعة التحويل. لو اتأكد، بيتسجل البيع في نظامنا ويتبعت Purchase إلى Meta تلقائيًا من السيرفر.</div>
+</div>
+</section>
+</main>
+<script>
+(function(){
+  const qs=new URLSearchParams(location.search);
+  const plans={
+    reserve:{label:'تثبيت المقعد',amount:2000},
+    full:{label:'السداد الكامل',amount:4500},
+    installment:{label:'التقسيط الممتد — الدفعة الأولى',amount:2000}
+  };
+  const plan=plans[qs.get('plan')]?qs.get('plan'):'reserve';
+  document.getElementById('planName').textContent=plans[plan].label;
+  document.getElementById('amountText').textContent=plans[plan].amount.toLocaleString('en-US')+' جنيه';
+  const preset=qs.get('method'); if(preset){const r=document.querySelector('input[name=method][value="'+preset+'"]');if(r)r.checked=true;}
+  function cookie(name){const m=document.cookie.match(new RegExp('(?:^|; )'+name.replace(/([.$?*|{}()\[\]\\/+^])/g,'\\$1')+'=([^;]*)'));return m?decodeURIComponent(m[1]):'';}
+  function fbc(){let v=cookie('_fbc');if(v)return v;const id=qs.get('fbclid');return id?'fb.1.'+Date.now()+'.'+id:'';}
+  const form=document.getElementById('manualForm'),status=document.getElementById('status'),btn=document.getElementById('submitBtn');
+  form.addEventListener('submit',async function(e){
+    e.preventDefault(); status.textContent=''; btn.disabled=true; btn.textContent='جاري الإرسال...';
+    const method=(new FormData(form)).get('method');
+    const payload={payment_method:method,payment_plan:plan,customer_name:document.getElementById('name').value,customer_phone:document.getElementById('phone').value,customer_email:document.getElementById('email').value,transaction_reference:document.getElementById('txref').value,transfer_note:document.getElementById('note').value,fbp:cookie('_fbp'),fbc:fbc(),landing_url:document.referrer||location.href};
+    try{
+      const r=await fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/manual-payment-submit',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
+      const data=await r.json(); if(!r.ok)throw new Error(data.error||'submit_failed');
+      document.getElementById('bookingRef').textContent=data.booking_reference;
+      document.getElementById('formBox').classList.add('hidden');document.getElementById('successBox').classList.add('show');
+      window.scrollTo({top:0,behavior:'smooth'});
+      try{if(typeof fbq==='function')fbq('track','AddPaymentInfo',{currency:'EGP',value:plans[plan].amount});}catch(e){}
+      document.getElementById('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(data.booking_reference);document.getElementById('copyBtn').textContent='تم النسخ';}catch(e){}};
+    }catch(err){
+      status.textContent=err.message==='valid_egypt_phone_required'?'اكتب رقم موبايل مصري صحيح.':'تعذر إرسال البيانات الآن. جرّب مرة تانية أو تواصل معنا على Messenger.';
+    }finally{btn.disabled=false;btn.textContent='إرسال بيانات التحويل للمراجعة';}
+  });
+})();
+</script>
+</body>
+</html>
