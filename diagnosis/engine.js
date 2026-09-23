@@ -57,6 +57,7 @@
     'التسعير':'pricing',
     'المبيعات':'sales',
     'الوصول لأول عميل':'sales',
+    'العملاء مش بيرجعوا':'retention',
     'الإعلانات والتسويق':'marketing',
     'السيولة والتحصيل':'cashflow',
     'التشغيل':'operations',
@@ -305,6 +306,7 @@
     pricing:['economics','demand','customer','decision','execution'],
     cashflow:['economics','execution','decision','demand','customer'],
     sales:['demand','customer','execution','decision','economics'],
+    retention:['customer','demand','execution','economics','decision'],
     marketing:['demand','economics','customer','decision','execution'],
     cost_reduction:['economics','execution','decision','customer','demand'],
     operations:['execution','customer','economics','decision','demand'],
@@ -338,7 +340,7 @@
     return best;
   }
   function decorate(question){
-    const defaults={options:(question.axis&&AXIS_OPTIONS[question.axis])||SCALE,evidenceWeight:.25};
+    const defaults={options:(question.axis&&AXIS_OPTIONS[question.axis])||SCALE,evidenceWeight:0,help:'اختار أقرب وصف لواقعك الحالي واعتمد على حاجة تقدر تراجعها أو تعدّها.'};
     return Object.assign(defaults,question);
   }
   function coreQuestions(stage){return (CORE[stage]||CORE.running).map(decorate);}
@@ -397,16 +399,38 @@
     const rankedAxes=rankAxes(type,axisScores);
     const weakAxes=rankedAxes.filter(axis=>axisScores[axis]<70);
     const reviewMode=weakAxes.length===0;
-    const chosenAxes=(reviewMode?rankedAxes.slice(0,2):weakAxes.slice(0,3));
+    const chosenAxes=(reviewMode?rankedAxes.slice(0,3):weakAxes.slice(0,3));
     const gapsTitle=reviewMode?'نقط راجعها قبل ما تكبّر الالتزام':'أهم الحاجات الناقصة قبل ما تتحرك';
     const gaps=chosenAxes.map(axis=>reviewMode
       ? {axis,label:AXES[axis],score:axisScores[axis],why:'المحور ده قوي نسبيًا في إجاباتك، لكن راجعه قبل أي التزام أكبر علشان تتأكد إن الدليل ما زال حديثًا.',missing:GAP_INFO[axis].missing,reviewOnly:true}
       : {axis,label:AXES[axis],score:axisScores[axis],why:GAP_INFO[axis].why,missing:GAP_INFO[axis].missing,reviewOnly:false}
     );
     const problem=String(input.problem||input.quickChoice||'القرار الذي تفكر فيه').trim();
-    const summary=`اللي كتبته أقرب إلى: ${DECISIONS[type].label}. وبما إنك في مرحلة ${STAGES[stage]}، فأول حاجة محتاجة تتأكد منها هي: ${gaps[0].label}`;
+    const summary=`قرارك أقرب إلى: ${DECISIONS[type].label}. أهم نقطة تراجعها الآن: ${gaps[0].label}.`;
+    const experiment=EXPERIMENTS[type]||EXPERIMENTS.general_decision;
+    let guidance={
+      key:'proceed',
+      title:'تحرّك بتجربة محدودة، مش بالتزام كامل',
+      reason:`عندك أساس جيد نسبيًا، لكن راجع «${gaps[0].label}» قبل ما تكبّر الالتزام.`,
+      action:experiment.test
+    };
+    if(riskBand==='مرتفعة'){
+      guidance={
+        key:'hold',
+        title:'ما تلتزمش بمصاريف كبيرة دلوقتي',
+        reason:`الدليل الحالي لسه ضعيف نسبيًا، وأكبر فجوة عندك هي «${gaps[0].label}».`,
+        action:experiment.test
+      };
+    }else if(riskBand==='متوسطة'){
+      guidance={
+        key:'test',
+        title:'اعمل اختبار صغير قبل القرار النهائي',
+        reason:`عندك جزء من الصورة، لكن «${gaps[0].label}» لسه ممكن تغيّر القرار.`,
+        action:experiment.test
+      };
+    }
     const plan=personalizedPlan(type,gaps,stage);
-    return {stage,type,decision:DECISIONS[type],problem,axisScores,readiness,evidence,riskScore,readinessBand,evidenceBand,riskBand,traffic,gaps,summary,plan,experiment:EXPERIMENTS[type]};
+    return {stage,type,decision:DECISIONS[type],problem,axisScores,readiness,evidence,riskScore,readinessBand,evidenceBand,riskBand,traffic,gaps,gapsTitle,summary,guidance,plan,experiment};
   }
   function safeEventData(result){return {stage:result.stage,decision_type:result.type,score_band:result.readinessBand,evidence_band:result.evidenceBand,risk_band:result.riskBand};}
   return {AXES,STAGES,SCALE,QUICK_MAP,DECISIONS,classifyProblem,coreQuestions,adaptiveQuestions,weakAxisFromCore,analyze,safeEventData};
