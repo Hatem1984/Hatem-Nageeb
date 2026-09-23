@@ -3,11 +3,6 @@ permalink: /
 ---
 {% capture page %}{% include landing-base.html %}{% endcapture %}
 
-{% capture lean_head %}<link rel="stylesheet" href="assets/landing-lean.css?v=20260923-lean1"/></head>{% endcapture %}
-{% assign page = page | replace: '</head>', lean_head %}
-{% capture lean_body %}<script src="assets/landing-lean.js?v=20260923-lean1"></script></body>{% endcapture %}
-{% assign page = page | replace: '</body>', lean_body %}
-
 {% capture refinement_style %}<style id="lean-conversion-refinement">
 .hero h1{font-size:clamp(23px,2.7vw,38px)!important;line-height:1.25!important}
 .footer-compliance{align-items:flex-start}
