@@ -3,7 +3,7 @@
   const Lab=window.DecisionLab;
   if(!Lab) throw new Error('DecisionLab engine is unavailable');
 
-  const STORE_KEY='decision_lab_v2';
+  const STORE_KEY='decision_lab_v3';
   const $=id=>document.getElementById(id);
   const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
@@ -137,9 +137,7 @@
     $('sevenDays').innerHTML=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${step}</li>`).join('');
     const x=r.experiment;
     $('experiment').innerHTML=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
-    $('adaptiveCtaContext').textContent=r.decision.cta;
-    $('localContext').textContent=r.extraNote?`ملاحظة أخذتها معك: ${r.extraNote}`:'';
-    $('localContext').classList.toggle('hidden',!r.extraNote);
+    $('adaptiveCtaContext').textContent='أكبر أولوية قبل أي خطوة أكبر: '+r.gaps[0].missing;
     save();
   }
 
