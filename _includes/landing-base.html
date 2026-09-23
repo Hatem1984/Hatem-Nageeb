@@ -2900,7 +2900,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <button aria-label="إغلاق" class="payment-modal-close" data-close-payment="" type="button">×</button>
 <div class="payment-modal-head">
 <span class="payment-kicker">تأكيد الحجز</span>
-<h2 id="paymentModalTitle">اختَر خطة الدفع ثم وسيلة التحويل</h2>
+<h2 id="paymentModalTitle">اختَر طريقة السداد ثم وسيلة الدفع</h2>
 <p id="paymentPlanSummary">تثبيت المقعد: 2,000 جنيه الآن، ثم 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر. إجمالي العرض 4,500 جنيه.</p>
 </div>
 <div class="amount-choice">
@@ -2913,11 +2913,6 @@ document.addEventListener('DOMContentLoaded', function(){
 <span>السداد الكامل</span>
 <b>4,500 جنيه</b>
 <small>دفعة واحدة · أفضل سعر للدفعة الأولى</small>
-</button>
-<button class="amount-option" data-payment-amount="2000" data-payment-plan="installment" type="button">
-<span>التقسيط الممتد</span>
-<b>2,000 جنيه الآن</b>
-<small>ثم 1,500 في 1 نوفمبر و1,500 في 1 ديسمبر · الإجمالي 5,000</small>
 </button>
 </div>
 <div class="payment-method-choice">
@@ -2938,15 +2933,6 @@ document.addEventListener('DOMContentLoaded', function(){
 <span class="payment-arrow">←</span>
 </a>
 </div>
-<div class="payment-confirmation-steps" aria-label="ماذا يحدث بعد التحويل">
-<h3>بعد ما تختار الخطة وتحول، إيه اللي بيحصل؟</h3>
-<ol><li>ابعت اسمك الكامل وصورة إثبات التحويل على Messenger.</li><li>نراجع التحويل والخطة المختارة، وبعدها نؤكد الحجز.</li><li>بعد تأكيد الحجز، تستلم تفاصيل الانضمام للبرنامج.</li></ol>
-</div>
-<div class="payment-after">
-<b>بعد التحويل</b>
-<span id="paymentTransferSummary">ابعت الاسم الكامل + Screenshot لإثبات تحويل 2,000 جنيه على Messenger. يتأكد المقعد بعد مراجعة التحويل واستلام البيانات.</span>
-<a data-track-contact="" href="https://m.me/891183134080763" id="paymentProofLink" rel="noopener" target="_blank">إرسال إثبات التحويل على Messenger</a>
-</div>
 <div class="payment-policy-mini">
       نافذة الاسترداد تبدأ بعد أول تدريب فعلي يوم 4 أكتوبر وتنتهي قبل الجلسة التالية يوم 7 أكتوبر الساعة 7:30 مساءً بتوقيت مصر.
     </div>
@@ -2965,8 +2951,7 @@ document.addEventListener('DOMContentLoaded', function(){
   let paymentMethodCheckoutTracked = false;
   const plans = {
     reserve:{amount:2000,summary:'تثبيت المقعد: 2,000 جنيه الآن، ثم 2,500 جنيه قبل أول تدريب فعلي يوم 4 أكتوبر. إجمالي العرض 4,500 جنيه.',transfer:'ابعت الاسم الكامل + Screenshot لإثبات تحويل 2,000 جنيه على Messenger. يتأكد المقعد بعد مراجعة التحويل واستلام البيانات.'},
-    full:{amount:4500,summary:'السداد الكامل: 4,500 جنيه دفعة واحدة، وبكده تثبت اشتراكك على سعر إطلاق الدفعة الأولى.',transfer:'ابعت الاسم الكامل + Screenshot لإثبات تحويل 4,500 جنيه على Messenger. يتأكد الاشتراك بعد مراجعة التحويل واستلام البيانات.'},
-    installment:{amount:2000,summary:'التقسيط الممتد: 2,000 جنيه الآن + 1,500 يوم 1 نوفمبر + 1,500 يوم 1 ديسمبر. إجمالي الاشتراك 5,000 جنيه.',transfer:'ابعت الاسم الكامل + Screenshot لإثبات تحويل أول 2,000 جنيه على Messenger. الأقساط التالية: 1,500 يوم 1 نوفمبر و1,500 يوم 1 ديسمبر.'}
+    full:{amount:4500,summary:'السداد الكامل: 4,500 جنيه دفعة واحدة، وبكده تثبت اشتراكك على سعر إطلاق الدفعة الأولى.',transfer:'ابعت الاسم الكامل + Screenshot لإثبات تحويل 4,500 جنيه على Messenger. يتأكد الاشتراك بعد مراجعة التحويل واستلام البيانات.'}
   };
 
   function setPlan(plan){
