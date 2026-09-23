@@ -157,12 +157,11 @@
     }
     $('gapsTitle').textContent=r.gapsTitle||'أهم الحاجات الناقصة قبل ما تتحرك';
     $('axisBars').innerHTML=Object.entries(r.axisScores).map(([axis,value])=>`<div class="bar-row"><b>${Lab.AXES[axis]}</b><div class="track"><i style="width:${value}%"></i></div><span>${value}/100</span></div>`).join('');
-    $('gaps').innerHTML=r.gaps.map((gap,index)=>`<article class="gap"><span>${index+1}</span><div><h4>${gap.label} · ${gap.score}/100</h4><p>${gap.why}</p><small>اللي محتاج تثبته: ${gap.missing}</small></div></article>`).join('');
+    $('gaps').innerHTML=r.gaps.map((gap,index)=>`<article class="gap"><span>${index+1}</span><div><h4>${gap.label} · ${gap.score}/100</h4><p>${gap.why}</p><small>${gap.reviewOnly?'راجع قبل التنفيذ:':'اللي محتاج تثبته:'} ${gap.missing}</small></div></article>`).join('');
     $('noGo').textContent=r.decision.noGo;
     $('sevenDays').innerHTML=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${step}</li>`).join('');
     const x=r.experiment;
     $('experiment').innerHTML=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
-    $('adaptiveCtaContext').textContent='أكبر أولوية قبل أي خطوة أكبر: '+r.gaps[0].missing;
     save();
   }
 
