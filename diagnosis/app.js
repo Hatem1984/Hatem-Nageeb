@@ -3,7 +3,7 @@
   const Lab=window.DecisionLab;
   if(!Lab) throw new Error('DecisionLab engine is unavailable');
 
-  const STORE_KEY='decision_lab_v4';
+  const STORE_KEY='decision_lab_v6';
   const $=id=>document.getElementById(id);
   const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
@@ -90,7 +90,7 @@
     const nextProblem=$('problemInput').value.trim();
     const nextStage=document.querySelector('input[name="stage"]:checked').value;
     const nextType=Lab.classifyProblem(nextProblem,state.quickChoice,nextStage);
-    resumeAvailable=state.problem===nextProblem&&state.stage===nextStage&&state.decisionType===nextType&&state.questions.length>=6&&Object.keys(state.answers).length>0;
+    resumeAvailable=state.problem===nextProblem&&state.stage===nextStage&&state.decisionType===nextType&&state.questions.length>=5&&Object.keys(state.answers).length>0;
     state.problem=nextProblem;
     state.stage=nextStage;
     state.decisionType=nextType;
@@ -114,10 +114,10 @@
     const q=state.questions[state.index];
     $('questionCount').textContent=`السؤال ${state.index+1} من 10`;
     $('progressBar').style.width=`${(state.index+1)*10}%`;
-    $('stageText').textContent=Lab.STAGES[state.stage];
-    $('axisTag').textContent=q.axis?Lab.AXES[q.axis]:'إجاباتك مبنية على إيه؟';
+    $('stageText').textContent=Lab.STAGES[state.stage]+' · '+(state.index<5?'أساس التشخيص':'مخصص لحالتك');
+    $('axisTag').textContent=q.axis?Lab.AXES[q.axis]:'قوة الدليل';
     $('questionText').textContent=q.prompt;
-    $('questionHelp').textContent=q.help||(state.index<6?'اختار الإجابة اللي بتحصل فعلًا دلوقتي، مش اللي نفسك يحصل.':'السؤال ده ظهر مخصوص لأن إجاباتك بتقول إن النقطة دي محتاجة نتأكد منها.');
+    $('questionHelp').textContent=q.help||(state.index<5?'اختار اللي بيحصل فعلًا في مشروعك دلوقتي، حتى لو الإجابة مش مريحة.':'السؤال ده اتحدد بناءً على نوع القرار وإجاباتك السابقة.');
     $('answers').innerHTML=q.options.map(option=>`<label class="answer"><input type="radio" name="answer" value="${option.value}" ${state.answers[q.id]===option.value?'checked':''}><span>${option.label}</span></label>`).join('');
     document.querySelectorAll('input[name="answer"]').forEach(input=>input.addEventListener('change',e=>{
       state.answers[q.id]=Number(e.target.value); $('nextBtn').disabled=false; save();
@@ -130,7 +130,7 @@
   $('nextBtn').addEventListener('click',()=>{
     const q=state.questions[state.index]; if(state.answers[q.id]===undefined)return;
     track('DiagnosticQuestionProgress','diagnostic_question_progress');
-    if(state.index===5&&state.questions.length===6){state.questions.push(...Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers));}
+    if(state.index===4&&state.questions.length===5){state.questions.push(...Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers));}
     if(state.index<9){
       state.index++; save(); renderQuestion();
     }else{
