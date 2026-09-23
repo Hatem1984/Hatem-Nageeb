@@ -284,6 +284,28 @@
   };
 
   function normalize(value){return String(value||'').toLowerCase().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/[ًٌٍَُِّْـ]/g,'').trim();}
+  const AXIS_PRIORITY={
+    idea_validation:['demand','customer','decision','economics','execution'],
+    pricing:['economics','demand','customer','decision','execution'],
+    cashflow:['economics','execution','decision','demand','customer'],
+    sales:['demand','customer','execution','decision','economics'],
+    marketing:['demand','economics','customer','decision','execution'],
+    cost_reduction:['economics','execution','decision','customer','demand'],
+    operations:['execution','customer','economics','decision','demand'],
+    expansion:['execution','demand','economics','decision','customer'],
+    new_branch:['demand','economics','execution','decision','customer'],
+    new_product:['demand','customer','economics','execution','decision'],
+    customer_concentration:['economics','demand','customer','decision','execution'],
+    general_decision:['decision','economics','demand','customer','execution']
+  };
+  function rankAxes(type,scores){
+    const priority=AXIS_PRIORITY[type]||AXIS_PRIORITY.general_decision;
+    return Object.keys(scores).sort((a,b)=>{
+      const diff=Number(scores[a]||0)-Number(scores[b]||0);
+      if(diff!==0)return diff;
+      return priority.indexOf(a)-priority.indexOf(b);
+    });
+  }
   function classifyProblem(text,quickChoice,stage){
     const normalized=normalize(text);
     if(quickChoice&&quickChoice!=='قرار آخر'&&QUICK_MAP[quickChoice]) return QUICK_MAP[quickChoice];
@@ -304,13 +326,13 @@
     return Object.assign(defaults,question);
   }
   function coreQuestions(stage){return (CORE[stage]||CORE.running).map(decorate);}
-  function weakAxisFromCore(stage,answers){
+  function weakAxisFromCore(stage,answers,type='general_decision'){
     const totals={customer:0,demand:0,economics:0,execution:0,decision:0};
     coreQuestions(stage).forEach(q=>{if(q.axis)totals[q.axis]=Number(answers[q.id]??0);});
-    return Object.keys(totals).sort((a,b)=>totals[a]-totals[b])[0];
+    return rankAxes(type,totals)[0];
   }
   function adaptiveQuestions(stage,type,answers){
-    const weak=weakAxisFromCore(stage,answers);
+    const weak=weakAxisFromCore(stage,answers,type);
     return [...(TYPE_QUESTIONS[type]||TYPE_QUESTIONS.general_decision),STAGE_FOLLOW[stage]||STAGE_FOLLOW.running,WEAK_FOLLOW[weak]].map(decorate);
   }
   function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
@@ -347,12 +369,20 @@
     const riskScore=clamp(Math.round(100-(readiness*.55+evidence*.45)+(DECISIONS[type].riskBias||0)),0,100);
     const readinessBand=band(readiness,[40,70],['منخفض','قيد البناء','أقرب لقرار قابل للدفاع']);
     const evidenceBand=band(evidence,[40,70],['ضعيف','متوسط','قوي']);
-    const riskBand=band(riskScore,[36,66],['منخفضة','متوسطة','مرتفعة']);
+    const riskBand=band(riskScore,[30,60],['منخفضة','متوسطة','مرتفعة']);
     let traffic={key:'green',icon:'🟢',title:'عندك أساس يسمح بتجربة محدودة قابلة للرجوع'};
     if(riskBand==='مرتفعة')traffic={key:'red',icon:'🔴',title:'الدليل الحالي مش كفاية لالتزام كبير'};
     else if(riskBand==='متوسطة')traffic={key:'orange',icon:'🟠',title:'اختبر على نطاق صغير قبل ما تكبّر الالتزام'};
     else if(readiness<70||evidence<70)traffic={key:'yellow',icon:'🟡',title:'الصورة قريبة، لكن محتاجة دليل أوضح في نقطة محددة'};
-    const gaps=Object.keys(axisScores).sort((a,b)=>axisScores[a]-axisScores[b]).slice(0,3).map(axis=>({axis,label:AXES[axis],score:axisScores[axis],why:GAP_INFO[axis].why,missing:GAP_INFO[axis].missing}));
+    const rankedAxes=rankAxes(type,axisScores);
+    const weakAxes=rankedAxes.filter(axis=>axisScores[axis]<70);
+    const reviewMode=weakAxes.length===0;
+    const chosenAxes=(reviewMode?rankedAxes.slice(0,2):weakAxes.slice(0,3));
+    const gapsTitle=reviewMode?'نقط راجعها قبل ما تكبّر الالتزام':'أهم الحاجات الناقصة قبل ما تتحرك';
+    const gaps=chosenAxes.map(axis=>reviewMode
+      ? {axis,label:AXES[axis],score:axisScores[axis],why:'المحور ده قوي نسبيًا في إجاباتك، لكن راجعه قبل أي التزام أكبر علشان تتأكد إن الدليل ما زال حديثًا.',missing:GAP_INFO[axis].missing,reviewOnly:true}
+      : {axis,label:AXES[axis],score:axisScores[axis],why:GAP_INFO[axis].why,missing:GAP_INFO[axis].missing,reviewOnly:false}
+    );
     const problem=String(input.problem||input.quickChoice||'القرار الذي تفكر فيه').trim();
     const summary=`اللي كتبته أقرب إلى: ${DECISIONS[type].label}. وبما إنك في مرحلة ${STAGES[stage]}، فأول حاجة محتاجة تتأكد منها هي: ${gaps[0].label}`;
     const plan=personalizedPlan(type,gaps,stage);
