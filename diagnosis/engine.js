@@ -14,10 +14,10 @@
   };
   const STAGES={idea:'فكرة / تحت التأسيس',running:'مشروع قائم'};
   const SCALE=[
-    {value:0,label:'مش عارف / ده مجرد إحساس'},
-    {value:1,label:'عندي شوية ملاحظات'},
-    {value:2,label:'جربت أو عندي أرقام بسيطة'},
-    {value:3,label:'عندي أرقام أو مواقف متكررة تثبت ده'}
+    {value:0,label:'مش عارف / ما عنديش دليل واضح'},
+    {value:1,label:'عندي انطباع أو حالات قليلة'},
+    {value:2,label:'عندي تجربة أو أرقام لفترة محدودة'},
+    {value:3,label:'عندي بيانات أو مواقف متكررة وبراجعها'}
   ];
   const QUICK_MAP={
     'عندي فكرة مشروع':'idea_validation',
@@ -48,20 +48,80 @@
 
   const CORE={
     idea:[
-      {id:'idea_customer',axis:'customer',prompt:'محدد مين الشخص اللي ممكن يشتري، وإيه المشكلة اللي بيحاول يحلها دلوقتي؟'},
-      {id:'idea_demand',axis:'demand',prompt:'هل حد مناسب عمل خطوة حقيقية، زي تجربة أو طلب أو دفع، مش بس قال إن الفكرة حلوة؟'},
-      {id:'idea_economics',axis:'economics',prompt:'عندك تقدير للسعر اللي هتبيع به، وتكلفة تنفيذ أول بيعة؟'},
-      {id:'idea_execution',axis:'execution',prompt:'عارف أبسط نسخة تقدر تجهزها وتوصلها لعميل خلال 7 أيام؟'},
-      {id:'idea_decision',axis:'decision',prompt:'محدد هتعمل إيه بعد التجربة، وإمتى توقف أو تراجع النتيجة؟'},
-      {id:'idea_evidence',metric:'evidence',evidenceWeight:2,prompt:'أقوى حاجة مخلياك مصدق إن الفكرة ممكن تنفع مبنية على إيه؟'}
+      {id:'idea_customer',axis:'customer',evidenceWeight:.5,prompt:'مين العميل الأقرب للفكرة؟ وقد إيه متأكد إن المشكلة دي مهمة له دلوقتي؟',options:[
+        {value:0,label:'لسه مش محدد العميل أو المشكلة'},
+        {value:1,label:'محددهم بشكل عام من افتراضاتي'},
+        {value:2,label:'اتكلمت مع ناس مناسبين وسمعت المشكلة منهم'},
+        {value:3,label:'نفس المشكلة اتكررت بوضوح مع أكتر من عميل مناسب'}
+      ]},
+      {id:'idea_demand',axis:'demand',evidenceWeight:.8,prompt:'إيه أقوى دليل عندك إن العميل مستعد يعمل خطوة فعلية ناحية الحل؟',options:[
+        {value:0,label:'مفيش خطوة فعلية لحد دلوقتي'},
+        {value:1,label:'فيه إعجاب أو اهتمام بالكلام'},
+        {value:2,label:'فيه تجربة أو طلب تفاصيل جاد'},
+        {value:3,label:'فيه حجز أو طلب أو دفع فعلي'}
+      ]},
+      {id:'idea_economics',axis:'economics',evidenceWeight:.5,prompt:'قد إيه أرقام أول بيعة واضحة عندك: سعر البيع، التكلفة المباشرة، واللي هيفضل منها؟',options:[
+        {value:0,label:'لسه ما حسبتش الأرقام'},
+        {value:1,label:'عندي تقدير عام'},
+        {value:2,label:'حسبت نموذج أو سيناريو مبدئي'},
+        {value:3,label:'عندي حساب واضح ومراجع للأرقام الأساسية'}
+      ]},
+      {id:'idea_execution',axis:'execution',evidenceWeight:.4,prompt:'هل تقدر تختبر الفكرة بنسخة صغيرة خلال 7 أيام من غير ما تبني المشروع كامل؟',options:[
+        {value:0,label:'مش عارف أبدأ بإيه'},
+        {value:1,label:'عندي تصور لكن محتاج تجهيز كبير'},
+        {value:2,label:'محدد نسخة بسيطة أقدر أجربها'},
+        {value:3,label:'محدد النسخة والعميل وطريقة التسليم فعلًا'}
+      ]},
+      {id:'idea_decision',axis:'decision',evidenceWeight:.4,prompt:'قبل ما تبدأ التجربة، هل محدد إمتى تعتبرها ناجحة وإمتى تعدّل أو توقف؟',options:[
+        {value:0,label:'لا، هجرّب وأشوف'},
+        {value:1,label:'عندي فكرة عامة عن النجاح'},
+        {value:2,label:'محدد معيار أو اتنين بشكل مبدئي'},
+        {value:3,label:'محدد معيار نجاح وحد توقف وموعد مراجعة'}
+      ]},
+      {id:'idea_evidence',metric:'evidence',evidenceWeight:2,prompt:'لما تقول إن الفكرة واعدة، أقوى حاجة بتعتمد عليها إيه؟',options:[
+        {value:0,label:'إحساسي أو رأي ناس قريبة'},
+        {value:1,label:'مقابلات أو ملاحظات قليلة'},
+        {value:2,label:'تجربة صغيرة أو طلبات أولية'},
+        {value:3,label:'شراء/حجز أو سلوك متكرر من عملاء مناسبين'}
+      ]}
     ],
     running:[
-      {id:'run_customer',axis:'customer',prompt:'عارف أنهي نوع من العملاء بيرجع يشتري وبيكون راضي، وبيفضل لك منه مكسب مناسب؟'},
-      {id:'run_demand',axis:'demand',prompt:'تقدر تفرّق بين اللي بيشتري منك بشكل متكرر واللي اشترى مرة بسبب خصم أو عرض مؤقت؟'},
-      {id:'run_economics',axis:'economics',prompt:'لما تقارن السعر والتكلفة والفلوس اللي دخلت فعلًا، هل كل الأرقام من نفس الفترة ومتسجلة بنفس الطريقة؟',options:[{value:0,label:'مش عارف أو الأرقام مش متجمعة'},{value:1,label:'عندي أرقام متفرقة ومش لنفس الفترة'},{value:2,label:'جمعت أرقام فترة واحدة بشكل مبدئي'},{value:3,label:'براجع نفس الأرقام بانتظام وبطريقة واضحة'}]},
-      {id:'run_execution',axis:'execution',prompt:'متابع الطلب من وقت ما يدخل لحد ما يتسلّم والفلوس تدخل فعلًا؟'},
-      {id:'run_decision',axis:'decision',prompt:'محدد الرقم اللي هتقرر على أساسه، وإمتى تكمل، وإمتى توقف وتراجع؟'},
-      {id:'run_evidence',metric:'evidence',evidenceWeight:2,prompt:'أقوى حاجة معتمد عليها في قرارك الحالي مبنية على إيه؟'}
+      {id:'run_customer',axis:'customer',evidenceWeight:.5,prompt:'قد إيه عارف أنهي نوع عميل بيديك أفضل مزيج من تكرار الشراء والرضا والمكسب؟',options:[
+        {value:0,label:'مش عارف أو بتعامل كل العملاء بنفس الشكل'},
+        {value:1,label:'عندي انطباع من الخبرة'},
+        {value:2,label:'عندي ملاحظات أو أرقام لفترة محدودة'},
+        {value:3,label:'مقسم العملاء وبراجع الشراء والربحية بانتظام'}
+      ]},
+      {id:'run_demand',axis:'demand',evidenceWeight:.6,prompt:'هل تقدر تميّز الطلب الحقيقي المتكرر عن مبيعات جاية من خصم أو ظرف مؤقت؟',options:[
+        {value:0,label:'لا، كل المبيعات عندي رقم واحد'},
+        {value:1,label:'أحيانًا بلاحظ الفرق'},
+        {value:2,label:'بفصل بينهم في بعض الفترات أو القنوات'},
+        {value:3,label:'بتابع التكرار ومصدر الطلب بشكل واضح ومنتظم'}
+      ]},
+      {id:'run_economics',axis:'economics',evidenceWeight:.7,prompt:'بالنسبة للقرار اللي بتراجعه، هل السعر والتكلفة والتحصيل من نفس الفترة ومتسجلين بطريقة واحدة؟',options:[
+        {value:0,label:'الأرقام مش متجمعة أو مش متوافقة'},
+        {value:1,label:'عندي أرقام متفرقة أو من فترات مختلفة'},
+        {value:2,label:'جمعت فترة واحدة بشكل مبدئي'},
+        {value:3,label:'عندي أرقام متسقة وبراجعها دوريًا'}
+      ]},
+      {id:'run_execution',axis:'execution',evidenceWeight:.5,prompt:'قد إيه عندك رؤية واضحة لرحلة الطلب من دخوله لحد التسليم والتحصيل؟',options:[
+        {value:0,label:'مش متابع الرحلة كاملة'},
+        {value:1,label:'بعرف المشاكل لما تحصل'},
+        {value:2,label:'متابع أغلب الخطوات ووقت التنفيذ'},
+        {value:3,label:'متابع الخطوات والوقت والأخطاء والتحصيل بانتظام'}
+      ]},
+      {id:'run_decision',axis:'decision',evidenceWeight:.5,prompt:'هل القرار مربوط برقم أو شرط واضح وموعد مراجعة محدد؟',options:[
+        {value:0,label:'لا، القرار مبني على الإحساس غالبًا'},
+        {value:1,label:'عندي هدف عام فقط'},
+        {value:2,label:'محدد رقم أو شرط مبدئي'},
+        {value:3,label:'محدد معيار قرار وحد توقف وموعد مراجعة'}
+      ]},
+      {id:'run_evidence',metric:'evidence',evidenceWeight:2,prompt:'أقوى دليل بتعتمد عليه في القرار الحالي جاي منين؟',options:[
+        {value:0,label:'إحساس أو انطباع شخصي'},
+        {value:1,label:'ملاحظات أو حالات فردية'},
+        {value:2,label:'أرقام أو تجربة لفترة محدودة'},
+        {value:3,label:'بيانات متكررة ومراجعة من أكتر من مصدر داخل المشروع'}
+      ]}
     ]
   };
 
@@ -117,16 +177,53 @@
   };
 
   const STAGE_FOLLOW={
-    idea:{id:'stage_idea_commitment',axis:'demand',evidenceWeight:1,prompt:'طلبت من شخص مناسب يعمل خطوة واضحة، زي تجربة أو طلب أو حجز، بدل ما تسأله بس: «عجبتك الفكرة؟»'},
-    running:{id:'stage_run_90days',axis:'economics',evidenceWeight:1,prompt:'تقدر تطلع أرقام آخر 90 يومًا الخاصة بالقرار ده بسهولة، ومن غير ما تلاقي أرقام مختلفة لنفس الحاجة؟'}
+    idea:{id:'stage_idea_commitment',axis:'demand',evidenceWeight:1,prompt:'قبل ما تعتبر الاهتمام دليل طلب، إيه أقوى التزام أخدته من عميل مناسب؟',options:[
+      {value:0,label:'مفيش التزام؛ مجرد رأي أو إعجاب'},
+      {value:1,label:'وافق يتكلم أو يشوف تفاصيل'},
+      {value:2,label:'وافق يجرب أو يحجز مبدئيًا'},
+      {value:3,label:'طلب أو حجز أو دفع فعلًا'}
+    ]},
+    running:{id:'stage_run_90days',axis:'economics',evidenceWeight:1,prompt:'لو طلبت دلوقتي أرقام آخر 90 يوم الخاصة بالقرار، هتطلعها قد إيه بسهولة وبنفس التعريفات؟',options:[
+      {value:0,label:'مش متاحة أو كل مصدر بيدي رقم مختلف'},
+      {value:1,label:'هجمعها يدويًا وهتحتاج تنضيف كبير'},
+      {value:2,label:'معظمها متاح لكن محتاج مراجعة بسيطة'},
+      {value:3,label:'متاحة ومتسقة وأقدر أراجعها فورًا'}
+    ]}
   };
+
   const WEAK_FOLLOW={
-    customer:{id:'weak_customer',axis:'customer',evidenceWeight:1,prompt:'قد إيه كلامك عن المشكلة جاي من حاجات العملاء قالوها أو عملوها فعلًا؟'},
-    demand:{id:'weak_demand',axis:'demand',evidenceWeight:1.2,prompt:'عندك تصرفات حقيقية تقدر تعدّها، زي طلب أو تجربة أو حجز أو شراء، مش كلام بس؟'},
-    economics:{id:'weak_economics',axis:'economics',evidenceWeight:1.2,prompt:'كل رقم بتعتمد عليه مكتوب جاي منين، وبيخص أنهي فترة، وبيحسب إيه بالضبط؟'},
-    execution:{id:'weak_execution',axis:'execution',evidenceWeight:1,prompt:'فيه خطوة واحدة في الشغل قست بتاخد وقت قد إيه، وبتطلع بجودة إيه، وبتكلف كام؟'},
-    decision:{id:'weak_decision',axis:'decision',evidenceWeight:1,prompt:'محدد إمتى تبدأ، وإمتى تقول كفاية وتوقف، وإمتى ترجع تبص على النتيجة؟'}
+    customer:{id:'weak_customer',axis:'customer',evidenceWeight:1,prompt:'لما توصف مشكلة العميل، قد إيه الكلام ده جاي من العميل نفسه؟',options:[
+      {value:0,label:'من افتراضاتي أنا'},
+      {value:1,label:'من كلام حالة أو حالتين'},
+      {value:2,label:'اتكرر مع عدة عملاء مناسبين'},
+      {value:3,label:'اتكرر ومعاه تصرف أو شراء يؤكد أهميته'}
+    ]},
+    demand:{id:'weak_demand',axis:'demand',evidenceWeight:1.2,prompt:'قد إيه عندك سلوك حقيقي تقدر تعدّه بدل كلام الاهتمام؟',options:[
+      {value:0,label:'مفيش سلوك قابل للعد'},
+      {value:1,label:'استفسارات أو اهتمام فقط'},
+      {value:2,label:'تجارب/طلبات أولية قابلة للعد'},
+      {value:3,label:'شراء/حجز متكرر أو التزام واضح'}
+    ]},
+    economics:{id:'weak_economics',axis:'economics',evidenceWeight:1.2,prompt:'قد إيه الأرقام اللي بتعتمد عليها موثقة: مصدرها، فترتها، وتعريفها؟',options:[
+      {value:0,label:'الأرقام تقديرية أو غير موثقة'},
+      {value:1,label:'بعضها معروف المصدر وبعضها لا'},
+      {value:2,label:'معظمها موثق لنفس الفترة'},
+      {value:3,label:'كل رقم له مصدر وفترة وتعريف واضح'}
+    ]},
+    execution:{id:'weak_execution',axis:'execution',evidenceWeight:1,prompt:'هل قست خطوة واحدة على الأقل في التشغيل من حيث الوقت والجودة والتكلفة؟',options:[
+      {value:0,label:'لا، ما قستش'},
+      {value:1,label:'عندي تقدير من الخبرة'},
+      {value:2,label:'قستها لفترة أو على عينة'},
+      {value:3,label:'بقيسها بانتظام وبعرف الانحرافات'}
+    ]},
+    decision:{id:'weak_decision',axis:'decision',evidenceWeight:1,prompt:'قد إيه القرار له نقطة بداية وحد توقف وموعد مراجعة واضحين؟',options:[
+      {value:0,label:'مش محددين'},
+      {value:1,label:'واحد منهم واضح فقط'},
+      {value:2,label:'معظمهم محدد بشكل مبدئي'},
+      {value:3,label:'البداية وحد التوقف وموعد المراجعة محددين'}
+    ]}
   };
+
   const GAP_INFO={
     customer:{why:'لو مش محدد مين العميل وإيه مشكلته، ممكن تقدم حاجة كويسة لشخص مش محتاجها.',missing:'كلام أو تصرف مباشر من عميل مناسب يوضح إن المشكلة مهمة له دلوقتي.'},
     demand:{why:'الإعجاب مش معناه إن الشخص هيشتري؛ القرار محتاج خطوة حقيقية تقدر تعدّها.',missing:'طلب أو تجربة أو حجز أو شراء فعلي، مش مجرد كلام مشجع.'},
@@ -167,6 +264,7 @@
   function normalize(value){return String(value||'').toLowerCase().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/[ًٌٍَُِّْـ]/g,'').trim();}
   function classifyProblem(text,quickChoice,stage){
     const normalized=normalize(text);
+    if(quickChoice&&quickChoice!=='قرار آخر'&&QUICK_MAP[quickChoice]) return QUICK_MAP[quickChoice];
     if(!normalized&&quickChoice&&QUICK_MAP[quickChoice]) return QUICK_MAP[quickChoice];
     let best='general_decision',bestScore=0;
     Object.keys(DECISIONS).forEach(type=>{
@@ -192,6 +290,20 @@
   }
   function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
   function band(value,cuts,labels){return value<cuts[0]?labels[0]:value<cuts[1]?labels[1]:labels[2];}
+  function personalizedPlan(type,gaps,stage){
+    const experiment=EXPERIMENTS[type]||EXPERIMENTS.general_decision;
+    const label=DECISIONS[type]?.label||DECISIONS.general_decision.label;
+    return [
+      'اكتب القرار بصيغة واحدة محددة: «'+label+'»، وحدد إيه اللي هيتغير لو القرار كان صح.',
+      'اقفل أضعف فجوة أولًا: '+gaps[0].missing,
+      'اجمع دليل للنقطة الثانية: '+gaps[1].missing,
+      'راجع النقطة الثالثة قبل أي التزام أكبر: '+gaps[2].missing,
+      'نفّذ أصغر تجربة مناسبة: '+experiment.test,
+      'سجّل النتيجة كما حدثت، وقارنها بمعيار النجاح: '+experiment.success,
+      'اتخذ الخطوة التالية على أساس النتيجة: استمر لو المعيار تحقق، وإلا عدّل أو توقف. راجع القرار: '+experiment.review
+    ];
+  }
+
   function analyze(input){
     const stage=input.stage||'running',type=DECISIONS[input.decisionType]?input.decisionType:'general_decision';
     const questions=input.questions||[],answers=input.answers||{};
@@ -218,7 +330,8 @@
     const gaps=Object.keys(axisScores).sort((a,b)=>axisScores[a]-axisScores[b]).slice(0,3).map(axis=>({axis,label:AXES[axis],score:axisScores[axis],why:GAP_INFO[axis].why,missing:GAP_INFO[axis].missing}));
     const problem=String(input.problem||input.quickChoice||'القرار الذي تفكر فيه').trim();
     const summary=`اللي كتبته أقرب إلى: ${DECISIONS[type].label}. وبما إنك في مرحلة ${STAGES[stage]}، فأول حاجة محتاجة تتأكد منها هي: ${gaps[0].label}`;
-    return {stage,type,decision:DECISIONS[type],problem,axisScores,readiness,evidence,riskScore,readinessBand,evidenceBand,riskBand,traffic,gaps,summary,plan:PLANS[type],experiment:EXPERIMENTS[type],extraNote:String(input.extraNote||'').trim(),nextDecision:String(input.nextDecision||'').trim()};
+    const plan=personalizedPlan(type,gaps,stage);
+    return {stage,type,decision:DECISIONS[type],problem,axisScores,readiness,evidence,riskScore,readinessBand,evidenceBand,riskBand,traffic,gaps,summary,plan,experiment:EXPERIMENTS[type],extraNote:String(input.extraNote||'').trim(),nextDecision:String(input.nextDecision||'').trim()};
   }
   function safeEventData(result){return {stage:result.stage,decision_type:result.type,score_band:result.readinessBand,evidence_band:result.evidenceBand,risk_band:result.riskBand};}
   return {AXES,STAGES,SCALE,QUICK_MAP,DECISIONS,classifyProblem,coreQuestions,adaptiveQuestions,weakAxisFromCore,analyze,safeEventData};
