@@ -3,7 +3,7 @@
   const Lab=window.DecisionLab;
   if(!Lab) throw new Error('DecisionLab engine is unavailable');
 
-  const STORE_KEY='decision_lab_v3';
+  const STORE_KEY='decision_lab_v4';
   const $=id=>document.getElementById(id);
   const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
