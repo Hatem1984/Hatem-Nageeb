@@ -177,8 +177,18 @@
       {id:'cash_split',axis:'execution',evidenceWeight:1.1,prompt:'لما تسجل شغلك، بتفرّق بين يوم البيع، ويوم إصدار الفاتورة، ويوم دخول الفلوس، ويوم دفع المصروف؟',options:[{value:0,label:'لا، كله متسجل كرقم واحد'},{value:1,label:'بفرّق بينهم أحيانًا'},{value:2,label:'متفصلين في أغلب البيعات'},{value:3,label:'كل تاريخ متسجل بوضوح وبانتظام'}]}
     ],
     sales:[
-      {id:'sales_funnel',axis:'execution',evidenceWeight:1.2,prompt:'عارف أغلب الناس بتقف فين: بعد ما تسأل، ولا بعد ما تعرف السعر، ولا قبل الشراء؟'},
-      {id:'sales_offer',axis:'customer',evidenceWeight:1,prompt:'اللي بتعرضه بيقول للعميل بوضوح هتحل له إيه والنتيجة اللي هياخدها؟'}
+      {id:'sales_funnel',axis:'execution',evidenceWeight:1.2,prompt:'عارف أغلب الناس بتقف فين: بعد ما تسأل، ولا بعد ما تعرف السعر، ولا قبل الشراء؟',options:[
+        {value:0,label:'مش عارف فين بيقفوا'},
+        {value:1,label:'عندي انطباع من بعض المحادثات'},
+        {value:2,label:'راجعت عينة وحددت مرحلة تسرب واضحة'},
+        {value:3,label:'بتابع عدد الناس في كل مرحلة بانتظام'}
+      ]},
+      {id:'sales_offer',axis:'customer',evidenceWeight:1,prompt:'اللي بتعرضه بيقول للعميل بوضوح هتحل له إيه والنتيجة اللي هياخدها؟',options:[
+        {value:0,label:'العرض بيركز على المنتج أو الخدمة من غير نتيجة واضحة'},
+        {value:1,label:'النتيجة موجودة لكنها عامة ومش مرتبطة بعميل محدد'},
+        {value:2,label:'النتيجة واضحة لنوع عميل محدد وجربت الصياغة'},
+        {value:3,label:'العملاء بيفهموا النتيجة بوضوح وبتظهر في سلوك الشراء'}
+      ]}
     ],
     retention:[
       {id:'retention_repeat',axis:'demand',evidenceWeight:1.3,prompt:'قد إيه عارف نسبة أو عدد العملاء اللي رجعوا يشتروا مرة تانية خلال فترة واضحة؟',options:[
@@ -195,36 +205,101 @@
       ]}
     ],
     marketing:[
-      {id:'marketing_quality',axis:'demand',evidenceWeight:1.2,prompt:'بتتابع كام شخص جاي من الإعلان كان مناسب فعلًا واشترى، مش بس كام واحد بعت رسالة؟'},
-      {id:'marketing_unit',axis:'economics',evidenceWeight:1.3,prompt:'عارف بتدفع كام في الإعلان علشان تكسب عميل جديد، وبيفضل لك كام من بيعته بعد تكلفة تنفيذها؟'}
+      {id:'marketing_quality',axis:'demand',evidenceWeight:1.2,prompt:'بتتابع كام شخص جاي من الإعلان كان مناسب فعلًا واشترى، مش بس كام واحد بعت رسالة؟',options:[
+        {value:0,label:'بتابع الرسائل أو الضغطات فقط'},
+        {value:1,label:'بعرف مين مناسب تقريبًا لكن من غير تسجيل منتظم'},
+        {value:2,label:'بسجل المناسبين واللي اشتروا في حملات أو فترات محددة'},
+        {value:3,label:'بتابع المسار من الإعلان لحد الشراء الفعلي بانتظام'}
+      ]},
+      {id:'marketing_unit',axis:'economics',evidenceWeight:1.3,prompt:'عارف بتدفع كام في الإعلان علشان تكسب عميل جديد، وبيفضل لك كام من بيعته بعد تكلفة تنفيذها؟',options:[
+        {value:0,label:'مش عارف تكلفة العميل ولا اللي بيفضل من بيعته'},
+        {value:1,label:'عندي تقدير لواحد منهم فقط'},
+        {value:2,label:'حسبت الاتنين على حملة أو فترة محدودة'},
+        {value:3,label:'بتابع تكلفة العميل والعائد من بيعته بانتظام'}
+      ]}
     ],
     cost_reduction:[
-      {id:'cost_value',axis:'economics',evidenceWeight:1.2,prompt:'عارف كل مصروف بيأثر إزاي على البيع أو الجودة أو التسليم أو دخول الفلوس؟'},
-      {id:'cost_test',axis:'execution',evidenceWeight:1,prompt:'تقدر تقلل مصروف واحد لفترة قصيرة وتشوف هل الجودة أو التسليم اتأثروا؟'}
+      {id:'cost_value',axis:'economics',evidenceWeight:1.2,prompt:'عارف المصاريف الكبيرة عندك بتحمي إيه: البيع، الجودة، التسليم، ولا مفيش أثر واضح؟',options:[
+        {value:0,label:'عارف الإجمالي فقط ومش عارف أثر كل مصروف'},
+        {value:1,label:'عارف أثر بعض المصاريف من الخبرة'},
+        {value:2,label:'راجعت أكبر المصاريف وربطتها بأثر مبدئي'},
+        {value:3,label:'براجع أثر المصاريف الأساسية قبل ما أزودها أو أقللها'}
+      ]},
+      {id:'cost_test',axis:'execution',evidenceWeight:1,prompt:'هل تقدر تختبر تقليل مصروف واحد بطريقة قابلة للرجوع وتقيس أثرها؟',options:[
+        {value:0,label:'لا، أي خفض هيكون شامل ومش هعرف أقيس أثره'},
+        {value:1,label:'أقدر أقلله لكن القياس هيكون بالانطباع'},
+        {value:2,label:'أقدر أعمل تجربة صغيرة وأقيس مؤشرًا أو اثنين'},
+        {value:3,label:'عملت اختبارات مشابهة وبقارن الجودة والوقت والتكلفة قبل وبعد'}
+      ]}
     ],
     operations:[
-      {id:'ops_wait',axis:'execution',evidenceWeight:1.4,prompt:'متابع الوقت اللي الطلب بيقف فيه، وعدد المرات اللي بتعيد فيها الشغل بسبب خطأ أو نقص؟'},
-      {id:'ops_customer',axis:'customer',evidenceWeight:1,prompt:'عارف أنهي تأخير بيضايق العميل فعلًا وأنهي تأخير مجرد مشكلة داخلية عندك؟'}
+      {id:'ops_wait',axis:'execution',evidenceWeight:1.4,prompt:'متابع الوقت اللي الطلب بيقف فيه، وعدد المرات اللي بتعيد فيها الشغل بسبب خطأ أو نقص؟',options:[
+        {value:0,label:'مش متابع الوقت أو إعادة الشغل'},
+        {value:1,label:'بعرف المشاكل لما تحصل لكن من غير تسجيل'},
+        {value:2,label:'قست عينة من الطلبات أو فترة محدودة'},
+        {value:3,label:'بتابع الانتظار وإعادة الشغل بانتظام'}
+      ]},
+      {id:'ops_customer',axis:'customer',evidenceWeight:1,prompt:'عارف أنهي تأخير بيضايق العميل فعلًا وأنهي تأخير مجرد مشكلة داخلية عندك؟',options:[
+        {value:0,label:'بفترض من نفسي إيه اللي يضايق العميل'},
+        {value:1,label:'عندي شكاوى أو ملاحظات من حالات قليلة'},
+        {value:2,label:'نفس نوع التأخير اتكرر في كلام عدة عملاء'},
+        {value:3,label:'مربط التأخير بشكاوى أو إلغاءات أو تكرار شراء فعلي'}
+      ]}
     ],
     expansion:[
       {id:'expand_repeat',axis:'execution',evidenceWeight:1.2,prompt:'لو الشغل زاد فجأة، فريقك ونظامك يقدروا يستحملوا من غير ما الجودة أو التسليم يقعوا؟',options:[{value:0,label:'لا، الشغل واقف عليّ أو بيتعطل'},{value:1,label:'نقدر بصعوبة ولمدة قصيرة'},{value:2,label:'جربنا زيادة بسيطة والشغل استمر'},{value:3,label:'عندنا طريقة واضحة تستحمل شغل زيادة'}]},
-      {id:'expand_demand',axis:'demand',evidenceWeight:1.4,prompt:'فيه ناس من السوق أو المنطقة الجديدة طلبت تشتري أو سألت بشكل جاد فعلًا؟'}
+      {id:'expand_demand',axis:'demand',evidenceWeight:1.4,prompt:'إيه أقوى دليل إن السوق أو المنطقة الجديدة فيها طلب حقيقي؟',options:[
+        {value:0,label:'مجرد توقع أو إحساس'},
+        {value:1,label:'استفسارات أو اهتمام بدون خطوة جدية'},
+        {value:2,label:'طلبات أو تجارب أولية من السوق الجديد'},
+        {value:3,label:'مبيعات أو حجوزات متكررة من السوق الجديد'}
+      ]}
     ],
     new_branch:[
       {id:'branch_demand',axis:'demand',evidenceWeight:1.5,prompt:'فيه ناس من المنطقة الجديدة طلبت تشتري أو سألت بشكل جاد فعلًا؟',options:[{value:0,label:'لا، ده توقع مني'},{value:1,label:'فيه أسئلة عابرة من ناس قليلة'},{value:2,label:'فيه طلبات أو محادثات جدية'},{value:3,label:'فيه طلبات أو مبيعات متكررة من المنطقة'}]},
       {id:'branch_economics',axis:'economics',evidenceWeight:1.3,prompt:'عارف الفرع لازم يبيع تقريبًا بكام كل شهر علشان يغطي مصاريفه؟ ولو المبيعات طلعت أقل من المتوقع، تقدر تستحمل قد إيه؟',options:[{value:0,label:'مش عارف'},{value:1,label:'عندي تقدير عام للمصاريف'},{value:2,label:'حسبت المبيعات المطلوبة بشكل مبدئي'},{value:3,label:'عندي حساب واضح وعارف أقدر أستحمل لحد إمتى'}]}
     ],
     new_product:[
-      {id:'product_problem',axis:'customer',evidenceWeight:1.2,prompt:'المشكلة اللي المنتج الجديد بيحلها مهمة للعميل لدرجة إنه عايز يحلها دلوقتي؟'},
-      {id:'product_preorder',axis:'demand',evidenceWeight:1.5,prompt:'قبل ما تعمل المنتج كامل، هل حد طلب يجربه أو حجزه أو دفع جزء من ثمنه؟'}
+      {id:'product_problem',axis:'customer',evidenceWeight:1.2,prompt:'إيه أقوى دليل إن المشكلة اللي المنتج الجديد بيحلها مهمة للعميل دلوقتي؟',options:[
+        {value:0,label:'افتراض مني من غير كلام مباشر من العميل'},
+        {value:1,label:'سمعتها من حالة أو حالتين'},
+        {value:2,label:'اتكررت من عدة عملاء مناسبين'},
+        {value:3,label:'اتكررت ومعاها طلب لحل أو تجربة أو شراء'}
+      ]},
+      {id:'product_preorder',axis:'demand',evidenceWeight:1.5,prompt:'قبل ما تعمل المنتج كامل، إيه أقوى التزام أخدته من عميل؟',options:[
+        {value:0,label:'مفيش التزام لسه'},
+        {value:1,label:'اهتمام أو طلب معلومات فقط'},
+        {value:2,label:'وافق يجرب أو طلب حجزًا مبدئيًا'},
+        {value:3,label:'حجز أو دفع أو اشترى نسخة أولية'}
+      ]}
     ],
     customer_concentration:[
-      {id:'concentration_share',axis:'economics',evidenceWeight:1.3,prompt:'عارف أكبر 3 عملاء بيدخلوا كام من دخل المشروع، وبيفضل لك منهم كام، وبيدفعوا بعد قد إيه؟'},
-      {id:'concentration_alt',axis:'demand',evidenceWeight:1.1,prompt:'جربت تبيع لنوع عملاء مختلف أو من مكان جديد علشان ما تعتمدش على عميل أو اتنين؟'}
+      {id:'concentration_share',axis:'economics',evidenceWeight:1.3,prompt:'قد إيه صورة اعتمادك على أكبر العملاء واضحة بالأرقام؟',options:[
+        {value:0,label:'مش عارف نسبة أكبر العملاء من الدخل'},
+        {value:1,label:'عارف أكبر عميل تقريبًا فقط'},
+        {value:2,label:'حسبت نسبة أكبر 3 عملاء من الدخل'},
+        {value:3,label:'عارف النسبة + الربحية + مدة التحصيل لكل عميل كبير'}
+      ]},
+      {id:'concentration_alt',axis:'demand',evidenceWeight:1.1,prompt:'إيه أقوى دليل إن عندك مصدر طلب بديل لو عميل كبير قلّل أو وقف؟',options:[
+        {value:0,label:'مفيش بديل مجرّب'},
+        {value:1,label:'فيه ناس مهتمة لكن من غير شراء'},
+        {value:2,label:'جربت مع عملاء جدد وفيه طلبات أولية'},
+        {value:3,label:'عندي عملاء جدد بيدفعوا وبدأوا يقللوا الاعتماد على الكبار'}
+      ]}
     ],
     general_decision:[
-      {id:'general_options',axis:'decision',evidenceWeight:1,prompt:'كتبت الاختيارات المتاحة فعلًا، ولا مركز على اختيار واحد وبتحاول تقنع نفسك به؟'},
-      {id:'general_change',axis:'decision',evidenceWeight:1.2,prompt:'عارف إيه المعلومة الجديدة اللي لو ظهرت هتخليك تغيّر قرارك؟'}
+      {id:'general_options',axis:'decision',evidenceWeight:1,prompt:'قد إيه البدائل قدامك مكتوبة ومقارنة بدل ما تكون مركز على اختيار واحد؟',options:[
+        {value:0,label:'مركز على اختيار واحد فقط'},
+        {value:1,label:'عندي بديل أو اتنين في دماغي'},
+        {value:2,label:'كتبت البدائل وقارنتهم بشكل مبدئي'},
+        {value:3,label:'كتبت البدائل ومعايير المقارنة والقيود لكل بديل'}
+      ]},
+      {id:'general_change',axis:'decision',evidenceWeight:1.2,prompt:'هل محدد المعلومة اللي لو ظهرت هتغيّر قرارك فعلًا؟',options:[
+        {value:0,label:'مش عارف إيه اللي ممكن يغيّر قراري'},
+        {value:1,label:'عندي فكرة عامة لكن مش محددة'},
+        {value:2,label:'محدد معلومة واحدة حاسمة'},
+        {value:3,label:'محدد المعلومة والحد اللي عنده هغيّر أو أوقف القرار'}
+      ]}
     ]
   };
 
