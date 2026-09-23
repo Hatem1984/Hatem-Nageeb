@@ -130,7 +130,13 @@
   $('nextBtn').addEventListener('click',()=>{
     const q=state.questions[state.index]; if(state.answers[q.id]===undefined)return;
     track('DiagnosticQuestionProgress','diagnostic_question_progress');
-    if(state.index===4&&state.questions.length===5){state.questions.push(...Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers));}
+    if(state.index===4){
+      const core=state.questions.slice(0,5);
+      const adaptive=Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers);
+      const validIds=new Set([...core,...adaptive].map(item=>item.id));
+      Object.keys(state.answers).forEach(id=>{if(!validIds.has(id))delete state.answers[id];});
+      state.questions=[...core,...adaptive];
+    }
     if(state.index<9){
       state.index++; save(); renderQuestion();
     }else{
