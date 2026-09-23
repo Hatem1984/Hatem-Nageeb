@@ -90,7 +90,7 @@ permalink: /
 .payment-method-card.xpay{border-color:rgba(78,98,255,.34);background:linear-gradient(145deg,#f4f7ff,#fff);box-shadow:0 12px 28px rgba(74,92,219,.09)}
 .payment-method-card.xpay .payment-method-icon{color:#fff;background:linear-gradient(135deg,#151f3a,#6656ff);font-size:11px;letter-spacing:.2px}
 .payment-method-card.xpay b{color:#16244d}
-.payment-method-card.xpay small{color:#5d6d86}
+.payment-method-card.xpay small{color:#5d6d86}\n.payment-method-card.xpay[aria-disabled=\"true\"]{opacity:.55;pointer-events:none;filter:grayscale(.15)}
 </style></head>{% endcapture %}
 {% assign page = page | replace: '</head>', final_week_style %}
 
@@ -99,7 +99,7 @@ permalink: /
 <span class="payment-method-icon">XPay</span>
 <div>
 <b id="xpayCardTitle">ادفع إلكترونيًا — 2,000 جنيه</b>
-<small>بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع</small>
+<small id=\"xpayCardNote\">بطاقة بنكية / Fawry / ValU · تأكيد إلكتروني بعد نجاح الدفع</small>
 </div>
 <span class="payment-arrow">←</span>
 </a>{% endcapture %}
