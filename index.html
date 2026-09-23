@@ -140,13 +140,8 @@ document.addEventListener('DOMContentLoaded',function(){
       var h=document.getElementById('seatCountHeadline');
       var d=document.getElementById('seatCountDetail');
       if(!h||!d||typeof s.available!=='number'||typeof s.booked!=='number')return;
-      if(s.available<=0){
-        h.textContent='اكتملت المقاعد المتاحة';
-        d.textContent='تواصل معنا للاستفسار عن قائمة الانتظار أو الدفعة التالية.';
-      }else{
-        h.textContent=s.available+' مقعدًا متاحًا من '+s.capacity;
-        d.textContent='المقاعد المحجوزة المؤكدة: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
-      }
+      h.textContent='الحد الأقصى '+s.capacity+' مقعدًا';
+      d.textContent='الحجوزات المؤكدة عبر XPay حتى الآن: '+s.booked+' · تثبيت المقعد بـ2,000 جنيه';
     }).catch(function(){});
 });
 </script></body>{% endcapture %}
