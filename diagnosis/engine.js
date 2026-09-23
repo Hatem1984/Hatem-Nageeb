@@ -495,7 +495,7 @@
       ]}
     ],
     cashflow:[
-      {id:'cash_stress',axis:'decision',evidenceWeight:1.3,prompt:'لو أكبر عميلين اتأخروا 30 يوم، هل تعرف هتغطي المرتبات والإيجار والموردين منين؟',options:[
+      {id:'cash_stress',axis:'decision',evidenceWeight:1.3,prompt:'لو جزء مهم من تحصيلاتك اتأخر 30 يوم، هل تعرف هتغطي المرتبات والإيجار والموردين منين؟',options:[
         {value:0,label:'لا، غالبًا هتفاجئ وقتها'},
         {value:1,label:'عندي إحساس إننا هنعدّيها لكن من غير رقم'},
         {value:2,label:'عندي تقدير للاحتياطي والفجوة المتوقعة'},
