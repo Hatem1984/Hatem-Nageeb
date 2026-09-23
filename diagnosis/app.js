@@ -5,7 +5,7 @@
 
   const STORE_KEY='decision_lab_v2';
   const $=id=>document.getElementById(id);
-  const views=['intake','confirm','quiz','context','results'];
+  const views=['intake','confirm','quiz','results'];
   let resumeAvailable=false;
   const state={
     problem:'',quickChoice:'',stage:'',firstName:'',projectName:'',decisionType:'',
@@ -104,7 +104,7 @@
       state.answers[q.id]=Number(e.target.value); $('nextBtn').disabled=false; save();
     }));
     $('prevBtn').style.visibility=state.index===0?'hidden':'visible';
-    $('nextBtn').textContent=state.index===9?'أضف سياقًا اختياريًا':'التالي';
+    $('nextBtn').textContent=state.index===9?'اعرض النتيجة':'التالي';
     $('nextBtn').disabled=state.answers[q.id]===undefined;
   }
   $('prevBtn').addEventListener('click',()=>{if(state.index>0){state.index--;save();renderQuestion();}});
@@ -112,13 +112,16 @@
     const q=state.questions[state.index]; if(state.answers[q.id]===undefined)return;
     track('DiagnosticQuestionProgress','diagnostic_question_progress');
     if(state.index===5&&state.questions.length===6){state.questions.push(...Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers));}
-    if(state.index<9){state.index++;save();renderQuestion();}else{show('context');}
-  });
-  $('contextBackBtn').addEventListener('click',()=>{state.index=9;show('quiz');renderQuestion();});
-  $('resultBtn').addEventListener('click',()=>{
-    state.extraNote=$('extraNote').value.trim(); state.nextDecision=$('nextDecision').value.trim();
-    state.result=Lab.analyze({stage:state.stage,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers,extraNote:state.extraNote,nextDecision:state.nextDecision});
-    renderResult(); track('DiagnosticComplete','diagnostic_complete',Lab.safeEventData(state.result)); show('results');
+    if(state.index<9){
+      state.index++; save(); renderQuestion();
+    }else{
+      state.extraNote='';
+      state.nextDecision='';
+      state.result=Lab.analyze({stage:state.stage,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers,extraNote:'',nextDecision:''});
+      renderResult();
+      track('DiagnosticComplete','diagnostic_complete',Lab.safeEventData(state.result));
+      show('results');
+    }
   });
 
   function renderResult(){
@@ -134,13 +137,12 @@
     $('sevenDays').innerHTML=r.plan.map((step,index)=>`<li><span>اليوم ${index+1}</span>${step}</li>`).join('');
     const x=r.experiment;
     $('experiment').innerHTML=[['إحنا متوقعين إيه؟',x.hypothesis],['هنجرب إزاي؟',x.test],['هنجرب لمدة قد إيه؟',x.duration],['أقصى مبلغ هتصرفه',x.cost],['إمتى نقول إن التجربة ماشية صح؟',x.success],['إمتى نوقف؟',x.stop],['إمتى نرجع نبص على النتيجة؟',x.review]].map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
-    $('adaptiveCtaContext').textContent=r.decision.cta; $('adaptiveCta').textContent='شوف البرنامج مناسب لحالتك إزاي'; $('adaptiveCta').href='../#tracks';
+    $('adaptiveCtaContext').textContent=r.decision.cta;
     $('localContext').textContent=r.extraNote?`ملاحظة أخذتها معك: ${r.extraNote}`:'';
     $('localContext').classList.toggle('hidden',!r.extraNote);
     save();
   }
 
-  $('adaptiveCta').addEventListener('click',()=>track('DiagnosticProgramClick','diagnostic_program_click'));
   $('programBtn').addEventListener('click',()=>track('DiagnosticProgramClick','diagnostic_program_click'));
   $('messengerBtn').addEventListener('click',()=>{
     const r=state.result;
@@ -165,16 +167,6 @@
     try{if(typeof fbq==='function')fbq('track','Contact',cleanEventData(eventData()));}catch(e){}
     track('DiagnosticMessengerClick','diagnostic_messenger_click');
   });
-  $('restartBtn').addEventListener('click',()=>{
-    localStorage.removeItem(STORE_KEY);
-    resumeAvailable=false;
-    Object.assign(state,{problem:'',quickChoice:'',stage:'',firstName:'',projectName:'',decisionType:'',questions:[],answers:{},index:0,result:null,extraNote:'',nextDecision:'',view:'intake'});
-    document.querySelectorAll('input[name="stage"]').forEach(x=>x.checked=false);
-    document.querySelectorAll('[data-quick]').forEach(x=>x.classList.remove('selected'));
-    ['problemInput','firstName','projectName','extraNote','nextDecision'].forEach(id=>$(id).value='');
-    $('resumeNote').classList.add('hidden'); validateIntake(); show('intake');
-  });
-
   const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   function fileToDataUrl(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});}
   async function getLogoData(){const response=await fetch('../assets/شعار_لعبة_البزنس_خفيف.webp',{cache:'force-cache'});if(!response.ok)throw new Error('logo_load_failed');return fileToDataUrl(await response.blob());}
