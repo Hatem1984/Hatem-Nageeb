@@ -164,6 +164,13 @@
       state.result=Lab.analyze({stage:state.stage,sector:state.sector,decisionType:state.decisionType,problem:state.problem,quickChoice:state.quickChoice,questions:state.questions,answers:state.answers});
       renderResult();
       track('DiagnosticComplete','diagnostic_complete',Lab.safeEventData(state.result));
+      const leadData=cleanEventData(Lab.safeEventData(state.result));
+      try{
+        if(typeof fbq==='function') fbq('track','Lead',Object.assign({content_name:'DiagnosticComplete'},leadData));
+      }catch(e){}
+      try{
+        if(typeof gtag==='function') gtag('event','generate_lead',Object.assign({lead_source:'diagnostic'},leadData));
+      }catch(e){}
       show('results');
     }
   });
