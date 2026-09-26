@@ -6,7 +6,7 @@ permalink: /manual-payment/
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>تأكيد التحويل اليدوي | لعبة البزنس</title>
+<title>تأكيد التحويل اليدوي | لعبة البزنس</title><script src="../assets/funnel.js?v=35"></script>
 <meta name="robots" content="noindex,nofollow">
 <style>
 *{box-sizing:border-box}
@@ -48,6 +48,11 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
 <label class="method"><input type="radio" name="method" value="instapay" required><span><img src="../assets/InstaPay_2.webp" alt="">InstaPay</span></label>
 <label class="method"><input type="radio" name="method" value="mobile_wallet" required><span><img src="../assets/mobile-wallet.svg" alt="">محفظة إلكترونية</span></label>
 </div>
+<div class="wallet-extra show" id="transferHelp"><p id="transferHelpText">اختَر وسيلة التحويل لعرض بيانات التحويل.</p><a id="instapayOpen" class="btn secondary" href="https://ipn.eg/S/hatemnageeb/instapay/52oq4Q" target="_blank" rel="noopener" style="display:none;margin-top:8px">فتح InstaPay للتحويل</a></div>
+<div id="balanceRefBox" style="display:none">
+<label for="enrollmentRef">رقم الحجز الأصلي</label>
+<input id="enrollmentRef" maxlength="80" placeholder="مثال: LB-20260926-ABC123">
+</div>
 <div class="wallet-extra" id="walletExtra">
 <p><strong>رقم الاستقبال:</strong> 01011223667 — مسجل على Vodafone Cash، ويستقبل التحويل من المحافظ الإلكترونية المصرية الأخرى.</p>
 <label for="walletProvider">المحفظة اللي حوّلت منها</label>
@@ -65,6 +70,7 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
 <label for="email">البريد الإلكتروني <span class="optional">(اختياري)</span></label><input id="email" type="email" autocomplete="email" maxlength="180">
 <label for="txref">رقم/مرجع العملية <span class="optional">(لو ظاهر عندك)</span></label><input id="txref" maxlength="120">
 <label for="note">ملاحظة للمراجعة <span class="optional">(اختياري)</span></label><textarea id="note" maxlength="500" placeholder="مثال: التحويل تم الساعة 8:35 مساءً"></textarea>
+<input id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
 <div class="privacy">بيانات التحويل تُستخدم فقط لمطابقة الدفع وتأكيد الحجز. لا يتم تسجيل Purchase في Meta إلا بعد اعتماد التحويل كمدفوع فعليًا.</div>
 <button class="primary" id="submitBtn" type="submit">إرسال بيانات التحويل للمراجعة</button>
 <div class="status" id="status"></div>
@@ -73,9 +79,9 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
 <div class="success" id="successBox">
 <span class="kicker">تم استلام البيانات</span>
 <h1>طلبك دخل المراجعة</h1>
-<p>احتفظ برقم الحجز ده، وابعت صورة إثبات التحويل على Messenger ومعاها الرقم.</p>
+<p>احتفظ برقم الحجز ده، وابعت صورة إثبات التحويل على WhatsApp ومعاها الرقم.</p>
 <div class="ref" id="bookingRef"></div>
-<a class="btn primary" id="messengerLink" href="https://m.me/891183134080763" target="_blank" rel="noopener">فتح Messenger وإرسال الإثبات</a>
+<a class="btn primary" id="whatsappProofLink" href="https://wa.me/201011223667" target="_blank" rel="noopener">فتح WhatsApp وإرسال الإثبات</a>
 <button class="secondary" id="copyBtn" type="button">نسخ رقم الحجز</button>
 <div class="warn">الحجز يتأكد فقط بعد مراجعة التحويل. لو اتأكد، بيتسجل البيع في نظامنا ويتبعت Purchase إلى Meta تلقائيًا من السيرفر.</div>
 </div>
@@ -86,11 +92,20 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
   const qs=new URLSearchParams(location.search);
   const plans={
     reserve:{label:'تثبيت المقعد',amount:2000},
-    full:{label:'السداد الكامل',amount:4500}
+    full:{label:'السداد الكامل',amount:4500},
+    balance:{label:'استكمال المبلغ المتبقي',amount:2500}
   };
+  const formStartedAt=Date.now();
   const plan=plans[qs.get('plan')]?qs.get('plan'):'reserve';
   document.getElementById('planName').textContent=plans[plan].label;
   document.getElementById('amountText').textContent=plans[plan].amount.toLocaleString('en-US')+' جنيه';
+  const balanceRefBox=document.getElementById('balanceRefBox');
+  const enrollmentRef=document.getElementById('enrollmentRef');
+  if(plan==='balance'){
+    balanceRefBox.style.display='block';
+    enrollmentRef.required=true;
+    enrollmentRef.value=qs.get('ref')||'';
+  }
   const walletExtra=document.getElementById('walletExtra');
   const walletProvider=document.getElementById('walletProvider');
   function syncWalletFields(){
@@ -98,6 +113,11 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
     const isWallet=checked&&checked.value==='mobile_wallet';
     walletExtra.classList.toggle('show',!!isWallet);
     if(!isWallet)walletProvider.value='';
+    const help=document.getElementById('transferHelpText');
+    const open=document.getElementById('instapayOpen');
+    if(!checked){help.textContent='اختَر وسيلة التحويل لعرض بيانات التحويل.';open.style.display='none';}
+    else if(isWallet){help.innerHTML='<strong>رقم الاستقبال:</strong> 01011223667 — Vodafone Cash ويستقبل التحويل من المحافظ الإلكترونية المصرية.';open.style.display='none';}
+    else{help.textContent='حوّل المبلغ المطلوب عبر InstaPay ثم ارجع للصفحة وسجّل بيانات العملية.';open.style.display='inline-flex';}
   }
   document.querySelectorAll('input[name=method]').forEach(r=>r.addEventListener('change',syncWalletFields));
   const preset=qs.get('method'); if(preset){const r=document.querySelector('input[name=method][value="'+preset+'"]');if(r)r.checked=true;}
@@ -109,17 +129,23 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
     e.preventDefault(); status.textContent=''; btn.disabled=true; btn.textContent='جاري الإرسال...';
     const method=(new FormData(form)).get('method');
     if(method==='mobile_wallet'&&!walletProvider.value){status.textContent='اختَر المحفظة اللي تم التحويل منها.';btn.disabled=false;btn.textContent='إرسال بيانات التحويل للمراجعة';return;}
-    const payload={payment_method:method,payment_plan:plan,source_wallet_provider:method==='mobile_wallet'?walletProvider.value:'',customer_name:document.getElementById('name').value,customer_phone:document.getElementById('phone').value,customer_email:document.getElementById('email').value,transaction_reference:document.getElementById('txref').value,transfer_note:document.getElementById('note').value,fbp:cookie('_fbp'),fbc:fbc(),landing_url:document.referrer||location.href};
+    const attr=window.Lo3betFunnel?window.Lo3betFunnel.attribution():{};
+    const payload={payment_method:method,payment_plan:plan,source_wallet_provider:method==='mobile_wallet'?walletProvider.value:'',customer_name:document.getElementById('name').value,customer_phone:document.getElementById('phone').value,customer_email:document.getElementById('email').value,transaction_reference:document.getElementById('txref').value,transfer_note:document.getElementById('note').value,enrollment_reference:plan==='balance'?enrollmentRef.value.trim():'',fbp:cookie('_fbp')||attr.fbp||'',fbc:fbc()||attr.fbc||'',landing_url:(attr.first_touch&&attr.first_touch.landing_url)||document.referrer||location.href,attribution:attr,diagnosis:window.Lo3betFunnel?window.Lo3betFunnel.diagnosis():{},elapsed_ms:Date.now()-formStartedAt,website:document.getElementById('website').value};
     try{
       const r=await fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/manual-payment-submit',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
       const data=await r.json(); if(!r.ok)throw new Error(data.error||'submit_failed');
       document.getElementById('bookingRef').textContent=data.booking_reference;
+      const wa=document.getElementById('whatsappProofLink');
+      if(wa){
+        const msg='تم التحويل اليدوي لبرنامج التشخيص قبل الحل. رقم الحجز: '+data.booking_reference+(data.submission_reference?' — مرجع التسجيل: '+data.submission_reference:'')+'. سأرسل صورة إثبات التحويل هنا.';
+        wa.href='https://wa.me/201011223667?text='+encodeURIComponent(msg);
+      }
       document.getElementById('formBox').classList.add('hidden');document.getElementById('successBox').classList.add('show');
       window.scrollTo({top:0,behavior:'smooth'});
       try{if(typeof fbq==='function')fbq('track','AddPaymentInfo',{currency:'EGP',value:plans[plan].amount});}catch(e){}
       document.getElementById('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(data.booking_reference);document.getElementById('copyBtn').textContent='تم النسخ';}catch(e){}};
     }catch(err){
-      status.textContent=err.message==='valid_egypt_phone_required'?'اكتب رقم موبايل مصري صحيح.':'تعذر إرسال البيانات الآن. جرّب مرة تانية أو تواصل معنا على Messenger.';
+      status.textContent=err.message==='valid_egypt_phone_required'?'اكتب رقم موبايل مصري صحيح.':'تعذر إرسال البيانات الآن. جرّب مرة تانية أو تواصل معنا على WhatsApp.';
     }finally{btn.disabled=false;btn.textContent='إرسال بيانات التحويل للمراجعة';}
   });
 })();
