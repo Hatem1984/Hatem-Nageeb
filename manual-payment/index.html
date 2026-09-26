@@ -32,6 +32,8 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','2667954303602754');fbq('track','PageView');
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C2N57VGT70"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-C2N57VGT70');</script>
 </head>
 <body>
 <main class="wrap">
@@ -142,7 +144,8 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;width:
       }
       document.getElementById('formBox').classList.add('hidden');document.getElementById('successBox').classList.add('show');
       window.scrollTo({top:0,behavior:'smooth'});
-      try{if(typeof fbq==='function')fbq('track','AddPaymentInfo',{currency:'EGP',value:plans[plan].amount});}catch(e){}
+      try{if(typeof fbq==='function')fbq('track','AddPaymentInfo',{currency:'EGP',value:Number(data.amount||plans[plan].amount),payment_plan:plan});}catch(e){}
+      try{if(typeof gtag==='function')gtag('event','add_payment_info',{currency:'EGP',value:Number(data.amount||plans[plan].amount),payment_plan:plan,payment_method:method});}catch(e){}
       document.getElementById('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(data.booking_reference);document.getElementById('copyBtn').textContent='تم النسخ';}catch(e){}};
     }catch(err){
       status.textContent=err.message==='valid_egypt_phone_required'?'اكتب رقم موبايل مصري صحيح.':'تعذر إرسال البيانات الآن. جرّب مرة تانية أو تواصل معنا على WhatsApp.';
