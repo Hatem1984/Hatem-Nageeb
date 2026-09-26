@@ -1,32 +1,59 @@
-# التشخيص قبل الحل — Landing Page V34
+# التشخيص قبل الحل — V35 Full Funnel
 
-نسخة GitHub Pages الجاهزة للنشر لصفحة برنامج **التشخيص قبل الحل**.
+النسخة التشغيلية لصفحة برنامج **التشخيص قبل الحل** على `lo3betbusiness.com`.
 
-## النشر السريع
+## المسار الحالي
 
-1. ارفع محتويات هذا المجلد إلى جذر المستودع:
-   `Hatem1984/Hatem-Nageeb`
-2. تأكد أن الملفات الأساسية في الجذر بهذا الشكل:
-   - `index.html`
-   - `404.html`
-   - `assets/`
-   - `diagnosis/`
-   - `.nojekyll`
-3. من GitHub:
-   - Settings
-   - Pages
-   - Build and deployment
-   - Source: **Deploy from a branch**
-   - Branch: `main`
-   - Folder: `/ (root)`
-4. بعد النشر، العنوان المتوقع:
-   `https://hatem1984.github.io/Hatem-Nageeb/`
+Meta Ad → `/diagnosis/` → نتيجة التشخيص → WhatsApp أو XPay → Webhook مؤكد → Enrollment → صفحة تأكيد الحجز.
 
-## ملاحظات
+## العرض
 
-- لا تغيّر أسماء الملفات داخل `assets` إلا إذا عدّلت مساراتها داخل `index.html`.
-- الصفحة تحتوي على Meta Pixel وGA4 المضافين مسبقًا.
-- أداة **اختبار قرار مشروعك** مدمجة داخل المسار `/diagnosis/` وتُصدر تقرير PDF من صفحتين على جهاز الزائر.
-- لا تغيّر اسم مجلد `diagnosis` أو مسار زر الاختبار إلا إذا عدّلت الروابط داخل الصفحة.
-- اختبر أزرار Vodafone Cash وInstaPay من الموبايل بعد النشر.
-- إذا تم ربط دومين مخصص لاحقًا، غيّر `canonical` و`og:url` داخل `index.html` و`diagnosis/index.html` إلى الدومين الجديد.
+- إجمالي الاشتراك: **4,500 جنيه**.
+- تثبيت المقعد: **2,000 جنيه**.
+- استكمال المتبقي: **2,500 جنيه** قبل أول تدريب فعلي.
+- الدفعة الأولى: وصول كامل إلى أداة التشخيص مجانًا لمدة **6 أشهر**.
+- السعة: **20 مقعدًا**.
+- الجلسة التعريفية: 1 أكتوبر 2026، 7:30 مساءً بتوقيت مصر.
+- أول تدريب فعلي: 4 أكتوبر 2026، 7:30 مساءً.
+- 24 جلسة تدريبية فعلية + جلسة تعريفية.
+- التسجيلات متاحة 6 أشهر.
+
+## الملفات الأساسية
+
+- `_includes/landing-base.html` — الصفحة الأساسية.
+- `index.html` — طبقة تركيب GitHub Pages.
+- `assets/funnel.js` — حفظ Attribution وتشغيل Checkout Sessions.
+- `diagnosis/` — مختبر قرار مشروعك.
+- `manual-payment/` — التحويل اليدوي وإثباته.
+- `complete-payment/` — استكمال المبلغ المتبقي.
+- `payment-success.html` — التحقق من XPay وOnboarding.
+- `payment-admin/` — مراجعة التحويلات اليدوية.
+- `privacy-policy.html`, `booking-terms.html`, `refund-policy.html`.
+
+## القياس
+
+- Meta Pixel: `2667954303602754`.
+- GA4: `G-C2N57VGT70`.
+- Standard Lead: أول اكتمال تشخيص فقط خلال نافذة 30 يومًا على نفس الجهاز.
+- DiagnosticComplete: كل اكتمال.
+- Question progress: يتضمن رقم السؤال ومرحلة Core/Adaptive.
+- InitiateCheckout: عند اختيار وسيلة دفع فعلية.
+- Purchase: من السيرفر بعد تأكيد الدفع، وليس من صفحة النجاح.
+- BalancePayment: Event منفصل لاستكمال الدفعة الثانية.
+
+## الدفع
+
+XPay Checkout Sessions تُنشأ Server-side عبر Supabase باستخدام `XPAY_API_KEY`.
+الـWebhook هو مصدر الحقيقة لحالة الدفع.
+الحجز منفصل عن عمليات الدفع: Enrollment واحد يمكن أن يحتوي أكثر من Payment.
+
+## التواصل
+
+WhatsApp الرسمي: **01011223667**.
+
+## Rollback
+
+قبل V35 توجد Recovery branch:
+`recovery-pre-v35-2026-09-26`.
+
+لا تحذف Recovery branches بدون قرار صريح.

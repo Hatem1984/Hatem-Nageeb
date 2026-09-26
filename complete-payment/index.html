@@ -1,0 +1,59 @@
+---
+permalink: /complete-payment/
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>استكمال سداد الاشتراك | لعبة البزنس</title><meta name="robots" content="noindex,nofollow">
+<script src="../assets/funnel.js?v=35"></script>
+<style>
+*{box-sizing:border-box}:root{--navy:#07111f;--blue:#2ca7ff;--violet:#6656ff;--ink:#10264e;--muted:#66758b;--line:#dce6f2}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:radial-gradient(800px 400px at 85% 0%,rgba(44,167,255,.12),transparent 60%),#f5f8fc;color:var(--ink)}
+.wrap{width:min(680px,calc(100% - 28px));margin:auto;padding:34px 0}.brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}.brand img{width:54px;height:54px;border-radius:50%}.brand small{display:block;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:30px;box-shadow:0 22px 70px rgba(18,42,82,.10)}
+.kicker{display:inline-block;padding:7px 11px;border-radius:999px;background:#eef4ff;color:#365fcf;font-size:12px;font-weight:900}
+h1{font-size:30px;line-height:1.4;margin:14px 0 8px}p{color:var(--muted);line-height:1.8}
+label{display:block;font-weight:800;font-size:14px;margin:16px 0 7px}input{width:100%;border:1.5px solid #cfdbe7;border-radius:13px;padding:13px 14px;font:inherit;outline:none}
+button,a.btn{display:flex;align-items:center;justify-content:center;width:100%;border:0;border-radius:14px;padding:15px 18px;font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
+.primary{margin-top:20px;color:#fff;background:linear-gradient(90deg,var(--blue),var(--violet));box-shadow:0 13px 30px rgba(76,104,255,.22)}
+.secondary{margin-top:10px;color:#17335f;background:#eef3fa}.note{margin-top:18px;padding:13px;border-radius:13px;background:#f5f8fc;color:#697a90;font-size:12px;line-height:1.7}.status{min-height:22px;margin-top:12px;text-align:center;color:#a33;font-size:13px}
+@media(max-width:600px){.card{padding:24px 18px}h1{font-size:25px}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="brand"><img src="../assets/شعار_لعبة_البزنس_خفيف.webp" alt="لعبة البزنس"><div><b>لعبة البزنس</b><small>التشخيص قبل الحل</small></div></div>
+<section class="card">
+<span class="kicker">استكمال الحجز</span>
+<h1>استكمل المبلغ المتبقي على اشتراكك</h1>
+<p>اكتب رقم الحجز ورقم الموبايل المستخدم في الحجز. النظام هيتحقق من اشتراكك ويفتح لك XPay بقيمة المبلغ المتبقي فقط.</p>
+<label for="ref">رقم الحجز</label><input id="ref" autocomplete="off" placeholder="LB-20260926-ABC123">
+<label for="phone">رقم الموبايل</label><input id="phone" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx">
+<button class="primary" id="payBtn">ادفع المبلغ المتبقي عبر XPay</button>
+<a class="btn secondary" id="manualBtn" href="/manual-payment/?plan=balance">أفضل التحويل عبر InstaPay / محفظة</a>
+<a class="btn secondary" id="waBtn" href="https://wa.me/201011223667" target="_blank" rel="noopener">محتاج مساعدة؟ افتح WhatsApp</a>
+<div class="status" id="status"></div>
+<div class="note">لن يتم تسجيل أي عملية شراء إلا بعد تأكيد الدفع فعليًا من XPay أو مراجعة التحويل اليدوي.</div>
+</section></main>
+<script>
+(function(){
+ const qs=new URLSearchParams(location.search),ref=document.getElementById('ref'),phone=document.getElementById('phone'),status=document.getElementById('status'),btn=document.getElementById('payBtn'),manual=document.getElementById('manualBtn');
+ ref.value=qs.get('ref')||'';
+ function sync(){manual.href='/manual-payment/?plan=balance'+(ref.value.trim()?'&ref='+encodeURIComponent(ref.value.trim()):'');}
+ ref.addEventListener('input',sync);sync();
+ btn.addEventListener('click',async()=>{
+   const r=ref.value.trim(),p=phone.value.trim();status.textContent='';
+   if(!r||!p){status.textContent='اكتب رقم الحجز ورقم الموبايل.';return;}
+   btn.disabled=true;btn.textContent='جارٍ التحقق وفتح الدفع…';
+   try{
+     if(!window.Lo3betFunnel)throw new Error('funnel_unavailable');
+     await window.Lo3betFunnel.startCheckout('balance',{booking_reference:r,customer_phone:p});
+   }catch(e){
+     const code=e&&e.data&&e.data.error;
+     status.textContent=code==='enrollment_not_found'?'رقم الحجز أو الموبايل غير مطابق لبيانات الحجز.':code==='already_fully_paid'?'اشتراكك مسدد بالكامل بالفعل.':'تعذر فتح الدفع الآن. جرّب مرة أخرى أو تواصل معنا على WhatsApp.';
+     btn.disabled=false;btn.textContent='ادفع المبلغ المتبقي عبر XPay';
+   }
+ });
+})();
+</script>
+</body></html>

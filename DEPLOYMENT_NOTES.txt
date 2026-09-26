@@ -1,34 +1,68 @@
-V34 -> Adaptive Diagnostic Upgrade / Pre-Publication Bundle
+V35 FULL FUNNEL — RELEASE NOTES
 
-Rollback checkpoint (verified before publication):
-- Stable main SHA: 2edfabd0f34e1648af99686fe24b7a8ac368a96c
-- Verified rollback branch: rollback/pre-adaptive-diagnosis-v34
-- Recovery target: restore main from the verified rollback branch or its exact stable SHA.
+Recovery checkpoint
+- recovery-pre-v35-2026-09-26
+- Base SHA: c754668e27d76fcf21f7ba9834aa3a3596132bcc
 
-Implemented:
-- Integrated "اختبار قرار مشروعك" as a free lead magnet at /diagnosis/.
-- Added lead-magnet CTAs in the hero, navigation and a dedicated landing-page section.
-- Added a three-page direct PDF decision report while keeping visitor answers on-device.
-- Added diagnostic funnel events to Meta Pixel and GA4.
-- Corrected the payment modal, plan totals and duplicated checkout/payment tracking.
-- Updated the cohort cap to 20 and clarified reservation, full-pay and installment dates.
-- Marked the AI tool as ready and updated education/accreditation wording.
-- Added a lightweight 1200x630 social sharing image and reduced the main HTML payload.
-- Preserved the accepted testimonials, offer stack, refund terms and partner branding.
+Architecture
+- Course enrollment is now separate from payment transactions.
+- course_enrollments = one seat / one booking.
+- course_payments = one or more payments under the same booking.
+- Seat count reads active enrollments, not transaction count.
 
-Campaign refinement:
-- Made the free diagnostic the primary hero CTA and kept program details secondary.
-- Updated campaign capacity to 20 paid participants.
-- Made Messenger the only customer-contact and payment-proof channel.
-- Unified payment access through the plan-first modal flow.
-- Limited InitiateCheckout to the first checkout open per page load.
-- Added plan-aware PaymentMethodClick and PaymentProofClick events without firing Purchase.
-- Loaded the hero image eagerly and added a lightweight header-logo asset.
-- Displays readiness and evidence as scores out of 100, explicitly not success probabilities.
-- Displays risk only as a qualitative level plus traffic light; the numeric risk value stays internal.
+XPay
+- Server-created Checkout Sessions via Supabase checkout-session.
+- Plans: reserve 2,000 / full 4,500 / balance = remaining amount.
+- Restricted live key stored as XPAY_API_KEY.
+- XPay webhook remains source of truth.
+- Static payment links remain accepted by the webhook only for backward compatibility.
+- Browser success page does NOT fire Purchase.
 
-Before launch:
-- Upload the full bundle, including index.html, 404.html, assets/ and diagnosis/.
-- Test the payment modal and both payment methods on real Android/iPhone devices.
-- Complete the diagnostic test once and verify the three-page PDF download on iPhone and Android.
-- Verify GA4 and Meta Pixel events after deployment.
+Attribution
+- First/last touch stored locally from UTM, fbclid, fbp/fbc.
+- Safe attribution travels into Checkout Session metadata and enrollment/payment records.
+- Diagnosis free-text is never sent to Meta/GA.
+- Purchase attribution comes from verified server-side payment.
+
+Diagnosis
+- Scoring engine preserved.
+- Progressive disclosure reduces intake scroll.
+- Q1-Q10 progress includes question_number and question_phase.
+- Standard Meta Lead is de-duplicated on the same browser for 30 days.
+- DiagnosticComplete remains available for every completed run.
+- Result CTAs: WhatsApp, reserve, program details, PDF.
+- Official WhatsApp: 01011223667.
+
+Offer
+- 4,500 EGP total.
+- 2,000 EGP to reserve + remaining balance before 4 Oct.
+- First cohort AI diagnostic access: full access free for 6 months.
+- 20 seats.
+
+Manual payments
+- InstaPay and mobile wallet route through manual-payment.
+- Balance payments supported.
+- Honeypot + minimum-submit-time + per-IP rate limiting.
+- Admin confirmation updates enrollment and server-side Meta event.
+
+Post-payment
+- payment-success verifies XPay session server-side.
+- Displays booking reference, enrollment status, paid/remaining amounts.
+- Offers balance-payment route when required.
+- WhatsApp and calendar actions included.
+
+Policies
+- Standalone privacy policy.
+- Standalone booking terms.
+- Refund policy retained and contact updated.
+
+Pre-publish QA
+- Validate rendered HTML/CSS/JS syntax.
+- Verify no stale 7,500 / 9,000 pricing.
+- Verify no stale Messenger links.
+- Verify no old WhatsApp number.
+- Verify XPay static links are not used by the live checkout UI.
+- Verify diagnosis PDF still builds.
+- Verify Meta Lead / DiagnosticComplete / checkout event code.
+- Verify Supabase functions active and database constraints.
+- Publish only after branch QA.
