@@ -66,3 +66,15 @@ Pre-publish QA
 - Verify Meta Lead / DiagnosticComplete / checkout event code.
 - Verify Supabase functions active and database constraints.
 - Publish only after branch QA.
+
+
+Final backend hardening — 26 Sep 2026
+- Checkout Sessions now expire after 180 minutes.
+- Active XPay checkout sessions temporarily hold capacity so concurrent buyers cannot oversubscribe the 20-seat cohort.
+- Manual-payment submissions awaiting verification also hold capacity.
+- Capacity creation is atomic through a database advisory lock.
+- Expired / async-failed XPay sessions release their pending payment hold.
+- Abandoned XPay holds are cleaned after a safety buffer.
+- Final live QA passed for reserve 2,000, full 4,500, and balance 2,500 Checkout Session creation.
+- QA checkout sessions were explicitly expired and local QA enrollment/payment rows removed.
+- Production enrollment/payment counts returned to zero after QA.
