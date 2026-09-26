@@ -37,7 +37,7 @@
   }
 
   function cleanEventData(data){
-    const allowed=['stage','decision_type','score_band','evidence_band','risk_band'];
+    const allowed=['stage','decision_type','score_band','evidence_band','risk_band','question_number','question_phase'];
     return Object.fromEntries(Object.entries(data||{}).filter(([key,value])=>allowed.includes(key)&&value!==undefined&&value!==''));
   }
   function eventData(){
@@ -150,7 +150,10 @@
   $('prevBtn').addEventListener('click',()=>{if(state.index>0){state.index--;save();renderQuestion();}});
   $('nextBtn').addEventListener('click',()=>{
     const q=state.questions[state.index]; if(state.answers[q.id]===undefined)return;
-    track('DiagnosticQuestionProgress','diagnostic_question_progress');
+    track('DiagnosticQuestionProgress','diagnostic_question_progress',Object.assign({},eventData(),{
+      question_number:state.index+1,
+      question_phase:state.index<5?'core':'adaptive'
+    }));
     if(state.index===4){
       const core=state.questions.slice(0,5);
       const adaptive=Lab.adaptiveQuestions(state.stage,state.decisionType,state.answers,state.sector);
@@ -165,13 +168,26 @@
       renderResult();
       track('DiagnosticComplete','diagnostic_complete',Lab.safeEventData(state.result));
       const leadData=cleanEventData(Lab.safeEventData(state.result));
+      try{if(window.Lo3betFunnel)window.Lo3betFunnel.setDiagnosis(leadData);}catch(e){}
+      let standardLeadAllowed=true;
       try{
-        if(typeof fbq==='function') fbq('track','Lead',Object.assign({content_name:'DiagnosticComplete'},leadData));
+        const key='lb_standard_lead_sent_v35';
+        const previous=Number(localStorage.getItem(key)||0);
+        standardLeadAllowed=!previous||(Date.now()-previous)>30*24*60*60*1000;
+        if(standardLeadAllowed)localStorage.setItem(key,String(Date.now()));
       }catch(e){}
-      try{
-        if(typeof gtag==='function') gtag('event','generate_lead',Object.assign({lead_source:'diagnostic'},leadData));
-      }catch(e){}
+      if(standardLeadAllowed){
+        try{
+          if(typeof fbq==='function') fbq('track','Lead',Object.assign({content_name:'DiagnosticComplete'},leadData));
+        }catch(e){}
+        try{
+          if(typeof gtag==='function') gtag('event','generate_lead',Object.assign({lead_source:'diagnostic'},leadData));
+        }catch(e){}
+      }else{
+        track('DiagnosticRepeatComplete','diagnostic_repeat_complete',leadData);
+      }
       show('results');
+      configureConversionActions();
     }
   });
 
@@ -233,7 +249,34 @@
     save();
   }
 
+  function configureConversionActions(){
+    const decision=Lab.DECISIONS[state.decisionType];
+    const stageLabel=Lab.STAGES[state.stage]||state.stage;
+    const decisionLabel=decision?decision.label:state.decisionType;
+    const whatsapp=$('whatsappBtn');
+    if(whatsapp){
+      const msg='أنا خلصت مختبر قرار مشروعي. الحالة: '+stageLabel+' — القرار: '+decisionLabel+' — وعايز أعرف هل برنامج «التشخيص قبل الحل» مناسب لحالتي.';
+      whatsapp.href='https://wa.me/201011223667?text='+encodeURIComponent(msg);
+    }
+  }
+  async function startReserveCheckout(trigger){
+    if(!window.Lo3betFunnel){location.href='../#offer';return;}
+    const oldText=trigger&&trigger.textContent;
+    try{
+      if(trigger){trigger.setAttribute('aria-disabled','true');trigger.textContent='جارٍ فتح الدفع…';}
+      track('DiagnosticReserveClick','diagnostic_reserve_click');
+      await window.Lo3betFunnel.startCheckout('reserve');
+    }catch(e){
+      if(trigger){trigger.removeAttribute('aria-disabled');trigger.textContent=oldText||'ثبّت مقعدك بـ2,000 جنيه';}
+      alert('تعذر فتح الدفع الإلكتروني الآن. تقدر ترجع لتفاصيل البرنامج أو تتواصل معنا على واتساب.');
+    }
+  }
+
   $('programBtn').addEventListener('click',()=>track('DiagnosticProgramClick','diagnostic_program_click'));
+  const reserveBtn=$('reserveBtn');
+  if(reserveBtn)reserveBtn.addEventListener('click',()=>startReserveCheckout(reserveBtn));
+  const stickyReserveBtn=$('stickyReserveBtn');
+  if(stickyReserveBtn)stickyReserveBtn.addEventListener('click',e=>{e.preventDefault();startReserveCheckout(stickyReserveBtn);});
   const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   function fileToDataUrl(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});}
   async function getLogoData(){const response=await fetch('../assets/شعار_لعبة_البزنس_خفيف.webp',{cache:'force-cache'});if(!response.ok)throw new Error('logo_load_failed');return fileToDataUrl(await response.blob());}
