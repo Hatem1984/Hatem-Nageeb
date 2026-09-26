@@ -47,7 +47,7 @@
   async function startCheckout(plan,extra){
     const payload=Object.assign({plan:plan,attribution:attribution(),diagnosis:diagnosis()},extra||{});
     const r=await fetch('https://mjavabuxdhueziecypdy.supabase.co/functions/v1/checkout-session',{
-      method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)
+      method:'POST',headers:{'content-type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload)
     });
     const d=await r.json().catch(()=>({}));
     if(!r.ok||!d.checkout_url){
