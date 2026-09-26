@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>استبيان تطوير مصنع ألبان الماعز - ليبيا</title>
+<style>
+:root{--navy:#15313b;--copper:#b27642;--ivory:#f7f2e8;--ink:#1c2529;--muted:#617177;--line:#d8d9d4;--ok:#2f6d5b;--warn:#965f2c;--white:#fff}
+*{box-sizing:border-box} body{margin:0;font-family:Tahoma,"Segoe UI",Arial,sans-serif;background:#eef1ef;color:var(--ink);line-height:1.65}
+.wrap{max-width:900px;margin:0 auto;padding:16px}.hero{background:linear-gradient(135deg,#15313b,#234953);color:white;border-radius:20px;padding:24px;margin:10px 0 14px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.hero h1{font-size:25px;line-height:1.35;margin:0 0 8px}.hero p{margin:0;color:#e9f0ee}.badge{display:inline-block;background:#ffffff1f;border:1px solid #ffffff3b;padding:5px 10px;border-radius:999px;font-size:13px;margin-bottom:10px}
+.notice{background:#fff8e8;border:1px solid #eed9a7;border-radius:14px;padding:12px 14px;margin:12px 0;font-size:14px}.notice strong{color:#694819}
+.progress-wrap{position:sticky;top:0;z-index:10;background:#eef1efe8;backdrop-filter:blur(6px);padding:8px 0 10px}.progress-row{display:flex;align-items:center;gap:10px}.progress{flex:1;height:10px;background:#d9dfdc;border-radius:999px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--copper),#d5a06e);transition:.25s}.pct{font-weight:700;color:var(--navy);font-size:13px;min-width:40px}
+.card{background:white;border:1px solid #e2e5e3;border-radius:18px;margin:12px 0;padding:18px;box-shadow:0 3px 16px rgba(20,45,52,.04)}
+.card h2{font-size:20px;color:var(--navy);margin:0 0 4px}.sub{font-size:13px;color:var(--muted);margin-bottom:14px}.q{margin:15px 0;padding-bottom:14px;border-bottom:1px dashed #e0e2df}.q:last-child{border-bottom:0;padding-bottom:0}.q label.main{display:block;font-weight:700;margin-bottom:7px}.hint{display:block;color:var(--muted);font-size:12px;margin-top:-4px;margin-bottom:6px}.req{color:#a03d32;margin-right:3px}
+input[type=text],input[type=number],input[type=date],textarea,select{width:100%;border:1px solid #cfd7d3;border-radius:10px;padding:10px 11px;font:inherit;background:white;color:var(--ink);outline:none}textarea{min-height:82px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:#73958b;box-shadow:0 0 0 3px #73958b20}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choices{display:flex;flex-wrap:wrap;gap:8px}.choice{display:flex;align-items:center;gap:6px;background:#f7f8f7;border:1px solid #dce1de;border-radius:10px;padding:8px 10px}.choice input{accent-color:var(--navy)}
+.conditional{display:none;margin-top:10px;padding:10px;background:#f7faf9;border-right:3px solid #89a89e;border-radius:8px}.conditional.show{display:block}.attachments{display:grid;grid-template-columns:1fr 1fr;gap:8px}.att{background:#f7f8f7;border:1px solid #e0e3e1;border-radius:10px;padding:8px 10px;display:flex;gap:7px;align-items:flex-start}.att input{margin-top:5px;accent-color:var(--ok)}
+.actions{position:sticky;bottom:0;z-index:9;background:#ffffffee;backdrop-filter:blur(8px);border:1px solid #e0e5e2;border-radius:16px;padding:10px;margin:14px 0;display:flex;gap:8px;flex-wrap:wrap;box-shadow:0 -4px 18px rgba(20,45,52,.06)}button{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--navy);color:white}.secondary{background:#e9efec;color:var(--navy)}.danger{background:#f4e8e5;color:#8d4037}.status{font-size:12px;color:var(--muted);align-self:center;margin-right:auto}
+.footer{font-size:12px;color:var(--muted);text-align:center;padding:12px}.mini{font-size:12px;color:var(--muted)}
+@media(max-width:650px){.wrap{padding:10px}.hero{padding:19px}.hero h1{font-size:21px}.grid2,.attachments{grid-template-columns:1fr}.card{padding:14px}.actions button{flex:1 1 45%}}
+@media print{body{background:white}.progress-wrap,.actions{display:none}.card{box-shadow:none;break-inside:auto;margin:8px 0}.q{break-inside:avoid}.conditional{display:block}.wrap{max-width:none}.hero{box-shadow:none;padding:16px}.hero h1{font-size:20px}.notice{padding:8px 10px}.card h2{break-after:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="badge">نموذج جمع بيانات - المرحلة التشخيصية</div>
+    <h1>مشروع تطوير مصنع ألبان الماعز - ليبيا</h1>
+    <p>الهدف: فهم الوضع الحالي بدقة لتصميم مرحلة 1,000 لتر/يوم مع مراعاة التوسع المستقبلي إلى 5,000 لتر/يوم.</p>
+  </div>
+  <div class="notice"><strong>مهم:</strong> إذا لم تكن متأكدًا من أي معلومة، اختر «لا أعرف» أو اترك ملاحظة بدل التخمين. الأرقام غير الدقيقة قد تؤدي إلى اختيار معدات أو سعات غير مناسبة.</div>
+  <div class="progress-wrap"><div class="progress-row"><div class="progress"><div class="bar" id="bar"></div></div><div class="pct" id="pct">0%</div></div></div>
+
+<form id="f">
+<section class="card">
+<h2>1) بيانات عامة والإنتاج الحالي</h2><div class="sub">نبدأ بصورة سريعة عن المزرعة والطاقة الفعلية.</div>
+<div class="q"><label class="main">اسم صاحب/أصحاب المشروع أو اسم المشروع</label><input type="text" name="project_name" placeholder="مثال: مزرعة ..." /></div>
+<div class="q grid2"><div><label class="main">المدينة / المنطقة في ليبيا <span class="req">*</span></label><input required type="text" name="location" /></div><div><label class="main">متوسط إنتاج اللبن الحالي (لتر/يوم) <span class="req">*</span></label><input required type="number" min="0" name="current_lpd" placeholder="مثال: 300" /></div></div>
+<div class="q grid2"><div><label class="main">أعلى إنتاج يومي خلال الموسم (لتر)</label><input type="number" min="0" name="peak_lpd" /></div><div><label class="main">عدد الماعز الحلاب حاليًا</label><input type="number" min="0" name="lactating_goats" /></div></div>
+<div class="q"><label class="main">السلالات الموجودة</label><input type="text" name="breeds" placeholder="اكتب السلالة/السلالات إن كانت معروفة" /></div>
+<div class="q"><label class="main">هل الإنتاج موسمي بشكل واضح؟</label><div class="choices"><label class="choice"><input type="radio" name="seasonal" value="نعم"> نعم</label><label class="choice"><input type="radio" name="seasonal" value="لا"> لا</label><label class="choice"><input type="radio" name="seasonal" value="لا أعرف"> لا أعرف</label></div></div>
+<div class="q grid2"><div><label class="main">عدد مرات الحلب يوميًا</label><input type="number" min="1" name="milking_times" /></div><div><label class="main">نوع/عدد ماكينات الحلب الآلي</label><input type="text" name="milking_machine" /></div></div>
+<div class="q"><label class="main">هل توجد تحاليل دورية للبن الخام؟</label><div class="choices"><label class="choice"><input type="radio" name="milk_tests" value="نعم"> نعم</label><label class="choice"><input type="radio" name="milk_tests" value="لا"> لا</label></div></div>
+</section>
+
+<section class="card">
+<h2>2) بعد الحلب: التبريد والنقل للمصنع</h2><div class="sub">المسافة المعروفة تقريبًا 10 كم، ونريد فهم السلسلة الحرارية الفعلية.</div>
+<div class="q"><label class="main">بعد الحلب مباشرة، ماذا يحدث للبن خطوة بخطوة؟ <span class="req">*</span></label><textarea required name="post_milking_steps" placeholder="مثال: فلترة - تجميع - تبريد - نقل..."></textarea></div>
+<div class="q"><label class="main">هل يتم فلترة اللبن بعد الحلب؟</label><div class="choices"><label class="choice"><input type="radio" name="filtering" value="نعم"> نعم</label><label class="choice"><input type="radio" name="filtering" value="لا"> لا</label><label class="choice"><input type="radio" name="filtering" value="لا أعرف"> لا أعرف</label></div></div>
+<div class="q"><label class="main">هل يوجد تانك تبريد في المزرعة؟ <span class="req">*</span></label><div class="choices"><label class="choice"><input required type="radio" name="farm_cooling" value="نعم" data-toggle="cooling_yes"> نعم</label><label class="choice"><input type="radio" name="farm_cooling" value="لا" data-toggle="cooling_no"> لا</label></div>
+<div id="cooling_yes" class="conditional"><div class="grid2"><div><label class="main">سعة تانك التبريد (لتر)</label><input type="number" min="0" name="cooling_capacity"></div><div><label class="main">درجة حرارة اللبن قبل النقل (°C)</label><input type="number" step="0.1" name="milk_temp_before_transport"></div></div></div></div>
+<div class="q grid2"><div><label class="main">طريقة النقل الحالية <span class="req">*</span></label><select required name="transport_method"><option value="">اختر</option><option>تانك ستانلس معزول</option><option>جراكن / أوعية</option><option>سيارة مبردة</option><option>تانك غير معزول</option><option>أخرى</option><option>لا أعرف</option></select></div><div><label class="main">زمن الرحلة الفعلي للمصنع (دقيقة)</label><input type="number" min="0" name="transport_minutes"></div></div>
+<div class="q grid2"><div><label class="main">سعة وعاء/تانك النقل (لتر)</label><input type="number" min="0" name="transport_capacity"></div><div><label class="main">درجة حرارة اللبن عند الوصول للمصنع (°C)</label><input type="number" step="0.1" name="arrival_temp"></div></div>
+</section>
+
+<section class="card">
+<h2>3) اللبن المبستر الحالي</h2><div class="sub">نحتاج الوصفة التشغيلية الفعلية، وليس الاسم التجاري فقط.</div>
+<div class="q grid2"><div><label class="main">كم لتر مبستر تنتجون يوميًا؟ <span class="req">*</span></label><input required type="number" min="0" name="pasteurized_lpd"></div><div><label class="main">حجم الدفعة الواحدة Batch (لتر)</label><input type="number" min="0" name="pasteurized_batch"></div></div>
+<div class="q"><label class="main">اشرح خطوات تصنيع اللبن المبستر الحالية <span class="req">*</span></label><textarea required name="pasteurized_steps"></textarea></div>
+<div class="q grid2"><div><label class="main">درجة حرارة البسترة الحالية (°C)</label><input type="number" step="0.1" name="pasteur_temp"></div><div><label class="main">مدة البسترة</label><input type="text" name="pasteur_time" placeholder="مثال: 15 ثانية أو 30 دقيقة"></div></div>
+<div class="q grid2"><div><label class="main">مدة الصلاحية الحالية</label><input type="text" name="pasteurized_shelf"></div><div><label class="main">أهم مشكلة حاليًا إن وجدت</label><input type="text" name="pasteurized_issue" placeholder="طعم / فصل / تلف / مرتجع / لا توجد"></div></div>
+</section>
+
+<section class="card">
+<h2>4) اللبن الرايب الحالي</h2><div class="sub">القوام والتخمير وطريقة التبريد بعد التخمير هي نقاط تصميم أساسية.</div>
+<div class="q grid2"><div><label class="main">كم لتر رايب تنتجون يوميًا؟ <span class="req">*</span></label><input required type="number" min="0" name="raib_lpd"></div><div><label class="main">حجم الدفعة الواحدة Batch (لتر)</label><input type="number" min="0" name="raib_batch"></div></div>
+<div class="q"><label class="main">اشرح خطوات تصنيع الرايب الحالية <span class="req">*</span></label><textarea required name="raib_steps"></textarea></div>
+<div class="q grid2"><div><label class="main">نوع البادئ / الخميرة المستخدمة</label><input type="text" name="starter"></div><div><label class="main">درجة ومدة التخمير</label><input type="text" name="fermentation" placeholder="مثال: 42°C لمدة ..."></div></div>
+<div class="q"><label class="main">هل تضاف مكونات غير اللبن والبادئ؟</label><div class="choices"><label class="choice"><input type="radio" name="additives" value="نعم" data-toggle="additives_yes"> نعم</label><label class="choice"><input type="radio" name="additives" value="لا"> لا</label><label class="choice"><input type="radio" name="additives" value="لا أعرف"> لا أعرف</label></div><div id="additives_yes" class="conditional"><label class="main">اكتب المكونات والكميات إن أمكن</label><textarea name="additives_details" placeholder="لبن بودرة / مثبت / سكر / نكهة / غيره..."></textarea></div></div>
+<div class="q grid2"><div><label class="main">مدة صلاحية الرايب الحالية</label><input type="text" name="raib_shelf"></div><div><label class="main">مشاكل الجودة الحالية</label><input type="text" name="raib_issue" placeholder="انفصال شرش / قوام / حموضة / لا توجد"></div></div>
+</section>
+
+<section class="card">
+<h2>5) العبوات والتعبئة والتخزين البارد</h2><div class="sub">سرعة التعبئة المطلوبة ستحدد هل نحتاج يدوي، نصف آلي، أم آلي.</div>
+<div class="q"><label class="main">أحجام العبوات الحالية <span class="req">*</span></label><input required type="text" name="pack_sizes" placeholder="مثال: 250 مل، 500 مل، 1 لتر"></div>
+<div class="q grid2"><div><label class="main">نوع العبوة البلاستيكية</label><input type="text" name="bottle_type" placeholder="إن كان معروفًا: PET / HDPE / غيره"></div><div><label class="main">مصدر العبوات</label><select name="bottle_source"><option value="">اختر</option><option>شراء جاهزة</option><option>تصنيع/نفخ محلي</option><option>لا أعرف</option></select></div></div>
+<div class="q"><label class="main">طريقة التعبئة الحالية <span class="req">*</span></label><select required name="filling_now"><option value="">اختر</option><option>يدوية بالكامل</option><option>نصف آلية</option><option>آلية</option><option>أخرى</option></select></div>
+<div class="q grid2"><div><label class="main">طريقة غلق العبوة</label><input type="text" name="closure"></div><div><label class="main">هل يوجد Foil Seal؟</label><select name="foil"><option value="">اختر</option><option>نعم</option><option>لا</option><option>لا أعرف</option></select></div></div>
+<div class="q grid2"><div><label class="main">كيف يطبع تاريخ الإنتاج/الصلاحية؟</label><input type="text" name="date_print"></div><div><label class="main">السرعة المستهدفة للتعبئة (عبوة/ساعة)</label><input type="number" min="0" name="target_bph"></div></div>
+<div class="q"><label class="main">هل توجد غرفة تبريد حاليًا؟</label><div class="choices"><label class="choice"><input type="radio" name="cold_room" value="نعم" data-toggle="cold_room_yes"> نعم</label><label class="choice"><input type="radio" name="cold_room" value="لا"> لا</label></div><div id="cold_room_yes" class="conditional"><div class="grid2"><div><label class="main">الأبعاد / السعة</label><input type="text" name="cold_room_size"></div><div><label class="main">درجة التشغيل (°C)</label><input type="number" step="0.1" name="cold_room_temp"></div></div></div></div>
+</section>
+
+<section class="card">
+<h2>6) المصنع والبنية التحتية</h2><div class="sub">المساحة المعروفة 120 م² والارتفاع 6 م. نحتاج الأبعاد الفعلية لتقييم الـMezzanine والـGravity Flow.</div>
+<div class="q grid2"><div><label class="main">طول المصنع (متر) <span class="req">*</span></label><input required type="number" step="0.01" min="0" name="factory_length"></div><div><label class="main">عرض المصنع (متر) <span class="req">*</span></label><input required type="number" step="0.01" min="0" name="factory_width"></div></div>
+<div class="q grid2"><div><label class="main">الارتفاع الصافي الحقيقي (متر)</label><input type="number" step="0.01" name="clear_height" placeholder="المعروف مبدئيًا: 6"></div><div><label class="main">نوع السقف</label><select name="roof_type"><option value="">اختر</option><option>مستوٍ</option><option>جمالون / مائل</option><option>أخرى</option><option>لا أعرف</option></select></div></div>
+<div class="q"><label class="main">هل توجد أعمدة داخلية؟</label><input type="text" name="columns" placeholder="لا / نعم - العدد والمواقع التقريبية"></div>
+<div class="q"><label class="main">مقاسات ومواقع الأبواب الرئيسية ودخول سيارة اللبن</label><textarea name="doors_vehicle"></textarea></div>
+<div class="q grid2"><div><label class="main">الأرضيات والحوائط مناسبة للغسيل الغذائي؟</label><select name="hygienic_surfaces"><option value="">اختر</option><option>نعم</option><option>لا</option><option>جزئيًا</option><option>لا أعرف</option></select></div><div><label class="main">هل توجد مصارف أرضية مناسبة؟</label><select name="drains"><option value="">اختر</option><option>نعم</option><option>لا</option><option>لا أعرف</option></select></div></div>
+<div class="q grid2"><div><label class="main">مصدر المياه</label><input type="text" name="water_source"></div><div><label class="main">هل يوجد تحليل مياه حديث؟</label><select name="water_test"><option value="">اختر</option><option>نعم</option><option>لا</option></select></div></div>
+<div class="q grid2"><div><label class="main">الكهرباء Three Phase / ثلاثية الأوجه؟</label><select name="three_phase"><option value="">اختر</option><option>نعم</option><option>لا</option><option>لا أعرف</option></select></div><div><label class="main">القدرة الكهربائية المتاحة إن كانت معروفة (kW)</label><input type="number" step="0.1" name="available_kw"></div></div>
+<div class="q grid2"><div><label class="main">هل يوجد مولد احتياطي؟</label><select name="generator"><option value="">اختر</option><option>نعم</option><option>لا</option></select></div><div><label class="main">مصدر الحرارة المتاح</label><select name="heat_source"><option value="">اختر</option><option>كهرباء</option><option>غاز / LPG</option><option>ديزل</option><option>بخار موجود</option><option>أكثر من مصدر</option><option>لا أعرف</option></select></div></div>
+<div class="q"><label class="main">هل توجد رسومات إنشائية أو معلومات عن سمك الأرضية/القواعد؟</label><select name="structural_docs"><option value="">اختر</option><option>نعم</option><option>لا</option><option>لا أعرف</option></select></div>
+</section>
+
+<section class="card">
+<h2>7) المعدات الحالية والعمالة</h2><div class="sub">سنقرر بعد ذلك: ما يُحتفظ به، ما يُطوّر، وما يُشترى.</div>
+<div class="q"><label class="main">اكتب قائمة المعدات الموجودة حاليًا <span class="req">*</span></label><textarea required name="existing_equipment" placeholder="اسم المعدة - السعة - حالتها إن أمكن"></textarea></div>
+<div class="q"><label class="main">ما المعدات التي تريدون الاحتفاظ بها؟ وما الذي ترون أنه يحتاج استبدالًا؟</label><textarea name="keep_replace"></textarea></div>
+<div class="q grid2"><div><label class="main">عدد العاملين بالمصنع</label><input type="number" min="0" name="workers"></div><div><label class="main">ساعات التشغيل يوميًا</label><input type="number" min="0" max="24" step="0.5" name="hours_day"></div></div>
+<div class="q grid2"><div><label class="main">أيام التشغيل أسبوعيًا</label><input type="number" min="0" max="7" name="days_week"></div><div><label class="main">عدد الورديات المستهدفة</label><input type="number" min="1" name="shifts"></div></div>
+<div class="q"><label class="main">هل يوجد مسؤول جودة أو متخصص ألبان؟</label><select name="quality_staff"><option value="">اختر</option><option>نعم</option><option>لا</option><option>جزئي / استشاري</option></select></div>
+</section>
+
+<section class="card">
+<h2>8) التوسع والميزانية ونطاق المطلوب</h2><div class="sub">هذه الإجابات تحدد فلسفة الشراء الآن وما نؤجله للمرحلة التالية.</div>
+<div class="q grid2"><div><label class="main">متى تريدون الوصول إلى 1,000 لتر/يوم؟ <span class="req">*</span></label><input required type="text" name="target_1000" placeholder="مثال: خلال 6 أشهر"></div><div><label class="main">التوقع للوصول إلى 5,000 لتر/يوم</label><select name="target_5000"><option value="">اختر</option><option>خلال سنتين</option><option>2 - 3 سنوات</option><option>3 - 5 سنوات</option><option>أكثر من 5 سنوات</option><option>غير محدد</option></select></div></div>
+<div class="q"><label class="main">عند 5,000 لتر/يوم: مصدر اللبن المتوقع</label><select name="milk_source_5000"><option value="">اختر</option><option>المزرعة نفسها فقط</option><option>المزرعة + شراء من مزارع أخرى</option><option>شراء خارجي بدرجة كبيرة</option><option>غير محدد</option></select></div>
+<div class="q"><label class="main">هل توجد إمكانية لزيادة مساحة المصنع مستقبلًا؟</label><select name="factory_expand"><option value="">اختر</option><option>نعم</option><option>لا</option><option>ممكن ولكن غير مؤكد</option></select></div>
+<div class="q"><label class="main">هل توجد منتجات مستقبلية مخططة؟</label><input type="text" name="future_products" placeholder="زبادي / لبنة / جبن / غيره / لا يوجد حاليًا"></div>
+<div class="q"><label class="main">مستوى الأتمتة المطلوب للمرحلة الأولى <span class="req">*</span></label><select required name="automation_level"><option value="">اختر</option><option>نصف آلي اقتصادي مع تقليل العمل اليدوي</option><option>آلي بدرجة مرتفعة</option><option>نريد المقارنة بين الخيارين</option><option>غير محدد</option></select></div>
+<div class="q"><label class="main">الميزانية التقريبية المتاحة للمرحلة الأولى</label><input type="text" name="budget" placeholder="يمكن كتابة نطاق أو اختيار: غير محددة بعد"></div>
+<div class="q"><label class="main">ما المطلوب من الاستشارة؟ يمكن اختيار أكثر من بند</label><div class="choices">
+<label class="choice"><input type="checkbox" name="scope" value="تشخيص الوضع الحالي"> تشخيص الوضع الحالي</label>
+<label class="choice"><input type="checkbox" name="scope" value="Process Flow والسعات"> Process Flow والسعات</label>
+<label class="choice"><input type="checkbox" name="scope" value="Layout مبدئي للمصنع"> Layout مبدئي</label>
+<label class="choice"><input type="checkbox" name="scope" value="مواصفات المعدات"> مواصفات المعدات</label>
+<label class="choice"><input type="checkbox" name="scope" value="اختيار مصنعين وموردين من مصر"> اختيار مصنعين/موردين</label>
+<label class="choice"><input type="checkbox" name="scope" value="متابعة التصنيع والاستلام"> متابعة التصنيع والاستلام</label>
+<label class="choice"><input type="checkbox" name="scope" value="الإشراف على التركيب والتشغيل"> الإشراف على التركيب والتشغيل</label>
+</div></div>
+</section>
+
+<section class="card">
+<h2>المرفقات المطلوبة على واتساب</h2><div class="sub">ضع علامة على ما سترسله. الأفضل تسمية الصور/الفيديوهات بوضوح.</div>
+<div class="attachments">
+<label class="att"><input type="checkbox" name="attachments" value="فيديو المزرعة والحلب"> فيديو المزرعة ومنطقة الحلب</label>
+<label class="att"><input type="checkbox" name="attachments" value="فيديو المصنع 360"> فيديو المصنع بالكامل 360°</label>
+<label class="att"><input type="checkbox" name="attachments" value="صور المعدات"> صور كل المعدات الموجودة</label>
+<label class="att"><input type="checkbox" name="attachments" value="Name Plates"> صور Name Plate لكل معدة</label>
+<label class="att"><input type="checkbox" name="attachments" value="مخطط المصنع"> رسم المصنع بالأبعاد والأبواب والأعمدة</label>
+<label class="att"><input type="checkbox" name="attachments" value="لوحة الكهرباء"> صورة لوحة الكهرباء الرئيسية</label>
+<label class="att"><input type="checkbox" name="attachments" value="تحاليل اللبن"> آخر تحاليل اللبن إن وجدت</label>
+<label class="att"><input type="checkbox" name="attachments" value="تحاليل المياه"> آخر تحليل مياه إن وجد</label>
+<label class="att"><input type="checkbox" name="attachments" value="العبوات"> صور المنتجات والعبوات والأغطية</label>
+<label class="att"><input type="checkbox" name="attachments" value="تانك النقل والتبريد"> صور تانك التبريد ووسيلة نقل اللبن</label>
+</div>
+<div class="q"><label class="main">أي ملاحظات إضافية تريدون توضيحها</label><textarea name="final_notes"></textarea></div>
+</section>
+</form>
+
+<div class="actions">
+<button class="primary" type="button" onclick="copySummary()">نسخ الإجابات لواتساب</button>
+<button class="secondary" type="button" onclick="downloadSummary()">تحميل الإجابات TXT</button>
+<button class="secondary" type="button" onclick="window.print()">طباعة / حفظ PDF</button>
+<button class="danger" type="button" onclick="resetForm()">مسح الإجابات</button>
+<span class="status" id="status">يتم الحفظ تلقائيًا على هذا الجهاز</span>
+</div>
+<div class="footer">نموذج جمع بيانات فني أولي - لا يمثل تصميمًا نهائيًا للمعدات أو اعتمادًا إنشائيًا.</div>
+</div>
+<script>
+const form=document.getElementById('f'), statusEl=document.getElementById('status');
+const key='libya_goat_dairy_intake_v1';
+function esc(s){return (s||'').replace(/[<>]/g,'');}
+function updateConditionals(){
+ document.querySelectorAll('[data-toggle]').forEach(el=>{const target=document.getElementById(el.dataset.toggle); if(!target)return; const checked=el.checked; if(checked) target.classList.add('show'); else if(el.type==='radio'){ const group=document.querySelectorAll(`input[name="${el.name}"][data-toggle="${el.dataset.toggle}"]`); if(![...group].some(x=>x.checked)) target.classList.remove('show'); }});
+ // explicit groups where only yes has target
+ ['cooling_yes','additives_yes','cold_room_yes'].forEach(id=>{const target=document.getElementById(id); const ctl=document.querySelector(`[data-toggle="${id}"]`); if(target) target.classList.toggle('show', !!(ctl&&ctl.checked));});
+}
+function serialize(){const o={}; new FormData(form).forEach((v,k)=>{if(o[k]) o[k]=Array.isArray(o[k])?[...o[k],v]:[o[k],v]; else o[k]=v}); return o}
+function save(){localStorage.setItem(key,JSON.stringify(serialize())); statusEl.textContent='تم الحفظ تلقائيًا ✓'; setTimeout(()=>statusEl.textContent='يتم الحفظ تلقائيًا على هذا الجهاز',1200); updateProgress();}
+function load(){try{const o=JSON.parse(localStorage.getItem(key)||'{}'); Object.entries(o).forEach(([k,v])=>{const els=form.elements[k]; if(!els)return; const vals=Array.isArray(v)?v:[v]; if(els.length && !els.tagName){[...els].forEach(e=>{if((e.type==='radio'||e.type==='checkbox')) e.checked=vals.includes(e.value); else e.value=vals[0]||''})} else if(els.type==='checkbox'||els.type==='radio') els.checked=vals.includes(els.value); else els.value=vals[0]||''});}catch(e){} updateConditionals(); updateProgress();}
+function updateProgress(){const visible=[...form.querySelectorAll('input,select,textarea')].filter(e=>e.type!=='hidden' && e.offsetParent!==null && e.name && e.type!=='checkbox'); const groups=new Set(); let answered=0,total=0; visible.forEach(e=>{if(e.type==='radio'){if(groups.has(e.name)) return; groups.add(e.name); total++; if(form.querySelector(`input[name="${e.name}"]:checked`)) answered++;} else {total++; if(String(e.value||'').trim()) answered++;}}); const p=total?Math.round(answered/total*100):0; document.getElementById('bar').style.width=p+'%'; document.getElementById('pct').textContent=p+'%';}
+function labelFor(name){if(name==='attachments')return 'المرفقات التي سيتم إرسالها'; const el=form.querySelector(`[name="${name}"]`); if(!el)return name; const parent=el.parentElement; const direct=parent?parent.querySelector(':scope > label.main'):null; if(direct)return direct.textContent.replace('*','').trim(); const q=el.closest('.q'); const l=q?q.querySelector('label.main'):null; return l?l.textContent.replace('*','').trim():name}
+function summary(){const data=serialize(); const sections=[...document.querySelectorAll('.card')]; let out='استبيان تطوير مصنع ألبان الماعز - ليبيا\n'+'='.repeat(42)+'\n'; sections.forEach(sec=>{const title=sec.querySelector('h2'); if(!title)return; let block='\n## '+title.textContent.trim()+'\n'; let any=false; const names=[]; sec.querySelectorAll('[name]').forEach(e=>{if(!names.includes(e.name)) names.push(e.name)}); names.forEach(name=>{let v=data[name]; if(v===undefined||v===null||String(v).trim()==='')return; if(Array.isArray(v)) v=v.join('، '); block+=`- ${labelFor(name)}: ${v}\n`; any=true}); if(any) out+=block;}); out+='\nملاحظة: تم تعبئة النموذج بواسطة صاحب المشروع، وتحتاج البيانات الفنية للتحقق قبل اعتماد التصميم النهائي.\n'; return out}
+async function copySummary(){const t=summary(); try{await navigator.clipboard.writeText(t); alert('تم نسخ الإجابات. افتح واتساب والصقها في المحادثة.');}catch(e){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('تم نسخ الإجابات.');}}
+function downloadSummary(){const blob=new Blob([summary()],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='اجابات-مشروع-البان-الماعز.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function resetForm(){if(confirm('هل تريد مسح كل الإجابات المحفوظة على هذا الجهاز؟')){form.reset();localStorage.removeItem(key);updateConditionals();updateProgress();}}
+form.addEventListener('input',save); form.addEventListener('change',()=>{updateConditionals();save()}); load();
+</script>
+</body></html>
