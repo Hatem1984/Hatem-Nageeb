@@ -1,4 +1,4 @@
-# التشخيص قبل الحل — V35 Full Funnel
+# التشخيص قبل الحل — V36 Full Funnel
 
 النسخة التشغيلية لصفحة برنامج **التشخيص قبل الحل** على `lo3betbusiness.com`.
 
@@ -58,6 +58,16 @@ WhatsApp الرسمي: **01011223667**.
 
 لا تحذف Recovery branches بدون قرار صريح.
 
+
+## V36 — الأداء والبنية
+
+- أزيلت طبقة Jekyll post-render القديمة من `index.html` وأصبح المدخل canonical مباشرًا إلى `_includes/landing-base.html`.
+- CSS المتراكم جُمّع في `assets/landing-v36.css` مع الحفاظ على ترتيب الـcascade.
+- JavaScript التفاعلي جُمّع في `assets/landing-v36.js` بدل عدة inline patches.
+- Checkout POST يستخدم simple `text/plain` request لتفادي CORS preflight من المتصفح.
+- تجهيز Checkout قبل XPay أصبح RPC واحدة تقريبًا بدل عدة round trips لقاعدة البيانات.
+- زر XPay يعرض حالة واضحة: «جاري تجهيز الدفع الآمن…» أثناء انتظار الجلسة.
+- Attribution keys القديمة `v35` محفوظة عمدًا حتى لا نفقد بيانات الزوار الحاليين.
 
 ## حماية السعة
 
