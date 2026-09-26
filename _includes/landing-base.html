@@ -2182,8 +2182,10 @@ html:not(.js) .reveal{opacity:1!important;transform:none!important}
 (function(){
   document.querySelectorAll('[data-track-contact]').forEach(function(el){
     el.addEventListener('click',function(){
-      try{fbq('track','Contact');fbq('trackCustom','MessengerClick')}catch(e){}
-      try{gtag('event','contact_click',{method:'messenger'})}catch(e){}
+      var href=String(this.getAttribute('href')||'');
+      var channel=href.indexOf('wa.me')>-1?'whatsapp':href.indexOf('m.me')>-1?'messenger':'contact';
+      try{fbq('trackCustom','ContactClick',{channel:channel})}catch(e){}
+      try{gtag('event','contact_click',{method:channel})}catch(e){}
     });
   });
 
