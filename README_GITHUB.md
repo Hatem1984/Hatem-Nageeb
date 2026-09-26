@@ -1,16 +1,15 @@
-# Landing Page — لعبة البزنس FINAL V22
+# لعبة البزنس — V35 Full Funnel
 
-## تحديث V22
-- إضافة جميع الأدوات التراكمية الـ24 المستخدمة عبر الجلسات.
-- تقسيم الأدوات إلى 6 وحدات × 4 جلسات.
-- ترقيم الأدوات من 01 إلى 24.
-- القسم مضغوط بدون صور لتجنب أي مشكلة في اتجاه النص العربي.
-- الإبقاء على عداد العرض، عداد المقاعد، أداة AI، وأزرار CTA كما هي.
+النسخة الحالية تربط الصفحة، التشخيص، الدفع، Attribution، وEnrollment.
 
-## Validation
-- Duplicate IDs: None
-- Broken internal anchors: None
-- Missing local assets: None
-- JavaScript syntax: PASS
-- JSON-LD syntax: PASS
-- Checks: {'24_tools_visible': True, 'tools_numbered_01_to_24': True, 'six_units_present': True, 'old_four_tool_cards_removed': True, 'timer_intact': True, 'dark_green_cta_intact': True}
+- السعر: 4,500 جنيه
+- تثبيت المقعد: 2,000 جنيه
+- استكمال المتبقي على نفس رقم الحجز
+- السعة: 20 مقعدًا
+- وصول أداة التشخيص للدفعة الأولى: 6 أشهر مجانًا
+- WhatsApp: 01011223667
+- XPay Checkout Sessions عبر Supabase
+- Purchase من Webhook بعد تأكيد الدفع
+- تقرير التشخيص PDF: 3 صفحات
+
+Recovery: recovery-pre-v35-2026-09-26
