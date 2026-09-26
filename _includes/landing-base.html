@@ -2339,6 +2339,7 @@ document.addEventListener('DOMContentLoaded', function(){
   let selectedAmount = 2000;
   let selectedPlan = 'reserve';
   let selectedMethod = '';
+  let lastPaymentOpener = null;
   let checkoutTracked = false;
   let paymentMethodCheckoutTracked = false;
   const plans = {
@@ -2358,6 +2359,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function openPayment(plan){
     if(!modal) return;
+    lastPaymentOpener = document.activeElement;
     setPlan(plan || 'reserve');
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
@@ -2381,6 +2383,7 @@ document.addEventListener('DOMContentLoaded', function(){
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
+    if(lastPaymentOpener&&typeof lastPaymentOpener.focus==='function'){try{lastPaymentOpener.focus();}catch(e){}}
   }
 
   document.querySelectorAll('.js-open-payment').forEach(el=>{
@@ -2399,7 +2402,15 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape') closePayment();
+    if(!modal||!modal.classList.contains('open'))return;
+    if(e.key === 'Escape'){closePayment();return;}
+    if(e.key === 'Tab'){
+      const focusable=[...modal.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>el.offsetParent!==null);
+      if(!focusable.length)return;
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
   });
 
   if(modal){
