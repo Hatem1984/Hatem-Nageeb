@@ -78,3 +78,20 @@ Final backend hardening — 26 Sep 2026
 - Final live QA passed for reserve 2,000, full 4,500, and balance 2,500 Checkout Session creation.
 - QA checkout sessions were explicitly expired and local QA enrollment/payment rows removed.
 - Production enrollment/payment counts returned to zero after QA.
+
+
+V36 PERFORMANCE + LAYER CLEANUP — 26 Sep 2026
+- Recovery branch: recovery-pre-v36-performance-cleanup-2026-09-26.
+- Removed the legacy index.html post-render replacement layer.
+- Consolidated landing CSS into assets/landing-v36.css.
+- Consolidated interaction scripts into assets/landing-v36.js.
+- Canonical landing HTML reduced from about 99 KB to about 31 KB; CSS/JS are now cacheable assets.
+- Checkout browser POST changed to a simple text/plain JSON payload to avoid CORS preflight.
+- Checkout preparation consolidated into v36_prepare_checkout service-role-only RPC.
+- Fresh pending enrollments are now counted as temporary seat holds immediately, closing the pre-XPay oversell gap.
+- Pending payment persistence moved off the critical redirect path.
+- Checkout timing instrumentation added.
+- QA measurement: prepare stage ~272 ms; XPay session creation ~2.95 s; backend response ~3.23 s.
+- XPay remains the dominant latency component while the product image/logo is kept visible.
+- Live QA checkout session was expired and its QA records removed.
+- V36 security RPC permissions verified: anon/authenticated false, service_role true.
