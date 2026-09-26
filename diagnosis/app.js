@@ -227,30 +227,6 @@
   }
 
   $('programBtn').addEventListener('click',()=>track('DiagnosticProgramClick','diagnostic_program_click'));
-  $('messengerBtn').addEventListener('click',()=>{
-    const r=state.result;
-    if(r){
-      const firstGap=r.gaps&&r.gaps[0]?r.gaps[0].label:'';
-      const message=[
-        'نتيجة اختبار قرار مشروعي:',
-        `طبيعة النشاط: ${r.sectorLabel||''}`,
-        `نوع القرار: ${r.decision.label}`,
-        `الجاهزية: ${r.readiness}/100`,
-        `قوة الدليل: ${r.evidence}/100`,
-        firstGap?`أهم نقطة محتاجة مراجعة: ${firstGap}`:'',
-        'عايز أعرف: هل برنامج «التشخيص قبل الحل» مناسب لحالتي؟'
-      ].filter(Boolean).join('\n');
-      try{
-        if(navigator.clipboard&&navigator.clipboard.writeText){
-          navigator.clipboard.writeText(message).then(()=>{
-            $('pdfStatus').textContent='تم نسخ ملخص نتيجتك — الصقه في Messenger.';
-          }).catch(()=>{});
-        }
-      }catch(e){}
-    }
-    try{if(typeof fbq==='function')fbq('track','Contact',cleanEventData(eventData()));}catch(e){}
-    track('DiagnosticMessengerClick','diagnostic_messenger_click');
-  });
   const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   function fileToDataUrl(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});}
   async function getLogoData(){const response=await fetch('../assets/شعار_لعبة_البزنس_خفيف.webp',{cache:'force-cache'});if(!response.ok)throw new Error('logo_load_failed');return fileToDataUrl(await response.blob());}
