@@ -67,6 +67,11 @@
         button.classList.remove('selected');
       }
     });
+    const moreOps=$('moreOperationalDecisions');
+    if(moreOps){
+      moreOps.classList.toggle('hidden',stage!=='running');
+      if(stage!=='running')moreOps.open=false;
+    }
     const more=$('moreRunningDecisions');
     if(more){
       more.classList.toggle('hidden',stage!=='running'||!sector);
