@@ -2,6 +2,8 @@ package com.kenzelyom.walletlistener;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -30,13 +32,19 @@ public class MainActivity extends Activity {
     private TextView queue;
     private TextView lastEvent;
     private TextView lastSync;
+    private TextView lastError;
     private EditText pairCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(buildUi());
-        refresh();
+        try {
+            setContentView(buildUi());
+            refresh();
+        } catch (Throwable t) {
+            Prefs.setLastError(this, "MainActivity.onCreate: " + t.getClass().getSimpleName() + " - " + t.getMessage());
+            Toast.makeText(this, "حصل خطأ في فتح التطبيق. افتحه مرة ثانية لمراجعة آخر خطأ.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -45,10 +53,19 @@ public class MainActivity extends Activity {
         refresh();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executor.shutdownNow();
+    }
+
     private View buildUi() {
         ScrollView scroll = new ScrollView(this);
+        scroll.setFillViewport(true);
+
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
+        root.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         root.setPadding(dp(20), dp(24), dp(20), dp(30));
         root.setBackgroundColor(Color.rgb(250, 247, 239));
         scroll.addView(root);
@@ -56,18 +73,19 @@ public class MainActivity extends Activity {
         TextView brand = text("كنز اليوم", 28, true, Color.rgb(11, 67, 57));
         root.addView(brand);
 
-        TextView title = text("KENZ Wallet Listener", 19, true, Color.rgb(24, 24, 24));
+        TextView title = text("KENZ Wallet Listener · V2", 18, true, Color.rgb(24, 24, 24));
         title.setPadding(0, dp(4), 0, dp(18));
         root.addView(title);
 
         status = card(root, "حالة الربط");
-        permission = card(root, "صلاحية استقبال الرسائل");
+        permission = card(root, "صلاحية استقبال SMS");
         queue = card(root, "الرسائل في الانتظار");
-        lastEvent = card(root, "آخر رسالة محفظة");
+        lastEvent = card(root, "آخر رسالة دفع");
         lastSync = card(root, "آخر مزامنة");
+        lastError = card(root, "آخر خطأ مسجل");
 
         TextView note = text(
-                "الخصوصية: التطبيق لا يقرأ صندوق رسائلك القديم. يلتقط فقط رسائل SMS الجديدة التي تحمل مؤشرات المحافظ الإلكترونية، ويحفظها مؤقتًا إذا انقطع الإنترنت.",
+                "الخصوصية: التطبيق لا يقرأ صندوق رسائلك القديم ولا يحتاج READ_SMS. يلتقط فقط رسائل SMS الجديدة بعد التثبيت، ويفلتر رسائل المحافظ قبل إرسال أي شيء للسيرفر.",
                 13, false, Color.DKGRAY);
         note.setPadding(0, dp(12), 0, dp(14));
         root.addView(note);
@@ -80,25 +98,49 @@ public class MainActivity extends Activity {
         pairCode.setPadding(dp(14), dp(12), dp(14), dp(12));
         root.addView(pairCode, full());
 
-        Button pair = button("ربط هذا الموبايل");
+        Button pair = button("1) ربط هذا الموبايل");
         pair.setOnClickListener(v -> pairDevice());
         root.addView(pair, full());
 
-        Button grant = button("منح صلاحية استقبال SMS");
-        grant.setOnClickListener(v -> requestSmsPermission());
+        Button grant = button("2) منح صلاحية استقبال SMS");
+        grant.setOnClickListener(v -> requestSmsPermissionSafely());
         root.addView(grant, full());
 
-        Button test = button("اختبار الاتصال بالسيرفر");
+        Button test = button("3) اختبار الاتصال بالسيرفر");
         test.setOnClickListener(v -> testConnection());
         root.addView(test, full());
 
         Button retry = button("إعادة إرسال الرسائل المعلقة");
         retry.setOnClickListener(v -> {
-            SyncJobService.schedule(this);
-            Toast.makeText(this, "تم جدولة المزامنة", Toast.LENGTH_SHORT).show();
+            SyncScheduler.enqueue(this);
+            Toast.makeText(this, "تمت جدولة المزامنة", Toast.LENGTH_SHORT).show();
             refresh();
         });
         root.addView(retry, full());
+
+        Button battery = secondaryButton("فتح إعدادات البطارية");
+        battery.setOnClickListener(v -> {
+            try {
+                startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+            } catch (Throwable t) {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            }
+        });
+        root.addView(battery, full());
+
+        Button reset = secondaryButton("إعادة ضبط ربط الجهاز");
+        reset.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setTitle("إعادة ضبط الربط؟")
+                .setMessage("سيتم حذف رمز الجهاز المحلي فقط، ولن تُحذف أي طلبات أو مدفوعات.")
+                .setNegativeButton("إلغاء", null)
+                .setPositiveButton("إعادة ضبط", (d, which) -> {
+                    Prefs.clearPair(this);
+                    Prefs.clearLastError(this);
+                    refresh();
+                    Toast.makeText(this, "تمت إعادة ضبط الربط", Toast.LENGTH_SHORT).show();
+                })
+                .show());
+        root.addView(reset, full());
 
         return scroll;
     }
@@ -113,8 +155,7 @@ public class MainActivity extends Activity {
         status.setText("حالة الربط\nجاري الربط...");
         executor.execute(() -> {
             try {
-                String name = Build.MANUFACTURER + " " + Build.MODEL + " · " +
-                        Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                String name = Build.MANUFACTURER + " " + Build.MODEL;
                 JSONObject j = NetworkClient.pair(code, name);
                 Prefs.savePair(
                         this,
@@ -123,16 +164,18 @@ public class MainActivity extends Activity {
                         j.optString("device_id", ""),
                         j.optString("device_label", name)
                 );
+                Prefs.setLastError(this, "لا توجد أخطاء مسجلة");
                 runOnUiThread(() -> {
                     pairCode.setText("");
-                    Toast.makeText(this, "تم ربط الموبايل بنجاح", Toast.LENGTH_LONG).show();
-                    requestSmsPermission();
+                    Toast.makeText(this, "تم الربط. الآن اضغط منح صلاحية استقبال SMS.", Toast.LENGTH_LONG).show();
                     refresh();
                 });
             } catch (Exception e) {
+                Prefs.setLastError(this, "Pair: " + e.getClass().getSimpleName() + " - " + e.getMessage());
                 runOnUiThread(() -> {
-                    status.setText("حالة الربط\nفشل الربط. راجع كود الربط وحاول مرة أخرى.");
+                    status.setText("حالة الربط\nفشل الربط. راجع الكود والإنترنت.");
                     Toast.makeText(this, "تعذر ربط الجهاز", Toast.LENGTH_LONG).show();
+                    refresh();
                 });
             }
         });
@@ -143,6 +186,7 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "اربط الجهاز أولًا", Toast.LENGTH_SHORT).show();
             return;
         }
+
         lastSync.setText("آخر مزامنة\nجاري اختبار الاتصال...");
         executor.execute(() -> {
             try {
@@ -151,11 +195,12 @@ public class MainActivity extends Activity {
                         ? j.optJSONObject("device").optString("label", "") : "";
                 Prefs.setLastSync(this, "الاتصال سليم · " + label + " · " + Instant.now().toString());
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "الاتصال سليم", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "الاتصال بالسيرفر سليم", Toast.LENGTH_SHORT).show();
                     refresh();
                 });
             } catch (Exception e) {
                 Prefs.setLastSync(this, "فشل اختبار الاتصال");
+                Prefs.setLastError(this, "Connection test: " + e.getClass().getSimpleName() + " - " + e.getMessage());
                 runOnUiThread(() -> {
                     Toast.makeText(this, "تعذر الاتصال بالسيرفر", Toast.LENGTH_LONG).show();
                     refresh();
@@ -164,25 +209,50 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void requestSmsPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, SMS_PERMISSION);
-        } else {
-            Toast.makeText(this, "صلاحية SMS مفعلة", Toast.LENGTH_SHORT).show();
+    private void requestSmsPermissionSafely() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                    checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, SMS_PERMISSION);
+            } else {
+                Toast.makeText(this, "صلاحية استقبال SMS مفعلة", Toast.LENGTH_SHORT).show();
+                refresh();
+            }
+        } catch (Throwable t) {
+            Prefs.setLastError(this, "SMS permission: " + t.getClass().getSimpleName() + " - " + t.getMessage());
+            Toast.makeText(this, "تعذر فتح إذن SMS. افتح إعدادات التطبيق يدويًا.", Toast.LENGTH_LONG).show();
+            try {
+                Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                i.setData(android.net.Uri.parse("package:" + getPackageName()));
+                startActivity(i);
+            } catch (Throwable ignored) {}
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == SMS_PERMISSION) {
+            boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            Toast.makeText(this, granted ? "تم تفعيل استقبال SMS" : "لم يتم منح صلاحية SMS", Toast.LENGTH_LONG).show();
             refresh();
         }
     }
 
     private void refresh() {
         if (status == null) return;
-        status.setText("حالة الربط\n" + (Prefs.paired(this) ? "متصل · " + Prefs.deviceLabel(this) : "غير مربوط"));
-        boolean granted = Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
-        permission.setText("صلاحية استقبال الرسائل\n" + (granted ? "مفعلة ✓" : "غير مفعلة"));
-        queue.setText("الرسائل في الانتظار\n" + QueueStore.count(this));
-        lastEvent.setText("آخر رسالة محفظة\n" + Prefs.lastEvent(this));
-        lastSync.setText("آخر مزامنة\n" + Prefs.lastSync(this));
+        try {
+            status.setText("حالة الربط\n" + (Prefs.paired(this) ? "متصل · " + Prefs.deviceLabel(this) : "غير مربوط"));
+            boolean granted = Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                    checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
+            permission.setText("صلاحية استقبال SMS\n" + (granted ? "مفعلة ✓" : "غير مفعلة"));
+            queue.setText("الرسائل في الانتظار\n" + QueueStore.count(this));
+            lastEvent.setText("آخر رسالة دفع\n" + Prefs.lastEvent(this));
+            lastSync.setText("آخر مزامنة\n" + Prefs.lastSync(this));
+            lastError.setText("آخر خطأ مسجل\n" + Prefs.lastError(this));
+        } catch (Throwable t) {
+            Prefs.setLastError(this, "Refresh: " + t.getClass().getSimpleName() + " - " + t.getMessage());
+        }
     }
 
     private TextView card(LinearLayout root, String label) {
@@ -202,6 +272,17 @@ public class MainActivity extends Activity {
         b.setAllCaps(false);
         b.setTextColor(Color.WHITE);
         b.setBackgroundColor(Color.rgb(11, 67, 57));
+        b.setPadding(dp(12), dp(10), dp(12), dp(10));
+        return b;
+    }
+
+    private Button secondaryButton(String label) {
+        Button b = new Button(this);
+        b.setText(label);
+        b.setTextSize(13);
+        b.setAllCaps(false);
+        b.setTextColor(Color.rgb(11, 67, 57));
+        b.setBackgroundColor(Color.rgb(238, 233, 219));
         b.setPadding(dp(12), dp(10), dp(12), dp(10));
         return b;
     }
