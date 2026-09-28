@@ -9,6 +9,7 @@ public class KenzApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Notify.init(this);
         final Thread.UncaughtExceptionHandler previous = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
             try {
