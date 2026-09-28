@@ -36,6 +36,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
             QueueStore.enqueue(context, event);
             Prefs.setLastEvent(context, "تم التقاط رسالة دفع · " + Instant.now().toString());
+            Notify.show(context, 42001, "كنز اليوم", "وصلت رسالة دفع جديدة · جاري التحقق منها");
             SyncScheduler.enqueue(context);
         } catch (Throwable t) {
             Prefs.setLastError(context, "SmsReceiver: " + t.getClass().getSimpleName() + " - " + t.getMessage());
