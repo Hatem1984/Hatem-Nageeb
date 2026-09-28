@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            setContentView(buildUi());
+            setContentView(buildUi());\n            NotifPermission.ask(this);
             refresh();
         } catch (Throwable t) {
             Prefs.setLastError(this, "MainActivity.onCreate: " + t.getClass().getSimpleName() + " - " + t.getMessage());
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
         TextView brand = text("كنز اليوم", 28, true, Color.rgb(11, 67, 57));
         root.addView(brand);
 
-        TextView title = text("KENZ Wallet Listener · V2", 18, true, Color.rgb(24, 24, 24));
+        TextView title = text("KENZ Wallet Listener · V3", 18, true, Color.rgb(24, 24, 24));
         title.setPadding(0, dp(4), 0, dp(18));
         root.addView(title);
 
