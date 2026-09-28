@@ -1,1 +1,1 @@
-Build trigger after Android SDK workflow fix.
+Build trigger for KENZ Wallet Listener v3 after notification fixes.
