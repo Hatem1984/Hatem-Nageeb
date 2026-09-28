@@ -6,23 +6,32 @@ final class WalletFilter {
     static boolean isWalletMessage(String sender, String body) {
         String s = (sender == null ? "" : sender).toLowerCase(Locale.ROOT);
         String b = (body == null ? "" : body).toLowerCase(Locale.ROOT);
-        String all = s + " " + b;
+        String all = normalize(s + " " + b);
 
-        boolean provider =
-                all.contains("vodafone") || all.contains("vf-cash") || all.contains("vf cash") ||
-                all.contains("فودافون") || all.contains("ڤودافون") ||
-                all.contains("orange cash") || all.contains("orangecash") ||
-                all.contains("اورنج") || all.contains("أورنج") ||
-                all.contains("etisalat") || all.contains("e&") || all.contains("eand") ||
-                all.contains("اتصالات") || all.contains("إي آند") || all.contains("اي اند") ||
-                all.contains("we pay") || all.contains("wepay") || all.contains("وي باي");
+        boolean provider = containsAny(all,
+                "vodafone", "vf cash", "vfcash", "vf-cash", "فودافون", "ڤودافون",
+                "orange cash", "orangecash", "اورنج",
+                "etisalat cash", "etisalat", "e& money", "eand", "اتصالات", "اي اند",
+                "we pay", "wepay", "وي باي");
 
-        boolean amount = b.contains("جنيه") || b.contains("ج.م") || b.contains("egp");
-        boolean transfer =
-                b.contains("استلم") || b.contains("استلام") || b.contains("تم تحويل") ||
-                b.contains("تحويل") || b.contains("received") || b.contains("transfer");
+        boolean amount =
+                containsAny(all, "جنيه", "ج.م", "egp", " le ") ||
+                all.matches(".*\\b\\d+(?:\\.\\d{1,2})?\\b.*");
+
+        boolean transfer = containsAny(all,
+                "استلم", "استلام", "تم تحويل", "تحويل", "تم اضافه", "تم اضافة",
+                "received", "credited", "transfer", "cash transfer");
 
         return provider && amount && transfer;
+    }
+
+    private static boolean containsAny(String haystack, String... needles) {
+        for (String n : needles) if (haystack.contains(n)) return true;
+        return false;
+    }
+
+    private static String normalize(String v) {
+        return v.replace('أ', 'ا').replace('إ', 'ا').replace('آ', 'ا').replace('ى', 'ي');
     }
 
     private WalletFilter() {}
