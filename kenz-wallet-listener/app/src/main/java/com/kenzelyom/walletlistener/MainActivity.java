@@ -39,7 +39,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            setContentView(buildUi());\n            NotifPermission.ask(this);
+            setContentView(buildUi());
+            NotifPermission.ask(this);
             refresh();
         } catch (Throwable t) {
             Prefs.setLastError(this, "MainActivity.onCreate: " + t.getClass().getSimpleName() + " - " + t.getMessage());
