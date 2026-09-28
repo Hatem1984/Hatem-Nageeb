@@ -49,12 +49,12 @@ jobs:
       - name: Prepare named APK
         run: |
           mkdir -p dist
-          cp kenz-wallet-listener/app/build/outputs/apk/debug/app-debug.apk dist/KENZ-Wallet-Listener-v2.apk
-          sha256sum dist/KENZ-Wallet-Listener-v2.apk > dist/SHA256.txt
+          cp kenz-wallet-listener/app/build/outputs/apk/debug/app-debug.apk dist/KENZ-Wallet-Listener-v3.apk
+          sha256sum dist/KENZ-Wallet-Listener-v3.apk > dist/SHA256.txt
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KENZ-Wallet-Listener-v2
+          name: KENZ-Wallet-Listener-v3
           path: dist/*
           if-no-files-found: error
