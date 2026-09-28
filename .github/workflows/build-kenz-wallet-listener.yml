@@ -1,0 +1,54 @@
+name: Build KENZ Wallet Listener APK
+
+on:
+  push:
+    branches:
+      - kenz-wallet-listener-v1
+    paths:
+      - "kenz-wallet-listener/**"
+      - ".github/workflows/build-kenz-wallet-listener.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35
+        run: yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Build APK
+        working-directory: kenz-wallet-listener
+        run: gradle :app:assembleDebug --stacktrace
+
+      - name: Prepare named APK
+        run: |
+          mkdir -p dist
+          cp kenz-wallet-listener/app/build/outputs/apk/debug/app-debug.apk dist/KENZ-Wallet-Listener-v1.apk
+          sha256sum dist/KENZ-Wallet-Listener-v1.apk > dist/SHA256.txt
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: KENZ-Wallet-Listener-v1
+          path: dist/*
+          if-no-files-found: error
