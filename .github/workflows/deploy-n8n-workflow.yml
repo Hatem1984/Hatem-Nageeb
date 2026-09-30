@@ -1,6 +1,10 @@
 name: Deploy n8n workflow
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json'
   workflow_dispatch:
     inputs:
       workflow_path:
@@ -24,7 +28,7 @@ jobs:
 
       - name: Validate workflow JSON
         env:
-          WORKFLOW_PATH: ${{ inputs.workflow_path }}
+          WORKFLOW_PATH: ${{ github.event_name == 'push' && 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json' || inputs.workflow_path }}
         run: |
           set -euo pipefail
           test -f "$WORKFLOW_PATH"
@@ -33,7 +37,7 @@ jobs:
 
       - name: Build n8n API payload
         env:
-          WORKFLOW_PATH: ${{ inputs.workflow_path }}
+          WORKFLOW_PATH: ${{ github.event_name == 'push' && 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json' || inputs.workflow_path }}
         run: |
           jq '{name,nodes,connections,settings}' "$WORKFLOW_PATH" > /tmp/n8n-payload.json
 
@@ -41,7 +45,7 @@ jobs:
         env:
           N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
           N8N_BASE_URL: 'https://vmi3001071.contaboserver.net'
-          WORKFLOW_ID: ${{ inputs.workflow_id }}
+          WORKFLOW_ID: ${{ github.event_name == 'push' && 'jwG2V2csZqHzAOTk' || inputs.workflow_id }}
         run: |
           set -euo pipefail
           test -n "$N8N_API_KEY"
