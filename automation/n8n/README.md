@@ -63,3 +63,10 @@ The Action can:
 3. Verify image quality, Drive upload, Sheet status, and no accidental LinkedIn publication.
 4. Connect the approved-image path to LinkedIn Content Factory V2.
 5. Only after successful end-to-end tests, update production.
+
+
+## Current n8n workflow IDs
+
+- LinkedIn Image Generator V3 - Cloudflare Free - STAGING: `jwG2V2csZqHzAOTk`
+
+Future updates to this workflow should target this ID instead of creating a new workflow.
