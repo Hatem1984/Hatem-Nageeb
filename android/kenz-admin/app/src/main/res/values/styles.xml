@@ -3,11 +3,14 @@
     <style name="Theme.KENZAdmin" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="android:colorAccent">@color/kenz_gold</item>
         <item name="android:statusBarColor">@color/kenz_green</item>
         <item name="android:navigationBarColor">@color/kenz_green</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowBackground">@color/kenz_green</item>
+        <item name="android:forceDarkAllowed">false</item>
     </style>
 </resources>
