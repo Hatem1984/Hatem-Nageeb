@@ -774,8 +774,8 @@
     "credentialBindingRefresh": "2026-09-30T20:33:00+03:00",
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
-    "stagingWebhookTest": false,
-    "testRunSerial": "flux-v4.1-ready",
+    "stagingWebhookTest": true,
+    "testRunSerial": "flux-v4.1-e2e-005",
     "imageModel": "@cf/black-forest-labs/flux-1-schnell"
   },
   "tags": []
