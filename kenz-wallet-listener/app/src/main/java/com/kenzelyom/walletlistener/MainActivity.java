@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
         TextView brand = text("كنز اليوم", 28, true, Color.rgb(11, 67, 57));
         root.addView(brand);
 
-        TextView title = text("KENZ Wallet Listener · V4", 18, true, Color.rgb(24, 24, 24));
+        TextView title = text("KENZ Wallet Listener · V4.0.2", 18, true, Color.rgb(24, 24, 24));
         title.setPadding(0, dp(4), 0, dp(18));
         root.addView(title);
 
