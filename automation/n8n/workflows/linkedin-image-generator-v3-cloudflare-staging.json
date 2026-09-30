@@ -267,12 +267,12 @@
           ]
         },
         "sendBody": true,
-        "contentType": "raw",
-        "rawContentType": "application/json",
-        "body": "={{ JSON.stringify($json.batchPayload) }}",
+        "contentType": "json",
         "options": {
           "timeout": 120000
-        }
+        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.batchPayload) }}"
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -781,7 +781,7 @@
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
     "stagingWebhookTest": true,
-    "testRunSerial": "v4-e2e-002"
+    "testRunSerial": "v4-e2e-003"
   },
   "tags": []
 }
