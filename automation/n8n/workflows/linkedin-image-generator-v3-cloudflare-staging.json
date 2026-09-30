@@ -44,9 +44,7 @@
             }
           ]
         },
-        "options": {
-          "returnFirstMatch": true
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -102,7 +100,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -300,
+        -220,
         240
       ],
       "id": "33a33333-3333-4333-8333-333333333333",
@@ -111,7 +109,7 @@
     {
       "parameters": {
         "inputDataFieldName": "image",
-        "name": "=linkedin_{{ $('Get Pending Image Job').item.json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
+        "name": "=linkedin_{{ $('Pick Next Future Image Job').first().json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
         "driveId": {
           "__rl": true,
           "mode": "list",
@@ -129,7 +127,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        40,
+        120,
         240
       ],
       "id": "55a55555-5555-4555-8555-555555555555",
@@ -161,7 +159,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "row_number": "={{ $('Get Pending Image Job').item.json.row_number }}",
+            "row_number": "={{ $('Pick Next Future Image Job').first().json.row_number }}",
             "Generated_Image": "=https://drive.google.com/file/d/{{ $json.id }}/view?usp=drive_link",
             "Image_Status": "Ready",
             "Error_Message": ""
@@ -216,7 +214,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        380,
+        460,
         240
       ],
       "id": "66a66666-6666-4666-8666-666666666666",
@@ -227,6 +225,19 @@
           "name": "Google Sheets account 2156"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nif (!rows.length) return [];\n\nconst parts = new Intl.DateTimeFormat('en-CA', {\n  timeZone: 'Africa/Cairo',\n  year: 'numeric',\n  month: '2-digit',\n  day: '2-digit'\n}).formatToParts(new Date());\n\nconst map = Object.fromEntries(parts.map(p => [p.type, p.value]));\nconst today = `${map.year}-${map.month}-${map.day}`;\n\nconst cleanDate = (v) => String(v ?? '').trim().slice(0, 10);\n\nconst candidates = rows\n  .filter(i => cleanDate(i.json.Publish_Date) >= today)\n  .sort((a,b) => {\n    const ad = cleanDate(a.json.Publish_Date);\n    const bd = cleanDate(b.json.Publish_Date);\n    if (ad !== bd) return ad.localeCompare(bd);\n    return Number(a.json.row_number || 0) - Number(b.json.row_number || 0);\n  });\n\nreturn candidates.length ? [candidates[0]] : [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -470,
+        240
+      ],
+      "id": "2f6d7f14-6adb-4f24-b47f-f605aef5be35",
+      "name": "Pick Next Future Image Job"
     }
   ],
   "connections": {
@@ -242,6 +253,17 @@
       ]
     },
     "Get Pending Image Job": {
+      "main": [
+        [
+          {
+            "node": "Pick Next Future Image Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Next Future Image Job": {
       "main": [
         [
           {
