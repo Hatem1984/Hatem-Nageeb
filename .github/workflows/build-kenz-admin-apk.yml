@@ -56,13 +56,13 @@ jobs:
         run: |
           APK="android/kenz-admin/app/build/outputs/apk/release/app-release.apk"
           "$ANDROID_SDK_ROOT/build-tools/35.0.0/apksigner" verify --verbose "$APK"
-          cp "$APK" "KENZ-Admin-v1.0.0.apk"
-          sha256sum "KENZ-Admin-v1.0.0.apk"
+          cp "$APK" "KENZ-Admin-v1.0.1.apk"
+          sha256sum "KENZ-Admin-v1.0.1.apk"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KENZ-Admin-v1.0.0
-          path: KENZ-Admin-v1.0.0.apk
+          name: KENZ-Admin-v1.0.1
+          path: KENZ-Admin-v1.0.1.apk
           if-no-files-found: error
           retention-days: 30
