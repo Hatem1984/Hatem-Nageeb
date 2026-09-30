@@ -1,12 +1,12 @@
 {
-  "name": "LinkedIn Image Generator V3 - Cloudflare Free - STAGING",
+  "name": "LinkedIn Visual Factory V4 - STAGING",
   "nodes": [
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -880,
+        -900,
         240
       ],
       "id": "11a11111-1111-4111-8111-111111111111",
@@ -49,7 +49,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        -640,
+        -700,
         240
       ],
       "id": "22a22222-2222-4222-8222-222222222222",
@@ -61,6 +61,45 @@
           "name": "Google Sheets account 2156"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nif (!rows.length) return [];\n\nconst parts = new Intl.DateTimeFormat('en-CA', {\n  timeZone: 'Africa/Cairo',\n  year: 'numeric',\n  month: '2-digit',\n  day: '2-digit'\n}).formatToParts(new Date());\n\nconst map = Object.fromEntries(parts.map(p => [p.type, p.value]));\nconst today = `${map.year}-${map.month}-${map.day}`;\n\nconst cleanDate = (v) => String(v ?? '').trim().slice(0, 10);\n\nconst candidates = rows\n  .filter(i => cleanDate(i.json.Publish_Date) >= today)\n  .sort((a,b) => {\n    const ad = cleanDate(a.json.Publish_Date);\n    const bd = cleanDate(b.json.Publish_Date);\n    if (ad !== bd) return ad.localeCompare(bd);\n    return Number(a.json.row_number || 0) - Number(b.json.row_number || 0);\n  });\n\nreturn candidates.length ? [candidates[0]] : [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -500,
+        240
+      ],
+      "id": "2f6d7f14-6adb-4f24-b47f-f605aef5be35",
+      "name": "Pick Next Future Image Job"
+    },
+    {
+      "parameters": {
+        "jsCode": "const src = $json;\nconst text = [src['Post Description'],src.Content_Pillar,src.Strategy,src.Notes,src.Image_Text,src.Image_Prompt].filter(Boolean).join(' ').toLowerCase();\nconst rules={\n personal:['تعلمت','رأيي','خبرتي','من واقع','موقف','شفت','قابلت','درس','تجربتي','personal','lesson','experience'],\n expansion:['توسع','فرع','فروع','expand','expansion','scale','scaling','نمو','كبر'],\n profitability:['ربح','ربحية','هامش','margin','profit','مكسب','تكلفة البيع','مبيعات'],\n cashflow:['كاش','سيولة','cash','تحصيل','receivable','دفع','مخزون','التزامات'],\n pricing:['تسعير','سعر','pricing','خصم','discount','عرض سعر'],\n operations:['تشغيل','عملية','عمليات','operations','workflow','فريق','إنتاجية','اختناق'],\n decision:['قرار','اختيار','عشوائ','decision','مخاطرة','risk','أقرر','تقرر'],\n diagnostic:['تشخيص','سبب','مشكلة','diagnos','root cause','قبل الحل','تحليل']\n};\nlet best='diagnostic',bestScore=-1;\nfor(const [type,words] of Object.entries(rules)){const s=words.reduce((a,w)=>a+(text.includes(w)?1:0),0);if(s>bestScore){best=type;bestScore=s;}}\nconst presets={\n decision:{label:'قرار إداري',mood:'bright strategic contrast',title:'القرار قبل التنفيذ',subhead:'الاختيار السريع قد تكون له تكلفة طويلة.',benefits:['قرار أوضح','مخاطرة أقل','هدر أقل','نمو أهدأ'],scene:'a clear business decision metaphor: one protagonist facing two distinct strategic paths, one chaotic and costly and one structured and sustainable'},\n expansion:{label:'قرار توسع',mood:'bright optimistic architectural',title:'قبل ما تتوسع',subhead:'التوسع الجيد يبدأ من أساس يتحمل النمو.',benefits:['اختبار الطلب','حساب السيولة','جاهزية التشغيل','توسع محسوب'],scene:'a business expansion metaphor with a small successful operation in the foreground and multiple possible expansion paths, one disciplined path leading to sustainable growth'},\n profitability:{label:'ربحية',mood:'bright analytical premium',title:'مش كل بيع مكسب',subhead:'ارتفاع المبيعات لا يعني بالضرورة ارتفاع الربح.',benefits:['هامش أقوى','تكلفة أوضح','بيع أذكى','ربح حقيقي'],scene:'a premium business profitability metaphor where sales activity is rising while profit margin is being squeezed, shown through physical business objects and clean abstract unlabeled charts'},\n cashflow:{label:'سيولة',mood:'bright financial tension',title:'الكاش أهم من الرقم',subhead:'المبيعات على الورق لا تدفع الالتزامات وحدها.',benefits:['تحصيل أسرع','مخزون أذكى','التزام أقل','سيولة أفضل'],scene:'a cash-flow metaphor with money moving through a clean business pipeline while receivables, inventory and obligations create visible bottlenecks'},\n pricing:{label:'تسعير',mood:'bright commercial clarity',title:'السعر قرار',subhead:'التسعير ليس رقمًا منفصلًا عن القيمة والتكلفة.',benefits:['قيمة أوضح','هامش أفضل','خصم أقل','قرار أسرع'],scene:'a refined pricing strategy metaphor using product value, cost and margin as physical balanced elements in a premium business setting'},\n operations:{label:'تشغيل',mood:'bright operational precision',title:'التشغيل يكشف الحقيقة',subhead:'النمو بدون نظام يحوّل الضغط إلى فوضى.',benefits:['تدفق أسرع','اختناق أقل','فريق أوضح','جودة أعلى'],scene:'a modern SME operations metaphor with a workflow moving from cluttered bottleneck into a clean organized process, realistic office or light industrial context'},\n diagnostic:{label:'تشخيص أعمال',mood:'bright consulting editorial',title:'التشخيص قبل الحل',subhead:'السؤال الأدق يختصر حلولًا كثيرة خاطئة.',benefits:['سبب أوضح','قرار أدق','هدر أقل','خطوة عملية'],scene:'an editorial business diagnostic scene: consultant and business owner studying evidence, numbers and root causes before making a decision'},\n personal:{label:'خبرة استشارية',mood:'bright human editorial',title:'درس من الشغل',subhead:'الخبرة الحقيقية تبدأ من مواقف وقرارات واقعية.',benefits:['خبرة عملية','وجهة نظر','قرار أوضح','تعلم أسرع'],scene:'a premium editorial personal-brand scene from a consultant perspective, over-the-shoulder or side-profile in a real working moment, no attempt to imitate a specific real person'}\n};\nconst p=presets[best];\nlet title=String(src.Image_Text||'').trim();\nif(!title||title.length>38) title=p.title;\nif(text.includes('عشوائ')) title='العشوائية لها تكلفة';\nif(text.includes('فرع')||text.includes('توسع')) title='قبل ما تتوسع';\nif((text.includes('مبيعات')||text.includes('بيع'))&&(text.includes('ربح')||text.includes('مكسب'))) title='مش كل بيع مكسب';\nconst variants=[\n 'wide environmental editorial composition with a strong foreground subject and depth',\n 'high-end side-angle editorial composition with one dominant metaphor',\n 'clean top-down or elevated business composition with structured visual hierarchy',\n 'architectural symbolic composition with clear depth and one visual focal point'\n];\nreturn [{json:{...src,Visual_Type:best,Visual_Label:p.label,Visual_Mood:p.mood,Image_Title_Final:title,Visual_Subhead:p.subhead,B1:p.benefits[0],B2:p.benefits[1],B3:p.benefits[2],B4:p.benefits[3],Visual_Scene:p.scene,Composition_Variant:variants[Number(src.row_number||1)%4],Strategy_Version:'V4.0'}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -300,
+        240
+      ],
+      "id": "77a77777-7777-4777-8777-777777777777",
+      "name": "Visual Strategy Router"
+    },
+    {
+      "parameters": {
+        "jsCode": "const j=$json;\nconst prompt=[\n 'Premium LinkedIn personal-brand editorial business poster background.',\n j.Visual_Scene+'.',\n j.Composition_Variant+'.',\n 'Bright high-key natural daylight, airy premium atmosphere, clean off-white and warm light-gray base, refined navy or teal structure, subtle copper or warm amber accent chosen to suit the topic.',\n 'Egyptian or Middle Eastern SME context where relevant, realistic business clothing and environments, sophisticated consulting aesthetic.',\n 'Create one unmistakable visual idea, not a generic stock photo. Use depth, symbolism and visual storytelling appropriate to the post.',\n 'Maximum two people. Natural anatomy, realistic hands and faces, credible proportions.',\n 'Leave visually calm negative space in the upper area for a separate Arabic headline overlay.',\n 'Absolutely no visible words, letters, numbers, labels, logos, signatures, watermarks, UI text or readable chart text anywhere in the generated image.',\n 'Charts if present must be abstract unlabeled shapes only.',\n 'No dark cinematic grading, no clutter, no neon, no sci-fi holograms, no repeated template composition.',\n 'Photorealistic editorial finish, polished commercial art direction.'\n].join(' ');\nreturn [{json:{...j,Image_Prompt_Final:prompt}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        240
+      ],
+      "id": "88a88888-8888-4888-8888-888888888888",
+      "name": "Build Premium Visual Prompt"
     },
     {
       "parameters": {
@@ -82,7 +121,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ prompt: 'Premium LinkedIn editorial image. ' + $json.Image_Prompt, negative_prompt: 'dark moody lighting, cinematic darkness, visible text, letters, words, logos, watermark, oversaturated colors, distorted hands, extra fingers, deformed faces, low resolution, clutter, generic stock-photo look', num_steps: 20, guidance: 7, seed: Number($json.row_number || 42) + 2026 }) }}",
+        "body": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, negative_prompt: 'dark moody lighting, cinematic darkness, visible text, letters, words, numbers, labels, logos, watermark, fake UI text, oversaturated colors, distorted hands, extra fingers, deformed faces, duplicate people, low resolution, clutter, generic stock-photo look, sci-fi holograms', num_steps: 20, guidance: 7, seed: Number($json.row_number || 42) + 4040 }) }}",
         "options": {
           "response": {
             "response": {
@@ -98,7 +137,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -220,
+        120,
         240
       ],
       "id": "33a33333-3333-4333-8333-333333333333",
@@ -106,8 +145,21 @@
     },
     {
       "parameters": {
+        "jsCode": "const items=$input.all();\nif(!items.length) throw new Error('No image returned from generator');\nfor(const item of items){if(!item.binary||!item.binary.image) throw new Error('Image generation returned no binary image');}\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        240
+      ],
+      "id": "99a99999-9999-4999-8999-999999999999",
+      "name": "Technical Image QC"
+    },
+    {
+      "parameters": {
         "inputDataFieldName": "image",
-        "name": "=linkedin_{{ $('Pick Next Future Image Job').first().json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
+        "name": "=linkedin_base_{{ $('Pick Next Future Image Job').first().json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
         "driveId": {
           "__rl": true,
           "mode": "list",
@@ -125,11 +177,215 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        120,
+        560,
         240
       ],
       "id": "55a55555-5555-4555-8555-555555555555",
-      "name": "Upload Image to Drive",
+      "name": "Upload Base Image to Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $('Upload Base Image to Drive').first().json.id }}/permissions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ role: 'reader', type: 'anyone', allowFileDiscovery: false }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        240
+      ],
+      "id": "aaa11111-aaaa-4111-8111-aaaaaaaaaaa1",
+      "name": "Grant Temporary Image Access",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
+          "mode": "id"
+        },
+        "name": "=STAGING LinkedIn V4 Row {{ $('Pick Next Future Image Job').first().json.row_number }} - {{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1000,
+        240
+      ],
+      "id": "aaa22222-aaaa-4222-8222-aaaaaaaaaaa2",
+      "name": "Copy V4 Visual Template",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://slides.googleapis.com/v1/presentations/{{ $('Copy V4 Visual Template').first().json.id }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ requests: [\n{ replaceAllText: { containsText: { text: '{{CONTENT_PILLAR}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.Visual_Label } },\n{ replaceAllText: { containsText: { text: '{{IMAGE_TEXT}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.Image_Title_Final } },\n{ replaceAllText: { containsText: { text: '{{SUBHEAD}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.Visual_Subhead } },\n{ replaceAllText: { containsText: { text: '{{B1}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B1 } },\n{ replaceAllText: { containsText: { text: '{{B2}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B2 } },\n{ replaceAllText: { containsText: { text: '{{B3}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B3 } },\n{ replaceAllText: { containsText: { text: '{{B4}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B4 } },\n{ replaceAllShapesWithImage: { imageUrl: 'https://drive.google.com/uc?export=download&id=' + $('Upload Base Image to Drive').first().json.id, replaceMethod: 'CENTER_CROP', containsText: { text: '{{BASE_IMAGE}}', matchCase: true }, pageObjectIds: ['p1'] } }\n] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        240
+      ],
+      "id": "aaa33333-aaaa-4333-8333-aaaaaaaaaaa3",
+      "name": "Compose Arabic 4x5 Poster",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $('Upload Base Image to Drive').first().json.id }}/permissions/{{ $('Grant Temporary Image Access').first().json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        240
+      ],
+      "id": "aaa44444-aaaa-4444-8444-aaaaaaaaaaa4",
+      "name": "Revoke Temporary Image Access",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      },
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "=https://slides.googleapis.com/v1/presentations/{{ $('Copy V4 Visual Template').first().json.id }}/pages/p1/thumbnail?thumbnailProperties.thumbnailSize=LARGE&thumbnailProperties.mimeType=PNG",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1660,
+        240
+      ],
+      "id": "aaa55555-aaaa-4555-8555-aaaaaaaaaaa5",
+      "name": "Get Final Slide PNG URL",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.contentUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "final_image"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        240
+      ],
+      "id": "aaa66666-aaaa-4666-8666-aaaaaaaaaaa6",
+      "name": "Download Final PNG"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "final_image",
+        "name": "=linkedin_final_{{ $('Pick Next Future Image Job').first().json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1c1s0Up_MH7Qj6tCe6lBe8hlg9J5Hg_Gq",
+          "cachedResultName": "Generated Images - حاتم نجيب LinkedIn",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1c1s0Up_MH7Qj6tCe6lBe8hlg9J5Hg_Gq"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2100,
+        240
+      ],
+      "id": "aaa77777-aaaa-4777-8777-aaaaaaaaaaa7",
+      "name": "Upload Final LinkedIn Image",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "ssaUiWVcMEHfFKKJ",
@@ -158,9 +414,16 @@
           "mappingMode": "defineBelow",
           "value": {
             "row_number": "={{ $('Pick Next Future Image Job').first().json.row_number }}",
-            "Generated_Image": "=https://drive.google.com/file/d/{{ $json.id }}/view?usp=drive_link",
+            "Generated_Image": "=https://drive.google.com/file/d/{{ $('Upload Final LinkedIn Image').first().json.id }}/view?usp=drive_link",
             "Image_Status": "Ready",
-            "Error_Message": ""
+            "Publish_Result": "Not Published",
+            "Error_Message": "",
+            "Visual_Type": "={{ $('Build Premium Visual Prompt').first().json.Visual_Type }}",
+            "Visual_Mood": "={{ $('Build Premium Visual Prompt').first().json.Visual_Mood }}",
+            "Image_Title_Final": "={{ $('Build Premium Visual Prompt').first().json.Image_Title_Final }}",
+            "Base_Image_URL": "=https://drive.google.com/file/d/{{ $('Upload Base Image to Drive').first().json.id }}/view?usp=drive_link",
+            "Final_Image_URL": "=https://drive.google.com/file/d/{{ $('Upload Final LinkedIn Image').first().json.id }}/view?usp=drive_link",
+            "Strategy_Version": "V4.0"
           },
           "matchingColumns": [
             "row_number"
@@ -195,8 +458,71 @@
               "canBeUsedToMatch": true
             },
             {
+              "id": "Publish_Result",
+              "displayName": "Publish_Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
               "id": "Error_Message",
               "displayName": "Error_Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Visual_Type",
+              "displayName": "Visual_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Visual_Mood",
+              "displayName": "Visual_Mood",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Image_Title_Final",
+              "displayName": "Image_Title_Final",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Base_Image_URL",
+              "displayName": "Base_Image_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Final_Image_URL",
+              "displayName": "Final_Image_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Strategy_Version",
+              "displayName": "Strategy_Version",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -212,30 +538,17 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        460,
+        2320,
         240
       ],
       "id": "66a66666-6666-4666-8666-666666666666",
-      "name": "Mark Image Ready",
+      "name": "Mark Ready for Review",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "OV7wgOxVCUXod153",
           "name": "Google Sheets account 2156"
         }
       }
-    },
-    {
-      "parameters": {
-        "jsCode": "const rows = $input.all();\nif (!rows.length) return [];\n\nconst parts = new Intl.DateTimeFormat('en-CA', {\n  timeZone: 'Africa/Cairo',\n  year: 'numeric',\n  month: '2-digit',\n  day: '2-digit'\n}).formatToParts(new Date());\n\nconst map = Object.fromEntries(parts.map(p => [p.type, p.value]));\nconst today = `${map.year}-${map.month}-${map.day}`;\n\nconst cleanDate = (v) => String(v ?? '').trim().slice(0, 10);\n\nconst candidates = rows\n  .filter(i => cleanDate(i.json.Publish_Date) >= today)\n  .sort((a,b) => {\n    const ad = cleanDate(a.json.Publish_Date);\n    const bd = cleanDate(b.json.Publish_Date);\n    if (ad !== bd) return ad.localeCompare(bd);\n    return Number(a.json.row_number || 0) - Number(b.json.row_number || 0);\n  });\n\nreturn candidates.length ? [candidates[0]] : [];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -470,
-        240
-      ],
-      "id": "2f6d7f14-6adb-4f24-b47f-f605aef5be35",
-      "name": "Pick Next Future Image Job"
     }
   ],
   "connections": {
@@ -265,6 +578,28 @@
       "main": [
         [
           {
+            "node": "Visual Strategy Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Visual Strategy Router": {
+      "main": [
+        [
+          {
+            "node": "Build Premium Visual Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Premium Visual Prompt": {
+      "main": [
+        [
+          {
             "node": "Generate Image - Cloudflare Free",
             "type": "main",
             "index": 0
@@ -276,18 +611,106 @@
       "main": [
         [
           {
-            "node": "Upload Image to Drive",
+            "node": "Technical Image QC",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Upload Image to Drive": {
+    "Technical Image QC": {
       "main": [
         [
           {
-            "node": "Mark Image Ready",
+            "node": "Upload Base Image to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Base Image to Drive": {
+      "main": [
+        [
+          {
+            "node": "Grant Temporary Image Access",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grant Temporary Image Access": {
+      "main": [
+        [
+          {
+            "node": "Copy V4 Visual Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy V4 Visual Template": {
+      "main": [
+        [
+          {
+            "node": "Compose Arabic 4x5 Poster",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compose Arabic 4x5 Poster": {
+      "main": [
+        [
+          {
+            "node": "Revoke Temporary Image Access",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revoke Temporary Image Access": {
+      "main": [
+        [
+          {
+            "node": "Get Final Slide PNG URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Final Slide PNG URL": {
+      "main": [
+        [
+          {
+            "node": "Download Final PNG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Final PNG": {
+      "main": [
+        [
+          {
+            "node": "Upload Final LinkedIn Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Final LinkedIn Image": {
+      "main": [
+        [
+          {
+            "node": "Mark Ready for Review",
             "type": "main",
             "index": 0
           }
@@ -302,7 +725,9 @@
     "timezone": "Africa/Cairo"
   },
   "meta": {
-    "credentialBindingRefresh": "2026-09-30T20:33:00+03:00"
+    "credentialBindingRefresh": "2026-09-30T20:33:00+03:00",
+    "visualFactoryVersion": "V4.0",
+    "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo"
   },
   "tags": []
 }
