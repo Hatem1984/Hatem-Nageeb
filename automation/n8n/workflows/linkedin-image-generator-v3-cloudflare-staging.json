@@ -552,7 +552,7 @@
     },
     {
       "parameters": {
-        "httpMethod": "POST",
+        "httpMethod": "GET",
         "path": "linkedin-v4-staging-test-9c7e41f0",
         "responseMode": "onReceived",
         "options": {}
