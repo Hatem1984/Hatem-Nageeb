@@ -104,7 +104,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.cloudflare.com/client/v4/accounts/e35005aa0a2740a738c36989c2afe009/ai/run/@cf/black-forest-labs/flux-1-schnell",
+        "url": "https://api.cloudflare.com/client/v4/accounts/e35005aa0a2740a738c36989c2afe009/ai/run/@cf/leonardo/lucid-origin",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -126,7 +126,7 @@
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, seed: Number($json.row_number || 42) + 5050 }) }}"
+        "body": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, guidance: 5, seed: Number($json.row_number || 42) + 6060, width: 896, height: 1120, num_steps: 24 }) }}"
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -139,7 +139,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const item=$input.first();\nconst candidates=[\n  item.json?.result?.image,\n  item.json?.image,\n  item.json?.result?.response?.image,\n  item.json?.data?.image\n].filter(v=>typeof v==='string' && v.length>1000);\nif(!candidates.length){\n  throw new Error('FLUX returned no base64 image');\n}\nlet b64=candidates[0];\nif(b64.includes('base64,')) b64=b64.split('base64,').pop();\nconst strategy=$('Build Premium Visual Prompt').first().json;\nreturn [{\n  json:{\n    ...strategy,\n    Image_Model:'@cf/black-forest-labs/flux-1-schnell'\n  },\n  binary:{\n    image:{\n      data:b64,\n      mimeType:'image/jpeg',\n      fileName:'linkedin_base_'+String(strategy.row_number||'x')+'.jpg',\n      fileExtension:'jpg'\n    }\n  }\n}];"
+        "jsCode": "const item=$input.first();\nconst candidates=[\n  item.json?.result?.image,\n  item.json?.image,\n  item.json?.result?.response?.image,\n  item.json?.data?.image\n].filter(v=>typeof v==='string' && v.length>1000);\nif(!candidates.length){\n  throw new Error('Lucid Origin returned no base64 image');\n}\nlet b64=candidates[0];\nif(b64.includes('base64,')) b64=b64.split('base64,').pop();\nconst strategy=$('Build Premium Visual Prompt').first().json;\nreturn [{\n  json:{\n    ...strategy,\n    Image_Model:'@cf/leonardo/lucid-origin'\n  },\n  binary:{\n    image:{\n      data:b64,\n      mimeType:'image/jpeg',\n      fileName:'linkedin_base_'+String(strategy.row_number||'x')+'.jpg',\n      fileExtension:'jpg'\n    }\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -148,7 +148,7 @@
         240
       ],
       "id": "99a99999-9999-4999-8999-999999999999",
-      "name": "Decode & QC FLUX Image"
+      "name": "Decode & QC Lucid Image"
     },
     {
       "parameters": {
@@ -635,7 +635,7 @@
       "main": [
         [
           {
-            "node": "Decode & QC FLUX Image",
+            "node": "Decode & QC Lucid Image",
             "type": "main",
             "index": 0
           }
@@ -752,7 +752,7 @@
         ]
       ]
     },
-    "Decode & QC FLUX Image": {
+    "Decode & QC Lucid Image": {
       "main": [
         [
           {
@@ -775,8 +775,8 @@
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
     "stagingWebhookTest": true,
-    "testRunSerial": "flux-minimal-rest-006",
-    "imageModel": "@cf/black-forest-labs/flux-1-schnell"
+    "testRunSerial": "lucid-v4.1-e2e-007",
+    "imageModel": "@cf/leonardo/lucid-origin"
   },
   "tags": []
 }
