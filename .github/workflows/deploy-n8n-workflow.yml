@@ -137,3 +137,39 @@ jobs:
 
           jq '{id,name,active,updatedAt}' /tmp/n8n-response.json
           echo "n8n deployment completed with HTTP $HTTP_CODE"
+
+
+      - name: Set staging workflow activation state
+        env:
+          N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
+          N8N_BASE_URL: 'https://vmi3001071.contaboserver.net'
+          WORKFLOW_ID: ${{ github.event_name == 'push' && 'jwG2V2csZqHzAOTk' || inputs.workflow_id }}
+          WORKFLOW_PATH: ${{ github.event_name == 'push' && 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json' || inputs.workflow_path }}
+        run: |
+          set -euo pipefail
+          test -n "$N8N_API_KEY"
+          test -n "$WORKFLOW_ID"
+
+          if jq -e '.meta.stagingWebhookTest == true' "$WORKFLOW_PATH" >/dev/null; then
+            ACTION=activate
+          else
+            ACTION=deactivate
+          fi
+
+          HTTP_CODE=$(curl --silent --show-error \
+            --output /tmp/n8n-activation.json \
+            --write-out '%{http_code}' \
+            --request POST \
+            --url "$N8N_BASE_URL/api/v1/workflows/$WORKFLOW_ID/$ACTION" \
+            --header "X-N8N-API-KEY: $N8N_API_KEY" \
+            --header 'Content-Type: application/json' \
+            --data '{}')
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            jq '{message,code}' /tmp/n8n-activation.json || cat /tmp/n8n-activation.json
+            echo "n8n workflow $ACTION failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          jq '{id,name,active,updatedAt}' /tmp/n8n-activation.json
+          echo "n8n workflow $ACTION completed with HTTP $HTTP_CODE"
