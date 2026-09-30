@@ -65,14 +65,10 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.cloudflare.com/client/v4/accounts/{{ $vars.CLOUDFLARE_ACCOUNT_ID }}/ai/run/@cf/bytedance/stable-diffusion-xl-lightning",
+        "url": "https://api.cloudflare.com/client/v4/accounts/e35005aa0a2740a738c36989c2afe009/ai/run/@cf/bytedance/stable-diffusion-xl-lightning",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Bearer {{ $vars.CLOUDFLARE_API_TOKEN }}"
-            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -95,7 +91,9 @@
             }
           },
           "timeout": 120000
-        }
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth"
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
