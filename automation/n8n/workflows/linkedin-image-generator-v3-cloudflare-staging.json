@@ -104,7 +104,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.cloudflare.com/client/v4/accounts/e35005aa0a2740a738c36989c2afe009/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0",
+        "url": "https://api.cloudflare.com/client/v4/accounts/e35005aa0a2740a738c36989c2afe009/ai/run/@cf/black-forest-labs/flux-1-schnell",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -114,25 +114,19 @@
             },
             {
               "name": "Accept",
-              "value": "image/png"
+              "value": "application/json"
             }
           ]
         },
         "sendBody": true,
-        "contentType": "raw",
-        "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, negative_prompt: 'dark moody lighting, cinematic darkness, visible text, letters, words, numbers, labels, logos, watermark, fake UI text, oversaturated colors, distorted hands, extra fingers, deformed faces, duplicate people, low resolution, clutter, generic stock-photo look, sci-fi holograms', num_steps: 20, guidance: 7, seed: Number($json.row_number || 42) + 4040 }) }}",
+        "contentType": "json",
         "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file",
-              "outputPropertyName": "image"
-            }
-          },
           "timeout": 120000
         },
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth"
+        "genericAuthType": "httpHeaderAuth",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, steps: 8, seed: Number($json.row_number || 42) + 5050 }) }}"
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -145,7 +139,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const items=$input.all();\nif(!items.length) throw new Error('No image returned from generator');\nfor(const item of items){if(!item.binary||!item.binary.image) throw new Error('Image generation returned no binary image');}\nreturn items;"
+        "jsCode": "const item=$input.first();\nconst candidates=[\n  item.json?.result?.image,\n  item.json?.image,\n  item.json?.result?.response?.image,\n  item.json?.data?.image\n].filter(v=>typeof v==='string' && v.length>1000);\nif(!candidates.length){\n  throw new Error('FLUX returned no base64 image');\n}\nlet b64=candidates[0];\nif(b64.includes('base64,')) b64=b64.split('base64,').pop();\nconst strategy=$('Build Premium Visual Prompt').first().json;\nreturn [{\n  json:{\n    ...strategy,\n    Image_Model:'@cf/black-forest-labs/flux-1-schnell'\n  },\n  binary:{\n    image:{\n      data:b64,\n      mimeType:'image/jpeg',\n      fileName:'linkedin_base_'+String(strategy.row_number||'x')+'.jpg',\n      fileExtension:'jpg'\n    }\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -154,12 +148,12 @@
         240
       ],
       "id": "99a99999-9999-4999-8999-999999999999",
-      "name": "Technical Image QC"
+      "name": "Decode & QC FLUX Image"
     },
     {
       "parameters": {
         "inputDataFieldName": "image",
-        "name": "=linkedin_base_{{ $('Pick Next Future Image Job').first().json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
+        "name": "=linkedin_base_{{ $('Pick Next Future Image Job').first().json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.jpg",
         "driveId": {
           "__rl": true,
           "mode": "list",
@@ -423,7 +417,7 @@
             "Image_Title_Final": "={{ $('Build Premium Visual Prompt').first().json.Image_Title_Final }}",
             "Base_Image_URL": "=https://drive.google.com/file/d/{{ $('Upload Base Image to Drive').first().json.id }}/view?usp=drive_link",
             "Final_Image_URL": "=https://drive.google.com/file/d/{{ $('Upload Final LinkedIn Image').first().json.id }}/view?usp=drive_link",
-            "Strategy_Version": "V4.0"
+            "Strategy_Version": "={{ $('Build Premium Visual Prompt').first().json.Strategy_Version }}"
           },
           "matchingColumns": [
             "row_number"
@@ -641,18 +635,7 @@
       "main": [
         [
           {
-            "node": "Technical Image QC",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Technical Image QC": {
-      "main": [
-        [
-          {
-            "node": "Upload Base Image to Drive",
+            "node": "Decode & QC FLUX Image",
             "type": "main",
             "index": 0
           }
@@ -768,6 +751,17 @@
           }
         ]
       ]
+    },
+    "Decode & QC FLUX Image": {
+      "main": [
+        [
+          {
+            "node": "Upload Base Image to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
@@ -780,8 +774,9 @@
     "credentialBindingRefresh": "2026-09-30T20:33:00+03:00",
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
-    "stagingWebhookTest": true,
-    "testRunSerial": "v4-e2e-router-template-004"
+    "stagingWebhookTest": false,
+    "testRunSerial": "flux-v4.1-ready",
+    "imageModel": "@cf/black-forest-labs/flux-1-schnell"
   },
   "tags": []
 }
