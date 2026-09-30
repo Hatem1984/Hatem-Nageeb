@@ -564,23 +564,6 @@
     },
     {
       "parameters": {
-        "httpMethod": "GET",
-        "path": "linkedin-v4-staging-test-9c7e41f0",
-        "responseMode": "onReceived",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.2,
-      "position": [
-        -900,
-        40
-      ],
-      "id": "bbb11111-bbbb-4111-8111-bbbbbbbbbbb1",
-      "name": "STAGING Test Webhook",
-      "webhookId": "9c7e41f0-3b97-4cf5-a4e5-8dc936e5428a"
-    },
-    {
-      "parameters": {
         "jsCode": "const strategy=$('Build Premium Visual Prompt').first().json;\nconst baseId=$('Upload Base Image to Drive').first().json.id;\nconst presentationId=$json.id;\nconst requests=[\n  {replaceAllText:{containsText:{text:'{{CONTENT_PILLAR}}',matchCase:true},replaceText:strategy.Visual_Label}},\n  {replaceAllText:{containsText:{text:'{{IMAGE_TEXT}}',matchCase:true},replaceText:strategy.Image_Title_Final}},\n  {replaceAllText:{containsText:{text:'{{SUBHEAD}}',matchCase:true},replaceText:strategy.Visual_Subhead}},\n  {replaceAllText:{containsText:{text:'{{B1}}',matchCase:true},replaceText:strategy.B1}},\n  {replaceAllText:{containsText:{text:'{{B2}}',matchCase:true},replaceText:strategy.B2}},\n  {replaceAllText:{containsText:{text:'{{B3}}',matchCase:true},replaceText:strategy.B3}},\n  {replaceAllText:{containsText:{text:'{{B4}}',matchCase:true},replaceText:strategy.B4}},\n  {replaceAllShapesWithImage:{\n    imageUrl:'https://drive.google.com/uc?export=download&id='+baseId,\n    replaceMethod:'CENTER_CROP',\n    containsText:{text:'{{BASE_IMAGE}}',matchCase:true},\n    pageObjectIds:['p1']\n  }}\n];\nreturn [{json:{presentationId,batchPayload:{requests}}}];"
       },
       "type": "n8n-nodes-base.code",
@@ -748,17 +731,6 @@
         ]
       ]
     },
-    "STAGING Test Webhook": {
-      "main": [
-        [
-          {
-            "node": "Get Pending Image Job",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Build Slides Batch Payload": {
       "main": [
         [
@@ -793,7 +765,7 @@
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
     "stagingWebhookTest": false,
-    "testRunSerial": "physical-metaphors-v4.3-ready",
+    "testRunSerial": "closed-v4.3",
     "imageModel": "@cf/black-forest-labs/flux-2-klein-4b"
   },
   "tags": []
