@@ -254,7 +254,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://slides.googleapis.com/v1/presentations/{{ $('Copy V4 Visual Template').first().json.id }}:batchUpdate",
+        "url": "=https://slides.googleapis.com/v1/presentations/{{ $json.presentationId }}:batchUpdate",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleDriveOAuth2Api",
         "sendHeaders": true,
@@ -269,7 +269,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ requests: [\n{ replaceAllText: { containsText: { text: '{{CONTENT_PILLAR}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.Visual_Label } },\n{ replaceAllText: { containsText: { text: '{{IMAGE_TEXT}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.Image_Title_Final } },\n{ replaceAllText: { containsText: { text: '{{SUBHEAD}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.Visual_Subhead } },\n{ replaceAllText: { containsText: { text: '{{B1}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B1 } },\n{ replaceAllText: { containsText: { text: '{{B2}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B2 } },\n{ replaceAllText: { containsText: { text: '{{B3}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B3 } },\n{ replaceAllText: { containsText: { text: '{{B4}}', matchCase: true }, replaceText: $('Build Premium Visual Prompt').first().json.B4 } },\n{ replaceAllShapesWithImage: { imageUrl: 'https://drive.google.com/uc?export=download&id=' + $('Upload Base Image to Drive').first().json.id, replaceMethod: 'CENTER_CROP', containsText: { text: '{{BASE_IMAGE}}', matchCase: true }, pageObjectIds: ['p1'] } }\n] }) }}",
+        "body": "={{ JSON.stringify($json.batchPayload) }}",
         "options": {
           "timeout": 120000
         }
@@ -277,7 +277,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1220,
+        1440,
         240
       ],
       "id": "aaa33333-aaaa-4333-8333-aaaaaaaaaaa3",
@@ -300,7 +300,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1440,
+        1660,
         240
       ],
       "id": "aaa44444-aaaa-4444-8444-aaaaaaaaaaa4",
@@ -326,7 +326,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1660,
+        1880,
         240
       ],
       "id": "aaa55555-aaaa-4555-8555-aaaaaaaaaaa5",
@@ -354,7 +354,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1880,
+        2100,
         240
       ],
       "id": "aaa66666-aaaa-4666-8666-aaaaaaaaaaa6",
@@ -381,7 +381,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2100,
+        2320,
         240
       ],
       "id": "aaa77777-aaaa-4777-8777-aaaaaaaaaaa7",
@@ -538,7 +538,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        2320,
+        2540,
         240
       ],
       "id": "66a66666-6666-4666-8666-666666666666",
@@ -566,6 +566,19 @@
       "id": "bbb11111-bbbb-4111-8111-bbbbbbbbbbb1",
       "name": "STAGING Test Webhook",
       "webhookId": "9c7e41f0-3b97-4cf5-a4e5-8dc936e5428a"
+    },
+    {
+      "parameters": {
+        "jsCode": "const strategy=$('Build Premium Visual Prompt').first().json;\nconst baseId=$('Upload Base Image to Drive').first().json.id;\nconst presentationId=$json.id;\nconst requests=[\n  {replaceAllText:{containsText:{text:'{{CONTENT_PILLAR}}',matchCase:true},replaceText:strategy.Visual_Label}},\n  {replaceAllText:{containsText:{text:'{{IMAGE_TEXT}}',matchCase:true},replaceText:strategy.Image_Title_Final}},\n  {replaceAllText:{containsText:{text:'{{SUBHEAD}}',matchCase:true},replaceText:strategy.Visual_Subhead}},\n  {replaceAllText:{containsText:{text:'{{B1}}',matchCase:true},replaceText:strategy.B1}},\n  {replaceAllText:{containsText:{text:'{{B2}}',matchCase:true},replaceText:strategy.B2}},\n  {replaceAllText:{containsText:{text:'{{B3}}',matchCase:true},replaceText:strategy.B3}},\n  {replaceAllText:{containsText:{text:'{{B4}}',matchCase:true},replaceText:strategy.B4}},\n  {replaceAllShapesWithImage:{\n    imageUrl:'https://drive.google.com/uc?export=download&id='+baseId,\n    replaceMethod:'CENTER_CROP',\n    containsText:{text:'{{BASE_IMAGE}}',matchCase:true},\n    pageObjectIds:['p1']\n  }}\n];\nreturn [{json:{presentationId,batchPayload:{requests}}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        240
+      ],
+      "id": "aaa23232-aaaa-4232-8232-aaaaaaaaa232",
+      "name": "Build Slides Batch Payload"
     }
   ],
   "connections": {
@@ -672,7 +685,7 @@
       "main": [
         [
           {
-            "node": "Compose Arabic 4x5 Poster",
+            "node": "Build Slides Batch Payload",
             "type": "main",
             "index": 0
           }
@@ -744,6 +757,17 @@
           }
         ]
       ]
+    },
+    "Build Slides Batch Payload": {
+      "main": [
+        [
+          {
+            "node": "Compose Arabic 4x5 Poster",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
@@ -757,7 +781,7 @@
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
     "stagingWebhookTest": true,
-    "testRunSerial": "v4-e2e-001"
+    "testRunSerial": "v4-e2e-002"
   },
   "tags": []
 }
