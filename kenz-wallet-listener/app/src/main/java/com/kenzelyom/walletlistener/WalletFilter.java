@@ -18,11 +18,13 @@ final class WalletFilter {
                 containsAny(all, "جنيه", "ج.م", "egp", " le ") ||
                 all.matches(".*\\b\\d+(?:\\.\\d{1,2})?\\b.*");
 
-        boolean transfer = containsAny(all,
+        boolean transaction = containsAny(all,
                 "استلم", "استلام", "تم تحويل", "تحويل", "تم اضافه", "تم اضافة",
-                "received", "credited", "transfer", "cash transfer");
+                "received", "credited", "transfer", "cash transfer",
+                "رقم العمليه", "رقم العملية", "رصيدك الحالي", "على رقم محفظتك",
+                "transaction", "reference");
 
-        return provider && amount && transfer;
+        return provider && amount && transaction;
     }
 
     private static boolean containsAny(String haystack, String... needles) {
