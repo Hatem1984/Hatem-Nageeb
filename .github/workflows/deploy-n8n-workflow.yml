@@ -173,3 +173,66 @@ jobs:
 
           jq '{id,name,active,updatedAt}' /tmp/n8n-activation.json
           echo "n8n workflow $ACTION completed with HTTP $HTTP_CODE"
+
+
+      - name: Run one-time V4 staging test
+        env:
+          N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
+          N8N_BASE_URL: 'https://vmi3001071.contaboserver.net'
+          WORKFLOW_ID: ${{ github.event_name == 'push' && 'jwG2V2csZqHzAOTk' || inputs.workflow_id }}
+          WORKFLOW_PATH: ${{ github.event_name == 'push' && 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json' || inputs.workflow_path }}
+        run: |
+          set -euo pipefail
+
+          if ! jq -e '.meta.stagingWebhookTest == true' "$WORKFLOW_PATH" >/dev/null; then
+            echo "No staging webhook test requested."
+            exit 0
+          fi
+
+          echo "Triggering V4 staging webhook..."
+          curl --silent --show-error --fail \
+            "$N8N_BASE_URL/webhook/linkedin-v4-staging-test-9c7e41f0" \
+            -o /tmp/webhook-response.txt || true
+
+          for i in {1..12}; do
+            sleep 5
+            HTTP_CODE=$(curl --silent --show-error \
+              --output /tmp/executions.json \
+              --write-out '%{http_code}' \
+              --url "$N8N_BASE_URL/api/v1/executions?workflowId=$WORKFLOW_ID&limit=1" \
+              --header "X-N8N-API-KEY: $N8N_API_KEY")
+
+            if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+              echo "Could not read executions (HTTP $HTTP_CODE)."
+              exit 1
+            fi
+
+            EXEC_ID=$(jq -r '.data[0].id // empty' /tmp/executions.json)
+            STATUS=$(jq -r '.data[0].status // empty' /tmp/executions.json)
+
+            echo "Execution: ${EXEC_ID:-none} status: ${STATUS:-unknown}"
+
+            if [ "$STATUS" = "success" ]; then
+              echo "V4 staging execution succeeded."
+              exit 0
+            fi
+
+            if [ "$STATUS" = "error" ] && [ -n "$EXEC_ID" ]; then
+              curl --silent --show-error \
+                --output /tmp/execution-detail.json \
+                --url "$N8N_BASE_URL/api/v1/executions/$EXEC_ID?includeData=true" \
+                --header "X-N8N-API-KEY: $N8N_API_KEY"
+
+              jq '{
+                id,
+                status,
+                stoppedAt,
+                lastNodeExecuted: .data.resultData.lastNodeExecuted,
+                errorMessage: (.data.resultData.error.message // .data.resultData.error.description // "unknown")
+              }' /tmp/execution-detail.json
+              exit 1
+            fi
+          done
+
+          echo "Timed out waiting for V4 staging execution."
+          exit 1
