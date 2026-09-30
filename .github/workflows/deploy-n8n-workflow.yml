@@ -41,6 +41,45 @@ jobs:
         run: |
           jq '{name,nodes,connections,settings}' "$WORKFLOW_PATH" > /tmp/n8n-payload.json
 
+      - name: Preserve existing n8n credentials
+        env:
+          N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
+          N8N_BASE_URL: 'https://vmi3001071.contaboserver.net'
+          WORKFLOW_ID: ${{ github.event_name == 'push' && 'jwG2V2csZqHzAOTk' || inputs.workflow_id }}
+        run: |
+          set -euo pipefail
+          test -n "$N8N_API_KEY"
+
+          if [ -z "$WORKFLOW_ID" ]; then
+            echo "No existing workflow ID; nothing to preserve."
+            exit 0
+          fi
+
+          HTTP_CODE=$(curl --silent --show-error             --output /tmp/n8n-current.json             --write-out '%{http_code}'             --request GET             --url "$N8N_BASE_URL/api/v1/workflows/$WORKFLOW_ID"             --header "X-N8N-API-KEY: $N8N_API_KEY")
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            jq '{message,code}' /tmp/n8n-current.json || cat /tmp/n8n-current.json
+            echo "Could not read current n8n workflow; HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          jq --slurpfile current /tmp/n8n-current.json '
+            .nodes |= map(
+              . as $node
+              | if has("credentials") then .
+                else
+                  (($current[0].nodes
+                    | map(select(.id == $node.id or .name == $node.name))
+                    | first
+                    | .credentials) // null) as $creds
+                  | if $creds == null then . else . + {credentials: $creds} end
+                end
+            )
+          ' /tmp/n8n-payload.json > /tmp/n8n-payload-merged.json
+
+          mv /tmp/n8n-payload-merged.json /tmp/n8n-payload.json
+          echo "Existing node credentials preserved where the repository JSON does not define them."
+
       - name: Deploy to n8n
         env:
           N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
@@ -58,14 +97,7 @@ jobs:
             URL="$N8N_BASE_URL/api/v1/workflows"
           fi
 
-          HTTP_CODE=$(curl --silent --show-error \
-            --output /tmp/n8n-response.json \
-            --write-out '%{http_code}' \
-            --request "$METHOD" \
-            --url "$URL" \
-            --header "X-N8N-API-KEY: $N8N_API_KEY" \
-            --header 'Content-Type: application/json' \
-            --data-binary @/tmp/n8n-payload.json)
+          HTTP_CODE=$(curl --silent --show-error             --output /tmp/n8n-response.json             --write-out '%{http_code}'             --request "$METHOD"             --url "$URL"             --header "X-N8N-API-KEY: $N8N_API_KEY"             --header 'Content-Type: application/json'             --data-binary @/tmp/n8n-payload.json)
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
             jq '{message,code}' /tmp/n8n-response.json || cat /tmp/n8n-response.json
