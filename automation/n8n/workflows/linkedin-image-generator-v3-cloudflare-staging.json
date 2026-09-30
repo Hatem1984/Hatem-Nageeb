@@ -82,7 +82,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ prompt: 'Premium LinkedIn editorial image. ' + $json.Image_Prompt, negative_prompt: 'dark moody lighting, cinematic darkness, visible text, letters, words, logos, watermark, oversaturated colors, distorted hands, extra fingers, deformed faces, low resolution, clutter, generic stock-photo look', width: 1024, height: 1280, num_steps: 8, guidance: 7, seed: Number($json.row_number || 42) + 2026 }) }}",
+        "body": "={{ JSON.stringify({ prompt: 'Premium LinkedIn editorial image. ' + $json.Image_Prompt, negative_prompt: 'dark moody lighting, cinematic darkness, visible text, letters, words, logos, watermark, oversaturated colors, distorted hands, extra fingers, deformed faces, low resolution, clutter, generic stock-photo look', num_steps: 8, guidance: 7, seed: Number($json.row_number || 42) + 2026 }) }}",
         "options": {
           "response": {
             "response": {
