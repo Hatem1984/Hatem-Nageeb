@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KENZ Admin</string>
+    <string name="offline_title">تعذر الاتصال</string>
+    <string name="offline_message">تأكد من الإنترنت ثم حاول مرة أخرى.</string>
+    <string name="retry">إعادة المحاولة</string>
+</resources>
