@@ -44,12 +44,15 @@ public class SyncWorker extends Worker {
                 boolean paid = response.optBoolean("paid", false);
                 boolean matched = response.optBoolean("matched", false);
                 boolean ignored = response.optBoolean("ignored", false);
-                int received = response.optInt("received_minor", 0);
-                int remaining = response.optInt("remaining_minor", 0);
+                boolean duplicate = response.optBoolean("duplicate", false);
+                int received = response.optInt("received_minor", -1);
+                int remaining = response.optInt("remaining_minor", -1);
                 String orderRef = response.optString("order_ref", "");
 
                 String state;
-                if (paid) {
+                if (duplicate) {
+                    state = "تم تجاهل إعادة إرسال مكررة لنفس التحويل";
+                } else if (paid) {
                     state = "تم التحقق واعتماد الطلب";
                     Notify.show(
                             context, 42003,
@@ -59,7 +62,7 @@ public class SyncWorker extends Worker {
                     );
                 } else if (matched) {
                     state = "تمت مطابقة التحويل مع طلب";
-                    String body = "تم استلام " + money(received);
+                    String body = received >= 0 ? "تم استلام " + money(received) : "تمت مطابقة التحويل بنجاح";
                     if (remaining > 0) body += " · المتبقي " + money(remaining);
                     Notify.show(
                             context, 42002,
