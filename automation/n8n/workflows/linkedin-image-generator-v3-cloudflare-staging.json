@@ -119,14 +119,14 @@
           ]
         },
         "sendBody": true,
-        "contentType": "json",
+        "contentType": "raw",
         "options": {
           "timeout": 120000
         },
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, steps: 8, seed: Number($json.row_number || 42) + 5050 }) }}"
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ prompt: $json.Image_Prompt_Final, seed: Number($json.row_number || 42) + 5050 }) }}"
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -775,7 +775,7 @@
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
     "stagingWebhookTest": true,
-    "testRunSerial": "flux-v4.1-e2e-005",
+    "testRunSerial": "flux-minimal-rest-006",
     "imageModel": "@cf/black-forest-labs/flux-1-schnell"
   },
   "tags": []
