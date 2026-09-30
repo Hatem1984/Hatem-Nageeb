@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Insets;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
+import android.view.WindowInsets;
 import android.webkit.CookieManager;
-import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -35,7 +35,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setStatusBarColor(getColor(R.color.kenz_green));
+        getWindow().setNavigationBarColor(getColor(R.color.kenz_green));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            getWindow().setNavigationBarContrastEnforced(false);
+            getWindow().setStatusBarContrastEnforced(false);
+        }
+
         setContentView(R.layout.activity_main);
+
+        View root = findViewById(R.id.root);
+        applySystemInsets(root);
 
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progress);
@@ -43,6 +54,7 @@ public class MainActivity extends Activity {
         Button retryButton = findViewById(R.id.retryButton);
 
         configureWebView();
+
         retryButton.setOnClickListener(v -> {
             errorPanel.setVisibility(View.GONE);
             loadFreshAdmin();
@@ -52,8 +64,34 @@ public class MainActivity extends Activity {
         loadFreshAdmin();
     }
 
+    private void applySystemInsets(View root) {
+        root.setOnApplyWindowInsetsListener((v, insets) -> {
+            int left;
+            int top;
+            int right;
+            int bottom;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Insets bars = insets.getInsets(WindowInsets.Type.systemBars());
+                left = bars.left;
+                top = bars.top;
+                right = bars.right;
+                bottom = bars.bottom;
+            } else {
+                left = insets.getSystemWindowInsetLeft();
+                top = insets.getSystemWindowInsetTop();
+                right = insets.getSystemWindowInsetRight();
+                bottom = insets.getSystemWindowInsetBottom();
+            }
+
+            v.setPadding(left, top, right, bottom);
+            return insets;
+        });
+        root.requestApplyInsets();
+    }
+
     private void loadFreshAdmin() {
-        String url = ADMIN_URL + "?app=101&cb=" + System.currentTimeMillis();
+        String url = ADMIN_URL + "?app=102&cb=" + System.currentTimeMillis();
         java.util.HashMap<String, String> headers = new java.util.HashMap<>();
         headers.put("Cache-Control", "no-cache, no-store, max-age=0");
         headers.put("Pragma", "no-cache");
@@ -75,7 +113,7 @@ public class MainActivity extends Activity {
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         s.setSaveFormData(false);
         s.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        s.setUserAgentString(s.getUserAgentString() + " KENZAdmin/1.0.1");
+        s.setUserAgentString(s.getUserAgentString() + " KENZAdmin/1.0.2");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             s.setSafeBrowsingEnabled(true);
@@ -180,8 +218,7 @@ public class MainActivity extends Activity {
 
     private void openExternal(Uri uri) {
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
         } catch (ActivityNotFoundException ignored) {
         }
     }
@@ -190,11 +227,8 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == FILE_CHOOSER_REQUEST) {
             Uri[] results = null;
-            if (resultCode == RESULT_OK && data != null) {
-                String dataString = data.getDataString();
-                if (dataString != null) {
-                    results = new Uri[]{Uri.parse(dataString)};
-                }
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                results = new Uri[]{data.getData()};
             }
 
             if (filePathCallback != null) {
@@ -205,12 +239,6 @@ public class MainActivity extends Activity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        webView.saveState(outState);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
