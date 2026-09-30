@@ -1,0 +1,286 @@
+{
+  "name": "LinkedIn Image Generator V3 - Cloudflare Free - STAGING",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        240
+      ],
+      "id": "11a11111-1111-4111-8111-111111111111",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1VxNIQBAazD6s6cNLBMqdK2bIqVKXrLLhxTumcVmAJi4",
+          "mode": "list",
+          "cachedResultName": "STAGING - LinkedIn Content Factory V2 - 2026-09-30",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VxNIQBAazD6s6cNLBMqdK2bIqVKXrLLhxTumcVmAJi4/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 763072272,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VxNIQBAazD6s6cNLBMqdK2bIqVKXrLLhxTumcVmAJi4/edit#gid=763072272"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Pending"
+            },
+            {
+              "lookupColumn": "Approval_Status",
+              "lookupValue": "Needs Review"
+            },
+            {
+              "lookupColumn": "Image_Status",
+              "lookupValue": "Not Generated"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -640,
+        240
+      ],
+      "id": "22a22222-2222-4222-8222-222222222222",
+      "name": "Get Pending Image Job",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OV7wgOxVCUXod153",
+          "name": "Google Sheets account 2156"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cloudflare.com/client/v4/accounts/{{ $vars.CLOUDFLARE_ACCOUNT_ID }}/ai/run/@cf/bytedance/stable-diffusion-xl-lightning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $vars.CLOUDFLARE_API_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "image/png"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ prompt: 'Premium LinkedIn editorial image. ' + $json.Image_Prompt, negative_prompt: 'dark moody lighting, cinematic darkness, visible text, letters, words, logos, watermark, oversaturated colors, distorted hands, extra fingers, deformed faces, low resolution, clutter, generic stock-photo look', width: 1080, height: 1350, num_steps: 8, guidance: 7, seed: Number($json.row_number || 42) + 2026 }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "image"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -300,
+        240
+      ],
+      "id": "33a33333-3333-4333-8333-333333333333",
+      "name": "Generate Image - Cloudflare Free"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "image",
+        "name": "=linkedin_{{ $('Get Pending Image Job').item.json.row_number }}_{{ $now.toFormat('yyyy-MM-dd_HH-mm-ss') }}.png",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1c1s0Up_MH7Qj6tCe6lBe8hlg9J5Hg_Gq",
+          "cachedResultName": "Generated Images - حاتم نجيب LinkedIn",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1c1s0Up_MH7Qj6tCe6lBe8hlg9J5Hg_Gq"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        40,
+        240
+      ],
+      "id": "55a55555-5555-4555-8555-555555555555",
+      "name": "Upload Image to Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ssaUiWVcMEHfFKKJ",
+          "name": "Google Drive account 2083"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1VxNIQBAazD6s6cNLBMqdK2bIqVKXrLLhxTumcVmAJi4",
+          "mode": "list",
+          "cachedResultName": "STAGING - LinkedIn Content Factory V2 - 2026-09-30",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VxNIQBAazD6s6cNLBMqdK2bIqVKXrLLhxTumcVmAJi4/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 763072272,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VxNIQBAazD6s6cNLBMqdK2bIqVKXrLLhxTumcVmAJi4/edit#gid=763072272"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get Pending Image Job').item.json.row_number }}",
+            "Generated_Image": "=https://drive.google.com/file/d/{{ $json.id }}/view?usp=drive_link",
+            "Image_Status": "Ready",
+            "Error_Message": ""
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true
+            },
+            {
+              "id": "Generated_Image",
+              "displayName": "Generated_Image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Image_Status",
+              "displayName": "Image_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Error_Message",
+              "displayName": "Error_Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        380,
+        240
+      ],
+      "id": "66a66666-6666-4666-8666-666666666666",
+      "name": "Mark Image Ready",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OV7wgOxVCUXod153",
+          "name": "Google Sheets account 2156"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Pending Image Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pending Image Job": {
+      "main": [
+        [
+          {
+            "node": "Generate Image - Cloudflare Free",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image - Cloudflare Free": {
+      "main": [
+        [
+          {
+            "node": "Upload Image to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image to Drive": {
+      "main": [
+        [
+          {
+            "node": "Mark Image Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Africa/Cairo"
+  },
+  "meta": {},
+  "tags": []
+}
