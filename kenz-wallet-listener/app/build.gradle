@@ -10,8 +10,8 @@ android {
         applicationId "com.kenzelyom.walletlistener"
         minSdk 26
         targetSdk 35
-        versionCode 5
-        versionName "4.0.1"
+        versionCode 6
+        versionName "4.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
