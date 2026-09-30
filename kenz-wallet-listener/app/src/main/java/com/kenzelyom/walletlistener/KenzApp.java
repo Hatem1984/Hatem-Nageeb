@@ -10,6 +10,9 @@ public class KenzApp extends Application {
     public void onCreate() {
         super.onCreate();
         Notify.init(this);
+        if (QueueStore.count(this) > 0) {
+            SyncScheduler.enqueue(this);
+        }
         final Thread.UncaughtExceptionHandler previous = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
             try {
