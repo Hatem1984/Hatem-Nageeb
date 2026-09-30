@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Crown / spark -->
+    <path android:fillColor="#E0B55B"
+        android:pathData="M54,19 L61,29 L54,38 L47,29 Z"/>
+    <path android:fillColor="#C99843"
+        android:pathData="M45,31 L35,24 L37,38 L49,41 Z"/>
+    <path android:fillColor="#F1D791"
+        android:pathData="M63,31 L73,24 L71,38 L59,41 Z"/>
+
+    <!-- Main gem silhouette -->
+    <path android:fillColor="#D8A84E"
+        android:pathData="M25,45 L54,35 L83,45 L71,77 L54,93 L37,77 Z"/>
+
+    <!-- Upper facets -->
+    <path android:fillColor="#F7E9BE"
+        android:pathData="M30,46 L54,39 L46,59 Z"/>
+    <path android:fillColor="#E8C979"
+        android:pathData="M54,39 L78,46 L62,59 Z"/>
+    <path android:fillColor="#0B5144"
+        android:pathData="M46,59 L54,39 L62,59 L54,82 Z"/>
+
+    <!-- Side facets -->
+    <path android:fillColor="#126656"
+        android:pathData="M30,46 L46,59 L54,82 L39,73 Z"/>
+    <path android:fillColor="#073B33"
+        android:pathData="M78,46 L62,59 L54,82 L69,73 Z"/>
+
+    <!-- Bottom highlight -->
+    <path android:fillColor="#F1D791"
+        android:pathData="M39,73 L54,82 L69,73 L54,89 Z"/>
+</vector>
