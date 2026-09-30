@@ -45,14 +45,19 @@ public class MainActivity extends Activity {
         configureWebView();
         retryButton.setOnClickListener(v -> {
             errorPanel.setVisibility(View.GONE);
-            webView.loadUrl(ADMIN_URL);
+            loadFreshAdmin();
         });
 
-        if (savedInstanceState == null) {
-            webView.loadUrl(ADMIN_URL);
-        } else {
-            webView.restoreState(savedInstanceState);
-        }
+        webView.clearCache(true);
+        loadFreshAdmin();
+    }
+
+    private void loadFreshAdmin() {
+        String url = ADMIN_URL + "?app=101&cb=" + System.currentTimeMillis();
+        java.util.HashMap<String, String> headers = new java.util.HashMap<>();
+        headers.put("Cache-Control", "no-cache, no-store, max-age=0");
+        headers.put("Pragma", "no-cache");
+        webView.loadUrl(url, headers);
     }
 
     private void configureWebView() {
@@ -69,7 +74,8 @@ public class MainActivity extends Activity {
         s.setSupportMultipleWindows(false);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         s.setSaveFormData(false);
-        s.setUserAgentString(s.getUserAgentString() + " KENZAdmin/1.0.0");
+        s.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        s.setUserAgentString(s.getUserAgentString() + " KENZAdmin/1.0.1");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             s.setSafeBrowsingEnabled(true);
