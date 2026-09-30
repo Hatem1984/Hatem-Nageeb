@@ -24,7 +24,7 @@ final class SyncScheduler {
                     .build();
 
             WorkManager.getInstance(context.getApplicationContext())
-                    .enqueueUniqueWork(UNIQUE_WORK, ExistingWorkPolicy.KEEP, request);
+                    .enqueueUniqueWork(UNIQUE_WORK, ExistingWorkPolicy.REPLACE, request);
         } catch (Throwable t) {
             Prefs.setLastError(context, "SyncScheduler: " + t.getClass().getSimpleName() + " - " + t.getMessage());
         }
