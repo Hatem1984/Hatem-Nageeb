@@ -189,12 +189,26 @@ jobs:
             exit 0
           fi
 
+          BEFORE_CODE=$(curl --silent --show-error \
+            --output /tmp/executions-before.json \
+            --write-out '%{http_code}' \
+            --url "$N8N_BASE_URL/api/v1/executions?workflowId=$WORKFLOW_ID&limit=1" \
+            --header "X-N8N-API-KEY: $N8N_API_KEY")
+
+          if [ "$BEFORE_CODE" -lt 200 ] || [ "$BEFORE_CODE" -ge 300 ]; then
+            echo "Could not read executions before test (HTTP $BEFORE_CODE)."
+            exit 1
+          fi
+
+          BEFORE_ID=$(jq -r '.data[0].id // empty' /tmp/executions-before.json)
+          echo "Previous execution ID: ${BEFORE_ID:-none}"
+
           echo "Triggering V4 staging webhook..."
           curl --silent --show-error --fail \
             "$N8N_BASE_URL/webhook/linkedin-v4-staging-test-9c7e41f0" \
-            -o /tmp/webhook-response.txt || true
+            -o /tmp/webhook-response.txt
 
-          for i in {1..12}; do
+          for i in {1..18}; do
             sleep 5
             HTTP_CODE=$(curl --silent --show-error \
               --output /tmp/executions.json \
@@ -210,14 +224,19 @@ jobs:
             EXEC_ID=$(jq -r '.data[0].id // empty' /tmp/executions.json)
             STATUS=$(jq -r '.data[0].status // empty' /tmp/executions.json)
 
-            echo "Execution: ${EXEC_ID:-none} status: ${STATUS:-unknown}"
+            if [ -z "$EXEC_ID" ] || [ "$EXEC_ID" = "$BEFORE_ID" ]; then
+              echo "Waiting for a new execution..."
+              continue
+            fi
+
+            echo "New execution: $EXEC_ID status: ${STATUS:-unknown}"
 
             if [ "$STATUS" = "success" ]; then
               echo "V4 staging execution succeeded."
               exit 0
             fi
 
-            if [ "$STATUS" = "error" ] && [ -n "$EXEC_ID" ]; then
+            if [ "$STATUS" = "error" ]; then
               curl --silent --show-error \
                 --output /tmp/execution-detail.json \
                 --url "$N8N_BASE_URL/api/v1/executions/$EXEC_ID?includeData=true" \
@@ -234,5 +253,5 @@ jobs:
             fi
           done
 
-          echo "Timed out waiting for V4 staging execution."
+          echo "Timed out waiting for the new V4 staging execution."
           exit 1
