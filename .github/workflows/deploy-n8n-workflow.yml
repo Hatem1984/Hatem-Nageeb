@@ -8,9 +8,9 @@ on:
         required: true
         default: 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json'
       workflow_id:
-        description: 'Existing n8n workflow ID. Leave blank to create a new workflow.'
+        description: 'Existing n8n workflow ID. Leave blank only when intentionally creating a new workflow.'
         required: false
-        default: ''
+        default: 'jwG2V2csZqHzAOTk'
 
 permissions:
   contents: read
@@ -20,21 +20,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Validate workflow JSON
         env:
           WORKFLOW_PATH: ${{ inputs.workflow_path }}
         run: |
+          set -euo pipefail
           test -f "$WORKFLOW_PATH"
           jq -e '.name and .nodes and .connections and .settings' "$WORKFLOW_PATH" >/dev/null
+          jq -e '.nodes | length > 0' "$WORKFLOW_PATH" >/dev/null
 
       - name: Build n8n API payload
         env:
           WORKFLOW_PATH: ${{ inputs.workflow_path }}
         run: |
           jq '{name,nodes,connections,settings}' "$WORKFLOW_PATH" > /tmp/n8n-payload.json
-          jq -e '.nodes | length > 0' /tmp/n8n-payload.json >/dev/null
 
       - name: Deploy to n8n
         env:
@@ -43,10 +44,7 @@ jobs:
           WORKFLOW_ID: ${{ inputs.workflow_id }}
         run: |
           set -euo pipefail
-          if [ -z "$N8N_API_KEY" ]; then
-            echo "N8N_API_KEY secret is not configured."
-            exit 1
-          fi
+          test -n "$N8N_API_KEY"
 
           if [ -n "$WORKFLOW_ID" ]; then
             METHOD=PUT
@@ -56,13 +54,20 @@ jobs:
             URL="$N8N_BASE_URL/api/v1/workflows"
           fi
 
-          HTTP_CODE=$(curl --silent --show-error             --output /tmp/n8n-response.json             --write-out '%{http_code}'             --request "$METHOD"             --url "$URL"             --header "X-N8N-API-KEY: $N8N_API_KEY"             --header 'Content-Type: application/json'             --data-binary @/tmp/n8n-payload.json)
-
-          cat /tmp/n8n-response.json | jq . || cat /tmp/n8n-response.json
+          HTTP_CODE=$(curl --silent --show-error \
+            --output /tmp/n8n-response.json \
+            --write-out '%{http_code}' \
+            --request "$METHOD" \
+            --url "$URL" \
+            --header "X-N8N-API-KEY: $N8N_API_KEY" \
+            --header 'Content-Type: application/json' \
+            --data-binary @/tmp/n8n-payload.json)
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            jq '{message,code}' /tmp/n8n-response.json || cat /tmp/n8n-response.json
             echo "n8n deployment failed with HTTP $HTTP_CODE"
             exit 1
           fi
 
+          jq '{id,name,active,updatedAt}' /tmp/n8n-response.json
           echo "n8n deployment completed with HTTP $HTTP_CODE"
