@@ -80,6 +80,36 @@ jobs:
           mv /tmp/n8n-payload-merged.json /tmp/n8n-payload.json
           echo "Existing node credentials preserved where the repository JSON does not define them."
 
+      - name: Bind Cloudflare Header Auth credential when available
+        env:
+          N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
+          N8N_BASE_URL: 'https://vmi3001071.contaboserver.net'
+        run: |
+          set -euo pipefail
+          test -n "$N8N_API_KEY"
+
+          HTTP_CODE=$(curl --silent --show-error             --output /tmp/n8n-credentials.json             --write-out '%{http_code}'             --request GET             --url "$N8N_BASE_URL/api/v1/credentials?limit=250"             --header "X-N8N-API-KEY: $N8N_API_KEY")
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+            CRED_ID=$(jq -r '.data[]? | select(.name == "Header Auth account 48" and .type == "httpHeaderAuth") | .id' /tmp/n8n-credentials.json | head -n1)
+            if [ -n "$CRED_ID" ]; then
+              jq --arg id "$CRED_ID" '
+                .nodes |= map(
+                  if .name == "Generate Image - Cloudflare Free"
+                  then . + {credentials: {httpHeaderAuth: {id: $id, name: "Header Auth account 48"}}}
+                  else .
+                  end
+                )
+              ' /tmp/n8n-payload.json > /tmp/n8n-payload-bound.json
+              mv /tmp/n8n-payload-bound.json /tmp/n8n-payload.json
+              echo "Cloudflare Header Auth credential bound."
+            else
+              echo "Cloudflare Header Auth credential was not found; deploy continues without changing credential binding."
+            fi
+          else
+            echo "Credential metadata API unavailable with this API key (HTTP $HTTP_CODE); deploy continues safely."
+          fi
+
       - name: Deploy to n8n
         env:
           N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
