@@ -774,8 +774,8 @@
     "credentialBindingRefresh": "2026-09-30T20:33:00+03:00",
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
-    "stagingWebhookTest": false,
-    "testRunSerial": "art-direction-v4.2-ready",
+    "stagingWebhookTest": true,
+    "testRunSerial": "lucid-v4.2-final-008",
     "imageModel": "@cf/leonardo/lucid-origin"
   },
   "tags": []
