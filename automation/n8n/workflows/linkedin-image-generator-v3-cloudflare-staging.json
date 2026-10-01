@@ -574,6 +574,23 @@
       ],
       "id": "aaa23232-aaaa-4232-8232-aaaaaaaaa232",
       "name": "Build Slides Batch Payload"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "linkedin-v4-staging-test-9c7e41f0",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -900,
+        40
+      ],
+      "id": "bbb11111-bbbb-4111-8111-bbbbbbbbbbb1",
+      "name": "STAGING Test Webhook",
+      "webhookId": "9c7e41f0-3b97-4cf5-a4e5-8dc936e5428a"
     }
   ],
   "connections": {
@@ -752,6 +769,17 @@
           }
         ]
       ]
+    },
+    "STAGING Test Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Pending Image Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
@@ -764,8 +792,8 @@
     "credentialBindingRefresh": "2026-09-30T20:33:00+03:00",
     "visualFactoryVersion": "FEED-V5.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
-    "stagingWebhookTest": false,
-    "testRunSerial": "closed-feed-v5-initial",
+    "stagingWebhookTest": true,
+    "testRunSerial": "feed-v5-row41-2026-10-01",
     "imageModel": "@cf/black-forest-labs/flux-2-klein-4b",
     "strategyModel": "single-scene-object-first"
   },
