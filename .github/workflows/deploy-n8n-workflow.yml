@@ -91,12 +91,12 @@ jobs:
           HTTP_CODE=$(curl --silent --show-error             --output /tmp/n8n-credentials.json             --write-out '%{http_code}'             --request GET             --url "$N8N_BASE_URL/api/v1/credentials?limit=250"             --header "X-N8N-API-KEY: $N8N_API_KEY")
 
           if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
-            CRED_ID=$(jq -r '.data[]? | select(.name == "Header Auth account 48" and .type == "httpHeaderAuth") | .id' /tmp/n8n-credentials.json | head -n1)
+            CRED_ID=$(jq -r '.data[]? | select(.name == "Header Auth account 49" and .type == "httpHeaderAuth") | .id' /tmp/n8n-credentials.json | head -n1)
             if [ -n "$CRED_ID" ]; then
               jq --arg id "$CRED_ID" '
                 .nodes |= map(
                   if .name == "Generate Image - Cloudflare Free"
-                  then . + {credentials: {httpHeaderAuth: {id: $id, name: "Header Auth account 48"}}}
+                  then . + {credentials: {httpHeaderAuth: {id: $id, name: "Header Auth account 49"}}}
                   else .
                   end
                 )
