@@ -765,7 +765,7 @@
     "visualFactoryVersion": "V4.0",
     "templateId": "1Myed3anAiKe8dOqJZslxb31HLubsmhvo15sVCe1Xhzo",
     "stagingWebhookTest": false,
-    "testRunSerial": "closed-v4.3-row39-2026-10-01",
+    "testRunSerial": "closed-v4.3-row39-2026-10-01-cleanup-retry",
     "imageModel": "@cf/black-forest-labs/flux-2-klein-4b"
   },
   "tags": []
