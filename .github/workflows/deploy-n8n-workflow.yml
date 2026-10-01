@@ -110,6 +110,61 @@ jobs:
             echo "Credential metadata API unavailable with this API key (HTTP $HTTP_CODE); deploy continues safely."
           fi
 
+      - name: Pre-deactivate staging workflow before triggerless deploy
+        env:
+          N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
+          N8N_BASE_URL: 'https://vmi3001071.contaboserver.net'
+          WORKFLOW_ID: ${{ github.event_name == 'push' && 'jwG2V2csZqHzAOTk' || inputs.workflow_id }}
+          WORKFLOW_PATH: ${{ github.event_name == 'push' && 'automation/n8n/workflows/linkedin-image-generator-v3-cloudflare-staging.json' || inputs.workflow_path }}
+        run: |
+          set -euo pipefail
+
+          if jq -e '.meta.stagingWebhookTest == true' "$WORKFLOW_PATH" >/dev/null; then
+            echo "Staging test requested; pre-deactivation skipped."
+            exit 0
+          fi
+
+          if [ -z "$WORKFLOW_ID" ]; then
+            echo "No existing workflow ID; nothing to pre-deactivate."
+            exit 0
+          fi
+
+          STATE_CODE=$(curl --silent --show-error \
+            --output /tmp/n8n-pre-state.json \
+            --write-out '%{http_code}' \
+            --request GET \
+            --url "$N8N_BASE_URL/api/v1/workflows/$WORKFLOW_ID" \
+            --header "X-N8N-API-KEY: $N8N_API_KEY")
+
+          if [ "$STATE_CODE" -lt 200 ] || [ "$STATE_CODE" -ge 300 ]; then
+            echo "Could not read workflow state before deploy (HTTP $STATE_CODE)."
+            exit 1
+          fi
+
+          ACTIVE=$(jq -r '.active // false' /tmp/n8n-pre-state.json)
+          if [ "$ACTIVE" != "true" ]; then
+            echo "Existing workflow already inactive."
+            exit 0
+          fi
+
+          HTTP_CODE=$(curl --silent --show-error \
+            --output /tmp/n8n-pre-deactivate.json \
+            --write-out '%{http_code}' \
+            --request POST \
+            --url "$N8N_BASE_URL/api/v1/workflows/$WORKFLOW_ID/deactivate" \
+            --header "X-N8N-API-KEY: $N8N_API_KEY" \
+            --header 'Content-Type: application/json' \
+            --data '{}')
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            jq '{message,code}' /tmp/n8n-pre-deactivate.json || cat /tmp/n8n-pre-deactivate.json
+            echo "Pre-deactivation failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          jq '{id,name,active,updatedAt}' /tmp/n8n-pre-deactivate.json
+          echo "Existing workflow pre-deactivated before triggerless deploy."
+
       - name: Deploy to n8n
         env:
           N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
