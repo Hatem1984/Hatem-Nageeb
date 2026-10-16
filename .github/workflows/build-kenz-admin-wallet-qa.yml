@@ -1,0 +1,50 @@
+name: KENZ Admin Wallet QA (nonproduction)
+on:
+  push:
+    branches:
+      - feat/kenz-admin-wallet-qa-20261016
+    paths:
+      - 'android/kenz-admin/**'
+      - '.github/workflows/build-kenz-admin-wallet-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Android SDK 35
+        shell: bash
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          SDKMANAGER="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager | head -n 1)"; fi
+          test -x "$SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+      - name: Synthetic wallet classifier tests and isolated debug APK
+        working-directory: android/kenz-admin
+        run: gradle --no-daemon :app:testDebugUnitTest :app:assembleDebug --stacktrace
+      - name: Verify QA application package
+        shell: bash
+        run: |
+          APK=android/kenz-admin/app/build/outputs/apk/debug/app-debug.apk
+          test -s "$APK"
+          "$ANDROID_SDK_ROOT/build-tools/35.0.0/aapt" dump badging "$APK" | grep "package: name='com.kenzelyom.admin.walletqa'"
+          sha256sum "$APK"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KENZ-Admin-Wallet-QA-Only
+          path: android/kenz-admin/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7
+          if-no-files-found: error
