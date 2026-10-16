@@ -4,6 +4,7 @@ import android.app.Activity;
 import com.kenzelyom.admin.wallet.WalletOverviewActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Insets;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import android.widget.ProgressBar;
 public class MainActivity extends Activity {
     private static final String ADMIN_URL = "https://kenzelyom.com/admin/";
     private static final int FILE_CHOOSER_REQUEST = 4102;
+    private static final String WEBVIEW_STATE_KEY = "kenz_admin_webview_state";
 
     private WebView webView;
     private ProgressBar progressBar;
@@ -65,8 +67,19 @@ public class MainActivity extends Activity {
             loadFreshAdmin();
         });
 
-        webView.clearCache(true);
-        loadFreshAdmin();
+        // Rotating the phone must not reload /admin/ or reset the active WebView session.
+        // On rare full Activity recreation (e.g. memory pressure), restore the navigation state.
+        boolean restored = false;
+        if (savedInstanceState != null) {
+            Bundle webViewState = savedInstanceState.getBundle(WEBVIEW_STATE_KEY);
+            if (webViewState != null) {
+                android.webkit.WebBackForwardList history = webView.restoreState(webViewState);
+                restored = history != null && history.getSize() > 0;
+            }
+        }
+        if (!restored) {
+            loadFreshAdmin();
+        }
     }
 
     private void applySystemInsets(View root) {
@@ -247,8 +260,28 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // In-place rotation preserves WebView, cookies, authentication and current screen.
+        View root = findViewById(R.id.root);
+        if (root != null) root.requestApplyInsets();
+        if (webView != null) webView.requestLayout();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (webView != null) {
+            Bundle webViewState = new Bundle();
+            webView.saveState(webViewState);
+            outState.putBundle(WEBVIEW_STATE_KEY, webViewState);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onPause() {
-        webView.onPause();
+        if (webView != null) webView.onPause();
+        CookieManager.getInstance().flush();
         super.onPause();
     }
 

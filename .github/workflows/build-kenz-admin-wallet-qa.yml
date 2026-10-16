@@ -32,6 +32,16 @@ jobs:
           test -x "$SDKMANAGER"
           yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+      - name: Validate rotation session-preservation guard
+        shell: bash
+        run: |
+          ACTIVITY="android/kenz-admin/app/src/main/java/com/kenzelyom/admin/MainActivity.java"
+          MANIFEST="android/kenz-admin/app/src/main/AndroidManifest.xml"
+          grep -Fq 'android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"' "$MANIFEST"
+          grep -Fq 'onConfigurationChanged(Configuration newConfig)' "$ACTIVITY"
+          grep -Fq 'webView.saveState(webViewState)' "$ACTIVITY"
+          grep -Fq 'webView.restoreState(webViewState)' "$ACTIVITY"
+          if grep -Fq 'webView.clearCache(true)' "$ACTIVITY"; then exit 1; fi
       - name: Synthetic wallet classifier tests and isolated debug APK
         working-directory: android/kenz-admin
         run: gradle --no-daemon :app:testDebugUnitTest :app:assembleDebug --stacktrace
