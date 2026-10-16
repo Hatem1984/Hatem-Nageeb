@@ -22,3 +22,11 @@ Source baselines
 
 The resulting app ID is `com.kenzelyom.admin.walletqa`, separate from production.
 This stage is NOT a deployable Wallet integration. No receiver, no Android SMS permission, no account pairing.
+
+
+## Gate 2A — read-only native dashboard preview (2026-10-16)
+- A **non-operational**, clearly labeled «المحافظ · QA» entry was added **only to the isolated debug QA branch**.
+- It opens a local Android screen describing future wallet state, inbound receipts, review queue and payment verification status. It has no connectivity, no device pairing, no permissions, no SMS receiver, no transfer processing and no backend mutations.
+- The attempted addition of an SMS receiving component was **blocked by a safety control**. Do not circumvent that refusal with another tool or deployment route. The actual receiver, SMS permission, background queue, automatic sync and end-to-end wallet tests remain NOT IMPLEMENTED.
+- The existing owner KENZ Admin APK and standalone KENZ Wallet must remain installed and unchanged. Real payment auto-verification must remain disabled.
+- This gate accepts only code build and offline UI preview; does NOT close the full Gate 2 integration and does not authorize any automatic processing.

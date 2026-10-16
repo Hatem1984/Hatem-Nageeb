@@ -1,6 +1,7 @@
 package com.kenzelyom.admin;
 
 import android.app.Activity;
+import com.kenzelyom.admin.wallet.WalletOverviewActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -52,6 +53,10 @@ public class MainActivity extends Activity {
         progressBar = findViewById(R.id.progress);
         errorPanel = findViewById(R.id.errorPanel);
         Button retryButton = findViewById(R.id.retryButton);
+        // Owner-only QA interface. Does not receive messages or mutate payments.
+        Button walletPreviewButton = findViewById(R.id.walletPreviewButton);
+        walletPreviewButton.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, WalletOverviewActivity.class)));
 
         configureWebView();
 

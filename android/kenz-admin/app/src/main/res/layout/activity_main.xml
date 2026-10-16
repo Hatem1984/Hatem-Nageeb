@@ -63,4 +63,15 @@
                 android:textColor="@color/kenz_white" />
         </LinearLayout>
     </FrameLayout>
+    <Button
+        android:id="@+id/walletPreviewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="12dp"
+        android:minWidth="106dp"
+        android:backgroundTint="@color/kenz_green_2"
+        android:text="المحافظ · QA"
+        android:textColor="@color/kenz_white"
+        android:textSize="13sp" />
 </FrameLayout>
