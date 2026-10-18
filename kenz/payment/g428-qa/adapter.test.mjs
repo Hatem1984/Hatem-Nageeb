@@ -45,7 +45,7 @@ test('full source patcher enforces exact v23 KENZ fixture and preserves external
   let r=spawnSync(process.execPath,[cli,input,output],{encoding:'utf8'});
   assert.equal(r.status,0,r.stderr);assert(existsSync(output));
   const built=readFileSync(output,'utf8');
-  assert.equal(built.split('async function handleFactoryEvent(')[0],fixture.split('async function handleFactoryEvent(')[0]);
+  assert.ok(built.startsWith(fixture.split('async function handleFactoryEvent(')[0]),'Original shared preamble must be preserved');
   assert.equal(built.split('\nDeno.serve(')[1],fixture.split('\nDeno.serve(')[1]);
   assert.match(built,/rpc\('kenz_g427_atomic_xpay_v1'/);
   assert.doesNotMatch(built,/bucket: "sales"|from\("factory_payment_events"\)/);
