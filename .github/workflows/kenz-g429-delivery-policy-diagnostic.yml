@@ -46,3 +46,4 @@ jobs:
           psql -X -v ON_ERROR_STOP=1 -f kenz/payment/g427-qa/01_schema_fixture.sql
           psql -X -v ON_ERROR_STOP=1 -f kenz/payment/g427-qa/kenz_g427_atomic_xpay_candidate.sql
           psql -X -v ON_ERROR_STOP=1 -f kenz/payment/g429-qa/03_delivery_policy_diagnostic.sql
+          psql -X -v ON_ERROR_STOP=1 -f kenz/payment/g429-qa/04_paid_portal_access_diagnostic.sql
