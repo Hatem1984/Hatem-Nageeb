@@ -1,0 +1,26 @@
+name: KENZ G4.28 customer portal access QA (synthetic only)
+on:
+  push:
+    branches:
+      - qa/kenz-xpay-g426-20261018
+    paths:
+      - 'kenz/payment/g428-qa/customer-portal-contract-v16.fixture.ts'
+      - 'kenz/payment/g428-qa/phone-qa.mjs'
+      - 'kenz/payment/g428-qa/portal-identity.test.mjs'
+      - '.github/workflows/kenz-g428-portal-identity-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated-portal-contract-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout QA source only
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run synthetic access and Egyptian phone-format tests (no network)
+        run: node --test kenz/payment/g428-qa/portal-identity.test.mjs
