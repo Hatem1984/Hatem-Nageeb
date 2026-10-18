@@ -20,3 +20,11 @@ The patch:
 5. **Never** approve a real payment, resend a real event, unpause Checkout or change Meta/Telegram as part of this QA patch.
 
 Latest 2026-10-18 09:05 Cairo: Supabase orders 46, Paid 20, unsettled delivery 0, wallet enabled 0, email dispatch Cron 14/15 disabled. These are historical record counts, not current genuine sales.
+
+## Verified isolated QA evidence — 2026-10-18 06:20 UTC / 09:20 Cairo
+- GitHub Actions run 39103686952, commit da07979c8cecc249effa64cb44f3647dc9c0a415: 23/23 PASS, 0 failures.
+- 12 tests cover fail-closed source patching, exact KENZ-only live xpay-webhook v23 handler snapshot, and byte-for-byte preservation outside the handler.
+- 11 additional tests execute the patched handler under a mocked, in-memory Supabase client: pending -> paid once, repeat different event, repeat same ID, late unpaid/failure after Paid, late paid after expiry/failure -> exception, wrong amount/currency/session -> reject.
+- Verified against deployed v23 source that 11/11 exact pre-patch source markers match. No credentials or other business handler code are persisted in the QA fixture.
+- This does NOT validate real XPay signature implementation, actual database race/trigger atomicity, Resend delivery, or provider acceptance. The provider-event-insert followed by separate payment update / delivery enqueue gap remains production BLOCKER.
+- Live finances untouched: no order changed, no provider event replayed, no checkout, cron, Telegram, Meta or Resend send enabled. This repository PR contains only isolated QA files, NOT a production replacement function.
