@@ -1,0 +1,25 @@
+name: KENZ G4.28 XPay Atomic Adapter QA (offline only)
+on:
+  push:
+    branches:
+      - qa/kenz-xpay-g426-20261018
+    paths:
+      - 'kenz/payment/g428-qa/**'
+      - 'kenz/payment/g426-qa/factory-handler-live-v23.fixture.ts'
+      - '.github/workflows/kenz-xpay-g428-adapter.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shared-webhook-adapter-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: QA builder syntax
+        run: node --check kenz/payment/g428-qa/build-guarded-adapter.mjs
+      - name: Test adapter logic and fail-closed source patching (no payment, no network)
+        run: node --test kenz/payment/g428-qa/adapter.test.mjs
