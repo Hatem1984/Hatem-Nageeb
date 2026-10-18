@@ -26,4 +26,4 @@ jobs:
       - name: Syntax check offline patch builder
         run: node --check kenz/payment/g426-qa/build-candidate.mjs
       - name: Offline fail-closed regression checks (no secret, no network, no payment)
-        run: node --test kenz/payment/g426-qa/qa-patcher.test.mjs
+        run: node --test kenz/payment/g426-qa/*.test.mjs
