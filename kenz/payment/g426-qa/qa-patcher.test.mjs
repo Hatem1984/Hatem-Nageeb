@@ -82,3 +82,15 @@ test('guard refuses different original ledger fragment',()=>{const x=build(fixtu
 test('guard refuses unknown function name',()=>{const x=build(fixture.replace('async function handleFactoryEvent','async function handleFactoryEventV999'));assert.notEqual(x.status,0)});
 test('guard refuses ambiguous duplicate source fragment',()=>{const extra='\n  if (ins.error) {\n    if (ins.error.code === "23505") return json({ received: true, verified: true, duplicate: true });\n    console.error("factory_event_insert_error", ins.error);\n    return json({ error: "factory_database_error" }, 500);\n  }';const x=build(fixture.replace('  if (eventType ===',extra+'\n  if (eventType ==='));assert.notEqual(x.status,0);assert.match(x.stderr,/Ambiguous block/)});
 test('guard refuses missing Deno entrypoint boundary',()=>{const x=build(fixture.replace('Deno.serve(','NoDeno.serve('));assert.notEqual(x.status,0)});
+test('actual KENZ-only production v23 handler fixture patches safely',()=>{
+  const original = readFileSync(new URL('./factory-handler-live-v23.fixture.ts',import.meta.url),'utf8');
+  const result = build(original);
+  assert.equal(result.status,0,result.stderr);
+  assert.match(result.candidate,/already_paid: true/);
+  assert.match(result.candidate,/late_paid_event_review/);
+  assert.doesNotMatch(result.candidate,/bucket: "sales"/);
+  assert.equal(result.candidate.split('async function handleFactoryEvent(')[0],
+    original.split('async function handleFactoryEvent(')[0]);
+  assert.equal(result.candidate.split('\nDeno.serve(')[1],
+    original.split('\nDeno.serve(')[1]);
+});
