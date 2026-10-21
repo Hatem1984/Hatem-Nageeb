@@ -84,6 +84,10 @@ for(const route of ['downloads','order']){
   assert.match(html,/id="portalResult"/);
  });
 }
+test('G4.35 release JS exactly matches the tested QA candidate',()=>{
+ const release=readFileSync(new URL('./release/portal.js',import.meta.url),'utf8');
+ assert.equal(release,source,'Release JS diverged from tested candidate');
+});
 test('candidate preserves payment status and does not write customer or payment records',()=>{
  assert.equal(source.includes('xpay-webhook'),false);
  assert.equal(source.includes('service_role'),false);
