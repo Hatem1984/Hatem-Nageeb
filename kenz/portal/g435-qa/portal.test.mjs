@@ -84,6 +84,21 @@ for(const route of ['downloads','order']){
   assert.match(html,/id="portalResult"/);
  });
 }
+// The staged HTML changes must be ONLY a cache-busting script reference.
+// This prevents accidental divergence from live page content when publishing.
+for(const route of ['downloads','order']){
+ test(`G4.35 ${route} rollback baseline exactly matches staged HTML except JS query revision`,()=>{
+  const release=readFileSync(new URL(`./release/${route}/index.html`,import.meta.url),'utf8');
+  const rollback=readFileSync(new URL(`./rollback/${route}/index.html`,import.meta.url),'utf8');
+  assert.equal(rollback.replace('"/portal.js?v=129"','"/portal.js?v=130"'),release);
+ });
+}
+test('rollback JS is a v129 snapshot, not the patched candidate',()=>{
+ const rollback=readFileSync(new URL('./rollback/portal.js',import.meta.url),'utf8');
+ assert.match(rollback,/function portalAccessToken\(\)/);
+ assert.doesNotMatch(rollback,/function portalAccessToken\(forceContact=false\)/);
+ assert.notEqual(rollback,source);
+});
 test('G4.35 release JS exactly matches the tested QA candidate',()=>{
  const release=readFileSync(new URL('./release/portal.js',import.meta.url),'utf8');
  assert.equal(release,source,'Release JS diverged from tested candidate');
