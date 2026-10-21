@@ -1,7 +1,7 @@
 \set ON_ERROR_STOP on
 -- G4.29 READ-ONLY DIAGNOSTIC OF EXISTING G4.27 STAGING CANDIDATE.
 -- Runs only in fresh synthetic PostgreSQL 16 CI, NEVER production.
--- This is NOT an acceptance test: it reports known gaps rather than approving release.
+-- QA acceptance gate: fail CI if a known consent/site-only defect remains.
 DO $$
 DECLARE
   v_email_ok uuid := '00000000-0000-0000-0000-000000000291';
@@ -50,5 +50,10 @@ BEGIN
   IF (SELECT COUNT(*) FROM factory_cash_ledger WHERE order_id IN (v_email_ok,v_email_no_consent,v_site))<>3 THEN
     RAISE EXCEPTION 'financial ledger for synthetic settlements did not reconcile';
   END IF;
-  RAISE NOTICE 'G4.29 CURRENT CANDIDATE diagnostic complete: controls=%; confirmed gaps=%; no customer data',v_good,v_gap;
+  RAISE NOTICE 'G4.29 synthetic policy acceptance: controls=%; violations=%; no customer data',v_good,v_gap;
+  -- A diagnostic with known violations must NOT be a green release signal.
+  -- Synthetic QA only; no production database or real customer data.
+  IF v_gap > 0 THEN
+    RAISE EXCEPTION 'KENZ_RELEASE_GATE_BLOCKED: % delivery-policy violations remain',v_gap;
+  END IF;
 END $$;
