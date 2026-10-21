@@ -26,6 +26,31 @@ test('only verified routing metadata enters KENZ handler',async()=>{const h=crea
 test('successful signed event routes exactly ONE atomic RPC and does not write separately',async()=>{const h=createMock();const r=await h.send(); assert.equal(r.paid,true);assert.equal(r.settled,true);assert.equal(h.calls.length,1);assert.equal(h.calls[0].name,'kenz_g427_atomic_xpay_v1');assert.equal(h.calls[0].params.p_amount_minor,5900);assert.equal(h.calls[0].params.p_event_id,'evt_synthetic');});
 test('zero value, invalid amount, mismatched currency fail closed without RPC',async()=>{for(const session of [{amountTotal:0},{amountTotal:5900.7},{currency:'USD'},{paymentStatus:''}]){const h=createMock();const r=await h.send({session}); assert.equal(r.http_status,409);assert.equal(h.calls.length,0);}});
 test('unlisted provider event ignored without settlement',async()=>{const h=createMock();const r=await h.send({type:'payment_intent.succeeded'});assert.equal(r.ignored,true);assert.equal(h.calls.length,0);});
+// G4.30 synthetic RefundAPI safety contract. These assertions intentionally FAIL
+// against a handler that silently acknowledges KENZ refund notifications.
+// This is a release gate, NOT a simulated XPay webhook request or production fix.
+for (const refundEvent of ['refund.created', 'refund.failed']) {
+ test(`KENZ ${refundEvent} RefundAPI must be accounted for or rejected, never ACK ignored`,async()=>{
+  const h=createMock();
+  const r=await h.send({
+   type:refundEvent,
+   session:{
+    id:'re_synthetic_no_customer',
+    paymentIntentId:'pi_synthetic',
+    chargeId:'ch_synthetic',
+    amount:5900,
+    status:refundEvent==='refund.created'?'pending':'failed',
+    amountTotal:undefined,
+    paymentStatus:undefined,
+   },
+  });
+  assert.equal(h.calls.length,0,'refund must not run checkout-settlement RPC');
+  assert.ok(
+    r?.refund_recorded===true || (Number.isInteger(r?.http_status) && r.http_status>=400),
+    `${refundEvent} must be durably audited or fail closed; received/ignored HTTP 200 is unsafe`
+  );
+ });
+}
 test('RPC unavailable requires provider retry not success ACK',async()=>{const h=createMock(()=>({data:null,error:{code:'PGRST404'}}));const r=await h.send();assert.equal(r.http_status,503);assert.equal(h.calls.length,1);});
 test('RPC network exception requires retry',async()=>{const h=createMock(()=>{throw Error('temporary synthetic outage')});const r=await h.send();assert.equal(r.http_status,503);});
 test('RPC returns missing response: fail with 503',async()=>{const h=createMock({data:null,error:null});const r=await h.send();assert.equal(r.http_status,503);});
