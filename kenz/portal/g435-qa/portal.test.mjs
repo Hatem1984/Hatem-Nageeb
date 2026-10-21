@@ -74,6 +74,16 @@ test('successful synthetic signed-link creation replaces button with a link',asy
  assert.equal(h.button.replacement.href,'https://example.invalid/synthetic.pdf');
  assert.equal(h.button.replacement.rel,'noopener');
 });
+// G4.35 release HTML snapshots: stage only, never deploy on CI.
+for(const route of ['downloads','order']){
+ test(`G4.35 release HTML ${route} points to v130 portal asset and preserves portal form`,()=>{
+  const html=readFileSync(new URL(`./release/${route}/index.html`,import.meta.url),'utf8');
+  assert.match(html,/portal\.js\?v=130/);
+  assert.doesNotMatch(html,/portal\.js\?v=129/);
+  assert.match(html,/id="portalForm"/);
+  assert.match(html,/id="portalResult"/);
+ });
+}
 test('candidate preserves payment status and does not write customer or payment records',()=>{
  assert.equal(source.includes('xpay-webhook'),false);
  assert.equal(source.includes('service_role'),false);
