@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 
 const source=readFileSync(new URL('./portal-fixed.v129.js',import.meta.url),'utf8');
-function mount({saved='{"access_token":"stale-token","order_ref":"DF-OLD"}',search='',reply={ok:true}}={}){
+function mount({saved='{"access_token":"stale-token","order_ref":"DF-OLD"}',search='',reply={ok:true},rejectFetch=false}={}){
  const calls=[],ctx={};
  const form={getData:{order_ref:'DF-SYNTH-NEW',phone:'01011111111',email:''}};
  const FormDataStub=class {constructor(f){this.f=f}get(key){return this.f.getData[key]||''}};
@@ -16,7 +16,7 @@ function mount({saved='{"access_token":"stale-token","order_ref":"DF-OLD"}',sear
  const sandbox={
   document:doc,location:{search},URLSearchParams,FormData:FormDataStub,Intl,
   localStorage:{getItem:()=>saved},
-  fetch:async (...args)=>{calls.push(args);return {ok:reply.ok!==false,json:async()=>reply}},
+  fetch:async (...args)=>{calls.push(args);if(rejectFetch)throw Error('synthetic offline failure');return {ok:reply.ok!==false,json:async()=>reply}},
   window:{__portalAuth:{action:'lookup',access_token:'synthetic-valid'}},
   console,setTimeout(){throw Error('unexpected timer')}
  };
