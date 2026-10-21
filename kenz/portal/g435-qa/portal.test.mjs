@@ -61,9 +61,11 @@ test('HTTP error creating link restores button for retry without an external dow
  assert.match(h.button.textContent,/تعذر/);
 });
 test('unexpected network failure also restores create-download button',async()=>{
- const h=mount();
- h.qa.createDownload=function(){}; // VM fixture is separate; assert candidate fail-safe via source
- assert.match(source,/finally\s*\{if\(button\.isConnected\)button\.disabled=false\}/);
+ const h=mount({rejectFetch:true});
+ await h.qa.createDownload('synthetic-book',h.button);
+ assert.equal(h.calls.length,1);
+ assert.equal(h.button.disabled,false);
+ assert.equal(h.button.isConnected,true);
 });
 test('successful synthetic signed-link creation replaces button with a link',async()=>{
  const h=mount({reply:{ok:true,download_url:'https://example.invalid/synthetic.pdf'}});
