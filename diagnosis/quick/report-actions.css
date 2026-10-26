@@ -1,0 +1,8 @@
+.report-actions{max-width:1040px;margin:14px auto 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.report-action{cursor:pointer;border:1px solid #D9D0C4;border-radius:13px;min-height:47px;padding:10px 17px;color:#16484A;background:#FFFCF6;font-weight:700;font-size:13px}
+.report-action-main{background:#0D3436;border-color:#0D3436;color:#fff}
+.report-action:hover:not(:disabled){filter:brightness(1.08)}
+.report-action:disabled,.primary-btn:disabled{opacity:.58;cursor:not-allowed;transform:none;box-shadow:none}
+#reportActionStatus{color:#536363;font-size:12px;min-height:1.2em}
+button:focus-visible{outline:3px solid #C08A5A;outline-offset:3px}
+@media(max-width:600px){.report-actions{align-items:stretch}.report-action{width:100%}#reportActionStatus{width:100%;text-align:center}}
