@@ -112,6 +112,40 @@
   };
 
   const state={index:0,answers:Array(questions.length).fill(null),result:null};
+  const checkpointKey="business_game_quick_diagnosis_v38";
+  function saveCheckpoint(){
+    try{
+      sessionStorage.setItem(checkpointKey,JSON.stringify({
+        version:1,index:state.index,answers:state.answers,
+        completed:!!state.result
+      }));
+    }catch(e){}
+  }
+  function clearCheckpoint(){
+    try{sessionStorage.removeItem(checkpointKey);}catch(e){}
+  }
+  function restoreCheckpoint(){
+    let stored=null;
+    try{stored=JSON.parse(sessionStorage.getItem(checkpointKey)||"null");}catch(e){clearCheckpoint();}
+    if(!stored || stored.version!==1 || !Array.isArray(stored.answers) || stored.answers.length!==questions.length)return;
+    const valid=stored.answers.every((a,i)=>a===null || (Number.isInteger(a)&&a>=0&&a<questions[i].answers.length));
+    if(!valid || !Number.isInteger(stored.index) || stored.index<0 || stored.index>=questions.length){
+      clearCheckpoint();return;
+    }
+    state.answers=stored.answers.slice();
+    state.index=stored.index;
+    if(stored.completed && state.answers.every(a=>a!==null)){
+      state.result=calculate();
+      renderReport(state.result);
+      show("result");
+      offerSeen=false;
+      return;
+    }
+    if(state.answers.some(a=>a!==null) || state.index>0){
+      show("quiz");
+      renderQuestion();
+    }
+  }
 
   const views={
     start:document.getElementById("start"),
@@ -156,10 +190,11 @@
     document.getElementById("qLabel").textContent=`السؤال ${state.index+1} من ${questions.length}`;
     document.getElementById("qPct").textContent=`${pct}%`;
     document.getElementById("barFill").style.width=`${pct}%`;
+    document.getElementById("quizProgress").setAttribute("aria-valuenow",String(state.index+1));
     document.getElementById("backBtn").style.visibility=state.index===0?"hidden":"visible";
 
     const html=`
-      <h2>${item.q}</h2>
+      <h2 tabindex="-1">${item.q}</h2>
       <div class="answers">
         ${item.answers.map((a,i)=>`
           <button class="answer ${state.answers[state.index]===i?"is-selected":""}" data-i="${i}">
@@ -171,17 +206,20 @@
     `;
     const card=document.getElementById("questionCard");
     card.innerHTML=html;
+    card.querySelector("h2").focus({preventScroll:true});
 
     card.querySelectorAll(".answer").forEach(btn=>{
       btn.addEventListener("click",()=>{
         if(selectionLocked)return;
         selectionLocked=true;
         state.answers[state.index]=Number(btn.dataset.i);
+        saveCheckpoint();
         btn.classList.add("is-selected");
         track(`quiz_q${state.index+1}`,{answer:Number(btn.dataset.i)});
         setTimeout(()=>{
           if(state.index<questions.length-1){
             state.index++;
+            saveCheckpoint();
             renderQuestion();
           }else{
             finish();
@@ -340,6 +378,7 @@
   function finish(){
     const r=calculate();
     state.result=r;
+    saveCheckpoint();
     renderReport(r);
     track("quiz_complete",{type:r.type,top:r.topKey,second:r.secondKey,scores:r.scores});
     show("result");
@@ -356,17 +395,21 @@
   document.getElementById("backBtn").addEventListener("click",()=>{
     if(state.index>0){
       state.index--;
+      saveCheckpoint();
       renderQuestion();
     }
   });
 
-  document.getElementById("restartBtn").addEventListener("click",()=>{
+  function restartQuiz(){
     state.index=0;
     state.answers=Array(questions.length).fill(null);
     state.result=null;
+    clearCheckpoint();
     track("quiz_restart");
     show("start");
-  });
+  }
+  document.getElementById("restartBtn").addEventListener("click",restartQuiz);
+  document.getElementById("resetQuizBtn").addEventListener("click",restartQuiz);
 
   const checkoutBtn=document.getElementById("checkoutBtn");
   let checkoutUrl=null;
@@ -397,5 +440,6 @@
     location.assign(url.toString());
   });
 
+  restoreCheckpoint();
   track("quiz_view");
 })();
