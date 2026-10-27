@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0D3436">
+  <meta name="robots" content="index,follow">
+  <title>فحص مشروعك | التشخيص قبل الحل</title>
+  <meta name="description" content="فحص أولي من 6 أسئلة لأصحاب المشروعات القائمة يساعدك تعرف تبدأ تبص فين.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="report-actions.css">
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="brand" href="#" aria-label="لعبة البزنس">
+        <span class="brand-mark">ل</span>
+        <span class="brand-copy">
+          <strong>لعبة البزنس</strong>
+          <small>التشخيص قبل الحل</small>
+        </span>
+      </a>
+      <span class="header-note">لأصحاب المشروعات القائمة فقط</span>
+    </header>
+
+    <!-- START -->
+    <section id="start" class="view is-active">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">فحص أولي • 6 أسئلة فقط</span>
+          <h1>مشروعك شغال…<br><em>بس مش عارف المشكلة فين؟</em></h1>
+          <p class="hero-text">
+            جاوب على كام سؤال بسيط عن اللي بيحصل فعلًا في مشروعك،
+            وفي الآخر هتاخد <strong>قراءة أولية واضحة</strong> تقولك تبدأ تبص فين.
+          </p>
+
+          <div class="hero-points">
+            <span>دقيقتين تقريبًا</span>
+            <span>من غير تسجيل</span>
+            <span>النتيجة فورًا</span>
+          </div>
+
+          <button id="startBtn" class="primary-btn">
+            ابدأ فحص مشروعي
+            <span class="arrow">←</span>
+          </button>
+
+          <p class="subnote">مش اختبار نجاح وفشل، ومش تشخيص نهائي. هو نقطة بداية أوضح.</p>
+        </div>
+
+        <aside class="preview-card" aria-label="مثال لشكل النتيجة">
+          <div class="preview-top">
+            <span>مثال لشكل النتيجة</span>
+            <span class="status-dot"></span>
+          </div>
+
+          <div class="preview-section">
+            <small>أول حتة محتاجة فحص</small>
+            <strong>البيع والمتابعة</strong>
+          </div>
+
+          <div class="preview-grid">
+            <div>
+              <small>وضوح الصورة</small>
+              <strong>متوسط</strong>
+            </div>
+            <div>
+              <small>المنطقة الثانية</small>
+              <strong>العرض والسعر</strong>
+            </div>
+          </div>
+
+          <div class="preview-action">
+            <small>ابدأ من هنا</small>
+            <p>راجع آخر 20 استفسار ما تحوّلوش لشراء، وشوف الناس بتقف فين.</p>
+          </div>
+
+          <div class="preview-footer">
+            <span>قراءة أولية</span>
+            <span>مش حكم نهائي</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="view">
+      <div class="quiz-wrap">
+        <div class="quiz-head">
+          <button id="backBtn" class="icon-btn" aria-label="السؤال السابق">→</button>
+          <div class="quiz-progress">
+            <div class="quiz-progress-copy">
+              <span id="qLabel">السؤال 1 من 6</span>
+              <span id="qPct">17%</span>
+            </div>
+            <div class="bar"><span id="barFill"></span></div>
+          </div>
+        </div>
+
+        <div id="questionCard" class="question-card"></div>
+
+        <p class="quiz-help">اختار أقرب إجابة للي بيحصل فعلًا دلوقتي، مش الإجابة اللي تتمنى تكون صح.</p>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="result" class="view">
+      <div class="result-intro">
+        <span class="eyebrow">نتيجة الفحص الأولي</span>
+        <h2>دي أقرب قراءة طالعة من إجاباتك</h2>
+        <p>خدها كنقطة بداية، مش كتشخيص نهائي للمشروع.</p>
+      </div>
+
+      <div id="resultReport"></div>
+      <div class="report-actions" aria-label="خيارات التقرير">
+        <button id="saveReportBtn" type="button" class="report-action report-action-main">تنزيل التقرير PDF</button>
+        <button id="copySummaryBtn" type="button" class="report-action">نسخ ملخص النتيجة</button>
+        <span id="reportActionStatus" role="status" aria-live="polite"></span>
+      </div>
+
+      <section class="course-bridge">
+        <div class="bridge-copy">
+          <span class="eyebrow eyebrow-light">الخطوة اللي بعدها</span>
+          <h2>عرفت تبدأ تبص فين.<br><em>دلوقتي محتاج تعرف ليه.</em></h2>
+          <p>
+            الفحص بيحدد المنطقة الأقرب. لكن قبل ما تغيّر أو تصرف أو توقف حاجة،
+            محتاج تعرف السبب، الدليل، وأول خطوة تستحق تتعمل.
+          </p>
+        </div>
+
+        <div class="bridge-list">
+          <div><span>01</span><strong>المشكلة فين فعلًا؟</strong></div>
+          <div><span>02</span><strong>إيه الدليل؟</strong></div>
+          <div><span>03</span><strong>نبدأ بإيه؟</strong></div>
+        </div>
+      </section>
+
+      <section class="offer">
+        <div class="offer-copy">
+          <span class="eyebrow">البرنامج المكثف</span>
+          <h2>التشخيص قبل الحل</h2>
+          <p>
+            3 جلسات تدريبية خلال أسبوع واحد، ساعتين لكل جلسة، لأصحاب المشروعات القائمة.
+            هتتعلم تفحص المشكلة، وتراجع الأدلة، وترتب أولوياتك باستخدام نموذج خطة 30 / 60 / 90 يوم.
+          </p>
+
+          <div class="offer-meta">
+            <span>3 جلسات</span>
+            <span>6 ساعات تدريبية</span>
+            <span>Workbook كامل</span>
+            <span>خطة 30 / 60 / 90</span>
+          </div>
+        </div>
+
+        <div class="offer-cta">
+          <small>تفاصيل الحجز</small>
+          <div class="price"><strong style="font-size:20px">السعر يُعلن عند فتح التسجيل</strong></div>
+          <button id="checkoutBtn" class="primary-btn full">
+            عاوز أكمل التشخيص
+            <span class="arrow">←</span>
+          </button>
+          <p>البرنامج لا يشمل استشارة فردية أو متابعة شخصية. طريقة التقديم والمواعيد والسعر هيتعلنوا قبل فتح الحجز.</p>
+        </div>
+      </section>
+
+      <button id="restartBtn" class="restart">أعيد الفحص من الأول</button>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+  <script src="report-actions.js"></script>
+</body>
+</html>
