@@ -1,0 +1,17 @@
+/* V39: additive brand and consulting bridge — no changes to approved logos. */
+.v39-services{background:#f8f6f1;color:#173b39;padding-block:clamp(54px,7vw,92px)}
+.v39-services .v39-inner{max-width:1120px;margin:auto;padding-inline:24px}
+.v39-services .v39-kicker{font-size:.8rem;letter-spacing:.025em;font-weight:800;color:#a2714b}
+.v39-services h2{font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.5;margin:12px 0;color:#113f3e}
+.v39-services .v39-intro{color:#526a65;line-height:2;max-width:780px;font-size:1rem}
+.v39-services .v39-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-block:26px}
+.v39-services article{background:#fff;border:1px solid #dfe5dc;padding:25px 23px;border-radius:20px;box-shadow:0 8px 25px rgba(25,49,42,.05)}
+.v39-services article .v39-num{font-weight:900;color:#bd8760;font-size:1.65rem}
+.v39-services article h3{margin:12px 0 7px;font-size:1.12rem;line-height:1.65;color:#194d47}
+.v39-services article p{font-size:.91rem;line-height:2;color:#62726b}
+.v39-services .v39-actions{display:flex;gap:12px;flex-wrap:wrap}
+.v39-services .v39-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:11px 19px;border-radius:12px;font-weight:800;text-decoration:none;border:1px solid #23544f;color:#174d48}
+.v39-services .v39-actions a:first-child{background:#174d48;color:#fff}
+.v39-services .v39-note{font-size:.81rem;color:#63736b;line-height:1.9;margin-block:15px 0}
+@media(max-width:810px){.v39-services .v39-grid{grid-template-columns:1fr}.v39-services article{padding:20px}}
+@media(prefers-reduced-motion:reduce){.v39-services *{scroll-behavior:auto}}

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /diagnosis/quick/
+Disallow: /payment-admin/
+Disallow: /payment-success/
+Disallow: /manual-payment/
+Disallow: /complete-payment/
+Disallow: /diagnosis/
+Disallow: /automation/
+Sitemap: https://lo3betbusiness.com/sitemap.xml
