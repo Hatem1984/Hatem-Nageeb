@@ -18,6 +18,40 @@
       evidence:[...root.querySelectorAll(".evidence-item")].map(item=>item.textContent.trim())
     };
   }
+  const downloadText = document.getElementById("downloadTextBtn");
+  function readableReport(r){
+    const evidence = r.evidence.length
+      ? ["إجابات رجّحت النتيجة:",...r.evidence.map(x=>"- "+x)]
+      : [];
+    return [
+      "لعبة البزنس | التشخيص قبل الحل",
+      "تقرير فحص أولي — "+new Date().toLocaleDateString("ar-EG"),
+      "النتيجة: "+r.heading,
+      r.intro,
+      "وضوح الصورة: "+r.clarity,
+      ...r.boxes.map(x=>x.label+" — "+x.title+"\n"+x.body),
+      ...evidence,
+      "هذه قراءة استرشادية مبنية على إجاباتك؛ ليست تشخيصًا نهائيًا ولا ضمانًا لنتيجة."
+    ].join("\n\n");
+  }
+  if(downloadText)downloadText.addEventListener("click",()=>{
+    const r=extract();
+    if(!r)return say("أكمل الأسئلة الأول.");
+    try{
+      const blob=new Blob(["\uFEFF",readableReport(r)],{type:"text/plain;charset=utf-8"});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url;
+      a.download="Business-Game-Diagnosis-Text-"+new Date().toISOString().slice(0,10)+".txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),2000);
+      say("تم تنزيل النسخة النصية؛ تقدر تبحث وتنسخ منها.");
+    }catch(e){
+      say("تعذّر تنزيل النص، تقدر تستخدم زر نسخ الملخص.");
+    }
+  });
   copy.addEventListener("click",async()=>{
     const r=extract();
     if(!r)return say("أكمل الأسئلة الأول.");

@@ -6,6 +6,11 @@
   <meta name="theme-color" content="#0D3436">
   <meta name="robots" content="index,follow">
   <title>فحص مشروعك | التشخيص قبل الحل</title>
+  <link rel="canonical" href="https://lo3betbusiness.com/diagnosis/quick/">
+  <meta property="og:title" content="فحص مشروعك مجانًا | لعبة البزنس">
+  <meta property="og:description" content="ستة أسئلة لأصحاب المشروعات القائمة، قراءة استرشادية وتقرير PDF مجاني دون دفع.">
+  <meta property="og:image" content="https://lo3betbusiness.com/assets/og-share.jpg">
+  <meta property="og:url" content="https://lo3betbusiness.com/diagnosis/quick/">
   <meta name="description" content="فحص أولي من 6 أسئلة لأصحاب المشروعات القائمة يساعدك تعرف تبدأ تبص فين.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,14 +21,15 @@
 <body>
   <main class="page">
     <header class="header">
-      <a class="brand" href="#" aria-label="لعبة البزنس">
-        <span class="brand-mark">ل</span>
+      <a class="brand" href="/" aria-label="العودة إلى موقع لعبة البزنس">
+        <img class="brand-mark" src="../../assets/شعار_لعبة_البزنس_خفيف.webp" alt="" width="42" height="42" decoding="async">
         <span class="brand-copy">
           <strong>لعبة البزنس</strong>
           <small>التشخيص قبل الحل</small>
         </span>
       </a>
       <span class="header-note">لأصحاب المشروعات القائمة فقط</span>
+      <a class="home-link" href="/">الرجوع للموقع ←</a>
     </header>
 
     <!-- START -->
@@ -49,6 +55,7 @@
           </button>
 
           <p class="subnote">مش اختبار نجاح وفشل، ومش تشخيص نهائي. هو نقطة بداية أوضح.</p>
+          <p class="resume-note">لو الصفحة اتحدّثت، تقدر تكمل من آخر سؤال في نفس التبويب. تقدر تبدأ من جديد في أي وقت.</p>
         </div>
 
         <aside class="preview-card" aria-label="مثال لشكل النتيجة">
@@ -96,13 +103,14 @@
               <span id="qLabel">السؤال 1 من 6</span>
               <span id="qPct">17%</span>
             </div>
-            <div class="bar"><span id="barFill"></span></div>
+            <div id="quizProgress" class="bar" role="progressbar" aria-label="تقدم أسئلة التشخيص" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1"><span id="barFill"></span></div>
           </div>
         </div>
 
-        <div id="questionCard" class="question-card"></div>
+        <div id="questionCard" class="question-card" role="group" aria-label="السؤال الحالي"></div>
 
         <p class="quiz-help">اختار أقرب إجابة للي بيحصل فعلًا دلوقتي، مش الإجابة اللي تتمنى تكون صح.</p>
+        <button id="resetQuizBtn" class="quiz-reset" type="button">ابدأ الفحص من الأول</button>
       </div>
     </section>
 
@@ -118,6 +126,7 @@
       <div class="report-actions" aria-label="خيارات التقرير">
         <button id="saveReportBtn" type="button" class="report-action report-action-main">تنزيل التقرير PDF</button>
         <button id="copySummaryBtn" type="button" class="report-action">نسخ ملخص النتيجة</button>
+        <button id="downloadTextBtn" type="button" class="report-action">تنزيل نسخة نصية قابلة للبحث</button>
         <span id="reportActionStatus" role="status" aria-live="polite"></span>
       </div>
 
@@ -163,6 +172,11 @@
             <span class="arrow">←</span>
           </button>
           <p>البرنامج لا يشمل استشارة فردية أو متابعة شخصية. طريقة التقديم والمواعيد والسعر هيتعلنوا قبل فتح الحجز.</p>
+          <div class="inquiry-actions">
+            <a class="inquiry-primary" href="/#program-package">شوف تفاصيل البرنامج</a>
+            <a class="inquiry-secondary" href="https://wa.me/201011223667?text=%D8%B9%D8%A7%D9%88%D8%B2%20%D8%A3%D8%B9%D8%B1%D9%81%20%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84%20%D8%A7%D9%84%D8%AF%D9%81%D8%B9%D8%A9%20%D8%A7%D9%84%D9%82%D8%A7%D8%AF%D9%85%D8%A9%20%D9%85%D9%86%20%D8%A7%D9%84%D8%AA%D8%B4%D8%AE%D9%8A%D8%B5%20%D9%82%D8%A8%D9%84%20%D8%A7%D9%84%D8%AD%D9%84" target="_blank" rel="noopener noreferrer">اسأل عن الدفعة على واتساب</a>
+          </div>
+          <p class="inquiry-note">رسالة واتساب عامة، من غير إجاباتك أو نتيجتك. ده استفسار مش حجز.</p>
         </div>
       </section>
 
