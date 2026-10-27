@@ -1,6 +1,6 @@
 # Short-course V37 + six-question diagnosis — staging handoff
 
-Status: **development branch only**. Do not deploy to main or enable checkout.
+Status: **informational-publication approved 27 October 2026**. Checkout and sales must remain disabled; this does not approve an LMS commercial launch.
 
 ## Verified product scope (27 Oct 2026)
 - Audience: people with existing small/medium businesses, not idea-only founders.

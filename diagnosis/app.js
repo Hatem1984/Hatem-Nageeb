@@ -264,17 +264,9 @@
       whatsapp.href='https://wa.me/201011223667?text='+encodeURIComponent(msg);
     }
   }
-  async function startReserveCheckout(trigger){
-    if(!window.Lo3betFunnel){location.href='../#offer';return;}
-    const oldText=trigger&&trigger.textContent;
-    try{
-      if(trigger){trigger.setAttribute('aria-disabled','true');trigger.textContent='جارٍ فتح الدفع…';}
-      track('DiagnosticReserveClick','diagnostic_reserve_click');
-      await window.Lo3betFunnel.startCheckout('reserve');
-    }catch(e){
-      if(trigger){trigger.removeAttribute('aria-disabled');trigger.textContent=oldText||'ثبّت مقعدك بـ2,000 جنيه';}
-      alert('تعذر فتح الدفع الإلكتروني الآن. تقدر ترجع لتفاصيل البرنامج أو تتواصل معنا على واتساب.');
-    }
+  function startReserveCheckout(){
+    // Historical diagnostic remains readable, but its legacy checkout is retired.
+    location.href='../#program-package';
   }
 
   $('programBtn').addEventListener('click',()=>track('DiagnosticProgramClick','diagnostic_program_click'));
