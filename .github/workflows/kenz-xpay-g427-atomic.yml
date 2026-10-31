@@ -1,0 +1,44 @@
+name: KENZ G4.27 Atomic XPay PostgreSQL QA (offline)
+on:
+  push:
+    branches:
+      - qa/kenz-xpay-g426-20261018
+    paths:
+      - 'kenz/payment/g427-qa/**'
+      - '.github/workflows/kenz-xpay-g427-atomic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pg-transaction-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: kenz_qa
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout isolated QA branch
+        uses: actions/checkout@v4
+      - name: Install PostgreSQL client when necessary
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+      - name: Validate SQL against isolated PostgreSQL and concurrent callbacks
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: test
+          PGDATABASE: kenz_qa
+        run: bash kenz/payment/g427-qa/run_pg_integration.sh
